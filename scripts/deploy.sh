@@ -169,7 +169,7 @@ initialize_target_repository() {
         log_info "Creating initial commit..."
         echo "# Hyspex Theme Deployment Repository" > README.md
         echo "" >> README.md
-        echo "This repository contains the deployed theme files from the main hyspex-theme project." >> README.md
+        echo "This repository contains the deployed theme files from the main theme-dev project." >> README.md
         echo "Generated on $(date)" >> README.md
         git add README.md
         git commit -m "Initial commit: Setup deployment repository"
@@ -338,7 +338,7 @@ templates/      # Page templates
 \`\`\`
 
 ---
-*This deployment was generated automatically by the hyspex-theme deployment script.*
+*This deployment was generated automatically by the theme-dev deployment script.*
 EOF
 }
 
