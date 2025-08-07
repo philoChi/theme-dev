@@ -1,0 +1,32 @@
+{
+  "product_info": {
+    "rating": "Bewertung",
+    "select_color": "Farbe: ",
+    "select_size": "Größe auswählen: %{size}",
+    "on_sale": "SALE",
+    "new_tag": "NEU",
+    "color_options": "Farbauswahl",
+    "size_options": "Größenoptionen",
+    "colors": {
+      "label": "Farbe",
+      "NavyBlue": "Marineblau",
+      "Khaki": "Khaki",
+      "Orange": "Orange",
+      "LightPink": "Rosa",
+      "LightGray": "Hellgrau",
+      "DarkGray": "Dunkelgrau",
+      "Black": "Schwarz",
+      "White": "Weiß"
+    },
+    "sizes": {
+      "label": "Größe",
+      "XS": "XS",
+      "S": "S",
+      "M": "M",
+      "L": "L",
+      "XL": "XL",
+      "XXL": "XXL",
+      "XXXL": "XXXL"
+    }
+  }
+}

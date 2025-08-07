@@ -49,9 +49,9 @@
 
   # Determine appropriate ARIA label with localization
   if direction == 'prev'
-    assign aria_label = 'general.navigation.previous' | t | default: 'Previous'
+    assign aria_label = 'buttons_arrow.navigation.previous' | t | default: 'Previous'
   else
-    assign aria_label = 'general.navigation.next' | t | default: 'Next'
+    assign aria_label = 'buttons_arrow.navigation.next' | t | default: 'Next'
   endif
 
   # Build comprehensive data attributes

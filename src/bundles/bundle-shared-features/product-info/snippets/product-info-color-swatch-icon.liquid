@@ -41,7 +41,7 @@
           data-compare-price="{{ variant_for_color.compare_at_price | money | escape }}"
           data-show-compare="{{ variant_show_compare }}"
           data-sale-percentage="{{ variant_sale_percentage }}"
-          aria-label="{{ 'products.product.select_color' | t: color: value }}"
+          aria-label="{{ 'product_info.select_color' | t: color: value }}"
           {% if variant_for_color.id == current_variant.id %}aria-current="true"{% endif %}>
   </button>
 {%- endif -%}

@@ -11,8 +11,6 @@
       "NoCollection": "Keine Kollektion ausgewählt",
       "EMail_Form_Placeholder": "Hier deine E-Mail eingeben"
     },
-    "collections": {
-    },
     "product_showcase": {
       "view_all_in": "Alle ansehen in {{ collection }}",
       "no_products": "Keine Produkte gefunden",
@@ -37,15 +35,6 @@
           "collection_label": "Kollektion",
           "cta_text_label": "Text für 'Alle anzeigen'-Button"
         }
-      }
-    },
-    "faq": {
-      "no_faqs": "Es sind noch keine FAQs vorhanden.",
-      "search_placeholder": "Suche in den FAQs...",
-      "no_results": "Keine Ergebnisse gefunden für \"{{ query }}\"",
-      "results_count": {
-        "one": "1 Ergebnis gefunden",
-        "other": "{{ count }} Ergebnisse gefunden"
       }
     }
   },
@@ -75,114 +64,9 @@
       "message": "Für die beste Erfahrung aktivieren Sie bitte JavaScript in Ihrem Browser. Alle Produkte sind weiterhin unten sichtbar."
     }
   },
-  "collections": {
-    "general": {
-      "items_with_count": {
-        "one": "{{ count }} Artikel",
-        "other": "{{ count }} Artikel"
-      },
-      "no_products_title": "Keine Produkte gefunden",
-      "no_products_text": "Leider wurden keine Produkte in dieser Kollektion gefunden.",
-      "continue_shopping": "Weiter einkaufen",
-      "product_grid": "Produktraster"
-    },
-    "sorting": {
-      "sort_by_label": "Sortieren nach",
-      "featured": "Empfohlen",
-      "date_descending": "Neueste zuerst",
-      "price_ascending": "Preis aufsteigend",
-      "price_descending": "Preis absteigend",
-      "best_selling": "Bestseller",
-      "sort_help_text": "Wählen Sie eine Sortieroption"
-    },
-    "pagination": {
-      "load_more": "Mehr laden",
-      "showing": "Zeige {{ current }} von {{ total }} Produkten",
-      "pagination_label": "Produktnavigation",
-      "all_loaded": "Alle Produkte geladen"
-    },
-    "errors": {
-      "network_error": "Netzwerkfehler. Bitte prüfe deine Verbindung und versuche es erneut.",
-      "timeout_error": "Zeitüberschreitung. Bitte versuche es erneut.",
-      "load_error": "Fehler beim Laden. Bitte aktualisiere die Seite.",
-      "filter_error": "Filter sind vorübergehend nicht verfügbar. Du kannst trotzdem Produkte durchstöbern."
-    }
-  },
   "products": {
     "general": {
       "products": "Produkte"
-    },
-    "product": {
-      "decrease_quantity": "Decrease quantity",
-      "increase_quantity": "Increase quantity",
-      "quantity": "Quantity",
-      "add_to_cart": "In den Einkaufswagen legen",
-      "properties": "Produkteigenschaften",
-      "description": "Produktbeschreibung",
-      "features_heading": "Was macht %{determiner} %{product_type} besonders ?",
-      "feature_simple": "Simple care",
-      "feature_organic": "100 % organic",
-      "feature_cozy": "Extra cozy",
-      "size_options": "Größenoptionen",
-      "select_size": "Größe auswählen: %{size}",
-      "quick_add_to_cart": "Zum Warenkorb Hinzufügen",
-      "rating": "Bewertung",
-      "from_lowest_price_html": "",
-      "price_reduced_by": "%",
-      "from_price_html": "Preis",
-      "star_rating_accessibility_label": "Bewertungen",
-      "color_options": "Farbauswahl",
-      "select_color": "Farbe: ",
-      "on_sale": "SALE",
-      "new_tag": "NEU",
-      "stock_available": "Verfügbar",
-      "stock_delivery_time": "(in etwa %{count} Werktagen bei Dir)",
-      "shipping_note": "Versand mit DHL",
-      "feature_organic_msg": "Made from 100 % certified organic cotton—good for you and the planet",
-      "feature_cozy_msg": "Ultra-soft brushed fleece for an extra-snuggly feel",
-      "feature_simple_msg": "Clean, minimal embroidery that won't distract from your style",
-      "selection_color": "Farbe:",
-      "selection_size": "Größe:",
-      "selection_quantity": "Anzahl:",
-      "tax_note": "Inkl. MwSt. zzgl. Versand",
-      "skip_to_gallery": "Zu den Galerie-Anweisungen springen",
-      "gallery_thumbnails": "Produktbild-Vorschaubilder",
-      "view_image": "Bild anzeigen",
-      "of": "von",
-      "main_image": "Hauptproduktbild",
-      "loading": "Laden",
-      "loading_image": "Bild wird geladen...",
-      "thumbnail": "Vorschaubild",
-      "image": "Bild",
-      "no_image": "Kein Produktbild verfügbar",
-      "notifications": {
-        "added_to_cart": "Zum Warenkorb hinzugefügt!",
-        "select_size_error": "Bitte wählen Sie eine {{ size_label }} aus, bevor Sie zum Warenkorb hinzufügen",
-        "add_to_cart_error": "Fehler: Artikel konnte nicht zum Warenkorb hinzugefügt werden."
-      }
-    },
-    "sizes": {
-      "label": "Größe"
-    },
-    "colors": {
-      "label": "Farbe",
-      "NavyBlue": "Marineblau",
-      "Khaki": "Khaki",
-      "Orange": "Orange",
-      "LightPink": "Rosa",
-      "LightGray": "Hellgrau",
-      "DarkGray": "Dunkelgrau",
-      "Black": "Schwarz",
-      "White": "Weiß"
-    },
-    "faq": {
-      "no_faqs": "Es sind noch keine FAQs vorhanden.",
-      "search_placeholder": "Suche in den FAQs...",
-      "no_results": "Keine Ergebnisse gefunden für \"{{ query }}\"",
-      "results_count": {
-        "one": "1 Ergebnis gefunden",
-        "other": "{{ count }} Ergebnisse gefunden"
-      }
     }
   },
   "accessibility": {
@@ -197,95 +81,6 @@
       "no_results_text": "Versuche es mit anderen Suchbegriffen für \"{{ terms }}\"",
       "title": "Suche",
       "results": "Suchergebnisse"
-    }
-  },
-  "product_configurations": {
-    "_source": "Auto-generated from src/config/product-info.de.json",
-    "_note": "Do not edit this section directly. Modify src/config/product-info.de.json instead.",
-    "default": {
-      "product_type": "Produkt",
-      "determiner": "dieses",
-      "feature_chips": "organic"
-    },
-    "premium-organic-hoodie": {
-      "subtitle": "Premium Organic Hoodie",
-      "product_type": "Hoodie",
-      "determiner": "diesen",
-      "description": "- Material: 81% Polyester (recycled), 14% Bio-Baumwolle, 5% Elastan\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Transferdruck\n- Ursprungsland: Made in Portugal\n- Passform: Unisex\nNachhaltigkeit trifft Performance. Nachhaltigeres Material. Umweltschonendes Stoffgemisch aus recyceltem Polyester, Bio-Baumwolle und Elastan.",
-      "properties": "- Material: 81% Polyester (recycled), 14% Bio-Baumwolle, 5% Elastan\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Transferdruck\n- Ursprungsland: Made in Portugal\n- Passform: Unisex\nNachhaltigkeit trifft Performance. Nachhaltigeres Material. Umweltschonendes Stoffgemisch aus recyceltem Polyester, Bio-Baumwolle und Elastan.",
-      "feature_chips": "organic,cozy,simple"
-    },
-    "premium-organic-sweatshirt": {
-      "subtitle": "Premium Organic Sweatshirt",
-      "product_type": "Sweatshirt",
-      "determiner": "dieses",
-      "description": "- Material: 85% Bio-Baumwolle, 15% Polyester (recycled)\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Transferdruck\n- Ursprungsland: Made in Portugal\n- Passform: Unisex\nPremium Bio-Qualität. Weiches Sweatshirt-Material mit nachhaltiger Faser-Mischung.",
-      "properties": "- Material: 85% Bio-Baumwolle, 15% Polyester (recycled)\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Transferdruck\n- Ursprungsland: Made in Portugal\n- Passform: Unisex\nPremium Bio-Qualität. Weiches Sweatshirt-Material mit nachhaltiger Faser-Mischung.",
-      "feature_chips": "organic,cozy,simple"
-    },
-    "premium-organic-t-shirt": {
-      "subtitle": "Premium Organic T-Shirt",
-      "product_type": "T-Shirt",
-      "determiner": "dieses",
-      "description": "- Material: 100% Bio-Baumwolle (Premium-Qualität)\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Transferdruck\n- Ursprungsland: Made in Portugal\n- Passform: Unisex\nHöchste Qualität trifft Nachhaltigkeit. Premium Bio-Baumwolle für ultimativen Komfort.",
-      "properties": "- Material: 100% Bio-Baumwolle (Premium-Qualität)\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Transferdruck\n- Ursprungsland: Made in Portugal\n- Passform: Unisex\nHöchste Qualität trifft Nachhaltigkeit. Premium Bio-Baumwolle für ultimativen Komfort.",
-      "feature_chips": "organic,simple,cozy"
-    },
-    "organic-hoodie": {
-      "subtitle": "Organic Hoodie",
-      "product_type": "Hoodie",
-      "determiner": "diesen",
-      "description": "- Material: 70% Polyester (recycled), 30% Bio-Baumwolle\n- Verpackt in nachhaltiger Verpackung\n- Druckverfahren: Digitaldruck\n- Ursprungsland: Made in EU\n- Passform: Unisex\nUmweltbewusster Style. Nachhaltiges Material aus recycelten und biologischen Fasern.",
-      "properties": "- Material: 70% Polyester (recycled), 30% Bio-Baumwolle\n- Verpackt in nachhaltiger Verpackung\n- Druckverfahren: Digitaldruck\n- Ursprungsland: Made in EU\n- Passform: Unisex\nUmweltbewusster Style. Nachhaltiges Material aus recycelten und biologischen Fasern.",
-      "feature_chips": "organic,simple"
-    },
-    "organic-sweatshirt": {
-      "subtitle": "Organic Sweatshirt",
-      "product_type": "Sweatshirt",
-      "determiner": "dieses",
-      "description": "- Material: 85% Bio-Baumwolle, 15% Polyester (recycled)\n- Verpackt in nachhaltiger Verpackung\n- Druckverfahren: Digitaldruck\n- Ursprungsland: Made in EU\n- Passform: Unisex\nKomfort und Stil vereint. Weiches Sweatshirt-Material mit nachhaltiger Faser-Mischung.",
-      "properties": "- Material: 85% Bio-Baumwolle, 15% Polyester (recycled)\n- Verpackt in nachhaltiger Verpackung\n- Druckverfahren: Digitaldruck\n- Ursprungsland: Made in EU\n- Passform: Unisex\nKomfort und Stil vereint. Weiches Sweatshirt-Material mit nachhaltiger Faser-Mischung.",
-      "feature_chips": "organic,cozy"
-    },
-    "organic-t-shirt": {
-      "subtitle": "Organic T-Shirt",
-      "product_type": "T-Shirt",
-      "determiner": "dieses",
-      "description": "- Material: 100% Bio-Baumwolle\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Siebdruck\n- Ursprungsland: Made in Portugal\n- Passform: Unisex\nPure Bio-Qualität. Weiches, atmungsaktives Material aus 100% zertifizierter Bio-Baumwolle.",
-      "properties": "- Material: 100% Bio-Baumwolle\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Siebdruck\n- Ursprungsland: Made in Portugal\n- Passform: Unisex\nPure Bio-Qualität. Weiches, atmungsaktives Material aus 100% zertifizierter Bio-Baumwolle.",
-      "feature_chips": "organic,simple"
-    },
-    "premium-men-hoodie": {
-      "subtitle": "Herren Premium Organic Hoodie",
-      "product_type": "Hoodie",
-      "determiner": "diesen",
-      "description": "- Material: 81% Polyester (recycled), 14% Bio-Baumwolle, 5% Elastan\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Transferdruck\n- Ursprungsland: Made in Portugal\n- Passform: Herren-Schnitt\nNachhaltigkeit trifft Performance. Nachhaltigeres Material. Umweltschonendes Stoffgemisch aus recyceltem Polyester, Bio-Baumwolle und Elastan.",
-      "properties": "- Material: 81% Polyester (recycled), 14% Bio-Baumwolle, 5% Elastan\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Transferdruck\n- Ursprungsland: Made in Portugal\n- Passform: Herren-Schnitt\nNachhaltigkeit trifft Performance. Nachhaltigeres Material. Umweltschonendes Stoffgemisch aus recyceltem Polyester, Bio-Baumwolle und Elastan.",
-      "feature_chips": "organic,cozy,simple"
-    },
-    "premium-sweatshirt": {
-      "subtitle": "Premium Sweatshirt",
-      "product_type": "Sweatshirt",
-      "determiner": "dieses",
-      "description": "- Material: 85% Bio-Baumwolle, 15% Polyester (recycled)\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Transferdruck\n- Ursprungsland: Made in Portugal\n- Passform: Unisex\nKomfort und Stil vereint. Weiches Sweatshirt-Material mit nachhaltiger Faser-Mischung.",
-      "properties": "- Material: 85% Bio-Baumwolle, 15% Polyester (recycled)\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Transferdruck\n- Ursprungsland: Made in Portugal\n- Passform: Unisex\nKomfort und Stil vereint. Weiches Sweatshirt-Material mit nachhaltiger Faser-Mischung.",
-      "feature_chips": "organic,cozy,simple"
-    },
-    "eco-hoodie": {
-      "subtitle": "Eco Hoodie",
-      "product_type": "Hoodie",
-      "determiner": "diesen",
-      "description": "- Material: 70% Polyester (recycled), 30% Bio-Baumwolle\n- Verpackt in recycelter Verpackung\n- Druckverfahren: Digitaldruck\n- Ursprungsland: Made in EU\n- Passform: Unisex\nUmweltbewusster Style. Nachhaltiges Material aus recycelten und biologischen Fasern.",
-      "properties": "- Material: 70% Polyester (recycled), 30% Bio-Baumwolle\n- Verpackt in recycelter Verpackung\n- Druckverfahren: Digitaldruck\n- Ursprungsland: Made in EU\n- Passform: Unisex\nUmweltbewusster Style. Nachhaltiges Material aus recycelten und biologischen Fasern.",
-      "feature_chips": "organic,simple"
-    },
-    "classic-hoodie": {
-      "subtitle": "Classic Hoodie",
-      "product_type": "Hoodie",
-      "determiner": "diesen",
-      "description": "- Material: 80% Baumwolle, 20% Polyester\n- Standard-Verpackung\n- Druckverfahren: Siebdruck\n- Ursprungsland: Made in EU\n- Passform: Unisex\nDer Klassiker. Bewährte Qualität für jeden Tag.",
-      "properties": "- Material: 80% Baumwolle, 20% Polyester\n- Standard-Verpackung\n- Druckverfahren: Siebdruck\n- Ursprungsland: Made in EU\n- Passform: Unisex\nDer Klassiker. Bewährte Qualität für jeden Tag.",
-      "feature_chips": "simple"
     }
   }
 }

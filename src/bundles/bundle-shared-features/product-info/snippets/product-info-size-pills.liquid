@@ -37,7 +37,7 @@
   <div class="product-size-pills"
        data-size-pills
        role="group"
-       aria-label="{{ 'products.product.size_options' | t }}">
+       aria-label="{{ 'product_info.size_options' | t }}">
     {%- assign rendered_sizes = '' -%}
     {%- for value in size_option.values -%}
       {%- comment -%}Find first variant that matches this size value{%- endcomment -%}
@@ -55,7 +55,7 @@
                 class="size-pill{% if variant_for_size.id == current_variant.id %} is-selected{% endif %}"
                 data-size-value="{{ value | escape }}"
                 data-variant-id="{{ variant_for_size.id }}"
-                aria-label="{{ 'products.product.select_size' | t: size: value }}"
+                aria-label="{{ 'product_info.select_size' | t: size: value }}"
                 {% if variant_for_size.id == current_variant.id %}aria-current="true"{% endif %}>
                 {{ value }}
           </button>

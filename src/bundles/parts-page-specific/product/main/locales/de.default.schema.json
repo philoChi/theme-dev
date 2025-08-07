@@ -1,0 +1,41 @@
+{
+  "sections": {
+    "product-main": {
+      "name": "Produktseite",
+      "settings": {
+        "show_vendor": {
+          "label": "Marke/Hersteller anzeigen"
+        },
+        "show_rating": {
+          "label": "Bewertungen anzeigen"
+        },
+        "show_quantity_selector": {
+          "label": "Mengenauswahl anzeigen"
+        },
+        "show_pickup_availability": {
+          "label": "Abholung vor Ort anzeigen"
+        },
+        "show_share": {
+          "label": "Teilen-Button anzeigen"
+        },
+        "show_dynamic_checkout": {
+          "label": "Express-Checkout-Buttons anzeigen",
+          "info": "PayPal, Apple Pay, etc."
+        },
+        "gallery_layout": {
+          "label": "Galerie-Layout",
+          "options": {
+            "stacked": "Gestapelt",
+            "thumbnail": "Mit Vorschaubildern"
+          }
+        },
+        "enable_zoom": {
+          "label": "Bildvergrößerung aktivieren"
+        },
+        "enable_video_looping": {
+          "label": "Video-Wiederholung aktivieren"
+        }
+      }
+    }
+  }
+}

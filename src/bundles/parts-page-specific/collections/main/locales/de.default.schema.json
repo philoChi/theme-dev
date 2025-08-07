@@ -1,0 +1,31 @@
+{
+  "sections": {
+    "collections-main": {
+      "name": "Kollektionsseite",
+      "settings": {
+        "show_collection_description": {
+          "label": "Kollektionsbeschreibung anzeigen"
+        },
+        "show_collection_image": {
+          "label": "Kollektionsbild anzeigen"
+        },
+        "enable_filtering": {
+          "label": "Produktfilter aktivieren"
+        },
+        "enable_sorting": {
+          "label": "Produktsortierung aktivieren"
+        },
+        "products_per_page": {
+          "label": "Produkte pro Seite"
+        },
+        "pagination_type": {
+          "label": "Seitennavigation-Typ",
+          "options": {
+            "paginate": "Seitennummern",
+            "load_more": "Mehr laden Button"
+          }
+        }
+      }
+    }
+  }
+}

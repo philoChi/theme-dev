@@ -33,7 +33,7 @@
       {%- elsif color_option and color_option.values.size > 1 -%}
         <a href="{{item.url}}" style="white-space: nowrap; display:flex; gap: 5px;">
           <span class="product-card__variant-cart-text">
-            {{ 'products.colors.label' | t }}
+            {{ 'product_card.colors.label' | t }}
           </span>
           {%- assign unique_color_values = color_option.values | uniq -%}
           <span class="product-color-swatches">
@@ -52,8 +52,8 @@
           <input type="number" min="1" class="quantity-input" value="{{ item.quantity }}" data-line="{{ data_line }}">
           <button class="quantity-button quantity-button--plus" data-line="{{ data_line }}">+</button>
         </div>
-        <button class="cart-drawer__item-remove" data-line="{{ data_line }}" aria-label="Artikel entfernen">
-          Entfernen
+        <button class="cart-drawer__item-remove" data-line="{{ data_line }}" aria-label="{{ 'product_card.remove_item' | t }}">
+          {{ 'product_card.remove_item' | t }}
         </button>
       </div>
     {% endif %}

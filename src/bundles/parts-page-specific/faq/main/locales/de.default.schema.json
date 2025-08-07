@@ -1,0 +1,21 @@
+{
+  "sections": {
+    "faq-main": {
+      "name": "FAQ-Seite",
+      "settings": {
+        "show_search": {
+          "label": "Suchfunktion anzeigen"
+        },
+        "search_placeholder": {
+          "label": "Suchfeld-Platzhaltertext"
+        },
+        "enable_categories": {
+          "label": "FAQ-Kategorien aktivieren"
+        },
+        "show_question_count": {
+          "label": "Anzahl der Fragen anzeigen"
+        }
+      }
+    }
+  }
+}

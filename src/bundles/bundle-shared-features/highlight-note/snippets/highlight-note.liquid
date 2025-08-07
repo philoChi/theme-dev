@@ -45,7 +45,7 @@
   <div class="{{ note_classes }}"
        {%- if custom_styles != blank %} style="{{ custom_styles }}"{% endif -%}
        role="note"
-       aria-label="{{ 'general.accessibility.note' | t | default: 'Note' }}">
+       aria-label="{{ 'highlight_note.accessibility.note' | t | default: 'Note' }}">
     
     {%- if first_text != blank -%}
       <div class="highlight-note__first-row">

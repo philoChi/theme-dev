@@ -57,7 +57,7 @@
 -%}
 
 
-<a href="{{ product.url }}" class="product-card__rating" aria-label="{{ 'products.product.rating' | t: rating: rating_value, count: rating_count }}" itemprop="url">         
+<a href="{{ product.url }}" class="product-card__rating" aria-label="{{ 'product_info.rating' | t: rating: rating_value, count: rating_count }}" itemprop="url">         
   <div class="rating-stars" role="img" aria-label="{{ rating_value }} out of 5 stars">
     {%- # Full stars -%}
     {%- for i in (1..full_stars) -%}
