@@ -1,0 +1,24 @@
+/**
+ * Collection Page Bundle - All Styles
+ * Direct imports to avoid path resolution issues
+ */
+
+/* Import main section styles */
+@import './styles/main.scss';
+
+/* Import component-specific styles */
+@import './styles/header.scss';
+@import './styles/product-grid.scss';
+@import './styles/filters.scss';
+@import './styles/sorting.scss';
+@import './styles/pagination.scss';
+
+/* Import utility styles */
+@import './styles/accessibility.scss';
+@import './styles/animations.scss';
+
+/* Bundle-specific optimizations */
+.collection-page-bundle {
+  /* Bundle is now fully self-contained */
+  contain: layout style;
+}

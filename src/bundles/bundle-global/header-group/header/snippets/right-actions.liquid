@@ -1,0 +1,31 @@
+{%- comment -%}
+  Snippet: header-right-actions.liquid
+  Purpose: Right side action buttons for header (search, cart, account)
+  Usage: {% render 'snippet-section-header-header-right-actions' %}
+  
+  Parameters: None (uses global cart object)
+{%- endcomment -%}
+
+<div class="site-header__right">
+  {%- comment -%} Desktop search button {%- endcomment -%}
+  {%- render 'snippet-section-header-icon-button',
+    type: 'search',
+    id: 'search-button-drawer-id-desktop',
+    context: 'desktop',
+    variant: 'glassmorphism'
+  -%}
+
+  {%- comment -%} Cart button {%- endcomment -%}
+  {%- render 'snippet-section-header-icon-button',
+    type: 'cart',
+    id: 'cart-drawer-trigger',
+    cart_count: cart.item_count,
+    variant: 'glassmorphism'
+  -%}
+
+  {%- comment -%} Account login/dashboard button {%- endcomment -%}
+  {%- render 'snippet-section-header-icon-button',
+    type: 'account',
+    variant: 'glassmorphism'
+  -%}
+</div>

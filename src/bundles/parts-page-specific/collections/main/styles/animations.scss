@@ -1,0 +1,196 @@
+/* ===================================
+   Collection Page Bundle - Animation Utilities
+   Purpose: Smooth animations and micro-interactions
+   =================================== */
+
+/* Base Animation Variables */
+.collection-page-bundle,
+.section-collection-page {
+  --animation-duration-fast: 0.15s;
+  --animation-duration-base: 0.3s;
+  --animation-duration-slow: 0.5s;
+  --animation-easing: cubic-bezier(0.4, 0, 0.2, 1);
+  --animation-easing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Grid Item Animations */
+.collection-grid__item {
+  transition: transform var(--animation-duration-base) var(--animation-easing),
+    opacity var(--animation-duration-base) var(--animation-easing);
+}
+
+.collection-grid__item:hover {
+  transform: translateY(-4px);
+  /* box-shadow removed - only product-card styling should show */
+}
+
+/* Utility Classes */
+.collection-page-bundle .fade-in {
+  animation: fadeIn var(--animation-duration-base) ease-in-out;
+}
+
+.collection-page-bundle .slide-up {
+  animation: slideUp var(--animation-duration-base) ease-out;
+}
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade in animation for new products */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Stagger animation for grid items */
+@keyframes staggerFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Filter and Sort Animations */
+.collection-page__filter-trigger {
+  transition: all var(--animation-duration-fast) var(--animation-easing);
+}
+
+.collection-page__filter-trigger:hover {
+  transform: translateY(-1px);
+}
+
+/* Load More Button Animation */
+.collection-page__load-more {
+  transition: all var(--animation-duration-base) var(--animation-easing);
+}
+
+.collection-page__load-more:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.collection-page__load-more:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Loading Spinner */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Slide animations for active filters */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutLeft {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+}
+
+.active-filter-tag {
+  animation: slideInRight var(--animation-duration-base) var(--animation-easing);
+}
+
+.active-filter-tag.removing {
+  animation: slideOutLeft var(--animation-duration-base) var(--animation-easing);
+}
+
+/* Skeleton loading animation */
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+.collection-grid__item--loading {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200px 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+
+  .collection-page-bundle,
+  .section-collection-page {
+    --animation-duration-fast: 0s;
+    --animation-duration-base: 0s;
+    --animation-duration-slow: 0s;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

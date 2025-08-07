@@ -1,0 +1,348 @@
+/* ---------------------------------------------------------------------
+ * Drawer — shared, side-agnostic off-canvas component
+ * Keeps all selectors hard-wired in JS:                     (see JS)
+ *   • #multi-drawer  • #cart-drawer
+ *   • .drawer__content  .drawer__header  .drawer__close
+ * Custom properties (`--drawer-*`) remain single source of truth.
+ * -------------------------------------------------------------------*/
+
+.drawer-common-vars {
+  --drawer-transiton-speed: .5s;
+}
+
+.drawer {
+  --drawer-width: 450px;
+  --header-icon-size: 30px;
+  --drawer-border-width: var(--main-border-width);
+  --drawer-border-color: var(--main-border-color);
+  --drawer-border-radius: var(--main-border-radius);
+
+  --drawer-border-width: var(--main-border-width);
+  --drawer-padding-side: 1.25rem;
+  --drawer-padding-vertical: 1rem;
+
+  position: fixed;
+  /* opacity: 0; */
+  top: 0;
+  height: 100%;
+  width: 100%;
+  max-width: var(--drawer-width);
+  background: #fff;
+  z-index: 2000;
+  display: none;
+  /* Changed from flex to none - drawers should be hidden by default */
+  flex-direction: column;
+  /* Only fade opacity here – sliding now handled by keyframes below */
+  /* transition: opacity var(--drawer-transiton-speed) ease-in-out; */
+}
+
+/* Anchoring & borders */
+.drawer--right {
+  /* default = right-hand cart */
+  right: 0;
+  transform: translateX(100%);
+  border-left: var(--drawer-border-width) solid var(--drawer-border-color);
+  border-top-left-radius: var(--drawer-border-radius);
+  border-bottom-left-radius: var(--drawer-border-radius);
+}
+
+.drawer--left {
+  /* multi-drawer (hamburger) */
+  left: 0;
+  transform: translateX(-100%);
+  border-right: var(--drawer-border-width) solid var(--drawer-border-color);
+  border-top-right-radius: var(--drawer-border-radius);
+  border-bottom-right-radius: var(--drawer-border-radius);
+}
+
+/* Drawer slide‑in keyframes */
+@keyframes drawer-slide-left-in {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes drawer-slide-right-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Drawer slide‑out keyframes */
+@keyframes drawer-slide-left-out {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes drawer-slide-right-out {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+/* Apply animation when .is-open is added */
+.drawer--left.is-open {
+  animation: drawer-slide-left-in var(--drawer-transiton-speed) ease-in-out forwards;
+}
+
+.drawer--right.is-open {
+  animation: drawer-slide-right-in var(--drawer-transiton-speed) ease-in-out forwards;
+}
+
+/* Apply reverse animation while closing ― JS will add `.is-closing` until it ends */
+.drawer--left.is-closing {
+  animation: drawer-slide-left-out var(--drawer-transiton-speed) ease-in-out forwards;
+}
+
+.drawer--right.is-closing {
+  animation: drawer-slide-right-out var(--drawer-transiton-speed) ease-in-out forwards;
+}
+
+.is-open {
+  display: flex !important;
+  visibility: visible !important;
+}
+
+/* Shared overlay — supports fade‑out via .is‑closing */
+.drawer__overlay {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, .5);
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1999;
+  transition: opacity var(--drawer-transiton-speed) ease;
+}
+
+/* overlay is visible during both open and close animations */
+.drawer__overlay.is-open,
+.drawer__overlay.is-closing {
+  visibility: visible;
+}
+
+.drawer__overlay.is-open {
+  opacity: 1;
+}
+
+/* fade‑in */
+.drawer__overlay.is-closing {
+  opacity: 0;
+}
+
+/* fade‑out */
+
+/* Header & content containers */
+.drawer__header {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: var(--drawer-border-width) solid var(--drawer-border-color);
+}
+
+.drawer__header__item {
+  margin-bottom: var(--drawer-padding-vertical);
+  margin-top: var(--drawer-padding-vertical);
+  margin-left: var(--drawer-padding-side);
+  display: none;
+}
+
+/* Search header specific styling - full width, no borders */
+.drawer__header__item#drawer__header__search {
+  margin: 0;
+  flex: 1;
+  padding: var(--drawer-padding-vertical) var(--drawer-padding-side);
+}
+
+.drawer__header__item#drawer__header__search .search-container {
+  width: 100%;
+  border: none !important;
+  border-radius: 0 !important;
+}
+
+.drawer__header__item#drawer__header__search .search-form {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.drawer__header__item#drawer__header__search .search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0.75rem 0.75rem 0.75rem 0.5rem;
+  font-size: 1rem;
+  order: 2;
+}
+
+.drawer__header__item#drawer__header__search .search-input:focus {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.drawer__header__item#drawer__header__search .search-button {
+  position: static;
+  background: transparent;
+  border: none;
+  padding: 0.75rem 0.5rem;
+  cursor: pointer;
+  order: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.drawer__header__item#drawer__header__search .search-button .icon-nav-search {
+  width: 1.2rem;
+  height: 1.2rem;
+  color: var(--main-font-color, #000);
+}
+
+.drawer__header__item#drawer__header__search .visually-hidden {
+  order: 0;
+}
+
+.drawer__header-icon {
+  margin-right: 20px;
+  padding-left: 10px;
+  height: var(--header-icon-size);
+  width: var(--header-icon-size);
+}
+
+.drawer__close {
+  margin-right: var(--drawer-padding-side);
+  background: none;
+  border: none;
+  font-size: 38px;
+  cursor: pointer
+}
+
+.drawer__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: var(--drawer-padding-vertical) var(--drawer-padding-side);
+}
+
+.drawer__content__item {
+  display: flex;
+  flex-direction: column;
+  display: none;
+}
+
+.drawer__footer {
+  display: flex;
+  flex-shrink: 1;
+  flex-direction: column;
+}
+
+.drawer__footer__item {
+  display: flex;
+  flex-shrink: 1;
+  flex-direction: column;
+  display: none;
+  border-top: var(--drawer-border-width) solid var(--main-border-color);
+  padding: var(--drawer-padding-vertical) var(--drawer-padding-side);
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+/* Search footer specific animations */
+.drawer__footer__item#drawer__footer__search {
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s ease;
+}
+
+.drawer__footer__item#drawer__footer__search.is-open {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.drawer__footer__item#drawer__footer__search.search-has-results {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.drawer__footer__item#drawer__footer__search.search-no-results {
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* General footer animation when opened */
+.drawer__footer__item.is-open {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* ---------- Global scroll‑lock helper ---------- */
+html {
+  scrollbar-gutter: stable;
+}
+
+/* keeps gutter reserved in modern browsers */
+
+/* Mobile (≤ 768 px) */
+@media (max-width: 768px) {
+
+  /* .drawer{ max-width: 100%; } */
+  .drawer--right,
+  .drawer--left {
+    border-radius: 0;
+  }
+
+  .drawer__close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .drawer--left.is-open,
+  .drawer--right.is-open,
+  .drawer--left.is-closing,
+  .drawer--right.is-closing {
+    animation: none;
+    transform: translateX(0);
+  }
+}

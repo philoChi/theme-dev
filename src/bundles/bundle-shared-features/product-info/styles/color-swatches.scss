@@ -1,0 +1,98 @@
+/* Color Variants
+    ========================================================================== */
+
+.product-color-swatches {
+  --swatch-spacing: 5px;
+
+  display: flex;
+  gap: var(--swatch-spacing);
+}
+
+.color-swatch--static,
+.color-swatch {
+  --swatch-size: 15px;
+  --swatch-size-static: 12px;
+  --swatch-color: rgb(121, 121, 121);
+  /* Default color */
+  --swatch-transition-time: .3s;
+
+  position: relative;
+  padding: 0;
+  border: solid 0.5px #00000038;
+  border-radius: 50%;
+  background-color: var(--swatch-color, transparent);
+  transition: transform var(--swatch-transition-time) ease;
+}
+
+.color-swatch--static {
+  width: var(--swatch-size-static);
+  height: var(--swatch-size-static);
+}
+
+.color-swatch {
+  cursor: pointer;
+  width: var(--swatch-size);
+  height: var(--swatch-size);
+}
+
+/* Active ring indicator */
+.color-swatch::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(100% + 6px);
+  height: calc(100% + 6px);
+  transform: translate(-50%, -50%);
+  border: 2px solid transparent;
+  border-radius: 50%;
+  pointer-events: none;
+  transition: border-color var(--swatch-transition-time) ease;
+}
+
+/* Hover effect */
+.color-swatch:hover {
+  transform: scale(1.1);
+}
+
+/* Selected state */
+.color-swatch.is-selected::after {
+  border-color: var(--color-primary);
+}
+
+/* Focus styles */
+.color-swatch:focus-visible {
+  outline: none;
+}
+
+.color-swatch:focus-visible::after {
+  border-color: var(--color-primary);
+}
+
+/* For light colored swatches */
+.color-swatch.is-light {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Active/pressed state */
+.color-swatch:active {
+  transform: scale(0.95);
+}
+
+/* Disabled state */
+.color-swatch:disabled,
+.color-swatch.is-disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.color-swatch:disabled::after,
+.color-swatch.is-disabled::after {
+  border-color: transparent;
+}
+
+.color-swatch:disabled:hover,
+.color-swatch.is-disabled:hover {
+  transform: none;
+}

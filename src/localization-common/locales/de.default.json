@@ -1,0 +1,433 @@
+{
+  "sections": {
+    "all": {
+      "javascript_required": "Diese Sektion benötigt JavaScript",
+      "padding": {
+        "section_padding_heading": "Abschnittsabstand",
+        "padding_top": "Abstand oben",
+        "padding_bottom": "Abstand unten"
+      },
+      "search_placeholder_text": "Wonach suchst Du ?",
+      "NoCollection": "Keine Kollektion ausgewählt",
+      "EMail_Form_Placeholder": "Hier deine E-Mail eingeben"
+    },
+    "Navigation": {
+      "open_menu": "Menu Öffnen",
+      "open_search": "Suche Öffnen",
+      "logo_alt": "Logo",
+      "open_login": "Login",
+      "open_cart": "Navigation öffnen",
+      "mega_menu": {
+        "empty_heading": "Missing"
+      }
+    },
+    "collections": {
+      "filtering": {
+        "clear_all": "Filter zurücksetzen",
+        "clear_all_aria": "Alle Filter zurücksetzen"
+      }
+    },
+    "Announcement_Bar": {
+      "Heading_1": "Kostenloser Versand ab %{free_shipping_value}"
+    },
+    "product_showcase": {
+      "view_all_in": "Alle ansehen in {{ collection }}",
+      "no_products": "Keine Produkte gefunden",
+      "no_products_in_collection": "Diese Kollektion enthält keine Produkte",
+      "error_no_collections": "Bitte wählen Sie mindestens eine Kollektion aus",
+      "previous": "Vorherige Produkte",
+      "next": "Nächste Produkte",
+      "slide": "Slide {{ number }}",
+      "carousel": "Produkt-Karussell",
+      "browse_all": "Alle Produkte durchstöbern",
+      "view": "Anzeigen",
+      "loading": "Laden...",
+      "quick_add": "In den Warenkorb",
+      "quick_add_to_cart": "{{ title }} in den Warenkorb legen",
+      "tab_navigation": "test",
+      "sold_out": "Ausverkauft",
+      "view_all_aria": "Alle anzeigen",
+      "blocks": {
+        "custom_category": {
+          "name": "Eigene Kategorie",
+          "tab_label": "Tab-Label",
+          "collection_label": "Kollektion",
+          "cta_text_label": "Text für 'Alle anzeigen'-Button"
+        }
+      }
+    },
+    "faq": {
+      "no_faqs": "Es sind noch keine FAQs vorhanden.",
+      "search_placeholder": "Suche in den FAQs...",
+      "no_results": "Keine Ergebnisse gefunden für \"{{ query }}\"",
+      "results_count": {
+        "one": "1 Ergebnis gefunden",
+        "other": "{{ count }} Ergebnisse gefunden"
+      }
+    }
+  },
+  "general": {
+    "view_all": "Alles anzeigen",
+    "loading": "Wird geladen...",
+    "accessibility": {
+      "unit_price_separator": "per"
+    },
+    "meta": {
+      "tags": "Tagged \"{{ tags }}\"",
+      "page": "Page {{ page }}"
+    },
+    "search": {
+      "search": "Suche",
+      "placeholder": "Wonach suchst Du?",
+      "submit": "Suche starten",
+      "results": "Suchergebnisse",
+      "heading": "Suchergebnisse",
+      "no_results": "Keine Produkte für \"{{ query }}\" gefunden. Versuche andere Suchbegriffe oder durchstöbere unsere Kollektionen.",
+      "no_results_html": "Deine Suche nach \"{{ terms }}\" ergab keine Treffer.",
+      "results_count": "{{ count }} {{ count | pluralize: 'Ergebnis', 'Ergebnisse' }} für \"{{ query }}\"",
+      "results_with_count": {
+        "one": "1 Ergebnis für \"{{ terms }}\"",
+        "other": "{{ count }} Ergebnisse für \"{{ terms }}\""
+      },
+      "show_all_results": "Alle {{ count }} Ergebnisse anzeigen",
+      "recent_searches": "Letzte Suchanfragen:",
+      "clear_recent": "Suchverlauf löschen",
+      "loading": "Suche läuft...",
+      "searching": "Suche läuft...",
+      "please_wait": "Bitte einen Moment warten",
+      "error": "Die Suche ist vorübergehend nicht verfügbar. Bitte versuche es erneut.",
+      "network_error": "Die Suche ist vorübergehend nicht verfügbar. Bitte überprüfe deine Internetverbindung und versuche es erneut.",
+      "timeout_error": "Die Suche dauert länger als erwartet. Bitte versuche es erneut.",
+      "rate_limit_error": "Zu viele Suchanfragen. Bitte warte einen Moment bevor du es erneut versuchst.",
+      "validation_error": "Bitte gib einen gültigen Suchbegriff ein.",
+      "query_too_long": "Der Suchbegriff ist zu lang. Bitte kürze deine Suchanfrage.",
+      "input_sanitized": "Deine Suchanfrage wurde aus Sicherheitsgründen bereinigt. Suche nach der sicheren Version.",
+      "cached_results": "Zeige gespeicherte Ergebnisse. Einige Produkte sind möglicherweise nicht aktuell.",
+      "try_again": "Erneut versuchen",
+      "suggestions_title": "Probiere diese Vorschläge:",
+      "suggestion_spelling": "Überprüfe deine Schreibweise",
+      "suggestion_keywords": "Versuche andere Suchbegriffe",
+      "suggestion_shorter": "Verwende kürzere Suchbegriffe",
+      "suggestion_general": "Verwende allgemeinere Suchbegriffe",
+      "browse_all": "Alle Produkte durchstöbern",
+      "suggestions": {
+        "heading": "Suchvorschläge",
+        "popular": "Beliebte Suchanfragen",
+        "categories": "Kategorien durchsuchen",
+        "brands": "Nach Marke suchen"
+      },
+      "hint": "Suchhinweis",
+      "type_more_characters": "Bitte gib mindestens 2 Zeichen ein",
+      "hint_description": "Tippe weiter, um nach Produkten zu suchen",
+      "welcome": "Produktsuche",
+      "welcome_title": "Was suchst du?",
+      "welcome_subtitle": "Finde deine Lieblingsprodukte schnell und einfach",
+      "popular_categories": "Beliebte Kategorien",
+      "search_tip": "Verwende Begriffe wie \"T-Shirt\", \"Hoodie\" oder \"Schwarz\""
+    },
+    "products": "Produkte",
+    "navigation": {
+      "faq": "FAQ",
+      "previous": "Letztes Element",
+      "next": "Nächstes Element"
+    },
+    "pagination": {
+      "label": "Seitennavigation",
+      "previous": "Vorherige",
+      "next": "Nächste",
+      "page": "Seite {{ current }} von {{ total }}"
+    },
+    "noscript": {
+      "title": "JavaScript erforderlich",
+      "message": "Für die beste Erfahrung aktivieren Sie bitte JavaScript in Ihrem Browser. Alle Produkte sind weiterhin unten sichtbar."
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Warenkorb",
+      "empty": "Der Warenkorb ist zur Zeit leer",
+      "subtotal": "Zwischensumme",
+      "shipping": "Versandkosten",
+      "total": "Insgesamt",
+      "free_shipping_total_label": "Kostenlos",
+      "tax_notice": "Die Gesamtsumme beinhaltet bereits %{tax}% MwSt.",
+      "free_shipping_threshold_notice": "Kostenloser Versand ab einem Bestellwert von %{threshold}.",
+      "free_shipping_notice": "Der Versand ist Kostenlos.",
+      "cta_checkout_text": "Sicher Bezahlen"
+    }
+  },
+  "multi-drawer": {
+    "filter": {
+      "header_text": "Filter",
+      "button_text": "Filter Anwenden"
+    },
+    "search": {
+      "result_button": "Alles Anzeigen"
+    },
+    "hamburger": {
+      "header_text": "Kategorien"
+    }
+  },
+  "collections": {
+    "general": {
+      "items_with_count": {
+        "one": "{{ count }} Artikel",
+        "other": "{{ count }} Artikel"
+      },
+      "no_products_title": "Keine Produkte gefunden",
+      "no_products_text": "Leider wurden keine Produkte in dieser Kollektion gefunden.",
+      "continue_shopping": "Weiter einkaufen",
+      "product_grid": "Produktraster"
+    },
+    "filtering": {
+      "filters": "Filter",
+      "show_filters": "Filter anzeigen",
+      "clear_all": "Filter zurücksetzen",
+      "clear_all_aria": "Alle Filter zurücksetzen",
+      "clear_all_filters": "Alle Filter zurücksetzen",
+      "apply_filters": "Filter anwenden",
+      "product_type": "Produkttyp",
+      "size": "Größe",
+      "color": "Farbe",
+      "gender": "Zielgruppe",
+      "gender_men": "Herren",
+      "gender_women": "Damen",
+      "gender_kids": "Kinder",
+      "tags": "Tags",
+      "availability": "Verfügbarkeit",
+      "in_stock": "Auf Lager",
+      "out_of_stock": "Ausverkauft",
+      "no_results_title": "Keine Ergebnisse gefunden",
+      "no_results_text": "Versuchen Sie, einige Filter zu entfernen oder andere Suchbegriffe zu verwenden.",
+      "active_filters": "Aktive Filter",
+      "clear_filters_help": "Alle Filter entfernen um alle Produkte anzuzeigen",
+      "filter_help": "Filter auswählen",
+      "filter_products": "Produkte filtern",
+      "price_from": "Von",
+      "price_to": "Bis",
+      "clear_all_help": "Alle Filter zurücksetzen",
+      "filter_actions": "Filter-Aktionen",
+      "no_filters_configured": "Keine Filter konfiguriert. Bitte konfigurieren Sie Filter in der Search & Filter App."
+    },
+    "sorting": {
+      "sort_by_label": "Sortieren nach",
+      "featured": "Empfohlen",
+      "date_descending": "Neueste zuerst",
+      "price_ascending": "Preis aufsteigend",
+      "price_descending": "Preis absteigend",
+      "best_selling": "Bestseller",
+      "sort_help_text": "Wählen Sie eine Sortieroption"
+    },
+    "pagination": {
+      "load_more": "Mehr laden",
+      "showing": "Zeige {{ current }} von {{ total }} Produkten",
+      "pagination_label": "Produktnavigation",
+      "all_loaded": "Alle Produkte geladen"
+    },
+    "errors": {
+      "network_error": "Netzwerkfehler. Bitte prüfe deine Verbindung und versuche es erneut.",
+      "timeout_error": "Zeitüberschreitung. Bitte versuche es erneut.",
+      "load_error": "Fehler beim Laden. Bitte aktualisiere die Seite.",
+      "filter_error": "Filter sind vorübergehend nicht verfügbar. Du kannst trotzdem Produkte durchstöbern."
+    }
+  },
+  "products": {
+    "general": {
+      "products": "Produkte"
+    },
+    "product": {
+      "decrease_quantity": "Decrease quantity",
+      "increase_quantity": "Increase quantity",
+      "quantity": "Quantity",
+      "add_to_cart": "In den Einkaufswagen legen",
+      "properties": "Produkteigenschaften",
+      "description": "Produktbeschreibung",
+      "features_heading": "Was macht %{determiner} %{product_type} besonders ?",
+      "feature_simple": "Simple care",
+      "feature_organic": "100 % organic",
+      "feature_cozy": "Extra cozy",
+      "size_options": "Größenoptionen",
+      "select_size": "Größe auswählen: %{size}",
+      "quick_add_to_cart": "Zum Warenkorb Hinzufügen",
+      "rating": "Bewertung",
+      "from_lowest_price_html": "",
+      "price_reduced_by": "%",
+      "from_price_html": "Preis",
+      "star_rating_accessibility_label": "Bewertungen",
+      "color_options": "Farbauswahl",
+      "select_color": "Farbe: ",
+      "on_sale": "SALE",
+      "new_tag": "NEU",
+      "stock_available": "Verfügbar",
+      "stock_delivery_time": "(in etwa %{count} Werktagen bei Dir)",
+      "shipping_note": "Versand mit DHL",
+      "feature_organic_msg": "Made from 100 % certified organic cotton—good for you and the planet",
+      "feature_cozy_msg": "Ultra-soft brushed fleece for an extra-snuggly feel",
+      "feature_simple_msg": "Clean, minimal embroidery that won't distract from your style",
+      "selection_color": "Farbe:",
+      "selection_size": "Größe:",
+      "selection_quantity": "Anzahl:",
+      "tax_note": "Inkl. MwSt. zzgl. Versand",
+      "skip_to_gallery": "Zu den Galerie-Anweisungen springen",
+      "gallery_thumbnails": "Produktbild-Vorschaubilder",
+      "view_image": "Bild anzeigen",
+      "of": "von",
+      "main_image": "Hauptproduktbild",
+      "loading": "Laden",
+      "loading_image": "Bild wird geladen...",
+      "thumbnail": "Vorschaubild",
+      "image": "Bild",
+      "no_image": "Kein Produktbild verfügbar",
+      "notifications": {
+        "added_to_cart": "Zum Warenkorb hinzugefügt!",
+        "select_size_error": "Bitte wählen Sie eine {{ size_label }} aus, bevor Sie zum Warenkorb hinzufügen",
+        "add_to_cart_error": "Fehler: Artikel konnte nicht zum Warenkorb hinzugefügt werden."
+      }
+    },
+    "sizes": {
+      "label": "Größe"
+    },
+    "colors": {
+      "label": "Farbe",
+      "NavyBlue": "Marineblau",
+      "Khaki": "Khaki",
+      "Orange": "Orange",
+      "LightPink": "Rosa",
+      "LightGray": "Hellgrau",
+      "DarkGray": "Dunkelgrau",
+      "Black": "Schwarz",
+      "White": "Weiß"
+    },
+    "faq": {
+      "no_faqs": "Es sind noch keine FAQs vorhanden.",
+      "search_placeholder": "Suche in den FAQs...",
+      "no_results": "Keine Ergebnisse gefunden für \"{{ query }}\"",
+      "results_count": {
+        "one": "1 Ergebnis gefunden",
+        "other": "{{ count }} Ergebnisse gefunden"
+      }
+    }
+  },
+  "accessibility": {
+    "skip_to_content": "Zum Inhalt springen",
+    "loading": "Wird geladen",
+    "search": {
+      "landmark": "Suche",
+      "results_landmark": "Suchergebnisse",
+      "input_label": "Produkte suchen",
+      "clear_button": "Suche löschen",
+      "close_search": "Suche schließen",
+      "item_position": "Element {{ current }} von {{ total }}",
+      "announcement": {
+        "searching": "Suche nach {{ query }}",
+        "results_found": "{{ count }} Produkte für {{ query }} gefunden",
+        "no_results": "Keine Produkte für {{ query }} gefunden",
+        "error": "Suchfehler aufgetreten",
+        "cleared": "Suche gelöscht"
+      }
+    }
+  },
+  "search": {
+    "show_all_results": "Alle Suchergebnisse anzeigen"
+  },
+  "templates": {
+    "search": {
+      "sort_by_relevance": "Relevanz",
+      "results_with_count": "{{ count }} Ergebnisse für \"{{ terms }}\"",
+      "no_results": "Keine Ergebnisse für \"{{ terms }}\"",
+      "no_results_title": "Keine Ergebnisse gefunden",
+      "no_results_text": "Versuche es mit anderen Suchbegriffen für \"{{ terms }}\"",
+      "title": "Suche",
+      "results": "Suchergebnisse"
+    }
+  },
+  "product_configurations": {
+    "_source": "Auto-generated from src/config/product-info.de.json",
+    "_note": "Do not edit this section directly. Modify src/config/product-info.de.json instead.",
+    "default": {
+      "product_type": "Produkt",
+      "determiner": "dieses",
+      "feature_chips": "organic"
+    },
+    "premium-organic-hoodie": {
+      "subtitle": "Premium Organic Hoodie",
+      "product_type": "Hoodie",
+      "determiner": "diesen",
+      "description": "- Material: 81% Polyester (recycled), 14% Bio-Baumwolle, 5% Elastan\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Transferdruck\n- Ursprungsland: Made in Portugal\n- Passform: Unisex\nNachhaltigkeit trifft Performance. Nachhaltigeres Material. Umweltschonendes Stoffgemisch aus recyceltem Polyester, Bio-Baumwolle und Elastan.",
+      "properties": "- Material: 81% Polyester (recycled), 14% Bio-Baumwolle, 5% Elastan\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Transferdruck\n- Ursprungsland: Made in Portugal\n- Passform: Unisex\nNachhaltigkeit trifft Performance. Nachhaltigeres Material. Umweltschonendes Stoffgemisch aus recyceltem Polyester, Bio-Baumwolle und Elastan.",
+      "feature_chips": "organic,cozy,simple"
+    },
+    "premium-organic-sweatshirt": {
+      "subtitle": "Premium Organic Sweatshirt",
+      "product_type": "Sweatshirt",
+      "determiner": "dieses",
+      "description": "- Material: 85% Bio-Baumwolle, 15% Polyester (recycled)\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Transferdruck\n- Ursprungsland: Made in Portugal\n- Passform: Unisex\nPremium Bio-Qualität. Weiches Sweatshirt-Material mit nachhaltiger Faser-Mischung.",
+      "properties": "- Material: 85% Bio-Baumwolle, 15% Polyester (recycled)\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Transferdruck\n- Ursprungsland: Made in Portugal\n- Passform: Unisex\nPremium Bio-Qualität. Weiches Sweatshirt-Material mit nachhaltiger Faser-Mischung.",
+      "feature_chips": "organic,cozy,simple"
+    },
+    "premium-organic-t-shirt": {
+      "subtitle": "Premium Organic T-Shirt",
+      "product_type": "T-Shirt",
+      "determiner": "dieses",
+      "description": "- Material: 100% Bio-Baumwolle (Premium-Qualität)\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Transferdruck\n- Ursprungsland: Made in Portugal\n- Passform: Unisex\nHöchste Qualität trifft Nachhaltigkeit. Premium Bio-Baumwolle für ultimativen Komfort.",
+      "properties": "- Material: 100% Bio-Baumwolle (Premium-Qualität)\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Transferdruck\n- Ursprungsland: Made in Portugal\n- Passform: Unisex\nHöchste Qualität trifft Nachhaltigkeit. Premium Bio-Baumwolle für ultimativen Komfort.",
+      "feature_chips": "organic,simple,cozy"
+    },
+    "organic-hoodie": {
+      "subtitle": "Organic Hoodie",
+      "product_type": "Hoodie",
+      "determiner": "diesen",
+      "description": "- Material: 70% Polyester (recycled), 30% Bio-Baumwolle\n- Verpackt in nachhaltiger Verpackung\n- Druckverfahren: Digitaldruck\n- Ursprungsland: Made in EU\n- Passform: Unisex\nUmweltbewusster Style. Nachhaltiges Material aus recycelten und biologischen Fasern.",
+      "properties": "- Material: 70% Polyester (recycled), 30% Bio-Baumwolle\n- Verpackt in nachhaltiger Verpackung\n- Druckverfahren: Digitaldruck\n- Ursprungsland: Made in EU\n- Passform: Unisex\nUmweltbewusster Style. Nachhaltiges Material aus recycelten und biologischen Fasern.",
+      "feature_chips": "organic,simple"
+    },
+    "organic-sweatshirt": {
+      "subtitle": "Organic Sweatshirt",
+      "product_type": "Sweatshirt",
+      "determiner": "dieses",
+      "description": "- Material: 85% Bio-Baumwolle, 15% Polyester (recycled)\n- Verpackt in nachhaltiger Verpackung\n- Druckverfahren: Digitaldruck\n- Ursprungsland: Made in EU\n- Passform: Unisex\nKomfort und Stil vereint. Weiches Sweatshirt-Material mit nachhaltiger Faser-Mischung.",
+      "properties": "- Material: 85% Bio-Baumwolle, 15% Polyester (recycled)\n- Verpackt in nachhaltiger Verpackung\n- Druckverfahren: Digitaldruck\n- Ursprungsland: Made in EU\n- Passform: Unisex\nKomfort und Stil vereint. Weiches Sweatshirt-Material mit nachhaltiger Faser-Mischung.",
+      "feature_chips": "organic,cozy"
+    },
+    "organic-t-shirt": {
+      "subtitle": "Organic T-Shirt",
+      "product_type": "T-Shirt",
+      "determiner": "dieses",
+      "description": "- Material: 100% Bio-Baumwolle\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Siebdruck\n- Ursprungsland: Made in Portugal\n- Passform: Unisex\nPure Bio-Qualität. Weiches, atmungsaktives Material aus 100% zertifizierter Bio-Baumwolle.",
+      "properties": "- Material: 100% Bio-Baumwolle\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Siebdruck\n- Ursprungsland: Made in Portugal\n- Passform: Unisex\nPure Bio-Qualität. Weiches, atmungsaktives Material aus 100% zertifizierter Bio-Baumwolle.",
+      "feature_chips": "organic,simple"
+    },
+    "premium-men-hoodie": {
+      "subtitle": "Herren Premium Organic Hoodie",
+      "product_type": "Hoodie",
+      "determiner": "diesen",
+      "description": "- Material: 81% Polyester (recycled), 14% Bio-Baumwolle, 5% Elastan\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Transferdruck\n- Ursprungsland: Made in Portugal\n- Passform: Herren-Schnitt\nNachhaltigkeit trifft Performance. Nachhaltigeres Material. Umweltschonendes Stoffgemisch aus recyceltem Polyester, Bio-Baumwolle und Elastan.",
+      "properties": "- Material: 81% Polyester (recycled), 14% Bio-Baumwolle, 5% Elastan\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Transferdruck\n- Ursprungsland: Made in Portugal\n- Passform: Herren-Schnitt\nNachhaltigkeit trifft Performance. Nachhaltigeres Material. Umweltschonendes Stoffgemisch aus recyceltem Polyester, Bio-Baumwolle und Elastan.",
+      "feature_chips": "organic,cozy,simple"
+    },
+    "premium-sweatshirt": {
+      "subtitle": "Premium Sweatshirt",
+      "product_type": "Sweatshirt",
+      "determiner": "dieses",
+      "description": "- Material: 85% Bio-Baumwolle, 15% Polyester (recycled)\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Transferdruck\n- Ursprungsland: Made in Portugal\n- Passform: Unisex\nKomfort und Stil vereint. Weiches Sweatshirt-Material mit nachhaltiger Faser-Mischung.",
+      "properties": "- Material: 85% Bio-Baumwolle, 15% Polyester (recycled)\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Transferdruck\n- Ursprungsland: Made in Portugal\n- Passform: Unisex\nKomfort und Stil vereint. Weiches Sweatshirt-Material mit nachhaltiger Faser-Mischung.",
+      "feature_chips": "organic,cozy,simple"
+    },
+    "eco-hoodie": {
+      "subtitle": "Eco Hoodie",
+      "product_type": "Hoodie",
+      "determiner": "diesen",
+      "description": "- Material: 70% Polyester (recycled), 30% Bio-Baumwolle\n- Verpackt in recycelter Verpackung\n- Druckverfahren: Digitaldruck\n- Ursprungsland: Made in EU\n- Passform: Unisex\nUmweltbewusster Style. Nachhaltiges Material aus recycelten und biologischen Fasern.",
+      "properties": "- Material: 70% Polyester (recycled), 30% Bio-Baumwolle\n- Verpackt in recycelter Verpackung\n- Druckverfahren: Digitaldruck\n- Ursprungsland: Made in EU\n- Passform: Unisex\nUmweltbewusster Style. Nachhaltiges Material aus recycelten und biologischen Fasern.",
+      "feature_chips": "organic,simple"
+    },
+    "classic-hoodie": {
+      "subtitle": "Classic Hoodie",
+      "product_type": "Hoodie",
+      "determiner": "diesen",
+      "description": "- Material: 80% Baumwolle, 20% Polyester\n- Standard-Verpackung\n- Druckverfahren: Siebdruck\n- Ursprungsland: Made in EU\n- Passform: Unisex\nDer Klassiker. Bewährte Qualität für jeden Tag.",
+      "properties": "- Material: 80% Baumwolle, 20% Polyester\n- Standard-Verpackung\n- Druckverfahren: Siebdruck\n- Ursprungsland: Made in EU\n- Passform: Unisex\nDer Klassiker. Bewährte Qualität für jeden Tag.",
+      "feature_chips": "simple"
+    }
+  }
+}

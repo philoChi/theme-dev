@@ -1,0 +1,66 @@
+{%- comment -%}
+  Feature: Dropdown
+  A reusable dropdown/accordion component with accessibility support
+  
+  @param trigger_text {String} - Text for the dropdown trigger button (required)
+  @param panel_content {String} - HTML content for the dropdown panel (required)
+  @param panel_id {String} - Unique ID for the panel (required)
+  @param trigger_class {String} - Additional classes for the trigger (optional)
+  @param panel_class {String} - Additional classes for the panel (optional)
+  @param expanded {Boolean} - Initial expanded state (default: false)
+  @param wrapper_class {String} - Additional classes for the wrapper (optional)
+{%- endcomment -%}
+
+{%- liquid
+  # Set defaults
+  assign expanded = expanded | default: false
+  if panel_id != blank
+    assign unique_id = panel_id
+  else
+    assign unique_id = 'dropdown-' | append: section.id
+  endif
+  
+  # Build classes
+  assign wrapper_classes = 'dropdown-feature'
+  if wrapper_class != blank
+    assign wrapper_classes = wrapper_classes | append: ' ' | append: wrapper_class
+  endif
+  
+  assign trigger_classes = 'dropdown-feature__trigger'
+  if trigger_class != blank
+    assign trigger_classes = trigger_classes | append: ' ' | append: trigger_class
+  endif
+  if expanded
+    assign trigger_classes = trigger_classes | append: ' is-open'
+  endif
+  
+  assign panel_classes = 'dropdown-feature__panel'
+  if panel_class != blank
+    assign panel_classes = panel_classes | append: ' ' | append: panel_class
+  endif
+-%}
+
+<dropdown-feature class="{{ wrapper_classes }}" dropdown-content>
+  <button type="button"
+          class="{{ trigger_classes }}"
+          data-dropdown-trigger
+          aria-controls="{{ unique_id }}"
+          aria-expanded="{{ expanded }}"
+  >
+    <span class="dropdown-feature__trigger-text">
+      {{- trigger_text -}}
+    </span>
+    <span class="dropdown-feature__icon" aria-hidden="true">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 4L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+  </button>
+  
+  <div id="{{ unique_id }}"
+       class="{{ panel_classes }}{% if expanded %} dropdown-feature__panel--expanded{% endif %}"
+       {% unless expanded %}hidden{% endunless %}
+  >
+    {{- panel_content -}}
+  </div>
+</dropdown-feature>

@@ -1,0 +1,137 @@
+<!-- Overlay (one single instance) -->
+{%  render 'snippet-section-drawer-base-overlay' %}
+
+<!-- Main container for the Drawer element -->
+<div id="multi-drawer" class="multi-drawer drawer drawer-common-vars drawer--left">
+ 
+  <!-- Drawer Headers -->
+  <div class="drawer__header">
+    {% render 'snippet-section-drawer-multi-header-search', id:"drawer__header__search" %}
+    {% render 'snippet-section-drawer-multi-header-label-icon', id:"drawer__header__category" %}
+    {% render 'snippet-section-drawer-base-header-text', id:"drawer__header__filter", icon: 'icon-filter', text_key: 'multi-drawer.filter.header_text' %}
+    <button class="drawer__close" aria-label="Schließen" mpe="drawer-close">
+      <span class="icon icon-close"></span>
+    </button>
+  </div>
+
+  <!-- Drawer Contents -->
+  <div class="drawer__content">
+    {% render 'snippet-section-drawer-multi-content-search', id:"drawer__content__search", section: section %}
+    {% render 'snippet-section-drawer-multi-content-navigation', id:"drawer__content__category" %}
+    {% render 'snippet-section-drawer-multi-content-filter', id:"drawer__content__filter" %}
+  </div>
+  
+  <!-- Drawer Footer -->
+  <div class="drawer__footer">
+    {% render 'snippet-section-drawer-multi-footer-search', id:"drawer__footer__search", section: section %}
+    {% render 'snippet-section-drawer-multi-footer-navigation', id:"drawer__footer__category" %}
+    {% render 'snippet-section-drawer-multi-footer-filter', id:"drawer__footer__filter" %}
+  </div>
+</div>
+
+<!-- Include JavaScript files -->
+<!-- TODO: Convert to ES6 and include in webpack drawer bundle -->
+<!-- <script src="{{ 'section-drawer-multi-init.js' | asset_url }}" defer></script> -->
+<!-- <script src="{{ 'section-drawer-multi-tabs.js' | asset_url }}" defer></script> -->
+{%- comment -%} Feature dropdowns are now initialized automatically by the feature snippet {%- endcomment -%}
+
+{% schema %}
+{
+  "name": "Multi Drawer",
+  "settings": [
+    { "type": "header", "content": "Allgemeine Einstellungen" },
+    { "type": "collection", "id": "search_collection",  "label": "📚 Wähle eine Kollektion für die Suche (Standard: alle Produkte)" },
+    { "type": "header", "content": "Navigation drawer" },
+    { "type": "link_list", "id": "bottom_menu", "label":  "Footer links (optional)", "info":   "Select a Shopify navigation menu to show at the bottom of the drawer."},
+    { "type": "text", "id": "bottom_cta_label", "label": "Bottom CTA label", "default": "Alles anzeigen" },
+    { "type": "url",  "id": "bottom_cta_link",  "label": "Bottom CTA link"  }
+  ],
+  "blocks": [
+    {
+      "type": "hero_banner",
+      "name": "Navigation Banner",
+      "settings": [
+        { "type": "image_picker", "id": "image",        "label": "Image" },
+        { "type": "url",          "id": "link",         "label": "Link (optional)" },
+        { "type": "text",         "id": "overlay_text", "label": "Overlay text" },
+        { "type": "text",         "id": "ratio",        "label": "Aspect ratio (e.g., 16/9)", "default": "16/9" }
+      ]
+    },
+    {
+      "type": "tab",
+      "name": "Navigation Tab",
+      "settings": [
+        { "type": "text",     "id": "label",    "label": "Label", "default": "Alle Produkte" },
+        { "type": "text",     "id": "handle",   "label": "Handle (unique)", "default": "all" },
+        { "type": "url",      "id": "link",     "label": "Optional link" },
+        { "type": "checkbox", "id": "is_active","label": "Active by default", "default": false }
+      ]
+    },
+    {
+      "type": "category_group",
+      "name": "Navigation Group",
+      "settings": [
+        { "type": "text",     "id": "group_label",        "label": "Heading", "info": "E.g. Kleidung", "default": "Kleidung" },
+        { "type": "text",     "id": "parent_tab_handle",  "label": "Parent Handle", "info": "E.g., if this group is for 'mens', and there's a Tab with handle 'mens'. (must match 'Handle' of a Tab block)" },
+        { "type": "checkbox", "id": "default_open",       "label": "Open by default", "default": false },
+        { "type": "header", "content": "Item 1" },
+        { "type": "text",     "id": "item1_label", "label": "1 - Label" },
+        { "type": "url",      "id": "item1_url",   "label": "1 - URL" },
+        { "type": "text",     "id": "item1_icon",  "label": "1 - Icon (optional)" },
+        { "type": "header", "content": "Item 2 (optional)" },
+        { "type": "text",     "id": "item2_label", "label": "2 - Label" },
+        { "type": "url",      "id": "item2_url",   "label": "2 - URL" },
+        { "type": "text",     "id": "item2_icon",  "label": "2 - Icon (optional)" },
+        { "type": "header", "content": "Item 3 (optional)" },
+        { "type": "text",     "id": "item3_label", "label": "3 - Label" },
+        { "type": "url",      "id": "item3_url",   "label": "3 - URL" },
+        { "type": "text",     "id": "item3_icon",  "label": "3 - Icon (optional)" },
+        { "type": "header", "content": "Item 4 (optional)" },
+        { "type": "text",     "id": "item4_label", "label": "4 - Label" },
+        { "type": "url",      "id": "item4_url",   "label": "4 - URL" },
+        { "type": "text",     "id": "item4_icon",  "label": "4 - Icon (optional)" },
+        { "type": "header", "content": "Item 5 (optional)" },
+        { "type": "text",     "id": "item5_label", "label": "5 - Label" },
+        { "type": "url",      "id": "item5_url",   "label": "5 - URL" },
+        { "type": "text",     "id": "item5_icon",  "label": "5 - Icon (optional)" },
+        { "type": "header", "content": "Item 6 (optional)" },
+        { "type": "text",     "id": "item6_label", "label": "6 - Label" },
+        { "type": "url",      "id": "item6_url",   "label": "6 - URL" },
+        { "type": "text",     "id": "item6_icon",  "label": "6 - Icon (optional)" },
+        { "type": "header", "content": "Item 7 (optional)" },
+        { "type": "text",     "id": "item7_label", "label": "7 - Label" },
+        { "type": "url",      "id": "item7_url",   "label": "7 - URL" },
+        { "type": "text",     "id": "item7_icon",  "label": "7 - Icon (optional)" },
+        { "type": "header", "content": "Item 8 (optional)" },
+        { "type": "text",     "id": "item8_label", "label": "8 - Label" },
+        { "type": "url",      "id": "item8_url",   "label": "8 - URL" },
+        { "type": "text",     "id": "item8_icon",  "label": "8 - Icon (optional)" },
+        { "type": "header", "content": "Item 9 (optional)" },
+        { "type": "text",     "id": "item9_label", "label": "9 - Label" },
+        { "type": "url",      "id": "item9_url",   "label": "9 - URL" },
+        { "type": "text",     "id": "item9_icon",  "label": "9 - Icon (optional)" },
+        { "type": "header", "content": "Item 10 (optional)" },
+        { "type": "text",     "id": "item10_label", "label": "10 - Label" },
+        { "type": "url",      "id": "item10_url",   "label": "10 - URL" },
+        { "type": "text",     "id": "item10_icon",  "label": "10 - Icon (optional)" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Multi Drawer",
+      "category": "Layout",
+      "blocks": [
+        { "type": "hero_banner" },
+        { "type": "tab", "settings": { "label": "Alle Produkte", "handle": "all", "is_active": true }},
+        { "type": "tab", "settings": { "label": "Herren", "handle": "herren" }},
+        { "type": "tab", "settings": { "label": "Damen", "handle": "damen" }},
+        { "type": "tab", "settings": { "label": "Kids", "handle": "kids" }},
+        { "type": "tab", "settings": { "label": "SALE", "handle": "sale", "link": "/collections/sale" }},
+        { "type": "category_group", "settings": { "group_label": "Kleidung", "parent_tab_handle": "all" }},
+        { "type": "category_group", "settings": { "group_label": "Accessoires", "parent_tab_handle": "all", "item1_label": "T-Shirts", "item1_url": "/collections/t-shirts", "item1_icon": "icon-t-shirt", "item2_label": "Hosen", "item2_url": "/collections/hosen", "item2_icon": "icon-pants"}}
+      ]
+    }
+  ]
+}
+{% endschema %}

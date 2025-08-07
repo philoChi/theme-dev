@@ -1,0 +1,172 @@
+{%- comment -%}
+  Search Empty State Component
+
+  Displays helpful messages when no search results are found
+  - Helpful suggestions and guidance
+  - Clear messaging with actionable advice
+  - Accessible with proper ARIA labels
+{%- endcomment -%}
+
+<div
+  class="search-empty-content"
+  role="status"
+  aria-label="{{ 'general.search.no_results' | t | default: 'No results found' }}"
+>
+  <div class="search-empty-icon">
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+      <path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2"/>
+      <circle cx="11" cy="11" r="3" stroke="currentColor" stroke-width="1" fill="none" opacity="0.3"/>
+    </svg>
+  </div>
+
+  <div class="search-empty-text">
+    <h3 class="search-empty-title" id="search-empty-title">
+      {{ 'general.search.no_results' | t: query: '' | default: 'No products found' }}
+    </h3>
+    <p class="search-empty-message" id="search-empty-query-message">
+      {{ 'general.search.no_results_html' | t: terms: '' | default: 'Your search did not yield any results.' }}
+    </p>
+
+    <div class="search-empty-suggestions">
+      <p class="search-empty-suggestions-title">
+        {{ 'general.search.suggestions_title' | t | default: 'Try these suggestions:' }}
+      </p>
+      <ul class="search-empty-suggestions-list">
+        <li>{{ 'general.search.suggestion_spelling' | t | default: 'Check your spelling' }}</li>
+        <li>{{ 'general.search.suggestion_keywords' | t | default: 'Try different keywords' }}</li>
+        <li>{{ 'general.search.suggestion_shorter' | t | default: 'Use shorter search terms' }}</li>
+        <li>{{ 'general.search.suggestion_general' | t | default: 'Try more general search terms' }}</li>
+      </ul>
+    </div>
+
+    <div class="search-empty-actions">
+      {% assign browse_all_text = 'general.search.browse_all' | t | default: 'Browse all products' %}
+      {% assign brwose_all_aria_label = 'general.search.browse_all' | t | default: 'Browse all products' %}
+      {% render 'snippet-feature-button',
+        button_text: browse_all_text,
+        button_link: routes.all_products_collection_url,
+        size: 'medium',
+        custom_aria_label: brwose_all_aria_label
+      %}
+    </div>
+  </div>
+</div>
+
+<style>
+  .search-empty-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+    min-height: 300px;
+  }
+
+  .search-empty-icon {
+    margin-bottom: 1.5rem;
+    color: var(--color-text-light, #666);
+    opacity: 0.6;
+  }
+
+  .search-empty-icon svg {
+    width: 48px;
+    height: 48px;
+  }
+
+  .search-empty-text {
+    max-width: 400px;
+  }
+
+  .search-empty-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--color-text, #333);
+  }
+
+  .search-empty-message {
+    font-size: 1rem;
+    color: var(--color-text, #333);
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+
+  .search-empty-suggestions {
+    margin-bottom: 2rem;
+  }
+
+  .search-empty-suggestions-title {
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+    color: var(--color-text, #333);
+  }
+
+  .search-empty-suggestions-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .search-empty-suggestions-list li {
+    font-size: 0.875rem;
+    color: var(--color-text-light, #666);
+    margin-bottom: 0.5rem;
+    position: relative;
+    padding-left: 1rem;
+  }
+
+  .search-empty-suggestions-list li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--color-primary, #000);
+  }
+
+  .search-empty-actions {
+    margin-top: 1rem;
+  }
+
+
+  /* Smooth transition animations */
+  .search-empty-state {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .search-empty-state[style*='display: none'] {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  .search-empty-state:not([style*='display: none']) {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Mobile responsive adjustments */
+  @media (max-width: 768px) {
+    .search-empty-content {
+      padding: 1.5rem 1rem;
+      min-height: 250px;
+    }
+
+    .search-empty-title {
+      font-size: 1.125rem;
+    }
+
+    .search-empty-message {
+      font-size: 0.875rem;
+    }
+
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    .search-empty-state {
+      transition: opacity 0.15s ease;
+    }
+
+  }
+</style>

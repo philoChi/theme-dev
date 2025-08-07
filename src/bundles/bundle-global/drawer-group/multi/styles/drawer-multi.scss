@@ -1,0 +1,648 @@
+/* -----------------------------------------------------------------
+   Multi Drawer-specific rules that are NOT provided by drawer-base
+   -----------------------------------------------------------------*/
+
+/* Existing .drawer__heading - no changes unless specified for new design context */
+.drawer__heading {
+  border-bottom: var(--drawer-border-width) solid var(--main-border-color);
+  padding: .625rem 0;
+  /* Consider adjusting if Picture B implies different header padding */
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 0 0 1rem 0;
+}
+
+/* Existing .category-list__flex__wrapper - likely not used by new tab/accordion structure directly */
+.category-list__flex__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+}
+
+/* Drawer search component - renamed to avoid conflict with body.search class */
+.drawer-search {
+  z-index: 3;
+  position: relative;
+  /* top: 6rem; /* This might need adjustment if hero/tabs change layout significantly */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  max-width: 35rem;
+  width: 100%;
+}
+
+/* ============================================================
+   Category Drawer 2.0 – pills, hero banner, accordion icons
+   MODIFICATIONS AND ADDITIONS START HERE
+   ============================================================ */
+
+/* --- Component-Specific Custom Properties --- */
+.drawer__content__item[id="drawer__content__category"] {
+  /* Scoping to the navigation content area */
+  --drawer-nav-padding-x: var(--drawer-padding-side, 1.25rem);
+  --drawer-nav-padding-y: var(--drawer-padding-vertical, 1rem);
+  --drawer-nav-spacing-0: 0.25rem;
+  /* Example spacing unit */
+  --drawer-nav-spacing-1: 0.5rem;
+  /* Example spacing unit */
+  --drawer-nav-spacing-2: 0.75rem;
+  /* Example spacing unit */
+  --drawer-nav-spacing-3: 1rem;
+  /* Example spacing unit */
+  --drawer-nav-spacing-4: 1.5rem;
+  /* Example spacing unit */
+
+  /* Hero Banner */
+  --drawer-nav-hero-margin-bottom: var(--drawer-nav-spacing-4, 1.5rem);
+  --drawer-nav-hero-overlay-font-family: var(--main-font, "Lato Bold", sans-serif);
+  --drawer-nav-hero-overlay-font-size: 1.75rem;
+  /* Adjust as per Picture B */
+  --drawer-nav-hero-overlay-text-color: #ffffff;
+  --drawer-nav-hero-overlay-text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --drawer-nav-hero-border-radius: var(--main-border-radius, 8px);
+
+  /* Tabs (Pills) */
+  --drawer-nav-tabs-margin-y: var(--drawer-nav-spacing-1, 1rem);
+  --drawer-nav-tabs-list-justify-content: center;
+  --drawer-nav-tabs-gap: 0;
+  --drawer-nav-tab-padding-y: 0.65rem;
+  --drawer-nav-tab-padding-x: var(--drawer-nav-spacing-3, 1rem);
+  --drawer-nav-tab-border-radius: 9999px;
+  --drawer-nav-tab-border-width: var(--main-border-width, 1px);
+  --drawer-nav-tab-border-color: var(--main-border-color, #e0e0e0);
+  --drawer-nav-tab-font-family: var(--main-font, "Lato Bold", sans-serif);
+  --drawer-nav-tab-font-size: 0.875rem;
+  /* 14px, adjust as needed */
+  --drawer-nav-tab-font-weight: var(--main-font-weight, 500);
+  /* Or 700 for bolder */
+  --drawer-nav-tab-text-transform: uppercase;
+  --drawer-nav-tab-color-default: var(--main-font-color, #212121);
+  --drawer-nav-tab-background-default: var(--main-background, #ffffff);
+  --drawer-nav-tab-color-active: #ffffff;
+  /* White text for active based on B.PNG */
+  --drawer-nav-tab-background-active: var(--main-foreground);
+  /* Terracotta/pinkish from B.PNG, replace with var if available (e.g., var(--main-foreground) if it matches) */
+  --drawer-nav-tab-border-color-active: var(--drawer-nav-tab-background-active);
+
+  /* Accordions */
+  --drawer-nav-accordion-container-margin-top: var(--drawer-nav-spacing-3, 1.5rem);
+  --drawer-nav-accordion-spacing-y: var(--drawer-nav-spacing-2, 0.75rem);
+  /* Spacing between accordions */
+  --drawer-nav-accordion-background: #f6f6f6;
+  /* Light grey from Picture B */
+  --drawer-nav-accordion-border-radius: var(--main-border-radius, 8px);
+  --drawer-nav-accordion-toggle-padding-y: var(--drawer-nav-spacing-3, 1rem);
+  --drawer-nav-accordion-toggle-padding-x: var(--drawer-nav-spacing-3, 1rem);
+  --drawer-nav-accordion-toggle-font-family: var(--main-font, "Lato Bold", sans-serif);
+  --drawer-nav-accordion-toggle-font-size: 1rem;
+  /* 16px */
+  --drawer-nav-accordion-toggle-color: var(--main-font-color, #212121);
+  --drawer-nav-accordion-chevron-size: 0.875rem;
+  /* 14px */
+  --drawer-nav-accordion-chevron-color: var(--drawer-nav-accordion-toggle-color);
+  --drawer-nav-accordion-panel-padding-top: var(--drawer-nav-spacing-1, 0.5rem);
+  --drawer-nav-accordion-panel-padding-bottom: var(--drawer-nav-spacing-3, 1rem);
+  --drawer-nav-accordion-panel-padding-x: var(--drawer-nav-accordion-toggle-padding-x);
+
+  /* Accordion Items */
+  --drawer-nav-accordion-item-padding-y: var(--drawer-nav-spacing-0);
+  --drawer-nav-accordion-item-icon-wrapper-size: 40px;
+  --drawer-nav-accordion-item-icon-color: var(--main-font-color, #212121);
+  /* Color for SVGs if they use currentColor */
+  --drawer-nav-accordion-item-label-font-family: var(--main-font, "Lato", sans-serif);
+  /* Using main-font, adjust if sub-font is preferred */
+  --drawer-nav-accordion-item-label-font-size: 0.9375rem;
+  /* 15px */
+  --drawer-nav-accordion-item-label-color: var(--main-font-color, #212121);
+  --drawer-nav-accordion-item-gap: var(--drawer-nav-spacing-2, 0.75rem);
+
+  gap: 3rem;
+}
+
+/* Fix gap styling for custom drawer-tabs-controller element wrapper */
+.drawer__content__item[id="drawer__content__category"] drawer-tabs-controller {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+
+/* 1. Hero banner - MODIFIED */
+.drawer-hero {
+  position: relative;
+  margin: 0;
+  /* Remove default margins if any from original */
+  max-width: 100%;
+  /* Ensure it fills the container width */
+  border-radius: var(--drawer-nav-hero-border-radius);
+  /* Apply border radius to the main hero container */
+  overflow: hidden;
+  /* Ensure child elements adhere to border radius */
+}
+
+.drawer-hero__media {
+  position: relative;
+  width: 100%;
+  padding-top: calc(100% / (var(--drawer-hero-ratio, 16/9)));
+  /* Keep aspect ratio logic */
+  overflow: hidden;
+  /* Removed border-radius from here, applied to .drawer-hero */
+}
+
+.drawer-hero__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.drawer-hero__overlay {
+  position: absolute;
+  left: var(--drawer-nav-spacing-3, 1rem);
+  bottom: var(--drawer-nav-spacing-3, 1rem);
+  color: var(--drawer-nav-hero-overlay-text-color);
+  font-family: var(--drawer-nav-hero-overlay-font-family);
+  font-size: var(--drawer-nav-hero-overlay-font-size);
+  font-weight: bold;
+  text-shadow: var(--drawer-nav-hero-overlay-text-shadow);
+  pointer-events: none;
+  line-height: 1.2;
+}
+
+/* 2. Pill / tab bar - MODIFIED */
+.drawer-tabs {
+  overflow-x: auto;
+  /* Keep horizontal scroll if many tabs */
+  -webkit-overflow-scrolling: touch;
+  /* Smooth scrolling on iOS */
+  scrollbar-width: none;
+  /* Hide scrollbar for Firefox */
+}
+
+.drawer-tabs::-webkit-scrollbar {
+  /* Hide scrollbar for Chrome, Safari, Edge */
+  display: none;
+}
+
+.drawer-tabs__list {
+  display: flex;
+  justify-content: var(--drawer-nav-tabs-list-justify-content);
+  gap: var(--drawer-nav-tabs-gap);
+  white-space: nowrap;
+}
+
+.drawer-tabs__item {
+  /* NEW: if <li> elements are used around buttons */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.drawer-tabs__button {
+  padding: var(--drawer-nav-tab-padding-y) var(--drawer-nav-tab-padding-x);
+  border: var(--drawer-nav-tab-border-width) solid var(--drawer-nav-tab-border-color);
+  border-left: none;
+  /* merge borders */
+  border-radius: 0;
+  background-color: var(--drawer-nav-tab-background-default);
+  color: var(--drawer-nav-tab-color-default);
+  font-family: var(--drawer-nav-tab-font-family);
+  font-size: var(--drawer-nav-tab-font-size);
+  font-weight: var(--drawer-nav-tab-font-weight);
+  line-height: 1.4;
+  /* Keep or adjust */
+  text-transform: var(--drawer-nav-tab-text-transform);
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, opacity 0.2s;
+  white-space: nowrap;
+  /* Ensure text doesn't wrap in pill */
+}
+
+.drawer-tabs__button.is-active {
+  background-color: var(--drawer-nav-tab-background-active);
+  color: var(--drawer-nav-tab-color-active);
+  border-color: var(--drawer-nav-tab-border-color-active);
+}
+
+.drawer-tabs__button.is-first {
+  border-left: var(--drawer-nav-tab-border-width) solid var(--drawer-nav-tab-border-color);
+  border-top-left-radius: var(--drawer-nav-tab-border-radius);
+  border-bottom-left-radius: var(--drawer-nav-tab-border-radius);
+}
+
+.drawer-tabs__button.is-last {
+  border-top-right-radius: var(--drawer-nav-tab-border-radius);
+  border-bottom-right-radius: var(--drawer-nav-tab-border-radius);
+}
+
+.drawer-tabs__button:not(.is-active):hover {
+  background-color: var(--drawer-nav-tab-background-active);
+  color: var(--drawer-nav-tab-color-active);
+  opacity: 0.5;
+}
+
+/* 3. Accordion groups - MODIFIED/NEW */
+/* Container for all accordions, if needed, or style individual ones */
+.drawer__content__item[id="drawer__content__category"]>div:has(.drawer-category) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--drawer-nav-accordion-spacing-y);
+}
+
+.drawer-category {
+  /* Individual accordion block */
+  background-color: var(--drawer-nav-accordion-background);
+  border-radius: var(--drawer-nav-accordion-border-radius);
+}
+
+/* --- Category‑group error message --- */
+.drawer-category__error {
+  color: #d93025;
+  /* Google‑red; swap for theme var if you prefer */
+  font-size: 0.875rem;
+  margin: 0.5rem 0;
+}
+
+.drawer-dropdowns {
+  gap: var(--drawer-nav-accordion-spacing-y, 0.75rem);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Tab content visibility based on data-tab-content */
+.drawer-category[data-tab-content] {
+  display: none;
+}
+
+.drawer-category[data-tab-content].is-visible {
+  display: block;
+}
+
+/* Ensure dropdown triggers are still clickable when visible */
+.drawer-category[data-tab-content].is-visible .dropdown-feature__trigger {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+/* Add proper spacing between dropdown elements */
+.drawer-category {
+  margin-bottom: var(--drawer-nav-accordion-spacing-y, 0.75rem);
+}
+
+.drawer-category:last-child {
+  margin-bottom: 0;
+}
+
+/* Override feature-dropdown styles for proper spacing */
+.drawer-category .dropdown-feature {
+  margin-bottom: 0;
+}
+
+/* Iconised list within accordion panel - MODIFIED */
+.drawer-category__list {
+  /* This is the ul element */
+  padding: 0;
+  margin: 0;
+}
+
+.drawer-category__item {
+  /* This is the li element */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Remove bottom margin from last item to avoid double padding with panel */
+.drawer-category__item:last-child {
+  margin-bottom: 0;
+}
+
+.drawer-category__link {
+  /* This is the a element */
+  display: flex;
+  align-items: center;
+  gap: var(--drawer-nav-accordion-item-gap);
+  text-decoration: none;
+  color: var(--drawer-nav-accordion-item-label-color);
+  /* Label color applies to link */
+  font-family: var(--drawer-nav-accordion-item-label-font-family);
+  font-size: var(--drawer-nav-accordion-item-label-font-size);
+  padding: var(--drawer-nav-accordion-item-padding-y) 0;
+  /* Vertical padding for clickable area */
+  transition: color 0.15s;
+}
+
+.drawer-category__link:hover {
+  /* color: var(--color-primary-accent); /* Example hover color from your theme */
+  opacity: 0.7;
+  /* Simple hover effect */
+}
+
+/* NEW: Styling for the icon wrapper and SVG */
+.drawer-category__icon-wrapper {
+  width: var(--drawer-nav-accordion-item-icon-wrapper-size);
+  height: var(--drawer-nav-accordion-item-icon-wrapper-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  /* Prevent shrinking */
+}
+
+.drawer-category__icon-wrapper svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  fill: var(--drawer-nav-accordion-item-icon-color);
+  /* Controls color of SVG if paths use currentColor or are not hardcoded */
+  /* stroke: var(--drawer-nav-accordion-item-icon-color); /* If using stroke based SVGs */
+}
+
+.drawer-category__label {
+  /* Styles mostly inherited from .drawer-category__link */
+  flex-grow: 1;
+  /* Allow label to take remaining space */
+}
+
+/* ─── Drawer footer links ──────────────────────────────── */
+.drawer-footer-links__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.drawer-footer-links__item+.drawer-footer-links__item {
+  margin-top: 1.25rem;
+  /* generous vertical spacing */
+}
+
+.drawer-footer-links__link {
+  display: inline-block;
+  text-decoration: none;
+  font-size: 1rem;
+  color: var(--main-font-color, #4a4a4a);
+}
+
+.drawer-footer-links__link:hover {
+  opacity: 0.7;
+  /* Simple hover effect */
+}
+
+/* Mobile ≤ 768 px: allow dropdown list to scroll & fill height */
+/* This existing rule might be for a different structure. Review if needed. */
+@media (max-width: 768px) {
+  .category-list__flex__wrapper {
+    overflow-y: auto;
+  }
+
+  /* This class might not be relevant for the new design */
+
+  /* Adjustments for new design on mobile if needed */
+  .drawer__content__item[id="drawer__content__category"] {
+    --drawer-nav-tab-padding-y: 0.5rem;
+    --drawer-nav-tab-padding-x: var(--drawer-nav-spacing-2, 0.75rem);
+    --drawer-nav-tab-font-size: 0.8125rem;
+    /* 13px */
+
+    --drawer-nav-accordion-toggle-padding-y: var(--drawer-nav-spacing-2, 0.75rem);
+    --drawer-nav-accordion-toggle-padding-x: var(--drawer-nav-spacing-2, 0.75rem);
+    --drawer-nav-accordion-toggle-font-size: 0.9375rem;
+    /* 15px */
+  }
+
+  .drawer-tabs__list {
+    /* On mobile, tabs might not be centered if they overflow to allow scrolling */
+    /* justify-content: flex-start; */
+    /* If you prefer left-align on scroll */
+    padding: 0 var(--drawer-nav-spacing-2);
+    /* Adjust padding for mobile if needed */
+  }
+}
+
+/* ============================================================
+   Filter Drawer Styles
+   ============================================================ */
+
+.drawer__content__filter {
+  --filter-drawer-padding: var(--drawer-padding-side, 1.25rem);
+  --filter-drawer-spacing: 1rem;
+  --filter-drawer-section-spacing: 0.8rem;
+  /* Spacing between filter sections */
+  --filter-drawer-border-color: var(--main-border-color, #e0e0e0);
+
+  padding: var(--filter-drawer-padding);
+}
+
+.filter-drawer__container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.filter-drawer__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.filter-drawer__clear-all {
+  background: none;
+  border: none;
+  color: var(--color-primary, #007bff);
+  font-size: 0.875rem;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+}
+
+.filter-drawer__clear-all:hover {
+  text-decoration: none;
+}
+
+.filter-drawer__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--filter-drawer-section-spacing);
+}
+
+.filter-drawer__footer {
+  margin-top: auto;
+  padding-top: var(--filter-drawer-spacing);
+  border-top: 1px solid var(--filter-drawer-border-color);
+}
+
+.filter-drawer__apply {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filter-drawer__count {
+  font-weight: 500;
+}
+
+/* Filter Groups */
+.filter-group {
+  margin-bottom: calc(var(--filter-drawer-spacing) / 2);
+}
+
+.filter-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.filter-options--pills,
+.filter-options--swatches {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+/* Filter Options */
+.filter-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.filter-option input[type="checkbox"] {
+  margin: 0;
+}
+
+.filter-option__label {
+  flex: 1;
+}
+
+.filter-option__count {
+  color: var(--color-text-secondary, #666);
+  font-size: 0.8125rem;
+}
+
+/* Size Pills */
+.size-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.375rem 0.75rem;
+  border: 1px solid var(--filter-drawer-border-color);
+  border-radius: 1.25rem;
+  background: white;
+  font-size: 0.875rem;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.size-pill:hover {
+  border-color: var(--main-foreground, #007bff);
+}
+
+.size-pill__count {
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+/* Color Swatches */
+.color-swatch {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem;
+  border: 1px solid transparent;
+  border-radius: 0.375rem;
+  background: white;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.75rem;
+}
+
+.color-swatch:hover {
+  border-color: var(--filter-drawer-border-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.color-swatch__color {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.color-swatch__label {
+  max-width: 3rem;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.color-swatch__count {
+  opacity: 0.6;
+}
+
+/* Active Filters Display */
+.active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: var(--filter-drawer-spacing);
+}
+
+.active-filters__label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-secondary, #666);
+}
+
+.active-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  background: var(--color-primary, #007bff);
+  color: white;
+  border: none;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.active-filter:hover {
+  background: var(--color-primary-dark, #0056b3);
+}
+
+.active-filter__remove {
+  margin-left: 0.25rem;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.active-filters__clear {
+  background: none;
+  border: 1px solid var(--filter-drawer-border-color);
+  color: var(--color-text, inherit);
+  padding: 0.25rem 0.5rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.active-filters__clear:hover {
+  background: var(--color-background-secondary, #f8f9fa);
+}

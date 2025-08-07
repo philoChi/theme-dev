@@ -1,0 +1,85 @@
+/* Icon Components – Buttons, Cart Counter, Account Indicator with ARIA States */
+
+/* Base icon button styling with transitions */
+.icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  text-decoration: none;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  
+  svg {
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
+  }
+  
+  &:focus {
+    outline: none;
+  }
+  
+  /* ARIA expanded state for dropdown buttons */
+  &[aria-expanded="true"] {
+    background-color: var(--button-active-bg, rgba(0, 0, 0, 0.1));
+    
+    .icon {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+/* Account status indicator */
+.account-status-indicator {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 8px;
+  height: 8px;
+  background: #4caf50;
+  border-radius: 50%;
+  border: 2px solid var(--site-navigation-header-color);
+}
+
+/* Cart icon button with counter - consolidated implementation */
+.icon-button--cart {
+  position: relative;
+}
+
+/* Cart button with items - ARIA-driven state */
+.icon-button[aria-describedby="cart-status"] {
+  position: relative;
+  
+  .cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    min-width: 18px;
+    height: 18px;
+    background: var(--background-accent, #ff0000);
+    color: var(--color-text-accent, white);;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+  }
+}
+
+/* Legacy cart counter pill - fallback for non-ARIA implementation */
+.icon-button--cart .cart-count {
+  position: absolute;
+  top: -6px;
+  right: -11px;
+  background: var(--main-foreground);
+  color: var(--main-background);
+  border-radius: 9999px;
+  padding: 0 6px;
+  font-size: 0.65rem;
+  line-height: 16px;
+  min-width: 16px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  border: 2px solid var(--site-navigation-header-color);
+}

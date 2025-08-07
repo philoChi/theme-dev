@@ -1,0 +1,37 @@
+{% comment %} Renders individual slides with CTAs {% endcomment %}
+{%- liquid
+  assign cta_count = 0
+  for i in (1..3)
+    assign cta_text_key = 'cta_text_' | append: i
+    if block.settings[cta_text_key] != blank
+      assign cta_count = cta_count | plus: 1
+    endif
+  endfor
+-%}
+
+<div class="slide-content">
+  {%- if block.settings.title != blank -%}
+    <h2 class="slide-title">{{ block.settings.title }}</h2>
+  {%- endif -%}
+
+  {%- if block.settings.description != blank -%}
+    <p class="slide-description">{{ block.settings.description }}</p>
+  {%- endif -%}
+
+  {%- if cta_count > 0 -%}
+    <div class="slide-ctas" style="--cta-count: {{ cta_count }}">
+      {%- for i in (1..3) -%}
+        {%- liquid
+          assign cta_text_key = 'cta_text_' | append: i
+          assign cta_link_key = 'cta_link_' | append: i
+          assign cta_color_key = 'cta_color_' | append: i
+          assign cta_text = block.settings[cta_text_key]
+          assign cta_link = block.settings[cta_link_key]
+        -%}
+        {%- if cta_text != blank -%}
+          {% render 'snippet-feature-button', button_text: cta_text, button_link: cta_link, size: 'medium' %}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</div>

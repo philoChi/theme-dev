@@ -1,0 +1,101 @@
+{%- comment -%}
+  snippet-drawer-content-navigation.liquid
+  ----------------------------------------
+{%- endcomment -%}
+
+<div class="drawer__content__item" id={{id}}>
+
+  {%- comment -%}★ Category Drawer 2.0 starts here ★{%- endcomment -%}
+  {%- comment -%}Collect the blocks we need ----------------------------------{%- endcomment -%}
+  {% assign hero_block  = section.blocks | where: "type", "hero_banner" | first %}
+  {% assign tab_blocks  = section.blocks | where: "type", "tab" %}
+
+  {%- comment -%}1 • Hero banner (optional) ----------------------------------{%- endcomment -%}
+  {% if hero_block %}
+  {% render 'snippet-section-drawer-multi-category-hero-banner',
+    image:        hero_block.settings.image,
+    link:         hero_block.settings.link,
+    overlay_text: hero_block.settings.overlay_text,
+    ratio:        hero_block.settings.ratio %}
+  {% endif %}
+
+  {%- comment -%}2 • Tab / pill bar -----------------------------------------{%- endcomment -%}
+  {% render 'snippet-section-drawer-multi-category-tabs', tabs: tab_blocks %}
+
+  {%- comment -%}3 • Accordion category via generic dropdown --------------{%- endcomment -%}
+  <div class="drawer-dropdowns">
+    {%- for group_block in section.blocks -%}
+      {%- if group_block.type == 'category_group' -%}
+
+        {%- assign heading      = group_block.settings.group_label -%}
+        {%- assign tab_handle   = group_block.settings.parent_tab_handle -%}
+        {%- assign is_open      = group_block.settings.default_open -%}
+
+        {%- capture dropdown_content -%}
+          <ul class="drawer-category__list list-unstyled">
+            {%- for i in (1..10) -%}
+              {%- capture lbl_key  -%}item{{ i }}_label{%- endcapture -%}
+              {%- capture url_key  -%}item{{ i }}_url{%-   endcapture -%}
+              {%- capture icon_key -%}item{{ i }}_icon{%-  endcapture -%}
+
+              {%- assign lbl  = group_block.settings[lbl_key]  -%}
+              {%- assign url  = group_block.settings[url_key]  -%}
+              {%- assign icon = group_block.settings[icon_key] -%}
+
+              {%- if lbl != blank and url != blank -%}
+                <li class="drawer-category__item">
+                  <a href="{{ url }}" class="drawer-category__link">
+                    {%- unless icon == blank -%}
+                      <span class="drawer-category__icon-wrapper">
+                        {%- case icon | strip -%}
+                          {%- when 'icon-t-shirt'    -%}<span class="icon icon-t-shirt"></span>
+                          {%- when 'icon-hoodie'     -%}<span class="icon icon-hoodie"></span>
+                          {%- when 'icon-socks'      -%}<span class="icon icon-socks"></span>
+                          {%- when 'icon-sweatshirt' -%}<span class="icon icon-sweatshirt"></span>
+                          {%- else -%}{% comment %} no icon {% endcomment %}
+                        {%- endcase -%}
+                      </span>
+                    {%- endunless -%}
+                    <span class="drawer-category__label">{{ lbl }}</span>
+                  </a>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- endcapture -%}
+
+        <div class="drawer-category" data-tab-content="{{ tab_handle | default: 'all' }}">
+          {%- liquid
+            assign dropdown_id = 'dropdown-nav-' | append: section.id | append: '-' | append: forloop.index
+            if heading != blank
+              assign dropdown_id = dropdown_id | append: '-' | append: heading | handleize
+            endif
+          -%}
+          {% render 'snippet-feature-dropdown',
+            trigger_text: heading,
+            panel_content: dropdown_content,
+            panel_id: dropdown_id,
+            expanded: is_open,
+            wrapper_class: 'drawer-dropdown' %}
+        </div>
+
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  {%- comment -%}4 • Optional bottom menu ------------------------------------{%- endcomment -%}
+  {% if section.settings.bottom_menu != blank %}
+    {% assign footer_menu = section.settings.bottom_menu %}
+    {%- if footer_menu and footer_menu.links.size > 0 -%}
+      <nav class="drawer-footer-links" aria-label="{{ footer_menu.title | default: 'Drawer footer links' }}">
+        <ul class="drawer-footer-links__list">
+          {%- for link in footer_menu.links -%}
+            <li class="drawer-footer-links__item">
+              <a href="{{ link.url }}" class="drawer-footer-links__link">{{ link.title }}</a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+    {%- endif -%}
+  {% endif %}
+</div>

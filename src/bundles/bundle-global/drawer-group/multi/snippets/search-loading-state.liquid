@@ -1,0 +1,129 @@
+{%- comment -%}
+  Search Loading State Component
+  
+  Displays loading indicators during search operations
+  - Accessible with ARIA labels
+  - Loading spinner with descriptive text
+  - Smooth transitions with CSS
+{%- endcomment -%}
+
+<div class="search-loading-content" role="status" aria-label="{{ 'general.loading' | t | default: 'Loading' }}">
+  <div class="search-loading-spinner">
+    <div class="spinner">
+      <div class="spinner-dot spinner-dot-1"></div>
+      <div class="spinner-dot spinner-dot-2"></div>
+      <div class="spinner-dot spinner-dot-3"></div>
+    </div>
+  </div>
+  
+  <div class="search-loading-text">
+    <p class="search-loading-message">{{ 'general.search.searching' | t | default: 'Searching...' }}</p>
+    <p class="search-loading-hint">{{ 'general.search.please_wait' | t | default: 'Please wait a moment' }}</p>
+  </div>
+</div>
+
+<style>
+  .search-loading-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+    min-height: 200px;
+  }
+
+  .search-loading-spinner {
+    margin-bottom: 1rem;
+  }
+
+  .spinner {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .spinner-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--color-primary, #000);
+    animation: spinner-bounce 1.4s ease-in-out infinite both;
+  }
+
+  .spinner-dot-1 {
+    animation-delay: -0.32s;
+  }
+
+  .spinner-dot-2 {
+    animation-delay: -0.16s;
+  }
+
+  .spinner-dot-3 {
+    animation-delay: 0s;
+  }
+
+  @keyframes spinner-bounce {
+    0%, 80%, 100% {
+      transform: scale(0.8);
+      opacity: 0.5;
+    }
+    40% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  .search-loading-text {
+    color: var(--color-text, #333);
+  }
+
+  .search-loading-message {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--color-primary, #000);
+  }
+
+  .search-loading-hint {
+    font-size: 0.875rem;
+    color: var(--color-text-light, #666);
+    margin: 0;
+  }
+
+  /* Smooth transition animations */
+  .search-loading-state {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .search-loading-state[style*="display: none"] {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  .search-loading-state:not([style*="display: none"]) {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    .spinner-dot {
+      animation: spinner-fade 1.4s ease-in-out infinite both;
+    }
+
+    @keyframes spinner-fade {
+      0%, 80%, 100% {
+        opacity: 0.5;
+      }
+      40% {
+        opacity: 1;
+      }
+    }
+
+    .search-loading-state {
+      transition: opacity 0.15s ease;
+    }
+  }
+</style>

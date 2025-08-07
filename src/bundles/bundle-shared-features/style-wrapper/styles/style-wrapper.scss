@@ -1,0 +1,586 @@
+/**
+ * Feature: Style Wrapper
+ * Purpose: Generic styling wrapper for UI elements with configurable variants
+ * Usage: Apply .style-wrapper and .style-wrapper--{variant} to parent container
+ * Elements: Works with any content - completely generic
+ */
+
+/* Base style wrapper - non-intrusive container */
+.style-wrapper {
+  display: contents;
+}
+
+/* =============================================================================
+   GLASSMORPHISM VARIANT
+   ============================================================================= */
+
+.style-wrapper--glassmorphism {
+  --glassmorphism-micro-animation-distance: -2px;
+  --glassmorphism-transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+  --glassmorphism-padding: 8px 16px;
+  --glassmorphism-border-radius: 8px;
+  --glassmorphism-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  --glassmorphism-shadow-hover: 0 4px 8px rgba(0, 0, 0, 0.12);
+  --glassmorphism-will-change-props: transform, box-shadow;
+  --glassmorphism-transition-time: .3s;
+  --glassmorphism-icon-size: var(--icon-size, 40px);
+  --glassmorphism-mobile-icon-size: var(--mobile-icon-size, 36px);
+
+  --glassmorphism-items-font-color-inactive: var(--custom-text-color, var(--main-font-color));
+  --glassmorphism-items-background-color-inactive: var(--custom-background-color, var(--main-background));
+  --glassmorphism-items-background-color-active: var(--main-font-color);
+  --glassmorphism-items-font-color-active: var(--main-background);
+  --glassmorphism-items-font-color-hover: var(--custom-hover-text-color, var(--main-background));
+  /* Ensure text stays visible on hover */
+  --glassmorphism-background-color-hover: var(--custom-hover-color, var(--main-font-color));
+}
+
+/* Base glassmorphism styling for all child elements */
+.style-wrapper--glassmorphism>* {
+  background: var(--glassmorphism-items-background-color-inactive);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: var(--glassmorphism-border-radius);
+  box-shadow: var(--glassmorphism-shadow);
+  will-change: var(--glassmorphism-will-change-props);
+  transition: background-color var(--glassmorphism-transition-time) var(--glassmorphism-transition-timing),
+    transform var(--glassmorphism-transition-time) var(--glassmorphism-transition-timing),
+    box-shadow var(--glassmorphism-transition-time) var(--glassmorphism-transition-timing),
+    border-color var(--glassmorphism-transition-time) var(--glassmorphism-transition-timing),
+    color var(--glassmorphism-transition-time) var(--glassmorphism-transition-timing);
+  padding: var(--glassmorphism-padding);
+  color: var(--glassmorphism-items-font-color-inactive);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+/* Generic hover states for all glassmorphism elements */
+.style-wrapper--glassmorphism>*:not(:disabled):not([aria-disabled="true"]):hover {
+  transform: translateY(var(--glassmorphism-micro-animation-distance)) scale(1.02);
+  box-shadow: var(--glassmorphism-shadow-hover);
+  background: var(--glassmorphism-background-color-hover) !important;
+  background-image: none !important;
+  color: var(--glassmorphism-items-font-color-hover) !important;
+}
+
+/* Ensure nested text elements inherit hover color properly */
+.style-wrapper--glassmorphism>*:not(:disabled):not([aria-disabled="true"]):hover * {
+  color: var(--glassmorphism-items-font-color-hover) !important;
+}
+
+/* Generic focus states */
+.style-wrapper--glassmorphism>*:focus-visible {
+  transform: translateY(var(--glassmorphism-micro-animation-distance));
+  box-shadow: var(--glassmorphism-shadow-hover);
+  outline: 2px solid var(--glassmorphism-items-font-color-active);
+  outline-offset: 2px;
+}
+
+/* Generic active states */
+.style-wrapper--glassmorphism>*.active {
+  background: var(--glassmorphism-items-background-color-active) !important;
+  box-shadow: var(--glassmorphism-shadow-hover) !important;
+  color: var(--glassmorphism-items-font-color-active) !important;
+}
+
+/* Ensure nested text elements inherit active color properly */
+.style-wrapper--glassmorphism>*.active * {
+  color: var(--glassmorphism-items-font-color-active) !important;
+}
+
+/* Disabled states */
+.style-wrapper--glassmorphism>*:disabled,
+.style-wrapper--glassmorphism>*[aria-disabled="true"] {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: auto;
+  transform: none !important;
+}
+
+/* Prevent hover effects on disabled elements */
+.style-wrapper--glassmorphism>*:disabled:hover,
+.style-wrapper--glassmorphism>*[aria-disabled="true"]:hover {
+  transform: none !important;
+}
+
+/* Generic styling for all nested text elements */
+.style-wrapper--glassmorphism>* * {
+  color: inherit;
+  transition: color var(--glassmorphism-transition-time) var(--glassmorphism-transition-timing);
+}
+
+/* Icon-like elements get appropriate sizing */
+.style-wrapper--glassmorphism>*:has(svg),
+.style-wrapper--glassmorphism>*[class*="icon"] {
+  width: var(--glassmorphism-icon-size);
+  height: var(--glassmorphism-icon-size);
+  padding: 8px;
+}
+
+/* Exception: Feature buttons with arrows should not be treated as icons */
+.style-wrapper--glassmorphism>*.feature-button:has(svg) {
+  width: auto !important;
+  height: auto !important;
+  padding: var(--glassmorphism-padding) !important;
+}
+
+/* Keep feature-button arrows at proper size */
+.style-wrapper--glassmorphism>*.feature-button .feature-button__arrow {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.style-wrapper--glassmorphism>*:has(svg) svg,
+.style-wrapper--glassmorphism>*[class*="icon"] svg {
+  width: calc(100% - 4px);
+  height: calc(100% - 4px);
+}
+
+/* Mobile responsiveness for icon-like elements */
+@media (max-width: 767px) {
+
+  .style-wrapper--glassmorphism>*:has(svg),
+  .style-wrapper--glassmorphism>*[class*="icon"] {
+    width: var(--glassmorphism-mobile-icon-size);
+    height: var(--glassmorphism-mobile-icon-size);
+  }
+
+}
+
+/* =============================================================================
+   FLAT VARIANT STYLES
+   ============================================================================= */
+
+/* Flat variant wrapper - transparent with no gaps */
+.style-wrapper--flat {
+  /* CSS Custom Properties for flat variant */
+  --flat-micro-animation-distance: -2px;
+  --flat-transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+  --flat-transition-timing-text-delay: 0.2s;
+  --flat-padding: 8px 16px;
+  --flat-will-change-props: transform, box-shadow, background;
+  --flat-transition-time: .3s;
+  --flat-icon-size: var(--icon-size, 40px);
+  --flat-mobile-icon-size: var(--mobile-icon-size, 36px);
+
+  /* Color system using theme variables with custom overrides */
+  --flat-items-font-color-inactive: var(--custom-text-color, var(--main-font-color));
+  --flat-items-background-color-inactive: var(--custom-background-color, var(--main-background));
+  --flat-items-background-color-active: var(--main-font-color);
+  --flat-items-font-color-active: var(--main-background);
+  --flat-items-font-color-hover: var(--custom-hover-text-color, var(--main-background));
+  --flat-background-color-hover: var(--custom-hover-color, var(--main-font-color));
+
+  /* Border styling */
+  --flat-border-inner-width: 2px;
+  --flat-border-inner-color: var(--main-background);
+  --flat-border-inner-color-hover: var(--main-background);
+
+  /* Transition-specific border radius for rounded inner animation */
+  --flat-transition-border-radius: 50%;
+
+  /* Outer border for contrast using box-shadow */
+  --flat-shadow: 0 0 0 var(--main-border-color);
+  --flat-shadow-hover: 0 0 0 var(--main-border-color);
+  --flat-outer-border-radius: var(--main-border-radius);
+  --flat-outer-border-color: var(--main-border-color);
+  --flat-outer-border-color-hover: var(--main-border-color);
+  --flat-outer-border-width: var(--main-border-width);
+
+  /* Flat hover animation properties - no scaling, truly flat */
+  --flat-hover-scale: 1;
+  --flat-hover-translate: 0px;
+  --flat-animation-duration: 0.6s;
+  --flat-animation-timing: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Typography */
+  --flat-font-weight: 500;
+  --flat-text-decoration: none;
+}
+
+/* Base flat styling for all child elements - truly flat design */
+.style-wrapper--flat>* {
+  background: var(--flat-items-background-color-inactive);
+  border: var(--flat-border-inner-width) solid var(--flat-border-inner-color);
+  border-radius: var(--flat-outer-border-radius);
+  box-shadow: var(--flat-shadow),
+    0 0 0 var(--flat-outer-border-width) var(--flat-outer-border-color);
+  padding: var(--flat-padding);
+  color: var(--flat-items-font-color-inactive);
+  text-decoration: var(--flat-text-decoration);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  font-weight: var(--flat-font-weight);
+  position: relative;
+  overflow: hidden;
+  transition: color var(--flat-transition-time) var(--flat-transition-timing),
+    border-color var(--flat-transition-time) var(--flat-transition-timing),
+    box-shadow var(--flat-transition-time) var(--flat-transition-timing);
+}
+
+/* Creative hover animation using pseudo-element for color flow */
+.style-wrapper--flat>*:not(:disabled):not([aria-disabled="true"]):hover {
+  color: var(--flat-items-font-color-hover) !important;
+  border-color: var(--flat-border-inner-color-hover);
+  box-shadow: var(--flat-shadow-hover),
+    0 0 0 var(--flat-outer-border-width) var(--flat-outer-border-color-hover);
+  transition: color var(--flat-transition-time) var(--flat-transition-timing) var(--flat-transition-timing-text-delay),
+    border-color var(--flat-transition-time) var(--flat-transition-timing),
+    box-shadow var(--flat-transition-time) var(--flat-transition-timing);
+}
+
+/* Left wave animation pseudo-element - full interior coverage */
+.style-wrapper--flat>*:not(:disabled):not([aria-disabled="true"])::before {
+  content: '';
+  position: absolute;
+  top: -25%;
+  left: -10%;
+  width: 70%;
+  height: 150%;
+  background: var(--flat-background-color-hover);
+  border-radius: var(--flat-transition-border-radius);
+  transform: translateX(-100%);
+  transform-origin: right center;
+  transition: transform var(--flat-animation-duration) var(--flat-animation-timing),
+    border-radius var(--flat-animation-duration) var(--flat-animation-timing);
+  z-index: 0;
+}
+
+/* Right wave animation pseudo-element - full interior coverage */
+.style-wrapper--flat>*:not(:disabled):not([aria-disabled="true"])::after {
+  content: '';
+  position: absolute;
+  top: -25%;
+  right: -10%;
+  width: 70%;
+  height: 150%;
+  background: var(--flat-background-color-hover);
+  border-radius: var(--flat-transition-border-radius);
+  transform: translateX(100%);
+  transform-origin: left center;
+  transition: transform var(--flat-animation-duration) var(--flat-animation-timing),
+    border-radius var(--flat-animation-duration) var(--flat-animation-timing);
+  z-index: 0;
+}
+
+/* Bidirectional wave animation on hover - full coverage */
+.style-wrapper--flat>*:not(:disabled):not([aria-disabled="true"]):hover::before {
+  transform: translateX(0);
+}
+
+.style-wrapper--flat>*:not(:disabled):not([aria-disabled="true"]):hover::after {
+  transform: translateX(0);
+}
+
+/* Alternative diagonal sweep animation - can be activated with CSS class */
+.style-wrapper--flat>*.flat-diagonal-sweep:not(:disabled):not([aria-disabled="true"])::before {
+  transform: translateX(-150%) translateY(-50%) rotate(25deg);
+  transform-origin: center;
+}
+
+.style-wrapper--flat>*.flat-diagonal-sweep:not(:disabled):not([aria-disabled="true"]):hover::before {
+  transform: translateX(50%) translateY(50%) rotate(25deg);
+}
+
+/* Alternative center expansion animation */
+.style-wrapper--flat>*.flat-center-expand:not(:disabled):not([aria-disabled="true"])::before {
+  transform: scale(0);
+  transform-origin: center;
+  border-radius: 50%;
+  transition: transform var(--flat-animation-duration) var(--flat-animation-timing),
+    border-radius calc(var(--flat-animation-duration) * 0.6) var(--flat-animation-timing);
+}
+
+.style-wrapper--flat>*.flat-center-expand:not(:disabled):not([aria-disabled="true"]):hover::before {
+  transform: scale(1.5);
+  border-radius: inherit;
+}
+
+/* Alternative corner flow animation */
+.style-wrapper--flat>*.flat-corner-flow:not(:disabled):not([aria-disabled="true"])::before {
+  clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
+  transition: clip-path var(--flat-animation-duration) var(--flat-animation-timing);
+}
+
+.style-wrapper--flat>*.flat-corner-flow:not(:disabled):not([aria-disabled="true"]):hover::before {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+/* Ensure nested text elements inherit hover color properly and appear above animation */
+.style-wrapper--flat>*:not(:disabled):not([aria-disabled="true"]):hover * {
+  color: var(--flat-items-font-color-hover) !important;
+  z-index: 1;
+  transition: color var(--flat-transition-time) var(--flat-transition-timing) var(--flat-transition-timing-text-delay);
+}
+
+/* Ensure all text content appears above the animation */
+.style-wrapper--flat>*>* {
+  position: relative;
+  z-index: 1;
+}
+
+/* Focus states - flat design, no transforms */
+.style-wrapper--flat>*:focus-visible {
+  outline: 2px solid var(--flat-items-font-color-active);
+  outline-offset: 2px;
+  border-color: var(--flat-border-inner-color-hover);
+}
+
+/* Active states - flat design */
+.style-wrapper--flat>*.active {
+  background: var(--flat-items-background-color-active) !important;
+  color: var(--flat-items-font-color-active) !important;
+  border-color: var(--flat-border-inner-color-hover) !important;
+  box-shadow: var(--flat-shadow-hover),
+    0 0 0 var(--flat-outer-border-width) var(--flat-outer-border-color-hover) !important;
+}
+
+/* Ensure nested text elements inherit active color properly */
+.style-wrapper--flat>*.active * {
+  color: var(--flat-items-font-color-active) !important;
+}
+
+/* Disabled states */
+.style-wrapper--flat>*:disabled,
+.style-wrapper--flat>*[aria-disabled="true"] {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: auto;
+  transform: none !important;
+}
+
+/* Prevent hover effects on disabled elements */
+.style-wrapper--flat>*:disabled:hover,
+.style-wrapper--flat>*[aria-disabled="true"]:hover {
+  transform: none !important;
+}
+
+/* Generic styling for all nested text elements */
+.style-wrapper--flat>* * {
+  color: inherit;
+  transition: color var(--flat-transition-time) var(--flat-transition-timing);
+}
+
+/* Icon-like elements get appropriate sizing */
+.style-wrapper--flat>*:has(svg),
+.style-wrapper--flat>*[class*="icon"] {
+  width: var(--flat-icon-size);
+  height: var(--flat-icon-size);
+  padding: 8px;
+}
+
+/* Exception: Feature buttons with arrows should not be treated as icons */
+.style-wrapper--flat>*.feature-button:has(svg) {
+  width: auto !important;
+  height: auto !important;
+  padding: var(--flat-padding) !important;
+}
+
+/* Keep feature-button arrows at proper size */
+.style-wrapper--flat>*.feature-button .feature-button__arrow {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.style-wrapper--flat>*:has(svg) svg,
+.style-wrapper--flat>*[class*="icon"] svg {
+  width: calc(100% - 4px);
+  height: calc(100% - 4px);
+}
+
+/* Mobile responsiveness for icon-like elements */
+@media (max-width: 767px) {
+
+  .style-wrapper--flat>*:has(svg),
+  .style-wrapper--flat>*[class*="icon"] {
+    width: var(--flat-mobile-icon-size);
+    height: var(--flat-mobile-icon-size);
+  }
+}
+
+/* =============================================================================
+   FLAT-BASIC VARIANT STYLES
+   ============================================================================= */
+
+/* Flat-basic variant wrapper - shared base with flat variant but simpler */
+.style-wrapper--flat-basic {
+  /* CSS Custom Properties for flat-basic variant - inheriting from flat */
+  --flat-basic-micro-animation-distance: 0px;
+  --flat-basic-transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+  --flat-basic-transition-timing-text-delay: 0.2s;
+  --flat-basic-padding: 8px 16px;
+  --flat-basic-will-change-props: background, color;
+  --flat-basic-transition-time: .3s;
+  --flat-basic-icon-size: var(--icon-size, 40px);
+  --flat-basic-mobile-icon-size: var(--mobile-icon-size, 36px);
+
+  /* Color system - light grey background with no border */
+  --flat-basic-items-font-color-inactive: var(--custom-text-color, var(--main-font-color));
+  --flat-basic-items-background-color-inactive: var(--custom-background-color, #f8f9fa);
+  --flat-basic-items-background-color-active: var(--main-font-color);
+  --flat-basic-items-font-color-active: var(--main-background);
+  --flat-basic-items-font-color-hover: var(--custom-hover-text-color, var(--main-background));
+  --flat-basic-background-color-hover: var(--custom-hover-color, var(--main-font-color));
+
+  /* No border styling for basic variant */
+  --flat-basic-border-width: 0px;
+  --flat-basic-border-radius: var(--main-border-radius);
+
+  /* Single animation - top to bottom */
+  --flat-basic-animation-duration: 0.4s;
+  --flat-basic-animation-timing: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Typography */
+  --flat-basic-font-weight: 500;
+  --flat-basic-text-decoration: none;
+}
+
+/* Shared base styling for both flat variants - reuse common properties */
+.style-wrapper--flat>*,
+.style-wrapper--flat-basic>* {
+  padding: var(--flat-padding, var(--flat-basic-padding));
+  color: var(--flat-items-font-color-inactive, var(--flat-basic-items-font-color-inactive));
+  text-decoration: var(--flat-text-decoration, var(--flat-basic-text-decoration));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  font-weight: var(--flat-font-weight, var(--flat-basic-font-weight));
+  position: relative;
+  overflow: hidden;
+}
+
+/* Specific styling for flat-basic variant */
+.style-wrapper--flat-basic>* {
+  background: var(--flat-basic-items-background-color-inactive);
+  border: var(--flat-basic-border-width) solid transparent;
+  border-radius: var(--flat-basic-border-radius);
+  transition: color var(--flat-basic-transition-time) var(--flat-basic-transition-timing),
+    background var(--flat-basic-transition-time) var(--flat-basic-transition-timing);
+}
+
+/* Top-to-bottom hover animation using pseudo-element - also handle aria-expanded state */
+.style-wrapper--flat-basic>*:not(:disabled):not([aria-disabled="true"]):hover,
+.style-wrapper--flat-basic>*:not(:disabled):not([aria-disabled="true"])[aria-expanded="true"] {
+  color: var(--flat-basic-items-font-color-hover) !important;
+  transition: color var(--flat-basic-transition-time) var(--flat-basic-transition-timing) var(--flat-basic-transition-timing-text-delay);
+}
+
+/* Single circular pseudo-element for top-to-bottom animation */
+.style-wrapper--flat-basic>*:not(:disabled):not([aria-disabled="true"])::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 150%;
+  height: 150%;
+  background: var(--flat-basic-background-color-hover);
+  border-radius: 50%;
+  transform: translateX(-50%) translateY(-100%);
+  transition: transform var(--flat-basic-animation-duration) var(--flat-basic-animation-timing);
+  z-index: 0;
+  pointer-events: none !important;
+}
+
+/* Circular top-to-bottom animation on hover AND aria-expanded (for mega-menu JavaScript compatibility) */
+.style-wrapper--flat-basic>*:not(:disabled):not([aria-disabled="true"]):hover::before,
+.style-wrapper--flat-basic>*:not(:disabled):not([aria-disabled="true"])[aria-expanded="true"]::before {
+  transform: translateX(-50%) translateY(-25%);
+}
+
+/* Ensure nested text elements inherit hover color properly and appear above animation */
+.style-wrapper--flat-basic>*:not(:disabled):not([aria-disabled="true"]):hover *,
+.style-wrapper--flat-basic>*:not(:disabled):not([aria-disabled="true"])[aria-expanded="true"] * {
+  color: var(--flat-basic-items-font-color-hover) !important;
+  z-index: 1;
+  transition: color var(--flat-basic-transition-time) var(--flat-basic-transition-timing) var(--flat-basic-transition-timing-text-delay);
+}
+
+/* Ensure all text content appears above the animation */
+.style-wrapper--flat-basic>*>* {
+  position: relative;
+  z-index: 1;
+}
+
+/* Focus states - flat design, no transforms */
+.style-wrapper--flat-basic>*:focus-visible {
+  outline: 2px solid var(--flat-basic-items-font-color-active);
+  outline-offset: 2px;
+}
+
+/* Active states are now handled via aria-expanded attribute - no separate active class needed */
+
+/* Disabled states */
+.style-wrapper--flat-basic>*:disabled,
+.style-wrapper--flat-basic>*[aria-disabled="true"] {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: auto;
+}
+
+/* Prevent hover effects on disabled elements */
+.style-wrapper--flat-basic>*:disabled:hover,
+.style-wrapper--flat-basic>*[aria-disabled="true"]:hover {
+  transform: none !important;
+}
+
+/* Generic styling for all nested text elements */
+.style-wrapper--flat-basic>* * {
+  color: inherit;
+  transition: color var(--flat-basic-transition-time) var(--flat-basic-transition-timing);
+}
+
+/* Icon-like elements get appropriate sizing */
+.style-wrapper--flat-basic>*:has(svg),
+.style-wrapper--flat-basic>*[class*="icon"] {
+  width: var(--flat-basic-icon-size);
+  height: var(--flat-basic-icon-size);
+  padding: 8px;
+}
+
+/* Exception: Feature buttons with arrows should not be treated as icons */
+.style-wrapper--flat-basic>*.feature-button:has(svg) {
+  width: auto !important;
+  height: auto !important;
+  padding: var(--flat-basic-padding) !important;
+}
+
+/* Keep feature-button arrows at proper size */
+.style-wrapper--flat-basic>*.feature-button .feature-button__arrow {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.style-wrapper--flat-basic>*:has(svg) svg,
+.style-wrapper--flat-basic>*[class*="icon"] svg {
+  width: calc(100% - 4px);
+  height: calc(100% - 4px);
+}
+
+/* Mobile responsiveness for icon-like elements */
+@media (max-width: 767px) {
+
+  .style-wrapper--flat-basic>*:has(svg),
+  .style-wrapper--flat-basic>*[class*="icon"] {
+    width: var(--flat-basic-mobile-icon-size);
+    height: var(--flat-basic-mobile-icon-size);
+  }
+}
+
+/* =============================================================================
+   FUTURE VARIANTS CAN BE ADDED HERE
+   ============================================================================= */
+
+/* Example for future variants:
+.style-wrapper--neumorphism {
+  // Neumorphism styles
+}
+
+.style-wrapper--neon {
+  // Neon glow styles
+}
+*/

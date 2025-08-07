@@ -1,0 +1,21 @@
+{%- comment -%}
+  ------------------------------------------------------------------
+  Dynamic Search Footer
+  Shows "Show All Results" button that navigates to search page
+  with current search query as parameter
+  ------------------------------------------------------------------
+{%- endcomment -%}
+
+<div class="drawer__footer__item" id="{{ id }}">
+  {%- assign show_all_text = 'multi-drawer.search.result_button' | t -%}
+
+  {%- comment -%} Dynamic button that will be updated by JavaScript {%- endcomment -%}
+  {%
+    render 'snippet-feature-button',
+    size: 'large',
+    button_text: show_all_text,
+    button_link: routes.search_url,
+    custom_tag: 'id="SearchShowAllButton"',
+    custom_aria_label: 'search.show_all_results' | t | default: 'Show all search results'
+  %}
+</div>

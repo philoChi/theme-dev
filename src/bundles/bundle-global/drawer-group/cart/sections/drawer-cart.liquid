@@ -1,0 +1,50 @@
+<!-- Overlay (one single instance) -->
+{%  render 'snippet-section-drawer-base-overlay' %}
+
+<!-- Drawer -------------------------------------------------------------- -->
+<div class="cart-drawer drawer drawer-common-vars drawer--right" id="cart-drawer">
+  
+  <div class="drawer__header">
+    {% render 'snippet-section-drawer-base-header-text', id: 'drawer__header__cart', icon:"icon-cart", text_key: 'cart.general.title' %}
+    <button class="drawer__close" aria-label="Schließen" mpe="drawer-close">
+      <span class="icon icon-close"></span>
+    </button>
+  </div>
+
+  <div class="drawer__content">
+    {% render 'snippet-section-drawer-cart-content', id:"drawer__content__cart" %}
+  </div>
+
+  <div class="drawer__footer">
+    {% render 'snippet-section-drawer-cart-footer', id:"drawer__footer__cart" %}
+  </div>
+</div>
+
+<!-- Übermitteln der Section-ID an JavaScript -->
+<script>
+    window.cartDrawerSectionId = '{{ section.id }}';
+</script>
+
+<!-- TODO: Convert to ES6 and include in webpack drawer bundle -->
+<!-- <script src="{{ 'section-drawer-cart-init.js'| asset_url }}" defer></script> -->
+
+{% schema %}
+{
+  "name": "Cart Drawer",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Cart Drawer Einstellungen"
+    },
+    {
+      "type": "paragraph",
+      "content": "Passen Sie das Aussehen und Verhalten des Warenkorb-Drawers an."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cart Drawer"
+    }
+  ]
+}
+{% endschema %}

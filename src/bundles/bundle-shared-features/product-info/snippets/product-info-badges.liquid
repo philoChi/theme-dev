@@ -1,0 +1,60 @@
+{%- comment -%}
+  Feature: Badges
+  Purpose: Renders product badges (sale, new, etc.) in a vertical stack
+  Version: 1.0
+  
+  Parameters:
+    - product: Product object (required)
+    - current_variant: Current variant object (optional, defaults to selected_or_first_available_variant)
+    - position: 'absolute' or 'relative' (optional, defaults to 'relative')
+    - align: 'left' or 'right' (optional, defaults to 'left' for absolute positioning)
+{%- endcomment -%}
+
+{%- liquid
+  # Get current variant if not provided
+  if current_variant == blank
+    assign current_variant = product.selected_or_first_available_variant
+  endif
+  
+  # Calculate sale percentage if applicable
+  assign sale_percentage = 0
+  if current_variant.compare_at_price and current_variant.compare_at_price > current_variant.price
+    assign price_difference = current_variant.compare_at_price | minus: current_variant.price
+    assign sale_percentage = price_difference | times: 100.0 | divided_by: current_variant.compare_at_price | round
+  endif
+  
+  # Check if product is new
+  assign is_new = false
+  if product.tags contains 'New' or product.tags contains 'NEU'
+    assign is_new = true
+  endif
+  
+  # Position classes
+  assign position_class = ''
+  if position == 'absolute'
+    assign position_class = 'feature-badges--absolute'
+    if align == 'right'
+      assign position_class = position_class | append: ' feature-badges--right'
+    endif
+  endif
+-%}
+
+{%- if sale_percentage > 0 or is_new -%}
+  <div class="feature-badges {{ position_class }}" data-badges>
+    {%- if sale_percentage > 0 -%}
+      <div class="feature-badges__item">
+        <div class="feature-badges__badge feature-badges__badge--sale" aria-label="{{ 'products.product.on_sale' | t }}">
+          {{ 'products.product.on_sale' | t }} -<span class="badge-percentage">{{ sale_percentage }}</span>%
+        </div>
+      </div>
+    {%- endif -%}
+    
+    {%- if is_new -%}
+      <div class="feature-badges__item">
+        <div class="feature-badges__badge feature-badges__badge--new" aria-label="{{ 'products.product.new_tag' | t }}">
+          {{ 'products.product.new_tag' | t | default: "NEU" }}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+{%- endif -%}

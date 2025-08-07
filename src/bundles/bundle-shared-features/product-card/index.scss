@@ -1,0 +1,10 @@
+/**
+ * Product Card Feature Styles
+ * Main entry point for all product card related styles
+ */
+
+// Import main product card styles
+@import './styles/main.scss';
+
+// Import component-specific styles
+@import './styles/info-variants.scss';

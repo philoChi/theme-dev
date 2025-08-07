@@ -1,0 +1,121 @@
+/* Image Menu Section Styles */
+.image-menu-section {
+  --image-menu-iconbackground: var(--main-background);
+  --image-menu-background: var(--main-foreground); 
+  --image-font-color: var(--main-background);
+  --item-image-size: 75px;
+  --item-image-size-mobile: 50px;
+
+  --border-top-bottom-width: var(--main-border-width);
+  --border-top-bottom-color: var(--main-border-color);
+
+  --border-image-color: black;
+  --border-image-width: var(--main-border-width);
+  
+  /* Section background and spacing */
+  background-color: var(--image-menu-background);
+
+  border-top: var(--border-top-bottom-width) solid var(--border-top-bottom-color);
+  border-bottom: var(--border-top-bottom-width) solid var(--border-top-bottom-color);
+  position: relative;
+  z-index: 50;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.image-menu-section__container {
+  /* Container for menu items */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: var(--page-small-width);
+  width: 100%;
+  height: 100%;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.image-menu-item {
+  /* Individual menu item */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+.image-menu-item__image-container {
+  /* Image container with circular border */
+  width: var(--item-image-size);
+  height: var(--item-image-size);
+  border: var(--border-image-width) solid var(--border-image-color);
+  background-color: var(--image-menu-iconbackground);
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-menu-item__image {
+  /* Menu item image */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-menu-item__label {
+  /* Menu item label */
+  color: var(--image-font-color);
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* Responsive Styles */
+
+/* Hide extra items on medium screens */
+@media screen and (max-width: 991px) {
+  /* Hide items beyond the 5th */
+  .image-menu-item:nth-child(n+6) {
+    display: none;
+  }
+}
+
+/* Adjustments for small screens */
+@media screen and (max-width: 767px) {
+  /* Hide items beyond the 4th */
+  .image-menu-item:nth-child(n+5) {
+    display: none;
+  }
+  /* Smaller image sizes */
+  .image-menu-item__image-container {
+    width: var(--item-image-size-mobile);
+    height: var(--item-image-size-mobile);
+  }
+  /* Adjust gaps */
+  .image-menu-section__container {
+    gap: 30px;
+    justify-content: space-around;
+  }
+}
+
+/* Adjustments for extra small screens */
+@media screen and (max-width: 479px) {
+  /* Hide items beyond the 3rd */
+  .image-menu-item:nth-child(n+4) {
+    display: none;
+  }
+  /* Adjust label font size */
+  .image-menu-item__label {
+    font-size: 0.75rem;
+  }
+  /* Adjust gaps */
+  .image-menu-section__container {
+    gap: 25px;
+  }
+}

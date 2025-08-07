@@ -1,0 +1,139 @@
+{%- comment -%}
+  Section: Simple Showcase
+  - Simplified version of Product Showcase without tabs
+  - Features: Semantic HTML structure, ARIA attributes, responsive design
+  - Version: 1.0.0
+{%- endcomment -%}
+
+{%- liquid
+  assign collection = collections[section.settings.collection]
+-%}
+
+<section
+  class="content-padding simple-showcase section-product-showcase content-width-limit-large"
+  data-section-id="{{ section.id }}"
+  data-section-type="showcase-simple"
+  {% if section.settings.show_header %}
+    aria-labelledby="showcase-heading-{{ section.id }}"
+  {% endif %}
+>
+  {%- # Header Container (Optional) -%}
+  {%- if section.settings.show_header -%}
+    <div class="product-showcase__tabs-wrapper">
+      <div class="product-showcase__tabs-container">
+        <div class="product-showcase__tabs">
+          <button class="product-showcase__tab simple-showcase__tab" aria-selected="true">
+            <span
+              class="product-showcase__tab-text simple-showcase__tab-text"
+              id="showcase-heading-{{ section.id }}"
+              class="simple-showcase__title"
+            >
+              {{ section.settings.title | escape }}
+            </span>
+          </button>
+        </div>
+
+        {%- # View All Button (Desktop) -%}
+        {%- if collection != blank -%}
+          <div class="product-showcase__view-all-buttons">
+            {% render 'snippet-feature-button',
+              button_text: section.settings.view_all_text,
+              button_link: collection.url,
+              size: 'small',
+              show_arrow: true,
+              arrow_position: 'right'
+            %}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- # Products Grid Container -%}
+  <div class="simple-showcase__container product-showcase__container">
+    <div class="product-showcase__panel active">
+      <div class="product-showcase__grid-wrapper">
+        {%- if collection != blank and collection.products.size > 0 -%}
+          {%-
+            render 'snippet-section-showcase-product-showcase-grid',
+            products: collection.products,
+            carousel_id: 'secondary-' | append: section.id
+          -%}
+        {%- else -%}
+          <div
+            class="product-showcase__empty-state"
+            role="status"
+          >
+            <p>{{ 'sections.product_showcase.no_products' | t }}</p>
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- # View All Button (Mobile or When Header is Hidden) -%}
+      <div class="product-showcase__view-all-buttons simple-showcase__view-all-buttons{% if section.settings.show_header == false %} simple-showcase__view-all-buttons--show{% endif %}">
+        {% render 'snippet-feature-button',
+          button_text: section.settings.view_all_text,
+          button_link: collection.url,
+          show_arrow: true,
+          size: 'small',
+          arrow_position: 'right'
+        %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Simple Product Showcase",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "header",
+      "content": "Header Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_header",
+      "label": "Show header",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Featured Collection"
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "View all button text",
+      "default": "View All"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Simple Product Showcase",
+      "settings": {
+        "show_header": true,
+        "title": "Featured Collection"
+      }
+    }
+  ]
+}
+{% endschema %}
+
+{%- comment -%} Assets loaded conditionally via theme.liquid {%- endcomment -%}

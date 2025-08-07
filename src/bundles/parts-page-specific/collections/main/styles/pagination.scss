@@ -1,0 +1,397 @@
+/* ===================================
+   Modern Pagination Component
+   Purpose: Subtle, minimalist pagination with refined interactions
+   =================================== */
+
+/* Main Pagination Container */
+.pagination {
+  --pagination-gap: 0.75rem;
+  --pagination-number-size: 2.25rem;
+  --pagination-nav-size: 2.5rem;
+  --pagination-text-color: rgb(102, 102, 102);
+  --pagination-hover-color: rgb(0, 0, 0);
+  --pagination-active-color: rgb(0, 0, 0);
+  --pagination-disabled-color: rgb(204, 204, 204);
+  --pagination-border-radius: 0.375rem;
+  --pagination-transition: all 0.2s ease;
+  --pagination-background-color: rgb(255, 255, 255);
+  --pagination-hover-background: rgb(248, 248, 248);
+  --pagination-active-background: transparent;
+  
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pagination-gap);
+  margin-top: 4rem;
+  padding: 2rem 0;
+  user-select: none;
+}
+
+/* Navigation Arrows */
+.pagination__nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--pagination-nav-size);
+  height: var(--pagination-nav-size);
+  color: var(--pagination-text-color, #666666);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--pagination-border-radius);
+  text-decoration: none;
+  transition: var(--pagination-transition);
+  cursor: pointer;
+  
+  &:hover:not(.pagination__nav--disabled) {
+    background: var(--pagination-hover-background, #f8f8f8);
+    color: var(--pagination-hover-color, #000000);
+    
+    .pagination__arrow {
+      transform: translateX(0);
+    }
+  }
+  
+  &:active:not(.pagination__nav--disabled) {
+    background: #f0f0f0;
+  }
+  
+  &--prev {
+    .pagination__arrow {
+      transform: translateX(1px);
+    }
+    
+    &:hover:not(.pagination__nav--disabled) {
+      .pagination__arrow {
+        transform: translateX(-1px);
+      }
+    }
+  }
+  
+  &--next {
+    .pagination__arrow {
+      transform: translateX(-1px);
+    }
+    
+    &:hover:not(.pagination__nav--disabled) {
+      .pagination__arrow {
+        transform: translateX(1px);
+      }
+    }
+  }
+  
+  &--disabled {
+    color: var(--pagination-disabled-color);
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.4;
+  }
+}
+
+.pagination__arrow {
+  width: 0.5rem;
+  height: 0.75rem;
+  transition: transform 0.2s ease;
+}
+
+/* Numbers Container */
+.pagination__numbers {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+/* Page Numbers - Higher specificity for Firefox */
+.pagination .pagination__number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--pagination-number-size);
+  height: var(--pagination-number-size);
+  padding: 0 0.625rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--pagination-text-color) !important;
+  text-decoration: none !important;
+  background: var(--pagination-active-background) !important;
+  border-radius: var(--pagination-border-radius);
+  transition: var(--pagination-transition);
+  position: relative;
+  border: none;
+  
+  /* Firefox-specific fixes */
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.pagination .pagination__number:hover {
+  color: var(--pagination-hover-color) !important;
+  background: var(--pagination-hover-background) !important;
+  text-decoration: none !important;
+}
+
+.pagination .pagination__number:active {
+  background: rgb(240, 240, 240) !important;
+}
+
+.pagination .pagination__number:focus {
+  outline: 2px solid var(--pagination-active-color);
+  outline-offset: 2px;
+}
+
+.pagination .pagination__number.pagination__number--current {
+  color: var(--pagination-active-color) !important;
+  font-weight: 600;
+  cursor: default;
+  background: var(--pagination-active-background) !important;
+  text-decoration: none !important;
+}
+
+.pagination .pagination__number.pagination__number--current::after {
+  content: '';
+  position: absolute;
+  bottom: -0.125rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1.25rem;
+  height: 0.125rem;
+  background: var(--pagination-active-color);
+  border-radius: 0.0625rem;
+}
+
+.pagination .pagination__number.pagination__number--current:hover {
+  color: var(--pagination-active-color) !important;
+  background: var(--pagination-active-background) !important;
+  text-decoration: none !important;
+}
+
+/* Dots Separator */
+.pagination__dots {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: var(--pagination-number-size);
+  color: var(--pagination-text-color, #666666);
+  opacity: 0.5;
+  
+  svg {
+    width: 1.25rem;
+    height: auto;
+  }
+}
+
+/* Pagination Info */
+.pagination__info {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.8125rem;
+  color: var(--pagination-text-color, #666666);
+  
+  &-text {
+    letter-spacing: 0.01em;
+  }
+}
+
+/* Navigation Controls Wrapper */
+.pagination__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pagination-gap);
+}
+
+/* Responsive Design */
+@media screen and (max-width: 63.9375rem) {
+  .pagination {
+    --pagination-gap: 0.5rem;
+    --pagination-number-size: 2rem;
+    --pagination-nav-size: 2.25rem;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .pagination__info {
+    position: static;
+    transform: none;
+    order: 2;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 0;
+  }
+  
+  .pagination__controls {
+    order: 1;
+  }
+}
+
+@media screen and (max-width: 47.9375rem) {
+  .pagination {
+    --pagination-gap: 0.375rem;
+    --pagination-number-size: 1.875rem;
+    --pagination-nav-size: 2rem;
+    margin-top: 3rem;
+    padding: 1.5rem 0;
+    gap: 1rem;
+  }
+  
+  .pagination__controls {
+    gap: var(--pagination-gap);
+  }
+  
+  .pagination__number {
+    font-size: 0.8125rem;
+    padding: 0 0.5rem;
+  }
+  
+  .pagination__numbers {
+    gap: 0.25rem;
+  }
+  
+  .pagination__info {
+    font-size: 0.75rem;
+  }
+  
+  /* Hide some numbers on very small screens */
+  @media screen and (max-width: 30rem) {
+    .pagination__number:nth-child(n+4):nth-last-child(n+4) {
+      display: none;
+    }
+    
+    .pagination__dots:nth-of-type(2) {
+      display: none;
+    }
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .pagination {
+    --pagination-text-color: #999;
+    --pagination-hover-color: #fff;
+    --pagination-active-color: #fff;
+    --pagination-disabled-color: #555;
+  }
+  
+  .pagination__nav:hover:not(.pagination__nav--disabled),
+  .pagination__number:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+  
+  .pagination__nav:active:not(.pagination__nav--disabled),
+  .pagination__number:active {
+    background: rgba(255, 255, 255, 0.12);
+  }
+}
+
+/* Loading State Animation */
+@keyframes pagination-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.pagination--loading {
+  pointer-events: none;
+  
+  .pagination__number,
+  .pagination__nav,
+  .pagination__dots {
+    animation: pagination-pulse 1.5s ease-in-out infinite;
+  }
+}
+
+/* Smooth Focus Styles */
+.pagination__nav:focus-visible,
+.pagination__number:focus-visible {
+  outline: 2px solid var(--pagination-active-color);
+  outline-offset: 2px;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .pagination__nav,
+  .pagination__number {
+    border: 1px solid currentColor;
+  }
+  
+  .pagination__nav--disabled {
+    opacity: 0.6;
+  }
+}
+
+/* Firefox-specific fixes */
+@-moz-document url-prefix() {
+  .pagination .pagination__number {
+    color: rgb(102, 102, 102) !important;
+    background: transparent !important;
+    border: none !important;
+    text-decoration: none !important;
+  }
+  
+  .pagination .pagination__number:hover {
+    color: rgb(0, 0, 0) !important;
+    background: rgb(248, 248, 248) !important;
+    text-decoration: none !important;
+  }
+  
+  .pagination .pagination__number.pagination__number--current {
+    color: rgb(0, 0, 0) !important;
+    background: transparent !important;
+    text-decoration: none !important;
+  }
+  
+  .pagination .pagination__number.pagination__number--current:hover {
+    color: rgb(0, 0, 0) !important;
+    background: transparent !important;
+    text-decoration: none !important;
+  }
+  
+  .pagination .pagination__number.pagination__number--current::after {
+    content: '' !important;
+    background: rgb(0, 0, 0) !important;
+    display: block !important;
+    position: absolute !important;
+    bottom: -2px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 20px !important;
+    height: 2px !important;
+    border-radius: 1px !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  /* Fix navigation arrow visibility */
+  .pagination .pagination__nav {
+    color: rgb(102, 102, 102) !important;
+    background: transparent !important;
+    border: 1px solid transparent !important;
+    text-decoration: none !important;
+  }
+  
+  .pagination .pagination__nav:hover:not(.pagination__nav--disabled) {
+    color: rgb(0, 0, 0) !important;
+    background: rgb(248, 248, 248) !important;
+    text-decoration: none !important;
+  }
+  
+  .pagination .pagination__nav:active:not(.pagination__nav--disabled) {
+    color: rgb(0, 0, 0) !important;
+    background: rgb(240, 240, 240) !important;
+    text-decoration: none !important;
+  }
+  
+  .pagination .pagination__nav--disabled {
+    color: rgb(204, 204, 204) !important;
+    background: transparent !important;
+    opacity: 0.4 !important;
+  }
+}

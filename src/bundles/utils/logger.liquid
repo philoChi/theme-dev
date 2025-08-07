@@ -1,0 +1,54 @@
+{%- comment -%}
+  Feature: Logger
+  Custom logging system for debugging
+  
+  @param enabled {Boolean} - Enable/disable logging (default: true in development)
+  @param log_level {String} - Minimum log level: 'debug', 'log', 'warn', 'error' (default: 'log')
+  @param prefix {String} - Prefix for all log messages (optional)
+{%- endcomment -%}
+
+{%- liquid
+  # Determine if we're in development mode
+  assign is_development = false
+  if request.host contains '.myshopify.com' or request.host contains 'localhost' or request.host contains `http://127.0.0.1:9292`
+    assign is_development = true
+  endif
+  
+  # Set defaults
+  if enabled == nil
+    assign enabled = is_development
+  endif
+  
+  assign log_level = log_level | default: 'log'
+  assign prefix = prefix | default: shop.name
+-%}
+
+{%- if enabled -%}
+  <script>
+    // Initialize logger configuration
+    window.loggerConfig = {
+      enabled: {{ enabled | json }},
+      logLevel: {{ log_level | json }},
+      prefix: {{ prefix | json }},
+      timestamp: true,
+      colorize: true
+    };
+  </script>
+  
+  {%- comment -%}
+    Logger JavaScript is now included in feature-shared-bundle loaded in theme.liquid
+  {%- endcomment -%}
+{%- else -%}
+  <script>
+    // Logger disabled - create no-op logger
+    window.logger = {
+      log: function() {},
+      warn: function() {},
+      error: function() {},
+      debug: function() {},
+      info: function() {},
+      group: function() {},
+      groupEnd: function() {}
+    };
+  </script>
+{%- endif -%}

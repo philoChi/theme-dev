@@ -1,0 +1,619 @@
+/**
+ * Account Pages Styling
+ * Handles styling for Shopify's account-related pages:
+ * - Login page (/account/login)
+ * - Account dashboard (/account)
+ * - Order history (/account/orders)
+ * - Address book (/account/addresses)
+ */
+
+/* =============================================================================
+   CSS Custom Properties
+   ============================================================================= */
+
+.account-page {
+  --account-max-width: 640px;
+  --account-spacing: 1rem;
+  --account-spacing-lg: 1.5rem;
+  --account-border-radius: var(--main-border-radius);
+  --account-border-color: var(--main-border-color);
+  --account-surface-color: var(--main-background);
+  --account-text-color: var(--main-font-color);
+  --account-primary-color: var(--main-font-color);
+  --account-error-color: var(--error);
+  --account-success-color: var(--buy-green-color);
+  --account-secondary-color: var(--sub-font-color);
+}
+
+/* =============================================================================
+   Base Account Page Layout
+   ============================================================================= */
+
+.account-page {
+  padding: var(--account-spacing) var(--mobile-page-side-distance);
+  min-height: 50vh;
+}
+
+.account-page__container {
+  max-width: var(--account-max-width);
+  margin: 0 auto;
+}
+
+.account-page__header {
+  margin-bottom: var(--account-spacing-lg);
+  text-align: center;
+}
+
+.account-page__title {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: var(--main-font-weight);
+  font-family: var(--main-font);
+  color: var(--account-text-color);
+  margin: 0 0 var(--account-spacing) 0;
+}
+
+.account-page__description {
+  color: var(--account-secondary-color);
+  font-size: var(--sub-font-size);
+  font-family: var(--sub-font);
+  font-weight: var(--sub-font-weight);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* =============================================================================
+   Login Page Specific Styles
+   ============================================================================= */
+
+.login-form {
+  background: var(--account-surface-color);
+  border: 1px solid var(--account-border-color);
+  border-radius: var(--account-border-radius);
+  padding: var(--account-spacing-lg);
+  margin-bottom: var(--account-spacing);
+}
+
+.login-form__field {
+  margin-bottom: var(--account-spacing);
+}
+
+.login-form__label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: calc(var(--account-spacing) / 2);
+  color: var(--account-text-color);
+  font-size: 0.875rem;
+}
+
+.login-form__input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--account-border-color);
+  border-radius: calc(var(--account-border-radius) / 2);
+  font-size: 1rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  background: var(--account-surface-color);
+  color: var(--account-text-color);
+}
+
+.login-form__input:focus {
+  outline: none;
+  border-color: var(--account-primary-color);
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+.login-form__input::placeholder {
+  color: var(--account-secondary-color);
+}
+
+.login-form__submit {
+  width: 100%;
+  padding: 0.875rem;
+  background: var(--account-primary-color);
+  color: var(--account-surface-color);
+  border: none;
+  border-radius: calc(var(--account-border-radius) / 2);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.login-form__submit:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.login-form__submit:active {
+  transform: translateY(0);
+}
+
+.login-form__submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Error states */
+.login-form__input--error {
+  border-color: var(--account-error-color);
+}
+
+.login-form__error {
+  color: var(--account-error-color);
+  font-size: 0.75rem;
+  margin-top: calc(var(--account-spacing) / 2);
+  display: block;
+}
+
+/* =============================================================================
+   Account Dashboard Styles
+   ============================================================================= */
+
+.account-dashboard {
+  padding: var(--account-spacing);
+}
+
+.account-dashboard__welcome {
+  background: var(--account-surface-color);
+  border: 1px solid var(--account-border-color);
+  border-radius: var(--account-border-radius);
+  padding: var(--account-spacing-lg);
+  margin-bottom: var(--account-spacing-lg);
+  text-align: center;
+}
+
+.account-dashboard__customer-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--account-text-color);
+  margin: 0 0 var(--account-spacing) 0;
+}
+
+.account-dashboard__logout-link {
+  color: var(--account-secondary-color);
+  text-decoration: underline;
+  font-size: 0.875rem;
+}
+
+.account-dashboard__navigation {
+  display: grid;
+  gap: var(--account-spacing);
+  margin-bottom: var(--account-spacing-lg);
+}
+
+.account-nav-card {
+  background: var(--account-surface-color);
+  border: 1px solid var(--account-border-color);
+  border-radius: var(--account-border-radius);
+  padding: var(--account-spacing-lg);
+  text-decoration: none;
+  color: var(--account-text-color);
+  transition: all 0.2s ease;
+  display: block;
+}
+
+.account-nav-card:hover {
+  border-color: var(--account-primary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  color: var(--account-text-color);
+}
+
+.account-nav-card__title {
+  font-weight: 600;
+  margin: 0 0 calc(var(--account-spacing) / 2) 0;
+  font-size: 1.125rem;
+}
+
+.account-nav-card__description {
+  color: var(--account-secondary-color);
+  font-size: 0.875rem;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* =============================================================================
+   Order History Styles
+   ============================================================================= */
+
+.order-history {
+  padding: var(--account-spacing);
+}
+
+.order-list {
+  display: grid;
+  gap: var(--account-spacing);
+}
+
+.order-card {
+  background: var(--account-surface-color);
+  border: 1px solid var(--account-border-color);
+  border-radius: var(--account-border-radius);
+  padding: var(--account-spacing-lg);
+}
+
+.order-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--account-spacing);
+  flex-wrap: wrap;
+  gap: calc(var(--account-spacing) / 2);
+}
+
+.order-card__number {
+  font-weight: 600;
+  color: var(--account-text-color);
+  margin: 0;
+  font-size: 1rem;
+}
+
+.order-card__date {
+  color: var(--account-secondary-color);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.order-card__status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.order-card__status--fulfilled {
+  background: var(--account-success-color);
+  color: white;
+}
+
+.order-card__status--pending {
+  background: #fbbf24;
+  color: #92400e;
+}
+
+.order-card__status--cancelled {
+  background: var(--account-error-color);
+  color: white;
+}
+
+.order-card__total {
+  font-weight: 600;
+  color: var(--account-text-color);
+  font-size: 1.125rem;
+}
+
+.order-card__actions {
+  margin-top: var(--account-spacing);
+  display: flex;
+  gap: calc(var(--account-spacing) / 2);
+  flex-wrap: wrap;
+}
+
+.order-card__link {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--account-border-color);
+  border-radius: calc(var(--account-border-radius) / 2);
+  text-decoration: none;
+  color: var(--account-text-color);
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+}
+
+.order-card__link:hover {
+  border-color: var(--account-primary-color);
+  color: var(--account-primary-color);
+  text-decoration: none;
+}
+
+.order-card__link--primary {
+  background: var(--account-primary-color);
+  color: var(--account-surface-color);
+  border-color: var(--account-primary-color);
+}
+
+.order-card__link--primary:hover {
+  opacity: 0.9;
+  color: var(--account-surface-color);
+}
+
+/* Empty state */
+.order-history__empty {
+  text-align: center;
+  padding: var(--account-spacing-lg);
+  color: var(--account-secondary-color);
+}
+
+.order-history__empty-title {
+  font-size: 1.25rem;
+  margin: 0 0 var(--account-spacing) 0;
+  color: var(--account-text-color);
+}
+
+.order-history__empty-description {
+  margin: 0 0 var(--account-spacing-lg) 0;
+  line-height: 1.5;
+}
+
+.order-history__empty-link {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: var(--account-primary-color);
+  color: var(--account-surface-color);
+  text-decoration: none;
+  border-radius: calc(var(--account-border-radius) / 2);
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.order-history__empty-link:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  text-decoration: none;
+  color: var(--account-surface-color);
+}
+
+/* =============================================================================
+   Responsive Design
+   ============================================================================= */
+
+/* Tablet and up */
+@media screen and (min-width: 768px) {
+  .account-page {
+    padding: var(--account-spacing-lg) var(--tablet-page-side-distance);
+  }
+
+  .account-dashboard__navigation {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .order-card__header {
+    flex-wrap: nowrap;
+  }
+
+  .order-card__actions {
+    justify-content: flex-start;
+  }
+}
+
+/* Desktop and up */
+@media screen and (min-width: 992px) {
+  .account-page {
+    padding: calc(var(--account-spacing-lg) * 1.5) var(--page-side-distance);
+  }
+
+  .account-dashboard__navigation {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .login-form {
+    padding: calc(var(--account-spacing-lg) * 1.5);
+  }
+}
+
+/* =============================================================================
+   Accessibility Enhancements
+   ============================================================================= */
+
+/* Focus indicators */
+.account-nav-card:focus,
+.order-card__link:focus,
+.login-form__input:focus,
+.login-form__submit:focus {
+  outline: 2px solid var(--account-primary-color);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .account-page {
+    --account-border-color: #000000;
+  }
+
+  .login-form__input,
+  .account-nav-card,
+  .order-card {
+    border-width: 2px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+
+  .login-form__submit,
+  .account-nav-card,
+  .order-card__link,
+  .order-history__empty-link {
+    transition: none;
+    transform: none;
+  }
+
+  .account-nav-card:hover,
+  .login-form__submit:hover,
+  .order-history__empty-link:hover {
+    transform: none;
+  }
+}
+
+/* =============================================================================
+   Login Form Footer
+   ============================================================================= */
+
+.login-form__footer {
+  margin-top: var(--account-spacing-lg);
+  text-align: center;
+  padding-top: var(--account-spacing);
+  border-top: 1px solid var(--account-border-color);
+}
+
+.login-form__footer p {
+  margin: 0 0 var(--account-spacing) 0;
+  font-size: 0.875rem;
+}
+
+.login-form__footer p:last-child {
+  margin-bottom: 0;
+}
+
+.login-form__forgot,
+.login-form__register {
+  color: var(--account-primary-color);
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.login-form__forgot:hover,
+.login-form__register:hover {
+  text-decoration: none;
+}
+
+.login-form__errors {
+  background: #fef2f2;
+  border: 1px solid var(--account-error-color);
+  border-radius: calc(var(--account-border-radius) / 2);
+  padding: var(--account-spacing);
+  margin-bottom: var(--account-spacing);
+  color: var(--account-error-color);
+  font-size: 0.875rem;
+}
+
+/* =============================================================================
+   Order Card Details
+   ============================================================================= */
+
+.order-card__details {
+  margin-bottom: var(--account-spacing);
+}
+
+.order-card__payment-status,
+.order-card__tracking {
+  margin-top: calc(var(--account-spacing) / 2);
+  font-size: 0.875rem;
+  color: var(--account-secondary-color);
+}
+
+.order-card__tracking a {
+  color: var(--account-primary-color);
+  text-decoration: underline;
+}
+
+.order-card__tracking a:hover {
+  text-decoration: none;
+}
+
+/* =============================================================================
+   Pagination Styles
+   ============================================================================= */
+
+.pagination {
+  margin-top: var(--account-spacing-lg);
+  padding-top: var(--account-spacing);
+  border-top: 1px solid var(--account-border-color);
+}
+
+.pagination__list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: calc(var(--account-spacing) / 2);
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pagination__item {
+  margin: 0;
+}
+
+.pagination__link,
+.pagination__text {
+  display: block;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--account-border-color);
+  border-radius: calc(var(--account-border-radius) / 2);
+  text-decoration: none;
+  color: var(--account-text-color);
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+}
+
+.pagination__link:hover {
+  border-color: var(--account-primary-color);
+  color: var(--account-primary-color);
+  text-decoration: none;
+}
+
+.pagination__item--current .pagination__link {
+  background: var(--account-primary-color);
+  color: var(--account-surface-color);
+  border-color: var(--account-primary-color);
+}
+
+.pagination__text {
+  border-color: transparent;
+  color: var(--account-secondary-color);
+}
+
+/* =============================================================================
+   Account Page Navigation
+   ============================================================================= */
+
+.account-page__navigation {
+  margin-top: var(--account-spacing-lg);
+  padding-top: var(--account-spacing);
+  border-top: 1px solid var(--account-border-color);
+  text-align: center;
+}
+
+.account-nav-card__link {
+  display: inline-block;
+  color: var(--account-primary-color);
+  text-decoration: underline;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.account-nav-card__link:hover {
+  text-decoration: none;
+}
+
+/* =============================================================================
+   Recent Orders Section
+   ============================================================================= */
+
+.account-dashboard__recent-orders {
+  margin-top: var(--account-spacing-lg);
+}
+
+.account-dashboard__recent-orders h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 var(--account-spacing) 0;
+  color: var(--account-text-color);
+}
+
+/* =============================================================================
+   Print Styles
+   ============================================================================= */
+
+@media print {
+
+  .account-dashboard__logout-link,
+  .login-form__submit,
+  .account-nav-card,
+  .order-card__actions {
+    display: none;
+  }
+
+  .account-page,
+  .order-card,
+  .login-form {
+    border: 1px solid #000;
+    background: white;
+    color: black;
+  }
+}

@@ -1,0 +1,33 @@
+/* Rating
+    ========================================================================== */
+
+.product-card__rating {
+  display: flex;
+  align-items: center;
+  gap: var(--card-info-spacing);
+}
+
+.rating-stars {
+  display: flex;
+  gap: 2px;
+}
+
+.star-icon {
+  width: 16px;
+  height: 16px;
+  color: #b9b9b95d;
+  transform: translateZ(0);
+}
+
+.star-icon.is-filled {
+  color: #cbb700;
+}
+
+.star-icon.is-half-filled {
+  color: #cbb700;
+}
+
+.rating-count {
+  font-size: var(--sub-font-size);
+  color: var(--main-font-color);
+}

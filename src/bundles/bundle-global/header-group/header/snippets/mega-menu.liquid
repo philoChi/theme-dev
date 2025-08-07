@@ -1,0 +1,116 @@
+{%- comment -%}
+  Snippet: snippet-navigation-mega-menu.liquid
+  Refactored mega‑menu (block‑based)
+  Usage: `{% render 'snippet-navigation-mega-menu', block: block %}`
+  Expected block settings (see section schema):
+    • label – nav link text (rendered in section)
+    • category_[1‑3]_name – text (translated via `locales` key if desired)
+    • category_[1‑3]_menu – link_list handle (optional)
+    • image_[1‑4]_img – image_picker (optional)
+    • image_[1‑4]_caption – text (optional, translatable)
+    • image_[1‑4]_url – url (optional)
+    • bottom_cta_label / bottom_cta_url – single CTA row below lists
+  Behaviour: keeps existing CSS/JS classes so the dropdown works as before.
+{%- endcomment -%}
+
+<div class="mega-menu-content" 
+     id="{{ block.id }}" 
+     role="menu"
+     aria-labelledby="nav-item-{{ block.id }}"
+     aria-hidden="true"
+     data-mega-menu-content>
+  {%- comment -%} ───────── Category columns ───────── {%- endcomment -%}
+  <div class="mega-menu-categories" role="group" aria-label="{{ 'sections.header.menu_categories' | t }}">
+    {%- for idx in (1..3) -%}
+      {%- assign cat_name_key = 'cat' | append: idx | append: '_name' -%}
+      {%- assign cat_menu_key = 'cat' | append: idx | append: '_menu' -%}
+      {%- assign cat_name = block.settings[cat_name_key] | default: 'sections.Navigation.mega_menu.empty_heading' -%}
+      {%- assign cat_menu = block.settings[cat_menu_key] -%}
+      {%- if cat_name or linklists[cat_menu] -%}
+        <div class="mega-menu-lists" role="group" aria-labelledby="heading-{{ block.id }}-{{ idx }}">
+          <h2 class="mega-menu-list-heading" id="heading-{{ block.id }}-{{ idx }}">{{ cat_name }}</h2>
+          {%- if linklists[cat_menu] -%}
+            <ul role="list" class="mega-menu-list" aria-labelledby="heading-{{ block.id }}-{{ idx }}">
+              {%- for link in linklists[cat_menu].links -%}
+                <li class="list-item" role="none">
+                  <a class="categorie-links" 
+                     href="{{ link.url }}" 
+                     role="menuitem"
+                     tabindex="-1">
+                    <span class="category-text">{{ link.title }}</span>
+                  </a>
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  {%- comment -%} ───────── Promo images ───────── {%- endcomment -%}
+  {%- assign has_categories = false -%}
+  {%- for idx in (1..3) -%}
+    {%- assign cat_menu_key = 'cat_' | append: idx | append: '_menu' -%}
+    {%- if linklists[block.settings[cat_menu_key]] -%}
+      {%- assign has_categories = true -%}
+    {%- endif -%}
+  {%- endfor -%}
+  <div class="mega-menu-product-images{% unless has_categories %} mega-menu-image-only{% endunless %}" 
+       role="group" 
+       aria-label="{{ 'sections.header.featured_promotions' | t }}">
+    {%- for idx in (1..4) -%}
+      {%- assign img_key = 'promo' | append: idx | append: '_image' -%}
+      {%- assign img = block.settings[img_key] -%}
+      {%- if img != blank -%}
+        {%- assign caption_key = 'promo' | append: idx | append: '_caption' -%}
+        {%- assign url_key = 'promo' | append: idx | append: '_url' -%}
+        {%- assign caption = block.settings[caption_key] -%}
+        {%- assign url = block.settings[url_key] | default: '#' -%}
+        <a class="mega-menu-product-image__link" 
+           href="{{ url }}" 
+           role="menuitem"
+           tabindex="-1"
+           aria-label="{{ 'sections.header.promo_link' | t: promo_name: caption }}"
+           data-promo="promo{{ idx }}">
+          <div class="hide-overflow">
+            <img
+              src="{{ img | img_url: '400x' }}"
+              alt="{{ caption | escape }}"
+              loading="lazy"
+              width="auto"
+              height="100%"
+            >
+          </div>
+          {%- if caption != blank -%}
+            <div class="mega_heading_container">
+              <h3>{{ caption }}</h3>
+            </div>
+          {%- endif -%}
+        </a>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  {%- comment -%} ───────── Bottom CTA row ───────── {%- endcomment -%}
+  <div class="mega-menu-bottom" role="group" aria-label="{{ 'sections.header.menu_actions' | t }}">
+    <div class="mega-menu-separator" aria-hidden="true"></div>
+    <a
+      class="mega-menu-cta-link"
+      href="{{ block.settings["bottom_cta_url"] | default: '#' }}"
+      role="menuitem"
+      tabindex="-1"
+      aria-label="{{ 'sections.header.view_all_in_category' | t: category: block.settings.label }}"
+    >
+      <span class="mega-menu-cta-text">
+        {% assign cta_text = 'general.view_all' | t %}
+        {% if block.settings.bottom_cta_label == blank %}
+          {{ cta_text }}
+        {% else %}
+          {{ block.settings.bottom_cta_label }}
+        {% endif %}
+      </span>
+      <span class="mega-menu-cta-arrow" aria-hidden="true">→</span>
+    </a>
+  </div>
+</div>

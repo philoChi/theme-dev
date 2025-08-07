@@ -1,0 +1,59 @@
+<svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Sweatshirt body -->
+  <path d="M 120,100 
+           C 120,80 160,50 250,50 
+           C 340,50 380,80 380,100
+           L 400,150
+           L 380,160
+           L 360,130
+           L 360,350
+           L 140,350
+           L 140,130
+           L 120,160
+           L 100,150 Z" 
+        fill="none" 
+        stroke="currentColor" 
+        stroke-width="6"/>
+  
+  <!-- Left sleeve -->
+  <path d="M 140,130 
+           C 120,150 100,170 80,240" 
+        fill="none" 
+        stroke="currentColor" 
+        stroke-width="6"/>
+  
+  <!-- Right sleeve -->
+  <path d="M 360,130 
+           C 380,150 400,170 420,240" 
+        fill="none" 
+        stroke="currentColor" 
+        stroke-width="6"/>
+  
+  <!-- Collar -->
+  <path d="M 200,100 
+           C 220,80 280,80 300,100" 
+        fill="none" 
+        stroke="currentColor" 
+        stroke-width="6"/>
+  
+  <!-- Bottom hem -->
+  <path d="M 140,350 
+           C 200,360 300,360 360,350" 
+        fill="none" 
+        stroke="currentColor" 
+        stroke-width="6"/>
+  
+  <!-- Left cuff -->
+  <path d="M 80,240 
+           C 85,250 90,250 95,240" 
+        fill="none" 
+        stroke="currentColor" 
+        stroke-width="6"/>
+  
+  <!-- Right cuff -->
+  <path d="M 420,240 
+           C 415,250 410,250 405,240" 
+        fill="none" 
+        stroke="currentColor" 
+        stroke-width="6"/>
+</svg>

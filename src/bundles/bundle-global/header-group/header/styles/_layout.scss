@@ -1,0 +1,63 @@
+/* Navigation Header Layout – Flex Architecture & Positioning */
+
+/* Base header container */
+.site-header {
+  position: relative;
+  background-color: var(--site-navigation-header-color);
+  height: var(--header-height);
+  z-index: 1000;
+}
+
+/* Header inner flex container */
+.site-header__inner {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 0 var(--page-side-distance);
+}
+
+/* Flex container utility pattern */
+%flex-container {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  gap: 12px;
+}
+
+/* Logo container - flex responsive behavior */
+.site-header__logo-container {
+  @extend %flex-container;
+  flex-shrink: 0;
+}
+
+/* Mobile left icons - hidden on desktop */
+.site-header__mobile-left {
+  @extend %flex-container;
+  display: none;
+}
+
+/* Right icons container */
+.site-header__right {
+  @extend %flex-container;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+/* Logo styling */
+.site-header__logo {
+  height: var(--logo-size);
+  width: auto;
+  transition: transform var(--transition-fast);
+}
+
+/* Site name typography */
+.site-header__name {
+  font: var(--nav-font-size)/1 var(--main-font);
+  font-weight: 600;
+  letter-spacing: .02em;
+  color: var(--main-foreground);
+  white-space: nowrap;
+}

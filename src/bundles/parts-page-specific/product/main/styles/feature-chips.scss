@@ -1,0 +1,148 @@
+/* Feature Chip Group
+  ========================================================================== */
+
+.feature-chip-group {
+  --chip-spacing: 8px;
+  --chip-padding: 8px 12px;
+  --chip-border-radius: 20px;
+  --chip-bg-color: #f5f5f5;
+  --chip-text-color: #333;
+  --chip-hover-bg: #e8e8e8;
+  --chip-font-size: 12px;
+  --chip-icon-size: 16px;
+  --chip-transition: all 0.2s ease;
+
+  display: flex;
+  gap: var(--chip-spacing);
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+/* Individual Feature Chip */
+.feature-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: var(--chip-padding);
+  background-color: var(--chip-bg-color);
+  color: var(--chip-text-color);
+  border-radius: var(--chip-border-radius);
+  font-size: var(--chip-font-size);
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--chip-transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-chip:hover {
+  background-color: var(--chip-hover-bg);
+  transform: translateY(-1px);
+}
+
+.feature-chip:active {
+  transform: translateY(0);
+}
+
+/* Chip Icon */
+.feature-chip__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--chip-icon-size);
+  height: var(--chip-icon-size);
+}
+
+.feature-chip__icon .icon {
+  width: 100%;
+  height: 100%;
+}
+
+/* Chip Label */
+.feature-chip__label {
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+/* Chip Message (Tooltip/Popover content) */
+.feature-chip__message {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px 12px;
+  background-color: #333;
+  color: #fff;
+  font-size: 11px;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  pointer-events: none;
+  z-index: 10;
+  max-width: 200px;
+}
+
+/* Arrow for message tooltip */
+.feature-chip__message::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 4px 4px 0 4px;
+  border-color: #333 transparent transparent transparent;
+}
+
+/* Show message on hover/focus */
+.feature-chip:hover .feature-chip__message,
+.feature-chip:focus .feature-chip__message,
+.feature-chip[aria-expanded="true"] .feature-chip__message {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Specific chip types */
+.feature-chip[data-feature="simple"] {
+  --chip-bg-color: #e3f2fd;
+  --chip-text-color: #1976d2;
+  --chip-hover-bg: #bbdefb;
+}
+
+.feature-chip[data-feature="organic"] {
+  --chip-bg-color: #e8f5e9;
+  --chip-text-color: #388e3c;
+  --chip-hover-bg: #c8e6c9;
+}
+
+.feature-chip[data-feature="cozy"] {
+  --chip-bg-color: #fff3e0;
+  --chip-text-color: #f57c00;
+  --chip-hover-bg: #ffe0b2;
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+  .feature-chip-group {
+    --chip-font-size: 11px;
+    --chip-padding: 6px 10px;
+    --chip-icon-size: 14px;
+  }
+}
+
+/* Accessibility */
+.feature-chip:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+  .feature-chip-group {
+    display: none;
+  }
+}

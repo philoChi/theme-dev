@@ -1,0 +1,7 @@
+{
+    "syncConfig": {
+        "scriptDirectory": "${workspaceFolder}/.sync",
+        "inputPath": "${workspaceFolder}",
+        "outputPath": "${workspaceFolder}/../hyspex-input"
+    }
+}

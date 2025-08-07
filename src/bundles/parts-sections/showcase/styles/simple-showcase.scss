@@ -1,0 +1,85 @@
+/* Section: Simple Showcase
+   A simplified version of the product showcase without tabs
+   ========================================================================== */
+
+/* Block: Simple Showcase */
+.simple-showcase {
+  /* Custom properties inherited from parent context */
+}
+
+/* Element: Tab (non-interactive) */
+.simple-showcase__tab {
+  cursor: default;
+}
+
+/* Element: Tab Text */
+.simple-showcase__tab-text {
+  font-size: 1.2rem;
+}
+
+/* Element: Header Container */
+.simple-showcase__header-container {
+  justify-content: space-between;
+  padding: 0 1rem;
+  min-height: var(--tab-height);
+  margin: 0 auto;
+}
+
+/* Element: Section Title */
+.simple-showcase__title {
+  position: relative;
+  font-size: var(--heading-font-size);
+  font-weight: var(--heading-font-weight);
+  margin: 0;
+  padding: 0.75rem 0;
+}
+
+/* Static Underline for Title (pseudo-element) */
+.simple-showcase__title::after {
+  content: '';
+  position: absolute;
+  bottom: calc(-1 * var(--tab-border-width));
+  left: 0;
+  width: 100%;
+  height: var(--indicator-height);
+  background-color: rgb(var(--color-primary));
+  transform: scaleX(1);
+  opacity: 1;
+}
+
+/* Element: View All Buttons Container */
+.simple-showcase__view-all-buttons {
+  display: flex;
+  justify-content: center;
+  margin: 2rem auto 0;
+  max-width: 200px;
+}
+
+/* Modifier: Show state for view all buttons */
+.simple-showcase__view-all-buttons--show {
+  display: flex !important;
+}
+
+/* Element: Container (for product cards) */
+.simple-showcase__container {
+  /* Inherits from product-showcase__container */
+}
+
+/* Mobile Adjustments */
+@media screen and (max-width: 767px) {
+  .simple-showcase__header-container {
+    padding: 0;
+  }
+
+  /* Ensure proper spacing when header is hidden */
+  .simple-showcase:not([aria-labelledby]) .simple-showcase__container {
+    margin-top: 0;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .simple-showcase__header-container {
+    transition: none;
+  }
+}

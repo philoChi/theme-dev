@@ -1,0 +1,253 @@
+/**
+ * Accessibility and Performance Enhancements for Multi-Drawer Search
+ * Supports keyboard navigation, screen readers, high contrast, and reduced motion
+ */
+
+/* Screen Reader Only Content */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Focus Indicators */
+.cart-drawer__item-link:focus {
+  outline: 2px solid var(--color-primary, #000);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.cart-drawer__item-link:focus-visible {
+  outline: 2px solid var(--color-primary, #000);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Enhanced focus for keyboard navigation */
+.cart-drawer__item-link[data-keyboard-focused="true"] {
+  background-color: var(--color-primary-hover, rgba(0, 0, 0, 0.05));
+  outline: 2px solid var(--color-primary, #000);
+  outline-offset: 2px;
+}
+
+/* Search Input Focus */
+[mpe="search-input"]:focus {
+  outline: 2px solid var(--color-primary, #000);
+  outline-offset: 2px;
+  border-color: var(--color-primary, #000);
+}
+
+/* Button focus styles are handled by style-wrapper */
+
+/* Lazy Loading Images */
+.lazy-load {
+  transition: opacity 0.3s ease-in-out;
+  opacity: 0;
+}
+
+.lazy-load.loaded {
+  opacity: 1;
+}
+
+/* Loading placeholder for images */
+.cart-drawer__item-image img[data-src] {
+  background-color: var(--color-background-secondary, #f5f5f5);
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'><rect width='60' height='60' fill='%23f5f5f5'/><path d='M20 20h20v20H20z' fill='%23ddd'/></svg>");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+/* High Contrast Support */
+@media (prefers-contrast: high) {
+
+  .cart-drawer__item-link:focus,
+  .cart-drawer__item-link:focus-visible {
+    outline: 3px solid;
+    outline-color: currentColor;
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+
+  [mpe="search-input"]:focus {
+    outline: 3px solid;
+    outline-color: currentColor;
+    border-width: 2px;
+  }
+
+
+  .cart-drawer__item-title {
+    font-weight: bold;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .lazy-load {
+    transition: none;
+  }
+
+  .cart-drawer__item-link {
+    transition: none;
+  }
+
+  /* Disable any search result animations */
+  #SearchResults * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+
+  .cart-drawer__item-link:focus,
+  .cart-drawer__item-link:focus-visible {
+    outline-color: var(--color-primary-light, #fff);
+  }
+
+  [mpe="search-input"]:focus {
+    outline-color: var(--color-primary-light, #fff);
+    border-color: var(--color-primary-light, #fff);
+  }
+
+}
+
+/* Touch Target Size (Minimum 44px) */
+.cart-drawer__item-link {
+  min-height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.cart-drawer__item-link:hover {
+  background-color: var(--color-background-secondary, rgba(0, 0, 0, 0.05));
+}
+
+/* Removed custom SearchShowAllButton styles to allow style-wrapper to work properly */
+
+/* ARIA Live Regions - Only for specific announcements */
+.collection-page__pagination-info[aria-live],
+.collection-page__no-results[aria-live],
+.notification-container[aria-live],
+#SearchResultsList[aria-live] {
+  /* These are visible elements, don't hide them */
+}
+
+/* Screen reader only announcements */
+.sr-only[aria-live] {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0,0,0,0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Search Results Container */
+#SearchResultsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#SearchResultsList[aria-label] {
+  /* Ensure screen readers announce the results count */
+}
+
+/* Loading States */
+.search-loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Empty States */
+.search-empty {
+  padding: 20px;
+  text-align: center;
+  color: var(--color-text-secondary, #666);
+}
+
+/* Error States */
+.search-error {
+  padding: 20px;
+  text-align: center;
+  color: var(--color-error, #d32f2f);
+  background-color: var(--color-error-background, #ffeaea);
+  border: 1px solid var(--color-error-border, #ffcdd2);
+  border-radius: 4px;
+  margin: 10px 0;
+}
+
+/* Performance Optimization: GPU Acceleration for Smooth Scrolling */
+#SearchResults {
+  transform: translateZ(0);
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Responsive Design for Result Limiting */
+@media (max-width: 768px) {
+  .cart-drawer__item-link {
+    padding: 12px 8px;
+  }
+
+  .cart-drawer__item-details {
+    font-size: 14px;
+  }
+
+  .cart-drawer__item-title {
+    font-size: 16px;
+    line-height: 1.3;
+  }
+}
+
+@media (min-width: 769px) {
+  .cart-drawer__item-link {
+    padding: 8px 12px;
+  }
+
+  .cart-drawer__item-details {
+    font-size: 15px;
+  }
+
+  .cart-drawer__item-title {
+    font-size: 17px;
+    line-height: 1.4;
+  }
+}
+
+/* Keyboard Navigation Indicators */
+.keyboard-navigation-active .cart-drawer__item-link:focus {
+  z-index: 1;
+  position: relative;
+}
+
+/* Print Styles */
+@media print {
+  #SearchResults {
+    color: black !important;
+    background: white !important;
+  }
+
+  .cart-drawer__item-link {
+    text-decoration: underline;
+  }
+
+  .lazy-load {
+    opacity: 1 !important;
+  }
+}

@@ -1,0 +1,114 @@
+<div class="announcement-bar-link-content">
+  <div class="sector-margin sector-max-width-small announcement-bar-flex-link">
+    <div class="separator-container">
+      <div class="info-icon-container">
+        {%- if section.settings.infoicon_left_visibility -%}
+          <div class="info-icon">
+            {%- if section.settings.icon_info_image_left == null -%}
+              <span class="icon icon-dhl"></span>
+            {%- else -%}
+              <img
+                src="{{ section.settings.icon_info_image_left.src | image_url: 'master' }}"
+                loading="lazy"
+                width="20"
+                height="20"
+                alt="{{ section.settings.icon_info_image_left.alt | escape }}"
+                class="info-icon-image"
+              >
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+        {%- if section.settings.infoicon_right_visibility -%}
+          <div class="info-icon">
+            {%- if section.settings.icon_info_image_right == null -%}
+              <span class="icon icon-flag-german"></span>
+            {%- else -%}
+              <img
+                src="{{ section.settings.icon_info_image_right.src | image_url: 'master' }}"
+                loading="lazy"
+                width="20"
+                height="20"
+                alt="{{ section.settings.icon_info_image_right.alt | escape }}"
+                class="info-icon-image"
+              >
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+    <div class="separator-container">
+      {%- if shop.brand.metafields.social_links.instagram.value -%}
+        <a href="{{ shop.brand.metafields.social_links.instagram.value }}" class="icon-container less-padding">
+          <span class="icon icon-social-instagram"></span>
+        </a>
+      {%- endif -%}
+      {%- if shop.brand.metafields.social_links.facebook.value -%}
+        <a href="{{ shop.brand.metafields.social_links.facebook.value }}" class="icon-container less-padding">
+          {%- comment -%}{% render 'icon-social-facebook' %}{%- endcomment -%}
+          <span class="icon icon-social-instagram"></span>{%- comment -%}Fallback: Facebook icon not available{%- endcomment -%}
+        </a>
+      {%- endif -%}
+      <a href="{{ pages["contact"].url }}" class="info-icon">
+        <span class="icon icon-social-mailbox"></span>
+      </a>
+      {%- if section.settings.show_faq_link -%}
+        <a href="{{ pages.faq.url | default: '/pages/faq' }}" class="faq-text-link" title="FAQ">
+          FAQ
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+<div class="announcement-bar-container">
+  <div class="separator-container left"></div>
+  <div class="separator-container announcement">
+    {%- assign free_shipping_value = settings.free_shipping_germany | times: 100 | money_without_trailing_zeros -%}
+    <div class="announcement-text">
+      {{ 'sections.Announcement_Bar.Heading_1' | t: free_shipping_value: free_shipping_value }}
+    </div>
+  </div>
+  <div class="separator-container right"></div>
+</div>
+
+{% schema %}
+{
+  "name": "AnnouncementBar",
+  "tag": "section",
+  "class": "announcement-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "infoicon_right_visibility",
+      "label": "InfoIcon Right - Visibility",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "infoicon_left_visibility",
+      "label": "InfoIcon Left - Visibility",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_info_image_right",
+      "label": "Icon Info Image Right"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_info_image_left",
+      "label": "Icon Info Image Left"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_faq_link",
+      "label": "Show FAQ Link",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "faq_link",
+      "label": "FAQ Page Link"
+    }
+  ]
+}
+{% endschema %}

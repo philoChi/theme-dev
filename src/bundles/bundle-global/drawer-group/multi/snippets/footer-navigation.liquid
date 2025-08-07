@@ -1,0 +1,9 @@
+{% if section.settings.bottom_cta_label != blank 
+  and section.settings.bottom_cta_link  != blank %}
+<div class="drawer__footer__item" id={{id}}>
+    {% render 'snippet-feature-button',
+      button_text: section.settings.bottom_cta_label,
+      button_link: section.settings.bottom_cta_link,
+      size:        'large' %}
+</div>
+{% endif %}

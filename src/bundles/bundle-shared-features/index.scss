@@ -1,0 +1,18 @@
+/**
+ * Shared Features Bundle - All Styles
+ * Consolidates all component and utility styles into a single import
+ */
+
+/* Component Styles */
+@import './dropdown-menu/styles/dropdown.scss';
+@import './notification-system/styles/notification.scss';
+
+/* Product Features */
+@import './product-card/index.scss';
+@import './product-info/index.scss';
+
+/* Utility Styles */
+@import './buttons-general/styles/button.scss';
+@import './buttons-arrow/styles/arrow-navigation.scss';
+@import './highlight-note/styles/highlight-note.scss';
+@import './style-wrapper/styles/style-wrapper.scss';

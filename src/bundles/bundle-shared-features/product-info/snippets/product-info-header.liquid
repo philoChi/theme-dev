@@ -1,0 +1,48 @@
+{%- comment -%}
+  Feature: Product Info Header
+  MODIFIED: {{ "now" | date: "%Y-%m-%d %H:%M:%S %Z" }}
+  Displays vendor, product title, and product type as subtitle.
+  Uses product type directly from Shopify's product organization.
+  Example:
+  Vendor: {{ product.vendor }}
+  Title: {{ product.title }}
+  Product Type: {{ product.type }}
+{%- endcomment -%}
+
+{%- liquid
+  # Use product type directly as subtitle
+  if product.type != blank
+    assign product_info = product.type
+  else
+    assign product_info = ''
+  endif
+%}
+
+{% if product_page %}
+  <div class="product-main__header">
+{% else %}
+  <a href="{{product.url}}" class="product-main__header">
+{%- endif -%}
+{% if show_vendor %}
+  {% if product.vendor != blank %}
+    <div class="product-main__vendor" itemprop="brand" itemtype="http://schema.org/Brand" itemscope>
+      <meta itemprop="name" content="{{ product.vendor | escape }}">
+      {{ product.vendor }}
+    </div>
+  {% endif %}
+{% endif %}
+
+<h1 class="product-main__title {%- if product_page %} big-title{%- endif -%}" itemprop="name">
+  {{ product.title | escape }}
+</h1>
+
+{%- if product_info != blank -%}
+  <div class="product-main__subtitle" itemprop="description">
+    {{- product_info -}}
+  </div>
+{%- endif -%}
+{% if product_page %}
+  </div>
+{% else %}
+  </a>
+{%- endif -%}

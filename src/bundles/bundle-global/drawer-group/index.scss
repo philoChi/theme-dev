@@ -1,0 +1,17 @@
+/**
+ * Drawer Group Styles
+ * Main entry point for all drawer related styles
+ */
+
+// Import base drawer styles
+@import './base/styles/drawer-base.scss';
+
+// Import cart drawer styles
+@import './cart/styles/drawer-cart.scss';
+
+// Import multi-drawer styles
+@import './multi/styles/accessibility.scss';
+@import './multi/styles/animations.scss';
+@import './multi/styles/drawer-multi.scss';
+@import './multi/styles/search-box.scss';
+@import './multi/styles/search-main.scss';

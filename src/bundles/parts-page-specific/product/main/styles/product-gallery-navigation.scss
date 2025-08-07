@@ -1,0 +1,668 @@
+/* 
+ * section-product-gallery-navigation.css
+ * -------------------------------------
+ * Enhanced product gallery navigation styles
+ * Following BEM methodology and theme conventions
+ * Version: 1.0 - Foundation styles for Milestone 1
+ */
+
+/* ===================================================================
+   Progressive Enhancement Styles
+   =================================================================== */
+
+/* Base HTML-only styles (no-JS experience) */
+html.no-js .product-gallery__main-image-container {
+  /* In no-JS mode, show all images in a scrollable container */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow-y: auto;
+  max-height: 600px;
+  padding: 1rem;
+  background-color: var(--color-background-subdued, #f9f9f9);
+  border-radius: 0.25rem;
+}
+
+/* Show all images in no-JS mode for SEO and accessibility */
+html.no-js .product-gallery__image {
+  display: block !important;
+  opacity: 1 !important;
+  position: static !important;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  margin-bottom: 1rem;
+}
+
+/* Progressive Enhancement: Default state shows all images, JS will hide alternates */
+.product-gallery__image--alternate {
+  display: block;
+  opacity: 1;
+}
+
+/* Only hide alternate images when JS has enhanced the gallery */
+.product-gallery-navigation:not(.no-js) .product-gallery__image--alternate {
+  display: none;
+}
+
+/* Thumbnail navigation works as anchor links in no-JS mode */
+html.no-js .product-gallery__thumbnail-item {
+  display: block;
+  text-decoration: none;
+}
+
+/* Hide JS-only elements in no-JS mode */
+html.no-js .product-gallery__navigation,
+html.no-js .product-gallery__position,
+html.no-js .product-gallery__announcements {
+  display: none !important;
+}
+
+/* ===================================================================
+   Gallery Navigation Foundation
+   =================================================================== */
+
+.product-gallery-navigation {
+  position: relative;
+  display: flex;
+  gap: var(--pm-thumbnail-gap, 0.5rem);
+  width: 100%;
+  height: 100%;
+}
+
+/* Transition states for smooth navigation */
+.product-gallery-navigation.is-transitioning {
+  pointer-events: none;
+}
+
+.product-gallery-navigation.is-transitioning .product-gallery__image {
+  transition: opacity var(--gallery-transition-duration, 300ms) ease-in-out;
+}
+
+/* Disable navigation buttons during transitions */
+.product-gallery-navigation.is-transitioning .product-gallery__navigation:disabled,
+.product-gallery-navigation.is-transitioning .product-gallery__navigation-button:disabled {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ===================================================================
+   Enhanced Main Image Container
+   =================================================================== */
+
+/* Main image container - grows to fill remaining space */
+.product-gallery-navigation .product-gallery__main-image-container {
+  flex: 1 1 auto;
+  min-width: 0;
+  /* Allow shrinking */
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.25rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  background-color: var(--color-background-subdued, #f9f9f9);
+}
+
+.product-gallery-navigation .product-gallery__image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  transition: opacity var(--gallery-transition-duration, 300ms) ease-in-out;
+  /* Ensure no layout shift during transitions */
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  /* Optimize for GPU acceleration */
+  will-change: opacity;
+}
+
+/* Progressive Enhancement: Hide alternate images when JS is enabled */
+.product-gallery-navigation:not(.no-js) .product-gallery__image--alternate {
+  display: none;
+}
+
+/* Active image is always visible */
+.product-gallery-navigation .product-gallery__image.is-active {
+  display: block;
+  opacity: 1;
+}
+
+/* Loading state for image transitions */
+.product-gallery__image--loading {
+  opacity: 0.7;
+}
+
+/* Ensure dimensions are preserved during transition */
+.product-gallery__image[src] {
+  min-height: 1px;
+  /* Prevent collapse during src changes */
+}
+
+/* Lazy loading states */
+.product-gallery__image[data-lazy-load="true"] {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.product-gallery__image.is-loading {
+  opacity: 0.5;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.product-gallery__image.is-loaded {
+  opacity: 1;
+}
+
+/* Performance optimization: Force GPU layers for smoother transitions */
+.product-gallery__main-image-container {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.product-gallery__image {
+  will-change: opacity, transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  /* Optimize rendering for smooth scaling */
+  image-rendering: auto;
+  /* Prevent reflow during transitions */
+  contain: layout style paint;
+}
+
+/* ===================================================================
+   Print Styles - Progressive Enhancement
+   =================================================================== */
+
+@media print {
+
+  /* Show all product images when printing */
+  .product-gallery__image {
+    display: block !important;
+    opacity: 1 !important;
+    page-break-inside: avoid;
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Hide navigation controls in print */
+  .product-gallery__navigation,
+  .product-gallery__position,
+  .product-gallery__thumbnails {
+    display: none !important;
+  }
+
+  /* Arrange images in a grid for printing */
+  .product-gallery__main-image-container {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+}
+
+/* ===================================================================
+   CSS-Only Focus States - Progressive Enhancement
+   =================================================================== */
+
+/* Enhanced focus indicators that work without JS */
+.product-gallery__thumbnail-item:focus {
+  outline: 3px solid var(--color-focus, #005fcc);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Hover states that work without JS */
+.product-gallery__thumbnail-item:hover {
+  opacity: 0.8;
+  transform: scale(1.02);
+  transition: all 0.2s ease-in-out;
+}
+
+/* Active thumbnail indicator that works without JS */
+.product-gallery__thumbnail-item[aria-selected="true"],
+.product-gallery__thumbnail-item.is-active {
+  position: relative;
+}
+
+.product-gallery__thumbnail-item[aria-selected="true"]::after,
+.product-gallery__thumbnail-item.is-active::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border: 2px solid var(--color-primary-foreground, #000);
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+/* ===================================================================
+   Navigation Controls Integration with Unified System
+   =================================================================== */
+
+/* Focus management for navigation controls rendered by unified system */
+.product-gallery-navigation:focus-within .product-gallery__navigation {
+  /* Unified system handles all navigation styling */
+}
+
+/* ===================================================================
+   Enhanced Thumbnail Navigation
+   =================================================================== */
+
+/* Thumbnails container - positioned on the side */
+.product-gallery-navigation .product-gallery__thumbnails {
+  flex: 0 0 var(--pm-thumbnail-width, 6rem);
+  display: flex;
+  flex-direction: column;
+  gap: var(--pm-thumbnail-gap, 0.5rem);
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+  scroll-behavior: smooth;
+  padding-right: 5px;
+  max-height: var(--pm-thumbnail-max-height-before-scroll, 680px);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+/* Scrollbar styling for thumbnails */
+.product-gallery-navigation .product-gallery__thumbnails::-webkit-scrollbar {
+  width: 5px;
+}
+
+.product-gallery-navigation .product-gallery__thumbnails::-webkit-scrollbar-thumb {
+  background-color: var(--main-border-color, rgba(0, 0, 0, 0.2));
+  border-radius: 3px;
+}
+
+/* Defer to main layout CSS for scrollbar styling */
+/* Main layout scrollbar styles take precedence in section-product-page-main.css */
+
+/* Thumbnail item styling */
+.product-gallery-navigation .product-gallery__thumbnail-item {
+  flex: 0 0 auto;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease-in-out;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* Thumbnail image styling */
+.product-gallery-navigation .product-gallery__thumbnail-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid var(--main-border-color, #e0e0e0);
+  border-radius: 0.25rem;
+  transition: border-color 0.2s ease, opacity 0.2s ease-in-out;
+}
+
+.product-gallery-navigation .product-gallery__thumbnail-item:hover img {
+  border-color: var(--color-primary-foreground, #000);
+  opacity: 0.9;
+}
+
+.product-gallery-navigation .product-gallery__thumbnail-item.is-active img {
+  border-color: var(--color-primary-foreground, #000);
+  opacity: 1;
+}
+
+/* Focus styles for accessibility */
+.product-gallery-navigation .product-gallery__thumbnail-item:focus {
+  outline: 2px solid var(--color-focus, #005fcc);
+  outline-offset: 2px;
+}
+
+.product-gallery-navigation .product-gallery__thumbnail-item:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ===================================================================
+   Position Indicator - Active Implementation
+   =================================================================== */
+
+.product-gallery__position {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  background: var(--gallery-position-bg, rgba(0, 0, 0, 0.7));
+  color: var(--gallery-position-color, white);
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  pointer-events: none;
+  /* Prevent position indicator from interfering with interactions */
+  min-width: 3rem;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Show position indicator during navigation and on hover */
+.product-gallery-navigation:hover .product-gallery__position,
+.product-gallery-navigation.is-transitioning .product-gallery__position,
+.product-gallery-navigation:focus-within .product-gallery__position {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Show position indicator when navigation buttons are visible */
+@media (hover: none) {
+  .product-gallery__position {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+/* ===================================================================
+   Accessibility Enhancements
+   =================================================================== */
+
+.product-gallery__announcements {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Focus indicators for keyboard navigation */
+.product-gallery-navigation:focus-within .product-gallery__navigation {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ===================================================================
+   Error States
+   =================================================================== */
+
+.product-gallery-navigation.has-error {
+  border: 2px dashed rgba(255, 0, 0, 0.3);
+}
+
+.product-gallery-navigation.has-error::after {
+  content: "Gallery Error";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 0, 0, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  color: #d32f2f;
+  z-index: 10;
+}
+
+/* ===================================================================
+   Mobile Layout Optimizations
+   =================================================================== */
+
+@media (max-width: 767px) {
+
+  /* Force mobile vertical layout - override existing theme */
+  .product-main__gallery {
+    flex-direction: column !important;
+    height: auto !important;
+  }
+
+  /* Main image takes full width and comes first */
+  .product-main__gallery .product-gallery__main-image-container {
+    order: 1 !important;
+    width: 100% !important;
+    flex: none !important;
+    aspect-ratio: 1 / 1;
+    margin-bottom: var(--pm-thumbnail-gap, 0.5rem) !important;
+    /* Enable touch gestures on mobile */
+    touch-action: pan-y pinch-zoom;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    /* Ensure relative positioning for navigation buttons */
+    position: relative;
+  }
+
+  /* Thumbnails horizontal scroll below main image */
+  .product-main__gallery .product-gallery__thumbnails {
+    order: 2 !important;
+    flex-direction: row !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    padding-right: 0 !important;
+    padding-bottom: 5px;
+    flex: none !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* Individual thumbnails sizing for horizontal layout */
+  .product-main__gallery .product-gallery__thumbnail-item {
+    flex: 0 0 var(--pm-thumbnail-width, 6rem) !important;
+    width: var(--pm-thumbnail-width, 6rem) !important;
+    margin-right: var(--pm-thumbnail-gap, 0.5rem);
+  }
+
+  .product-main__gallery .product-gallery__thumbnail-item:last-child {
+    margin-right: 0;
+  }
+
+  /* Prevent image dragging on mobile */
+  .product-main__gallery .product-gallery__image {
+    -webkit-user-drag: none;
+    user-drag: none;
+    /* Allow touch events for swipe detection */
+    pointer-events: auto;
+  }
+
+  /* Swipe visual feedback transition */
+  .product-gallery-navigation.is-swiping .product-gallery__main-image-container {
+    transition: transform 0.1s ease-out;
+  }
+
+  /* Reset transform after swipe */
+  .product-gallery-navigation:not(.is-swiping) .product-gallery__main-image-container {
+    transform: none;
+    transition: transform 0.2s ease-out;
+  }
+
+  /* Hide scrollbar on mobile thumbnails for cleaner look */
+  .product-main__gallery .product-gallery__thumbnails {
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .product-main__gallery .product-gallery__thumbnails::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Navigation buttons now handled by unified system */
+  /* Positioning and styling managed by feature-arrow-navigation.css */
+
+  .product-gallery__position {
+    bottom: 0.5rem;
+    font-size: 0.8125rem;
+    padding: 0.2rem 0.6rem;
+    z-index: 2;
+  }
+
+  /* Swipe indicator visual cue */
+  .product-gallery-navigation.supports-touch .product-gallery__main-image-container::after {
+    content: '';
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 4px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+  }
+
+  /* Show swipe indicator on first load */
+  .product-gallery-navigation.supports-touch.show-swipe-hint .product-gallery__main-image-container::after {
+    opacity: 1;
+    animation: swipe-hint 2s ease-out 0.5s;
+  }
+
+  @keyframes swipe-hint {
+
+    0%,
+    100% {
+      transform: translateX(-50%);
+    }
+
+    25% {
+      transform: translateX(-50%) translateX(-10px);
+    }
+
+    75% {
+      transform: translateX(-50%) translateX(10px);
+    }
+  }
+
+  /* Enhanced mobile navigation visibility handled by unified system */
+}
+
+/* ===================================================================
+   High Contrast Mode Support
+   =================================================================== */
+
+@media (prefers-contrast: high) {
+  /* Navigation button styling handled by unified system */
+
+  .product-gallery__position {
+    background: black;
+    border: 2px solid white;
+  }
+}
+
+/* ===================================================================
+   Reduced Motion Support
+   =================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .product-gallery__image,
+  .product-gallery__thumbnail-item,
+  .product-gallery__position,
+  .product-gallery__thumbnail-image,
+  .product-gallery__thumbnails {
+    transition: none;
+  }
+
+  /* Navigation button motion handled by unified system */
+
+  .product-gallery__thumbnail-item.is-active {
+    transform: none;
+  }
+
+  .product-gallery__thumbnail-item:hover {
+    transform: none;
+  }
+
+  .product-gallery__thumbnails {
+    scroll-behavior: auto;
+  }
+}
+
+/* ===================================================================
+   Loading States
+   =================================================================== */
+
+.product-gallery-navigation.is-loading {
+  position: relative;
+}
+
+.product-gallery-navigation.is-loading::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.product-gallery-navigation.is-loading::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid var(--color-primary, #000);
+  border-radius: 50%;
+  z-index: 6;
+  animation: gallery-loading-spin 1s linear infinite;
+}
+
+@keyframes gallery-loading-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===================================================================
+   CSS Custom Properties for Theming
+   =================================================================== */
+
+.product-gallery-navigation {
+  --gallery-transition-duration: 300ms;
+  /* Navigation styling handled by unified system */
+  --gallery-position-bg: rgba(0, 0, 0, 0.7);
+  --gallery-position-color: white;
+}
+
+/* Dark theme support with enhanced accessibility */
+@media (prefers-color-scheme: dark) {
+  .product-gallery-navigation {
+    /* Navigation theming handled by unified system */
+    --gallery-position-bg: rgba(255, 255, 255, 0.9);
+    --gallery-position-color: black;
+    --color-focus: #66b3ff;
+    --gallery-loading-bg: rgba(0, 0, 0, 0.9);
+  }
+
+  .product-gallery__announcements {
+    color: white;
+  }
+
+  .product-gallery__loading-indicator {
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+}

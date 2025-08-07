@@ -1,0 +1,36 @@
+{%- comment -%}
+  Converter: Product Type Configuration
+  Purpose: Dynamically maps product types to specific content configurations
+  
+  Usage:
+  {% capture tag_product_type %}{% render 'snippet-utils-converter-product-type', product: product, output: 'product_type' %}{% endcapture %}
+  {% capture tag_properties %}{% render 'snippet-utils-converter-product-type', product: product, output: 'properties' %}{% endcapture %}
+  {% capture tag_determiner %}{% render 'snippet-utils-converter-product-type', product: product, output: 'determiner' %}{% endcapture %}
+  {% capture tag_feature_chips %}{% render 'snippet-utils-converter-product-type', product: product, output: 'feature_chips' %}{% endcapture %}
+  
+  Parameters:
+  - product: Product object
+  - output: What to output ('product_type', 'properties', 'determiner', 'feature_chips')
+{%- endcomment -%}
+
+{%- assign result = '' -%}
+
+{%- if product.type != blank -%}
+  {%- assign type_handle = product.type | handleize -%}
+  
+  {%- comment -%} Try to get the value from the specific product configuration {%- endcomment -%}
+  {%- assign config_key = 'product_configurations.' | append: type_handle | append: '.' | append: output -%}
+  {%- assign result = config_key | t -%}
+  
+  {%- comment -%} If the translation key wasn't found, fall back to default configuration {%- endcomment -%}
+  {%- if result == config_key or result contains 'Translation missing' -%}
+    {%- assign default_key = 'product_configurations.default.' | append: output -%}
+    {%- assign result = default_key | t -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- if output == 'properties' and result != blank -%}
+  {{- result | strip -}}
+{%- else -%}
+  {{- result -}}
+{%- endif -%}

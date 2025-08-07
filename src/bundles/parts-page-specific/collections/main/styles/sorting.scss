@@ -1,0 +1,175 @@
+/* ===================================
+   Collection Page Bundle - Sorting Component
+   Purpose: Styles for sorting functionality
+   =================================== */
+
+/* Sort Dropdown */
+.collection-page__sort {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  /* Ensure sort component creates proper stacking context */
+  position: relative;
+  z-index: 1999;
+}
+
+.collection-page__sort-label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text) !important;
+  white-space: nowrap;
+}
+
+/* Custom Dropdown Menu */
+.collection-page__sort-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: #ffffff;
+  background: var(--color-background, #ffffff);
+  border: 1px solid #e0e0e0;
+  border: 1px solid var(--color-border, #e0e0e0);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  z-index: 1500;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+  margin-top: 4px;
+  overflow: hidden;
+  min-width: 200px;
+  /* Force vertical stacking */
+  display: flex;
+  flex-direction: column;
+}
+
+.collection-page__sort-dropdown.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.collection-page__sort-option {
+  display: block !important;
+  width: 100% !important;
+  padding: 14px 16px !important;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 400;
+  color: #333333;
+  color: var(--color-text, #333333);
+  background: #ffffff;
+  background: var(--color-background, #ffffff);
+  border: none;
+  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--color-border-light, #f0f0f0);
+  text-align: left;
+  white-space: nowrap;
+  line-height: 1.4;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  outline: none;
+  text-decoration: none;
+  /* Force vertical stacking */
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.collection-page__sort-option:last-child {
+  border-bottom: none;
+}
+
+.collection-page__sort-option:hover,
+.collection-page__sort-option:focus {
+  background-color: #f8f9fa;
+  background-color: var(--color-background-secondary, #f8f9fa);
+  color: #000000;
+  color: var(--color-text-hover, #000000);
+}
+
+.collection-page__sort-option[aria-selected="true"] {
+  background-color: #2563eb;
+  background-color: var(--color-primary, #2563eb);
+  color: #ffffff;
+  color: var(--color-text-inverse, #ffffff);
+  font-weight: 500;
+}
+
+.collection-page__sort-option[aria-selected="true"]:hover {
+  background-color: #1d4ed8;
+  background-color: var(--color-primary-dark, #1d4ed8);
+}
+
+/* Mobile Responsive Sorting */
+@media screen and (max-width: 47.9375rem) {
+  .collection-page__sort {
+    width: 100%;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: stretch;
+  }
+
+  .collection-page__sort-label {
+    text-align: center;
+  }
+
+  .collection-page__sort-dropdown {
+    left: 0;
+    width: 100%;
+    min-width: unset;
+  }
+}
+
+/* Visual button wrapper - for style-wrapper content only */
+.collection-page__sort-wrapper {
+  display: block;
+  width: 100%;
+  min-height: 40px;
+  cursor: pointer;
+}
+
+/* Container for both visual button and select element */
+.collection-page__sort-container {
+  position: relative;
+  display: block;
+  width: 100%;
+  cursor: pointer;
+  /* Fix stacking context to ensure dropdown appears above product cards */
+  z-index: 2000;
+  /* Ensure pointer cursor shows on container */
+}
+
+.collection-page__sort-display {
+  display: block;
+  padding-right: 24px;
+  font-size: inherit;
+  font-style: inherit;
+  line-height: 1.5;
+  pointer-events: none;
+  z-index: 1;
+  position: relative;
+  color: inherit;
+  transition: color 0.3s ease;
+}
+
+.collection-page__sort-arrow {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  z-index: 1;
+  color: inherit;
+  transition: color 0.3s ease;
+}
+
+/* Style-wrapper fix for proper animation coverage */
+.style-wrapper--flat-basic .collection-page__sort-wrapper::before {
+  width: 200% !important;
+  height: 200% !important;
+  pointer-events: none !important;
+}
+
+
+

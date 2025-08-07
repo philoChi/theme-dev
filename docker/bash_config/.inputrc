@@ -1,0 +1,70 @@
+# ~/.inputrc - readline configuration for proper terminal behavior
+
+# Be 8 bit clean.
+set input-meta on
+set output-meta on
+
+# Don't strip characters to 7 bits when reading
+set convert-meta off
+
+# Allow UTF-8 input and output
+set enable-meta-key on
+
+# Try to enable the application keypad when it is called.
+set enable-keypad on
+
+# Enable horizontal scrolling mode - this helps with line wrapping issues
+set horizontal-scroll-mode off
+
+# Show all if ambiguous
+set show-all-if-ambiguous on
+
+# Be more intelligent when autocompleting
+set completion-ignore-case on
+
+# Show extra file information when completing
+set visible-stats on
+
+# Show file types when completing
+set colored-stats on
+
+# Immediately add a trailing slash when autocompleting symlinks to directories
+set mark-symlinked-directories on
+
+# Don't make noise
+set bell-style none
+
+# Enable history expansion with space
+$if Bash
+    Space: magic-space
+$endif
+
+# Arrow keys in keypad mode
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+"\e[C": forward-char
+"\e[D": backward-char
+
+# Home/End keys
+"\e[1~": beginning-of-line
+"\e[4~": end-of-line
+"\e[H": beginning-of-line
+"\e[F": end-of-line
+
+# Page Up/Page Down
+"\e[5~": beginning-of-history
+"\e[6~": end-of-history
+
+# Delete key
+"\e[3~": delete-char
+
+# Ctrl+Left/Right to move by words
+"\e[1;5C": forward-word
+"\e[1;5D": backward-word
+"\e[5C": forward-word
+"\e[5D": backward-word
+"\e\e[C": forward-word
+"\e\e[D": backward-word
+
+# Fix for line wrapping issues
+set enable-bracketed-paste on

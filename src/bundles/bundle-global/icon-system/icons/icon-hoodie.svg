@@ -1,0 +1,81 @@
+<svg viewBox="0 0 600 500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Hoodie Body -->
+  <path d="M150,150 
+           C150,150 175,110 220,100
+           C265,90 335,90 380,100
+           C425,110 450,150 450,150
+           L480,330
+           C480,330 470,340 450,345
+           L450,420
+           L150,420
+           L150,345
+           C130,340 120,330 120,330
+           Z" 
+        fill="none" 
+        stroke="currentColor" 
+        stroke-width="6"/>
+  
+  <!-- Hood -->
+  <path d="M220,100
+           C220,100 250,130 300,130
+           C350,130 380,100 380,100
+           C380,100 370,70 350,60
+           C330,50 270,50 250,60
+           C230,70 220,100 220,100
+           Z"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="6"/>
+  
+  <!-- Hood Opening -->
+  <path d="M260,70
+           C260,70 280,60 300,60
+           C320,60 340,70 340,70
+           C340,70 335,85 300,85
+           C265,85 260,70 260,70
+           Z"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="6"/>
+  
+  <!-- Pocket -->
+  <path d="M225,300
+           C225,300 235,290 300,290
+           C365,290 375,300 375,300
+           L375,360
+           L225,360
+           Z"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="6"/>
+  
+  <!-- Left Sleeve -->
+  <path d="M150,150
+           L100,250
+           C90,270 85,290 90,320
+           L120,330"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="6"/>
+  
+  <!-- Right Sleeve -->
+  <path d="M450,150
+           L500,250
+           C510,270 515,290 510,320
+           L480,330"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="6"/>
+  
+  <!-- Sleeve Cuffs -->
+  <path d="M90,320 C90,320 100,330 120,330" fill="none" stroke="currentColor" stroke-width="6"/>
+  <path d="M510,320 C510,320 500,330 480,330" fill="none" stroke="currentColor" stroke-width="6"/>
+  
+  <!-- Drawstrings -->
+  <path d="M270,130 C270,150 260,170 250,180" fill="none" stroke="currentColor" stroke-width="6"/>
+  <path d="M330,130 C330,150 340,170 350,180" fill="none" stroke="currentColor" stroke-width="6"/>
+  
+  <!-- Drawstring Tips -->
+  <circle cx="250" cy="180" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
+  <circle cx="350" cy="180" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
+</svg>

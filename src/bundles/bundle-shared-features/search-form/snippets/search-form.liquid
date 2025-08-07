@@ -1,0 +1,96 @@
+{%- comment -%}
+  Feature: Search Form
+  Accessible search form with proper labeling and button semantics
+  Parameters:
+  - hide_tablet: Hide on tablet devices
+  - width: Custom width
+  - max_width: Maximum width
+  - border: Show border
+  - mpe: Custom attribute
+  - form_id: Unique form ID (optional)
+{%- endcomment -%}
+
+{%- liquid
+  assign unique_id = form_id | default: 'SearchForm-' | append: section.id
+  assign search_label = 'general.search.search' | t | default: 'Search'
+  assign search_placeholder = 'general.search.placeholder' | t | default: 'Search our store'
+-%}
+
+<div
+  class="search-container {% if hide_tablet %}hide-tablet{% endif %}"
+  style="
+    {% if width %} width: {{ width }}; {% endif %}
+    {% if max_width %} max-width: {{ max_width }}; {% endif %}
+    {% if border %}
+      border: var(--nav-border-width) solid var(--main-border-color);
+      border-radius: var(--navlink-hover-radius);
+    {% endif %}
+  "
+>
+  <form
+    action="{{ routes.search_url }}"
+    method="get"
+    role="search"
+    class="search-form"
+    data-search-form
+    aria-label="{{ search_label }}"
+  >
+    <label for="{{ unique_id }}" class="visually-hidden">
+      {{ search_label }}
+    </label>
+
+    <button
+      type="submit"
+      class="search-button"
+      aria-label="{{ 'general.search.submit' | t | default: 'Submit search' }}"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="icon-nav-search"
+        aria-hidden="true"
+      >
+        <path stroke-linecap="round"
+              stroke-linejoin="round"
+              d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+      </svg>
+    </button>
+
+    <input
+      type="search"
+      name="q"
+      id="{{ unique_id }}"
+      class="search-input"
+      {% if mpe %}
+        mpe="{{ mpe }}"
+      {% endif %}
+      placeholder="{{ search_placeholder }}"
+      maxlength="256"
+      required
+      autocomplete="off"
+      aria-describedby="{{ unique_id }}-description"
+    >
+  </form>
+</div>
+
+<style>
+  .visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+
+  .search-button:focus-visible {
+    outline: 2px solid var(--color-primary-foreground, #000);
+    outline-offset: 2px;
+  }
+</style>

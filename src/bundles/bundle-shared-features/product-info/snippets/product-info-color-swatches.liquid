@@ -1,0 +1,85 @@
+{%- comment -%}
+  Feature: Color Swatches
+  Purpose : Render clickable colour‑variant swatches in any context
+  Parameters
+    • product         – required (Product object)
+    • option_name     – optional, defaults to 'Color'
+    • initial_variant – optional, defaults to product.selected_or_first_available_variant
+  Notes
+    • Generates the same data‑attributes used by the old card markup,
+      so the global ColorSwatchController can attach without extra config.
+    • No <script> tag is included; controller is registered elsewhere.
+{%- endcomment -%}
+
+{%- liquid
+  assign option_name = option_name | default: 'Color'
+  assign option_key = option_name | handleize
+
+  # allow common synonyms without having to pass option_name each time
+  assign fallback_keys = 'color,colour,farbe,couleur,colore'
+  assign match_keys = option_key | append: ',' | append: fallback_keys | split: ','
+  assign color_option_idx = -1
+  assign color_option = null
+
+  for opt in product.options_with_values
+    assign opt_key = opt.name | handleize
+    if match_keys contains opt_key
+      assign color_option_idx = forloop.index0
+      assign color_option = opt
+      break
+    endif
+  endfor
+-%}
+
+{% if color_option_idx != -1 %}
+  {%- comment -%} Pre‑load one featured image per colour (deduplicated) {%- endcomment -%}
+  <div class="product-card__variants">
+    <div class="product-card__variant-images" aria-hidden="true">
+      {%- assign unique_media = '' -%}
+      {%- for value in color_option.values -%}
+        {%- for variant in product.variants -%}
+          {%- if variant.options[color_option_idx] == value and variant.featured_media -%}
+            {%- assign media_id = variant.featured_media.id | append: '' -%}
+            {%- unless unique_media contains media_id -%}
+              {%- assign unique_media = unique_media | append: media_id | append: ',' -%}
+              <link
+                rel="preload"
+                as="image"
+                href="{{ variant.featured_media | image_url: width: 400 }}"
+                data-media-id="{{ variant.featured_media.id }}"
+                data-variant-id="{{ variant.id }}"
+              >
+            {%- endunless -%}
+            {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endfor -%}
+    </div>
+
+    <div
+      class="product-color-swatches"
+      data-color-swatches
+      role="group"
+      aria-label="{{ 'products.product.color_options' | t }}"
+    >
+      {%- for value in color_option.values -%}
+        {%- assign variant_for_color = null -%}
+        {%- comment -%}find first variant that matches this colour{%- endcomment -%}
+        {%- for v in product.variants -%}
+          {%- if v.options[color_option_idx] == value -%}
+            {%- assign variant_for_color = v -%}
+            {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- if variant_for_color -%}
+          {% render 'snippet-feature-product-info-color-swatch-icon',
+            value: value,
+            variant_for_color: variant_for_color,
+            current_variant: product.selected_or_first_available_variant
+          %}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+{% endif %}

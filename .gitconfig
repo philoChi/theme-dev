@@ -1,0 +1,38 @@
+# Shared Git Configuration
+# Copy this to your global git config or use: git config --global include.path .gitconfig
+
+[alias]
+    # Quick commands
+    com = commit -m
+    co = checkout
+    s = status
+    cob = checkout -b
+    
+    # Branch management
+    bra = branch -a -vv
+    
+    # Add, commit, and push in one command
+    # Usage: git acp "commit message"
+    acp = "!f() { git add . && git commit -m \"$1\" && git push; }; f"
+    
+    # Utility aliases for configuration
+    confga = config --global alias.
+
+[core]
+    # Ensure consistent line endings
+    autocrlf = input
+    
+    # Better diff output
+    pager = less -FRX
+
+[push]
+    # Only push current branch
+    default = simple
+
+[pull]
+    # Use rebase by default to keep history clean
+    rebase = true
+
+[init]
+    # Use 'main' as default branch name
+    defaultBranch = main

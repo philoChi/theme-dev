@@ -1,0 +1,57 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Sock outline -->
+  <path
+    d="M150,50 
+       C190,50 230,50 270,55
+       C280,55 290,60 295,65
+       C300,70 300,80 300,90
+       L300,200
+       C300,250 280,280 250,310
+       C220,340 190,350 150,350
+       C110,350 80,340 70,310
+       C60,280 60,250 60,200
+       L60,90
+       C60,80 70,70 80,65
+       C90,60 110,50 150,50 Z"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="5"
+  />
+  
+  <!-- Sock ribbing at top -->
+  <path
+    d="M100,65 
+       C120,60 180,60 200,60
+       C220,60 250,60 260,65"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="6"
+  />
+  
+  <path
+    d="M100,75 
+       C120,70 180,70 200,70
+       C220,70 250,70 260,75"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="6"
+  />
+  
+  <path
+    d="M100,85 
+       C120,80 180,80 200,80
+       C220,80 250,80 260,85"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="6"
+  />
+  
+  <!-- Heel curve -->
+  <path
+    d="M100,280
+       C120,320 180,320 200,280"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="6"
+  />
+</svg>

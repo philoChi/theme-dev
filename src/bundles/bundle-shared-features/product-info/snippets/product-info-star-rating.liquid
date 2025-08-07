@@ -1,0 +1,94 @@
+{%- comment -%}
+  Feature: Product Info Star Rating
+  
+  Purpose: Renders a star rating display with support for full, half, and empty stars
+  
+  Parameters:
+    - rating_value: Decimal number between 0 and 5 (required)
+    - rating_count: Integer number of ratings (required)
+    - show_count: Boolean to determine if count should be displayed (optional, defaults to true)
+    
+  Usage:
+    {% render 'snippet-feature-product-info-star-rating',
+      rating_value: product.metafields.test_ratings.rating,
+      rating_count: product.metafields.test_ratings.count
+    %}
+{%- endcomment -%}
+
+{%- liquid
+  # Initialize rating variables
+  assign show_rating = false
+  assign rating_value = 0
+  assign rating_count = 0
+
+  # For development: Check for test ratings first
+  if product.metafields.test_ratings.rating != blank
+    assign show_rating = true
+    assign rating_value = product.metafields.test_ratings.rating
+    assign rating_count = product.metafields.test_ratings.count
+  # Then check for Judge.me ratings
+  elsif product.metafields.judgeme.rating > 0
+    assign show_rating = true
+    assign rating_value = product.metafields.judgeme.rating
+    assign rating_count = product.metafields.judgeme.rating_count
+  endif
+
+
+  # Set defaults
+  assign show_count = show_count | default: true
+  
+  # Ensure we have valid numbers
+  assign rating_number = rating_value | times: 1.0
+  assign rating_count = rating_count | default: 0
+  
+  # Calculate stars
+  assign full_stars = rating_number | floor
+  assign decimal_part = rating_number | minus: full_stars
+  assign half_star = 0
+  
+  # Determine half stars (0.3-0.7 range)
+  if decimal_part >= 0.3 and decimal_part <= 0.7
+    assign half_star = 1
+  elsif decimal_part > 0.7
+    assign full_stars = full_stars | plus: 1
+  endif
+  
+  assign empty_stars = 5 | minus: full_stars | minus: half_star
+-%}
+
+
+<a href="{{ product.url }}" class="product-card__rating" aria-label="{{ 'products.product.rating' | t: rating: rating_value, count: rating_count }}" itemprop="url">         
+  <div class="rating-stars" role="img" aria-label="{{ rating_value }} out of 5 stars">
+    {%- # Full stars -%}
+    {%- for i in (1..full_stars) -%}
+      <svg class="star-icon is-filled" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 0L10.2571 4.89337L15.6085 5.52786L11.8042 9.22663L12.7023 14.4721L8 12L3.29772 14.4721L4.19577 9.22663L0.391548 5.52786L5.74292 4.89337L8 0Z"/>
+      </svg>
+    {%- endfor -%}
+    
+    {%- # Half star -%}
+    {%- if half_star > 0 -%}
+      <svg class="star-icon is-half-filled" width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="half_grad">
+            <stop offset="50%" stop-color="currentColor"/>
+            <stop offset="50%" stop-color="rgba(51, 51, 51, 0.2)"/>
+          </linearGradient>
+        </defs>
+        <path fill="url(#half_grad)" d="M8 0L10.2571 4.89337L15.6085 5.52786L11.8042 9.22663L12.7023 14.4721L8 12L3.29772 14.4721L4.19577 9.22663L0.391548 5.52786L5.74292 4.89337L8 0Z"/>
+      </svg>
+    {%- endif -%}
+    
+    {%- # Empty stars -%}
+    {%- if empty_stars > 0 -%}
+      {%- for i in (1..empty_stars) -%}
+        <svg class="star-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 0L10.2571 4.89337L15.6085 5.52786L11.8042 9.22663L12.7023 14.4721L8 12L3.29772 14.4721L4.19577 9.22663L0.391548 5.52786L5.74292 4.89337L8 0Z"/>
+        </svg>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+  {%- if show_count -%}
+    <span class="rating-count">({{ rating_count }})</span>
+  {%- endif -%}
+</a>

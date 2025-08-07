@@ -1,0 +1,95 @@
+/*
+  Feature Badges CSS
+  Purpose: Styles for product badges (sale, new, etc.)
+  Version: 1.0
+*/
+
+/* Badge Container Custom Properties */
+.feature-badges {
+  --badge-bg-sale: var(--color-discount-color, #ad0000);
+  --badge-bg-new: var(--color-new-color, #60ff97);
+  --badge-text-color: var(--main-background, #fff);
+  --badge-font-size: 10px;
+  --badge-font-weight: 700;
+  --badge-padding: 2px 6px;
+  --badge-border-radius: 4px;
+  --badge-spacing: 8px;
+  --badge-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* Badge Container - Vertical Stack */
+.feature-badges {
+  display: flex;
+  flex-direction: column;
+  gap: var(--badge-spacing);
+  z-index: 3;
+}
+
+/* Hide empty badge container */
+.feature-badges:empty {
+  display: none;
+}
+
+/* Absolute Positioning */
+.feature-badges--absolute {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+}
+
+/* Right alignment for absolute positioning */
+.feature-badges--absolute.feature-badges--right {
+  left: auto;
+  right: 12px;
+}
+
+/* Individual Badge Item */
+.feature-badges__item {
+  display: inline-flex;
+  align-self: flex-start;
+}
+
+/* Badge Base Styles */
+.feature-badges__badge {
+  display: inline-block;
+  padding: var(--badge-padding);
+  color: var(--badge-text-color);
+  font-size: var(--badge-font-size);
+  font-weight: var(--badge-font-weight);
+  line-height: 1.2;
+  text-transform: uppercase;
+  border-radius: var(--badge-border-radius);
+  box-shadow: var(--badge-shadow);
+  white-space: nowrap;
+}
+
+/* Sale Badge */
+.feature-badges__badge--sale {
+  background-color: var(--badge-bg-sale);
+}
+
+/* New Badge */
+.feature-badges__badge--new {
+  background-color: var(--badge-bg-new);
+  color: #000; /* Dark text on light green background for better contrast */
+}
+
+/* Badge Percentage */
+.badge-percentage {
+  font-weight: inherit;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 767px) {
+  .feature-badges {
+    --badge-font-size: 9px;
+    --badge-padding: 2px 5px;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .feature-badges {
+    display: none;
+  }
+}

@@ -1,0 +1,14 @@
+<div class="drawer__content__item" 
+id={{id}}>
+    {% if cart.item_count == 0 %}
+        <div class="cart-drawer__empty">
+            <p class="cart-drawer__empty-text">{{ 'cart.general.empty' | t }}</p>
+        </div>
+    {% else %}
+        <ul class="drawer__items">
+            {% for item in cart.items %}
+            {% render 'snippet-feature-product-item', item: item, data_line: forloop.index, show_quantity: true %}
+            {% endfor %} 
+        </ul>
+    {% endif %}
+</div>

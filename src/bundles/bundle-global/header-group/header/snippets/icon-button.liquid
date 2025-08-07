@@ -1,0 +1,109 @@
+{%- comment -%}
+  Snippet: header-icon-button.liquid
+  Purpose: Reusable icon button component for header
+  Usage: {% render 'snippet-section-header-header-icon-button', type: 'cart', id: 'cart-drawer-trigger', variant: 'glassmorphism' %}
+  
+  Parameters:
+  - type: Button type - 'hamburger', 'search', 'cart', 'account' (required)
+  - id: Button ID attribute (required)
+  - variant: Style wrapper variant (default: 'glassmorphism')
+  - aria_label: Accessibility label (auto-generated if not provided)
+  - context: Context for search buttons - 'mobile' or 'desktop' (optional)
+  - cart_count: Cart item count for cart button (optional)
+{%- endcomment -%}
+
+{%- liquid
+  # Parameter validation and defaults
+  assign variant = variant | default: 'glassmorphism'
+  
+  # Generate appropriate icon, aria label, and classes based on type
+  case type
+    when 'hamburger'
+      assign icon_class = 'icon-hamburger'
+      assign button_class = 'icon-button icon-button--menu'
+      assign default_aria_label = 'sections.Navigation.open_menu' | t
+    when 'search'
+      assign icon_class = 'icon-search'
+      assign button_class = 'icon-button icon-button--search'
+      assign default_aria_label = 'sections.Navigation.open_search' | t
+      if context == 'desktop'
+        assign button_class = button_class | append: ' site-header__desktop-search'
+      endif
+    when 'cart'
+      assign icon_class = 'icon-cart'
+      assign button_class = 'icon-button icon-button--cart'
+      assign default_aria_label = 'sections.Navigation.open_cart' | t
+    when 'account'
+      assign icon_class = 'icon-login'
+      assign button_class = 'icon-button icon-button--login'
+      if customer
+        assign account_url = routes.account_url
+        assign default_aria_label = 'customer.account.title' | t
+        assign button_class = button_class | append: ' icon-button--logged-in'
+        assign is_logged_in = true
+      else
+        assign account_url = routes.account_login_url
+        assign default_aria_label = 'customer.login_page.title' | t
+        assign is_logged_in = false
+      endif
+    else
+      # Fallback for invalid type
+      assign icon_class = 'icon-menu'
+      assign button_class = 'icon-button'
+      assign default_aria_label = 'Button'
+  endcase
+  
+  assign final_aria_label = aria_label | default: default_aria_label
+-%}
+
+{%- capture button_content -%}
+  {%- if type == 'account' -%}
+    <a href="{{ account_url }}"
+       {% if id != blank %}id="{{ id }}"{% endif %}
+       class="{{ button_class }}"
+       aria-label="{{ final_aria_label }}">
+      <span class="icon {{ icon_class }}"></span>
+      {%- if is_logged_in -%}
+        <span class="account-status-indicator" aria-hidden="true"></span>
+      {%- endif -%}
+    </a>
+  {%- else -%}
+    <button
+      {% if id != blank %}id="{{ id }}"{% endif %}
+      class="{{ button_class }}"
+      aria-label="{{ final_aria_label }}"
+      {%- if type == 'cart' -%}
+        aria-describedby="cart-status"
+        {%- if cart.item_count > 0 -%}
+          aria-expanded="false"
+          aria-haspopup="dialog"
+        {%- endif -%}
+      {%- elsif type == 'search' -%}
+        aria-expanded="false"
+        aria-haspopup="dialog"
+      {%- elsif type == 'hamburger' -%}
+        aria-expanded="false"
+        aria-haspopup="menu"
+        aria-controls="mobile-menu"
+      {%- endif -%}
+    >
+      <span class="icon {{ icon_class }}" aria-hidden="true"></span>
+      {%- if type == 'cart' -%}
+        <span class="cart-count-container" style="display: {% if cart.item_count > 0 %}block{% else %}none{% endif %}">
+          <span class="cart-count" aria-label="{{ 'sections.cart.item_count' | t: count: cart.item_count }}">
+            {{ cart.item_count | default: 0 }}
+          </span>
+        </span>
+        <span class="sr-only" id="cart-status">
+          {%- if cart.item_count > 0 -%}
+            {{ 'sections.cart.items_in_cart' | t: count: cart.item_count }}
+          {%- else -%}
+            {{ 'sections.cart.empty' | t }}
+          {%- endif -%}
+        </span>
+      {%- endif -%}
+    </button>
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- render 'snippet-feature-style-wrapper', content: button_content, variant: variant -%}

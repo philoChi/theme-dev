@@ -1,0 +1,62 @@
+/* Sizes Variants
+  ========================================================================== */
+
+.product-size-pills {
+  /* --- CSS custom properties just for sizes ----------------------------- */
+  --size-pill-font-weight: var(--main-font-weight);
+  --size-pill-font-size: var(--sub-font-size);
+  --size-pill-padding: 2px 6px;
+  --size-pill-spacing: 5px;
+  --size-pill-border-width: var(--main-border-width);
+  --size-pill-border-color: var(--main-border-color);
+  --size-pill-bg-selected: var(--color-primary, #000);
+  --size-pill-fg-selected: #fff;
+
+  display: flex;
+  gap: var(--size-pill-spacing);
+  flex-wrap: wrap;
+}
+
+.size-pill {
+  font: var(--size-pill-font-weight) var(--size-pill-font-size)/1 var(--font-stack, "Inter", sans-serif);
+  padding: var(--size-pill-padding);
+  border: var(--size-pill-border-width) solid var(--size-pill-border-color);
+  border-radius: 2px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: transform .2s ease, background-color .2s ease, color .2s ease;
+}
+
+.size-pill:hover {
+  transform: scale(1.05);
+}
+
+.size-pill:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.size-pill:active {
+  transform: scale(0.95);
+}
+
+.size-pill.is-selected {
+  background-color: var(--size-pill-bg-selected);
+  color: var(--size-pill-fg-selected);
+}
+
+.size-pill.is-unavailable {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Reduced‑motion fallback */
+@media (prefers-reduced-motion: reduce) {
+  .size-pill,
+  .size-pill:hover,
+  .size-pill:active {
+    transition: none;
+    transform: none;
+  }
+}

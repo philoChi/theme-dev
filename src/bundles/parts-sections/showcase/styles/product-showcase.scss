@@ -1,0 +1,384 @@
+/* Section: Product Showcase
+   Enhanced tab navigation with modern transitions.
+   
+   Update 2025-01-10:
+   - Improved panel transition handling to prevent content jumps
+   - Removed fixed min-height in favor of content-based height
+   - Enhanced performance with proper containment and transforms
+   ========================================================================== */
+
+/* Section Container */
+.section-product-showcase {
+  --tab-height: 50px;
+  --tab-height: 3rem;
+  --tab-spacing: 1rem;
+  --transition-duration: 800ms;
+  --transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+  --indicator-height: 2px;
+  --focus-ring-color: rgb(var(--main-background), 0.25);
+  --focus-ring-offset: 2px;
+  --tab-border-color: var(--main-border-color);
+  --tab-border-width: var(--main-border-width);
+  --tab-active-underline-color: var(--main-font-color);
+  --tab-inactive-underline-color: var(--main-font-color);
+
+  margin: var(--section-distance) auto;
+  /* Performance optimizations */
+  contain: content;
+  content-visibility: auto;
+  will-change: transform;
+}
+
+/* Tab Navigation Container with new structure */
+.product-showcase__tabs-wrapper {
+  position: relative;
+  margin: 0 -2rem 2rem;
+  background: none;
+  /* Enhanced scroll behavior */
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  /* Add padding for scroll shadows */
+  padding: 0.5rem 0;
+  /* Performance optimization */
+  contain: content;
+  will-change: transform;
+  /* iOS Safari specific scroll behavior */
+  -webkit-scroll-snap-type: x mandatory;
+  scroll-snap-type: x mandatory;
+  /* Prevent rubber-banding on iOS */
+  position: relative;
+  /* Add momentum scrolling but prevent bouncing */
+  -webkit-overflow-scrolling: touch;
+  /* Add scroll shadows */
+  background:
+    linear-gradient(to right, white 30%, rgba(255, 255, 255, 0)),
+    linear-gradient(to right, rgba(255, 255, 255, 0), white 70%) 100% 0,
+    radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0)),
+    radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0)) 100% 0;
+  background-repeat: no-repeat;
+  background-color: white;
+  background-size: 40px 100%, 40px 100%, 14px 100%, 14px 100%;
+  background-attachment: local, local, scroll, scroll;
+
+
+  /* Add these new properties */
+  overscroll-behavior-x: none;
+  /* Prevent horizontal overscroll */
+  -webkit-overscroll-behavior-x: none;
+  /* Safari support */
+  overflow-x: auto;
+  /* Keep scrolling enabled */
+  /* Use position: relative and transform to create a boundary */
+  position: relative;
+  transform: translate3d(0, 0, 0);
+  /* Creates a new stacking context */
+  /* Ensure content stays within bounds */
+  overflow-x: auto;
+  -webkit-overflow-scrolling: auto;
+  /* Change from 'touch' to 'auto' */
+
+
+  touch-action: pan-x;
+  /* Only allow horizontal panning */
+}
+
+/* Hide scrollbar but keep functionality */
+.product-showcase__tabs-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+/* Tab Container with bottom border */
+.product-showcase__tabs-container {
+  border-bottom: var(--tab-border-width) solid var(--tab-border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  min-height: var(--tab-height);
+  margin: 0 auto;
+  /* Add explicit z-index and relative positioning to force border rendering */
+  position: relative;
+  z-index: 4;
+  /* Ensure border is visible on iOS */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  /* Improve iOS scroll snap behavior */
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* Tab List Container */
+.product-showcase__tabs {
+  display: flex;
+  align-items: center;
+  flex-grow: 0;
+  /* Don't allow tabs to grow */
+  flex-shrink: 0;
+  /* Prevent tabs from shrinking */
+  gap: var(--tab-spacing);
+}
+
+/* View All Buttons Container */
+.product-showcase__view-all-buttons {
+  display: none;
+  /* Hidden by default */
+  align-items: center;
+  justify-content: flex-end;
+  margin-left: 2rem;
+  min-width: 150px;
+}
+
+/* View All Button Styles - Using unified feature-button styling */
+
+/* Individual Tab Buttons */
+.product-showcase__tab {
+  position: relative;
+  height: var(--tab-height);
+  min-width: max-content;
+  padding: 0.75rem 1rem;
+  white-space: nowrap;
+  touch-action: pan-x pan-y pinch-zoom;
+  /* Improve iOS scroll snap behavior */
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  cursor: pointer;
+}
+
+.section-product-showcase .product-showcase__tab:hover {
+  color: var(--tab-active-underline-color);
+  opacity: 1;
+}
+
+.section-product-showcase .product-showcase__tab::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--tab-active-underline-color);
+  transform: scaleX(0);
+  transition: transform 300ms var(--transition-timing);
+  transform-origin: left center;
+  opacity: 1;
+}
+
+/* Tab Panel Container - Improved transition handling */
+.product-showcase__container {
+  position: relative;
+  /* Use contain: layout instead of content to maintain size during transitions */
+  contain: layout style paint;
+  /* Remove fixed min-height, use auto height */
+  min-height: 0;
+  height: auto;
+}
+
+/* Individual Tab Panels - Enhanced transition handling */
+.product-showcase__panel {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  /* Ensure panel affects layout even when absolute */
+  transform: translateZ(0);
+  will-change: opacity;
+  transition:
+    opacity var(--transition-duration) var(--transition-timing),
+    visibility 0s linear var(--transition-duration);
+}
+
+/* Active panel - Maintain layout influence */
+.product-showcase__panel.active {
+  opacity: 1;
+  visibility: visible;
+  position: relative;
+  height: auto;
+  transition: opacity var(--transition-duration) var(--transition-timing);
+}
+
+/* Transitioning states - Maintain space */
+.product-showcase__panel.transitioning-out {
+  opacity: 0;
+  visibility: visible;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: opacity var(--transition-duration) var(--transition-timing);
+}
+
+.product-showcase__panel.transitioning-in {
+  opacity: 0;
+  visibility: visible;
+  position: relative;
+  transition: opacity var(--transition-duration) var(--transition-timing);
+}
+
+/* Grid wrapper - Ensure proper height maintenance */
+.product-showcase__grid-wrapper {
+  position: relative;
+  width: 100%;
+  height: auto;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Active Tab Indicator */
+.product-showcase__tab::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: var(--indicator-height);
+  background-color: rgb(var(--tab-active-underline-color));
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform var(--transition-duration) var(--transition-timing);
+  /* Performance */
+  will-change: transform;
+  opacity: 1;
+}
+
+/* Interactive States */
+.product-showcase__tab:hover {
+  color: rgb(var(--color-foreground));
+}
+
+.product-showcase__tab:focus-visible {
+  outline: none;
+}
+
+.product-showcase__tab:focus-visible::before {
+  content: '';
+  position: absolute;
+  top: -var(--focus-ring-offset);
+  left: -var(--focus-ring-offset);
+  right: -var(--focus-ring-offset);
+  bottom: -var(--focus-ring-offset);
+  border-radius: 4px;
+  border: 2px solid rgb(var(--color-primary));
+  /* Ensure focus ring is visible */
+  z-index: 1;
+}
+
+.section-product-showcase .product-showcase__tab[aria-selected="true"] {
+  color: var(--tab-active-underline-color);
+  opacity: 1;
+}
+
+.section-product-showcase .product-showcase__tab[aria-selected="true"]::after {
+  transform: scaleX(1);
+}
+
+/* Responsive Design - Mobile Adjustments */
+@media screen and (max-width: 767px) {
+  .product-showcase__tabs-wrapper {
+    margin: 0 0 2rem;
+    /* iOS specific adjustments */
+    padding: 0;
+    -webkit-mask-image: -webkit-linear-gradient(left,
+        transparent 0%,
+        black 2%,
+        black 98%,
+        transparent 100%);
+  }
+
+  .product-showcase__tabs {
+    gap: calc(var(--tab-spacing) / 3);
+  }
+
+  /* Hide tab area view-all buttons */
+  .product-showcase__tabs-container .product-showcase__view-all-buttons {
+    display: none;
+  }
+
+  /* Show and style panel view-all buttons */
+  .product-showcase__panel .product-showcase__view-all-buttons {
+    display: flex;
+    justify-content: center;
+    margin: 2rem auto 0;
+    width: 100%;
+  }
+
+
+  /* Structural changes for mobile layout */
+  .product-showcase__tabs-container {
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+  }
+
+  /* Adjust product grid wrapper to maintain proper order */
+  .product-showcase__grid-wrapper {
+    order: 1;
+    margin-bottom: 0;
+  }
+}
+
+/* Adjustments for extra small screens */
+@media screen and (max-width: 510px) {
+
+  /* Move border */
+  .product-showcase__tabs-container {
+    border-bottom: 0px solid var(--tab-border-color);
+  }
+
+  /* Stronger border */
+  .product-showcase__tabs {
+    border-bottom: 1px solid var(--tab-border-color);
+  }
+
+  /* Structural changes for mobile layout */
+  .product-showcase__tabs-container {
+    justify-content: flex-start;
+  }
+}
+
+@media screen and (min-width: 768px) {
+
+  /* Show view-all buttons in tab area for desktop only */
+  .product-showcase__tabs-container .product-showcase__view-all-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-left: 2rem;
+    min-width: 150px;
+  }
+
+  /* Hide the bottom view-all buttons in desktop */
+  .product-showcase__panel .product-showcase__view-all-buttons {
+    display: none;
+  }
+
+  .product-showcase__tabs-container {
+    flex-wrap: nowrap;
+  }
+
+  .product-showcase__view-all-buttons {
+    flex-shrink: 0;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+
+  .product-showcase__tab,
+  .product-showcase__panel {
+    transition: none;
+  }
+}
+
+/* Add snap points for better touch experience */
+@supports (scroll-snap-type: x mandatory) {
+  .product-showcase__tabs-container {
+    scroll-snap-type: x mandatory;
+  }
+
+  .product-showcase__tab {
+    scroll-snap-align: start;
+  }
+}

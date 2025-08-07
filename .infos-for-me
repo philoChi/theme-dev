@@ -1,0 +1,14 @@
+claude mcp add mein-server -- node /absoluter/pfad/zu/path/mcp-server/index.js
+claude mcp add mein-server -- python /absoluter/pfad/zu/path/mcp-server/server.py
+claude mcp add mein-server -e API_KEY=xyz -- node /pfad/zu/path/mcp-server/index.js
+
+claude mcp add playwright npx @playwright/mcp@latest
+claude mcp add shopify-dev npx @shopify/dev-mcp@latest
+
+# Installing playwright dependencies
+sudo npx playwright install-deps
+sudo npx playwright install chromium
+sudo npx playwright install firefox
+sudo npx playwright install webkit
+
+

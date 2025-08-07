@@ -1,0 +1,161 @@
+/**
+ * Arrow Navigation Feature Component - Positioning Only
+ * 
+ * Handles positioning and layout for arrow navigation buttons.
+ * All styling is now handled by the style wrapper feature.
+ * 
+ * Architecture: BEM methodology with CSS custom properties
+ * Accessibility: WCAG 2.1 AA compliant with keyboard/screen reader support
+ * Performance: Optimized for Core Web Vitals and mobile devices
+ */
+
+/* ==========================================================================
+   Base Arrow Navigation Component - Positioning Only
+   ========================================================================== */
+
+.arrow-navigation {
+  /* Z-index hierarchy */
+  --arrow-nav-z-index: 2;
+  --arrow-nav-z-index-overlay: 10;
+  --arrow-nav-z-index-absolute: 2;
+
+  /* Base positioning */
+  position: relative;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   Position Modes
+   ========================================================================== */
+
+/* Inline Positioning - For carousel context */
+.arrow-navigation--inline {
+  position: relative;
+  z-index: var(--arrow-nav-z-index);
+  margin: 0 0.75rem;
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+/* Overlay Positioning - For slider context */
+.arrow-navigation--overlay {
+  position: absolute;
+  z-index: var(--arrow-nav-z-index-overlay);
+  top: 50%;
+}
+
+.arrow-navigation--overlay.arrow-navigation--prev {
+  left: 1rem;
+}
+
+.arrow-navigation--overlay.arrow-navigation--next {
+  right: 1rem;
+}
+
+/* Parent container for overlay arrows */
+.arrow-navigation-container--overlay {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Absolute Positioning - For gallery context */
+.arrow-navigation--absolute {
+  position: absolute;
+  z-index: var(--arrow-nav-z-index-absolute);
+}
+
+/* Gallery-specific absolute positioning */
+.arrow-navigation--absolute.arrow-navigation--prev {
+  left: 0.5rem;
+  top: 50%;
+}
+
+.arrow-navigation--absolute.arrow-navigation--next {
+  right: 0.5rem;
+  top: 50%;
+}
+
+/* Gallery bottom positioning variant */
+.arrow-navigation--absolute.arrow-navigation--bottom {
+  bottom: 1rem;
+  top: auto;
+  transform: none;
+}
+
+.arrow-navigation--absolute.arrow-navigation--bottom.arrow-navigation--prev {
+  left: 50%;
+  transform: translateX(-100%) translateX(-0.25rem);
+}
+
+.arrow-navigation--absolute.arrow-navigation--bottom.arrow-navigation--next {
+  left: 50%;
+  transform: translateX(0.25rem);
+}
+
+/* ==========================================================================
+   Responsive Design & Mobile Optimization
+   ========================================================================== */
+
+/* Mobile-first responsive adjustments */
+@media (max-width: 767px) {
+
+  /* Hide all arrow navigation on mobile devices */
+  .arrow-navigation {
+    display: none !important;
+  }
+}
+
+/* Responsive positioning adjustments */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .arrow-navigation--overlay.arrow-navigation--prev {
+    left: 0.75rem;
+  }
+
+  .arrow-navigation--overlay.arrow-navigation--next {
+    right: 0.75rem;
+  }
+
+  .arrow-navigation--absolute.arrow-navigation--prev {
+    left: 0.5rem;
+  }
+
+  .arrow-navigation--absolute.arrow-navigation--next {
+    right: 0.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .arrow-navigation--overlay.arrow-navigation--prev {
+    left: 1.5rem;
+  }
+
+  .arrow-navigation--overlay.arrow-navigation--next {
+    right: 1.5rem;
+  }
+
+  .arrow-navigation--absolute.arrow-navigation--prev {
+    left: 1rem;
+  }
+
+  .arrow-navigation--absolute.arrow-navigation--next {
+    right: 1rem;
+  }
+}
+
+/* ==========================================================================
+   Accessibility Enhancements
+   ========================================================================== */
+
+/* Visually hidden text for screen readers */
+.u-visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}

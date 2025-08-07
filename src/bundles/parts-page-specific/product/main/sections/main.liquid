@@ -1,0 +1,215 @@
+{%- comment -%}
+  Section: Product Main
+  Version: 3.1 (MODIFIED: {{ "now" | date: "%Y-%m-%d %H:%M:%S %Z" }})
+  Purpose:
+  - Implements a two-column layout for product page (gallery left, info right).
+  - Integrates new elements: Stock/Shipping, Feature Chips.
+  - Styles product information as a card with potential "SALE" or "NEW" badges.
+  - Utilizes existing snippets for core functionalities like price, variants, accordions.
+  - FIXED: Dynamic color and size labels that update when variants are selected.
+  - UPDATED: Now uses new variant controller architecture with base class
+  - REFACTORED: Now uses feature-badges component for badges
+{%- endcomment -%}
+
+{%- comment -%} Cache frequently used variant data {%- endcomment -%}
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+
+<section
+  class="product-main"
+  data-section-id="{{ section.id }}"
+  data-product-id="{{ product.id }}"
+  data-section-type="product-main"
+  data-auto-init
+>
+  {%- comment -%} Include standardized product data {%- endcomment -%}
+  {% render 'snippet-utils-converter-product-to-code',
+    product: product,
+    current_variant: current_variant,
+    container_class: 'product-page-data'
+  %}
+
+  <div class="product-main__wrapper content-padding">
+    <div class="product-main__grid">
+      {%- comment -%}
+        ======================================================================
+          LEFT COLUMN — PRODUCT GALLERY
+        ======================================================================
+      {%- endcomment -%}
+      <div class="product-main__gallery-column">
+        <div class="product-main__gallery">
+          {% render 'snippet-section-page-product-main-gallery', product: product, section: section %}
+        </div>
+      </div>
+
+      {%- comment -%}
+        ======================================================================
+          RIGHT COLUMN — PRODUCT INFORMATION
+        ======================================================================
+      {%- endcomment -%}
+      <div class="product-main__info-column">
+        <div class="product-main__info-card product-card-info-wrapper">
+          <div class="product-main__header-with-badges">
+            {% render 'snippet-feature-product-info-header', product: product, product_page: true %}
+            {% render 'snippet-feature-product-info-badges', product: product, current_variant: current_variant %}
+          </div>
+
+          <div class="product-price__info">
+            <div class="product-price__info-rating">
+              {% render 'snippet-feature-product-info-price',
+                product: product,
+                current_variant: current_variant,
+                show_compare_at_price: true
+              %}
+              {% render 'snippet-feature-product-info-star-rating', product: product %}
+            </div>
+            <small class="product-main__tax-note">{{ 'products.product.tax_note' | t }}</small>
+          </div>
+
+          <div class="product-main__variant-selector">
+            <span class="product-main__text-heading">
+              {%- comment -%} Dynamic Color Label - will be updated by JavaScript {%- endcomment -%}
+              <p class="product-main__text-text" data-dynamic-color-label>
+                {{ 'products.colors.label' | t | default: 'Farbe' }}:
+                {%- comment -%} Get initial selected color {%- endcomment -%}
+                {%- assign initial_color = current_variant.options[1] -%}
+                {%- assign initial_color_key = 'products.colors.' | append: initial_color -%}
+                <span data-selected-color-name style="margin-left: 3px;">
+                  {{- initial_color_key | t | default: initial_color -}}
+                </span>
+              </p>
+              {% render 'snippet-feature-product-info-color-swatches', product: product %}
+            </span>
+
+            <span class="product-main__text-heading">
+              {%- comment -%} Dynamic Size Label - will be updated by JavaScript {%- endcomment -%}
+              <p class="product-main__text-text" data-dynamic-size-label>
+                {{ 'products.sizes.label' | t | default: 'Größe' }}:
+                {%- comment -%} Get initial selected size {%- endcomment -%}
+                {%- assign initial_size = current_variant.options[0] -%}
+                <span data-selected-size-name style="margin-left: 3px;">{{ initial_size | default: '' }}</span>
+              </p>
+              {% render 'snippet-feature-product-info-size-pills', product: product %}
+            </span>
+          </div>
+
+          {%- comment -%} Stock and Shipping Information {%- endcomment -%}
+          <div class="product-main__stock-shipping-info">
+            {%- assign available_note = 'products.product.stock_available' | t: count: '2-3' | default: 'Auf Lager' -%}
+            {%- assign in_stock_note = 'products.product.stock_delivery_time'
+              | t: count: '2-3'
+              | default: '(in etwa 2-3 Werktagen bei Dir)'
+            -%}
+            {%- assign delivery_note = 'products.product.shipping_note' | t | default: 'Versand mit DHL' -%}
+            {% render 'snippet-feature-highlight-note', first_text: available_note, second_text: in_stock_note %}
+            {% render 'snippet-feature-highlight-note', first_text: delivery_note %}
+          </div>
+
+          {%- comment -%} Add-to-cart button {%- endcomment -%}
+          {%- assign add_to_cart_text = 'products.product.add_to_cart' | t -%}
+          {% render 'snippet-feature-button',
+            size: 'large',
+            button_text: add_to_cart_text,
+            custom_class: 'button--disabled',
+            custom_tag: 'data-add-to-cart',
+            background_color: 'var(--buy-green-color)',
+            hover_color: 'var(--buy-green-color-hover)',
+            text_color: 'white',
+            hover_text_color: 'white'
+          %}
+
+          {%- comment -%} Feature chips (NEW) {%- endcomment -%}
+          <span class="product-main__text-heading">
+            {%- liquid
+              # Load tag configuration to get product type and determiner
+              capture tag_product_type
+                render 'snippet-utils-converter-product-type', product: product, output: 'product_type'
+              endcapture
+              capture tag_determiner
+                render 'snippet-utils-converter-product-type', product: product, output: 'determiner'
+              endcapture
+
+              # Use dynamic product type and determiner in heading with translation variables
+              if tag_product_type != blank and tag_determiner != blank
+                assign features_text = 'products.product.features_heading' | t: determiner: tag_determiner, product_type: tag_product_type | default: 'What makes this Product special ?'
+                if features_text == 'What makes this Product special ?'
+                  assign features_text = features_text | replace: 'hoodie', tag_product_type
+                endif
+              else
+                # Default to "Product" if no tag configuration found
+                assign default_determiner = 'product_configurations.default.determiner' | t
+                assign default_product_type = 'product_configurations.default.product_type' | t
+                assign features_text = 'products.product.features_heading' | t: determiner: default_determiner, product_type: default_product_type | default: 'What makes this Product special ?'
+              endif
+            -%}
+            {{ features_text }}
+            {% render 'snippet-section-page-product-main-feature-chips', product: product %}
+          </span>
+        </div>
+        {%- comment -%} End .product-main__info-card {%- endcomment -%}
+
+        {%- comment -%} Accordions (Product Properties & Description) - Placed outside the card {%- endcomment -%}
+        <div class="product-main__accordions">
+          {%- liquid
+            # Load tag configuration for properties
+            capture tag_properties
+              render 'snippet-utils-converter-product-type', product: product, output: 'properties'
+            endcapture
+
+            # Use tag-based properties if available, otherwise fall back to product properties
+            assign properties_content = tag_properties | default: product.properties
+          -%}
+
+          {%- if properties_content != blank -%}
+            {%- assign text_properties = 'products.product.properties' | t | default: 'Produkteigenschaften' -%}
+            {% render 'snippet-feature-dropdown',
+              trigger_text: text_properties,
+              panel_id: 'dropdown-nav-text_properties',
+              expanded: false,
+              panel_content: properties_content
+            %}
+          {%- endif -%}
+
+          {%- if product.description != blank -%}
+            {%- assign text_description = 'products.product.description' | t | default: 'Produktbeschreibung' -%}
+            {% render 'snippet-feature-dropdown',
+              trigger_text: text_description,
+              panel_id: 'dropdown-nav-text_description',
+              expanded: false,
+              panel_content: product.description
+            %}
+          {%- endif -%}
+        </div>
+      </div>
+      {%- comment -%} End .product-main__info-column {%- endcomment -%}
+    </div>
+    {%- comment -%} End .product-main__grid {%- endcomment -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Main",
+  "tag": "section",
+  "class": "product-main-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "gallery_thumbnail_position",
+      "label": "Gallery Thumbnail Position",
+      "default": "left",
+      "info": "Controls position of thumbnails (e.g., 'left', 'bottom'). Requires CSS support."
+    },
+    {
+      "type": "header",
+      "content": "Product Information Card Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_card_shadow",
+      "label": "Show shadow on product info card",
+      "default": true
+    }
+  ],
+  "blocks": []
+}
+{% endschema %}

@@ -1,0 +1,41 @@
+{%- comment -%}
+  Feature: Style Wrapper
+  Purpose: Reusable styling wrapper for UI elements with configurable variants
+  Usage: {% render 'snippet-feature-style-wrapper', content: button_content, variant: 'glassmorphism' %}
+  
+  Parameters:
+  - content: The HTML content to wrap with styling effect
+  - variant: The styling variant to apply (default: 'glassmorphism')
+    Available variants:
+    - glassmorphism: Glass-like effect with backdrop blur and transparency
+    - flat: Flat design with bidirectional hover animations
+    - flat-basic: Basic flat design with light grey background and top-to-bottom hover animation
+  - background_color: Custom background color for unhovered state (optional)
+  - hover_color: Custom background color for hovered state (optional)
+  - text_color: Custom text color for unhovered state (optional)
+  - hover_text_color: Custom text color for hovered state (optional)
+{%- endcomment -%}
+
+{%- liquid
+  assign content = content | default: ''
+  assign variant = variant | default: 'glassmorphism'
+  
+  # Build custom CSS variables for color overrides
+  assign custom_styles = ''
+  if background_color != blank
+    assign custom_styles = custom_styles | append: '--custom-background-color: ' | append: background_color | append: ';'
+  endif
+  if hover_color != blank
+    assign custom_styles = custom_styles | append: '--custom-hover-color: ' | append: hover_color | append: ';'
+  endif
+  if text_color != blank
+    assign custom_styles = custom_styles | append: '--custom-text-color: ' | append: text_color | append: ';'
+  endif
+  if hover_text_color != blank
+    assign custom_styles = custom_styles | append: '--custom-hover-text-color: ' | append: hover_text_color | append: ';'
+  endif
+-%}
+
+<div class="style-wrapper style-wrapper--{{ variant }}"{% if custom_styles != blank %} style="{{ custom_styles }}"{% endif %}>
+  {{ content }}
+</div>

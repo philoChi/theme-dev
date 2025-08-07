@@ -1,0 +1,213 @@
+{%- comment -%}
+  Search Welcome State Component
+  
+  Displays helpful content when search drawer is opened
+  - Search tips and guidance
+  - Popular categories as quick navigation
+  - Recent searches (if implemented)
+  - Clear call-to-action to start searching
+{%- endcomment -%}
+
+<div class="search-welcome-content" role="region" aria-label="{{ 'general.search.welcome' | t | default: 'Search for products' }}">
+  <div class="search-welcome-header">
+    <div class="search-welcome-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="icon-search-welcome" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+      </svg>
+    </div>
+    <div class="search-welcome-text">
+      <h3 class="search-welcome-title">{{ 'general.search.welcome_title' | t | default: 'Was suchst du?' }}</h3>
+      <p class="search-welcome-subtitle">{{ 'general.search.welcome_subtitle' | t | default: 'Finde deine Lieblingsprodukte schnell und einfach' }}</p>
+    </div>
+  </div>
+
+  <div class="search-welcome-categories">
+    <p class="search-welcome-categories-title">{{ 'general.search.popular_categories' | t | default: 'Beliebte Kategorien' }}</p>
+    <div class="search-welcome-categories-grid">
+      {% for link in linklists.main-menu.links limit: 6 %}
+        {% if link.title != blank %}
+          {% render 'snippet-feature-button',
+            button_text: link.title,
+            button_link: '#',
+            custom_aria_label: link.title,
+            show_arrow: true,
+            arrow_position: 'right'
+          %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="search-welcome-tips">
+    <div class="search-welcome-tip">
+      <div class="search-welcome-tip-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189 6.014 6.014 0 01.75-2.221 3.09 3.09 0 00.973-2.409c0-1.413-.976-2.536-2.209-2.536S10.5 6.367 10.5 7.78c0 .902.362 1.704.973 2.409.364.422.6 1.009.75 2.221.15.063.3.126.45.189V18" />
+        </svg>
+      </div>
+      <div class="search-welcome-tip-text">
+        <p>{{ 'general.search.search_tip' | t | default: 'Verwende Begriffe wie "T-Shirt", "Hoodie" oder "Schwarz"' }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .search-welcome-content {
+    padding: 2rem 1.5rem;
+    text-align: center;
+    max-width: 100%;
+  }
+
+  .search-welcome-header {
+    margin-bottom: 2rem;
+  }
+
+  .search-welcome-icon {
+    margin-bottom: 1rem;
+    color: var(--color-primary, #000);
+  }
+
+  .icon-search-welcome {
+    width: 40px;
+    height: 40px;
+  }
+
+  .search-welcome-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--color-text, #333);
+  }
+
+  .search-welcome-subtitle {
+    font-size: 1rem;
+    color: var(--color-text-light, #666);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .search-welcome-categories {
+    margin-bottom: 2rem;
+  }
+
+  .search-welcome-categories-title {
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    color: var(--color-text, #333);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .search-welcome-categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.75rem;
+  }
+
+
+  .search-welcome-category-text {
+    flex: 1;
+    text-align: left;
+  }
+
+  .search-welcome-category-arrow {
+    width: 16px;
+    height: 16px;
+    margin-left: 0.5rem;
+    opacity: 0.6;
+    transition: transform 0.2s ease;
+  }
+
+
+  .search-welcome-tips {
+    border-top: 1px solid var(--color-border-light, #e5e7eb);
+    padding-top: 1.5rem;
+  }
+
+  .search-welcome-tip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .search-welcome-tip-icon {
+    color: var(--color-primary, #000);
+    opacity: 0.7;
+  }
+
+  .search-welcome-tip-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .search-welcome-tip-text {
+    text-align: left;
+  }
+
+  .search-welcome-tip-text p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--color-text-light, #666);
+    line-height: 1.4;
+  }
+
+  /* Mobile responsive adjustments */
+  @media (max-width: 768px) {
+    .search-welcome-content {
+      padding: 1.5rem 1rem;
+    }
+
+    .search-welcome-title {
+      font-size: 1.25rem;
+    }
+
+    .search-welcome-categories-grid {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+
+
+    .search-welcome-tip {
+      flex-direction: column;
+      text-align: center;
+      gap: 0.5rem;
+    }
+
+    .search-welcome-tip-text {
+      text-align: center;
+    }
+  }
+
+  /* Smooth transition animations */
+  .search-default-state {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .search-default-state[style*="display: none"] {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  .search-default-state:not([style*="display: none"]) {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+
+    .search-welcome-category-arrow {
+      transition: opacity 0.15s ease;
+    }
+
+
+    .search-default-state {
+      transition: opacity 0.15s ease;
+    }
+  }
+</style>

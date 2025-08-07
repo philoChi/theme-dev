@@ -1,0 +1,109 @@
+{%- comment -%}
+  Unified Arrow Navigation Feature Component
+
+  Creates consistent arrow navigation buttons that work across different contexts
+  (carousel, slider, gallery) while maintaining backward compatibility with
+  existing JavaScript controllers.
+
+  @param {String} style_wrapper - Style wrapper variant to use (default: 'glassmorphism')
+  @param {String} position - Positioning mode ['inline', 'overlay', 'absolute'] (default: 'inline')
+  @param {String} direction - Arrow direction ['prev', 'next'] (default: 'prev')
+  @param {String} data_attributes - Custom data attributes as string (optional)
+  @param {Boolean} disabled - Render button in disabled state (default: false)
+  @param {String} button_type - HTML button type attribute (default: 'button')
+
+  Usage Examples:
+  {% render 'snippet-feature-arrow-navigation', style_wrapper: 'glassmorphism', position: 'absolute', direction: 'prev' %}
+  {% render 'snippet-feature-arrow-navigation', position: 'overlay', style_wrapper: 'glassmorphism', direction: 'next' %}
+  {% render 'snippet-feature-arrow-navigation', style_wrapper: 'glassmorphism', position: 'inline', direction: 'prev' %}
+{%- endcomment -%}
+
+{%- liquid
+  # Parameter validation and defaults
+  assign style_wrapper = style_wrapper | default: 'glassmorphism'
+  assign position = position | default: 'inline'
+  assign data_attributes = data_attributes | default: ''
+  assign direction = direction | default: 'prev'
+  assign disabled = disabled | default: false
+  assign button_type = button_type | default: 'button'
+
+  # Parameter validation
+  case position
+    when 'inline', 'overlay', 'absolute'
+      # Valid - no change needed
+    else
+      assign position = 'inline'
+  endcase
+
+  case direction
+    when 'prev', 'next'
+      # Valid - no change needed
+    else
+      assign direction = 'prev'
+  endcase
+-%}
+
+{%- liquid
+  # Build CSS classes for positioning only (styling handled by wrapper)
+  assign class_list = 'arrow-navigation arrow-navigation--' | append: position | append: ' arrow-navigation--' | append: direction
+
+  # Determine appropriate ARIA label with localization
+  if direction == 'prev'
+    assign aria_label = 'general.navigation.previous' | t | default: 'Previous'
+  else
+    assign aria_label = 'general.navigation.next' | t | default: 'Next'
+  endif
+
+  # Build comprehensive data attributes
+  assign data_attrs = 'data-arrow-nav="true" data-direction="' | append: direction | append: '"'
+
+  # Add custom data attributes if provided
+  if data_attributes != blank
+    assign data_attrs = data_attrs | append: ' ' | append: data_attributes
+  endif
+-%}
+
+{%- capture button_content -%}
+  <button
+    type="{{ button_type }}"
+    class="{{ class_list | strip }}"
+    {{ data_attrs }}
+    aria-label="{{ aria_label | escape }}"
+    role="button"
+    tabindex="0"
+    {% if disabled %}
+      disabled aria-disabled="true"
+    {% else %}
+      aria-disabled="false"
+    {% endif %}
+    {% comment %} Enhanced accessibility attributes {% endcomment %}
+    aria-describedby="arrow-nav-instructions"
+    data-a11y-role="navigation-button"
+    data-keyboard-shortcut="Enter,Space,Arrow{{ direction | capitalize }}"
+  >
+    {%- liquid
+      # Use CSS icons based on direction (chevron style as default)
+      if direction == 'prev'
+        echo '<span class="icon icon-arrow-prev-chevron"></span>'
+      else
+        echo '<span class="icon icon-arrow-next-chevron"></span>'
+      endif
+    -%}
+
+    <span class="u-visually-hidden">{{ aria_label | escape }}</span>
+  </button>
+{%- endcapture -%}
+
+{%- liquid
+  # Wrap the button with the style wrapper
+  render 'snippet-feature-style-wrapper', content: button_content, variant: style_wrapper
+-%}
+
+{%- comment -%}
+  Screen reader instructions (rendered only once per page)
+{%- endcomment -%}
+{%- unless request.page_type == 'gift_card' -%}
+  <div id="arrow-nav-instructions" class="u-visually-hidden" aria-hidden="true">
+    Use arrow keys, Enter, or Space to navigate between content items.
+  </div>
+{%- endunless -%}

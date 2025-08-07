@@ -1,0 +1,68 @@
+{%- comment -%}
+  Feature: Product Variants
+  Initializes the product variants system for handling variant selection
+  
+  @param product {Object} - Product object (required)
+  @param current_variant {Object} - Currently selected variant (optional)
+  @param enable_dynamic_checkout {Boolean} - Enable dynamic checkout buttons (default: true)
+  @param update_url {Boolean} - Update browser URL on variant change (default: true)
+  @param container_selector {String} - Selector for the product container (optional)
+{%- endcomment -%}
+
+{%- liquid
+  # Set defaults
+  assign current_variant = current_variant | default: product.selected_or_first_available_variant
+  assign enable_dynamic_checkout = enable_dynamic_checkout | default: true
+  assign update_url = update_url | default: true
+  assign container_selector = container_selector | default: '[data-section-type="product"]'
+  
+  # Prepare variant data
+  assign variant_data = product.variants | map: 'id' | join: ','
+-%}
+
+{%- comment -%}
+  Initialize product variants data
+{%- endcomment -%}
+<script type="application/json" data-product-variants-config>
+  {
+    "productId": {{ product.id | json }},
+    "currentVariantId": {{ current_variant.id | json }},
+    "variantIds": [{{ variant_data }}],
+    "enableDynamicCheckout": {{ enable_dynamic_checkout | json }},
+    "updateUrl": {{ update_url | json }},
+    "containerSelector": {{ container_selector | json }},
+    "translations": {
+      "unavailable": {{ 'products.product.unavailable' | t | json }},
+      "soldOut": {{ 'products.product.sold_out' | t | json }},
+      "addToCart": {{ 'products.product.add_to_cart' | t | json }},
+      "selectOptions": {{ 'products.product.select_options' | t | json }}
+    }
+  }
+</script>
+
+{%- comment -%}
+  Include the product variants system
+{%- endcomment -%}
+{%- comment -%} Product variants scripts are now included in the section-product-page-bundle.js loaded on product pages {%- endcomment -%}
+
+{%- comment -%}
+  Initialize on DOM ready
+{%- endcomment -%}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const config = document.querySelector('[data-product-variants-config]');
+    if (config && window.Shopify && window.Shopify.ProductVariants) {
+      const data = JSON.parse(config.textContent);
+      
+      // Initialize base variants system
+      window.Shopify.ProductVariants.init(data);
+      
+      // Auto-register product containers
+      document.querySelectorAll(data.containerSelector).forEach(container => {
+        if (container.dataset.productId == data.productId) {
+          window.Shopify.ProductVariants.register(container, data);
+        }
+      });
+    }
+  });
+</script>

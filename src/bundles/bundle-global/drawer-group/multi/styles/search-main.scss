@@ -1,0 +1,157 @@
+/**
+ * Search Drawer Styles
+ * Controls visibility states for search UI components
+ */
+
+/* Container States - Use CSS instead of inline styles for better control */
+#SearchLoadingState,
+#SearchResultsList,
+#SearchEmptyState {
+  display: none !important;
+}
+
+/* Active state overrides - more specific to win over display: none */
+#SearchLoadingState[aria-hidden="false"],
+#SearchResultsList[aria-hidden="false"],
+#SearchEmptyState[aria-hidden="false"] {
+  display: block !important;
+}
+
+/* Default state should be visible initially unless explicitly hidden */
+#SearchDefaultState {
+  display: block;
+}
+
+#SearchDefaultState[aria-hidden="true"] {
+  display: none !important;
+}
+
+/* Search results container */
+.search-results-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+}
+
+/* Results list specific styles */
+.search-results-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Loading state styles */
+.search-loading-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.search-loading-state[aria-hidden="false"] {
+  opacity: 1;
+}
+
+/* Loading spinner */
+.search-loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: var(--color-primary, #000);
+  animation: search-spin 1s ease-in-out infinite;
+}
+
+@keyframes search-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Empty state styles */
+.search-empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.search-empty-state[aria-hidden="false"] {
+  opacity: 1;
+}
+
+/* Animation classes */
+.search-entering {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.search-exiting {
+  animation: fadeOut 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+/* Search suggestions */
+.cart-drawer__item--suggestion {
+  padding: 8px 16px;
+}
+
+.search-suggestion-button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.search-suggestion-button:hover,
+.search-suggestion-button:focus {
+  background-color: rgba(0, 0, 0, 0.05);
+  outline: none;
+}
+
+.search-suggestion-icon {
+  margin-right: 12px;
+  opacity: 0.5;
+}
+
+.search-suggestion-text {
+  flex: 1;
+  color: var(--color-text, #000);
+}
+
+/* Ensure proper stacking and visibility */
+.drawer__content__item#drawer__content__search {
+  position: relative;
+  z-index: 1;
+}
+
+/* Override any conflicting drawer styles */
+.drawer__content__item#drawer__content__search.is-open {
+  display: flex !important;
+  flex-direction: column;
+}

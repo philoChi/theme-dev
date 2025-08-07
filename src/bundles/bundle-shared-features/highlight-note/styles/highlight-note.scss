@@ -1,0 +1,86 @@
+/**
+ * Highlight Note Component
+ * 
+ * A modern highlighted note snippet with customizable colors
+ * Designed to be responsive and content-dependent in height
+ */
+
+ .highlight-note {
+    /* Default color variables - can be overridden via inline styles */
+    --highlight-color: #007bff;
+    --background-color: #e3f2fd;
+    --text-color: var(--main-font-color);
+    --border-radius: 6px;
+    --padding-vertical: .5rem;
+    --padding-horizontal: .9rem;
+    --highlight-width: 4px;
+    --font-size: 12px;
+    --line-height: 0.7;
+    --gap: 8px;
+    
+    /* Base styles */
+    position: relative;
+    background-color: var(--background-color);
+    border-radius: var(--border-radius);
+    padding-left: var(--padding-horizontal);
+    padding-top: var(--padding-vertical);
+    padding-bottom: var(--padding-vertical);
+    border-left: var(--highlight-width) solid var(--highlight-color);
+    color: var(--text-color);
+    font-size: var(--font-size);
+    line-height: var(--line-height);
+    
+    /* Ensure content stacking */
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+  }
+  
+  .highlight-note__first-row {
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+  
+  .highlight-note__second-row {
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    opacity: 0.9;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .highlight-note {
+      --padding-vertical: 14px;
+      --padding-horizontal: 16px;
+      --font-size: 13px;
+      --highlight-width: 3px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .highlight-note {
+      --padding-vertical: 12px;
+      --padding-horizontal: 14px;
+      --font-size: 12px;
+      --border-radius: 6px;
+    }
+  }
+  
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .highlight-note {
+      border-left-width: 6px;
+      box-shadow: 0 0 0 1px var(--highlight-color);
+    }
+  }
+  
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    .highlight-note {
+      transition: none;
+    }
+  }

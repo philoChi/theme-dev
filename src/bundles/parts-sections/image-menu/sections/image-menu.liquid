@@ -1,0 +1,91 @@
+{% comment %}
+  Image Menu Section
+  This section displays a customizable image menu with up to 6 items.
+  Users can add, edit, or remove menu items via the Shopify theme editor.
+{% endcomment %}
+{%- comment -%} Assets loaded conditionally via theme.liquid {%- endcomment -%}
+
+<section class="image-menu-section">
+  <div class="image-menu-section__container">
+    {% assign max_items = section.settings.max_items | default: 6 %}
+    {% for block in section.blocks limit: max_items %}
+      {% comment %} Menu Item {% endcomment %}
+      <a href="{{ block.settings.link }}" class="image-menu-item">
+        <div mpe="grow-container" class="image-menu-item__image-container">
+          {% comment %} Menu Item Image {% endcomment %}
+          <img
+            src="{{ block.settings.image | img_url: '200x200' }}"
+            width="auto"
+            height="auto"
+            alt="{{ block.settings.label | escape }}"
+            class="image-menu-item__image grow-container__image"
+          >
+        </div>
+        {% comment %} Menu Item Label {% endcomment %}
+        <div class="image-menu-item__label">
+          {{ block.settings.label }}
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Image Menu",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "range",
+      "id": "max_items",
+      "label": "Maximum items to display",
+      "min": 1,
+      "max": 6,
+      "default": 6
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu_item",
+      "name": "Menu Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ],
+      "limit": 6
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image Menu",
+      "blocks": [
+        {
+          "type": "menu_item"
+        },
+        {
+          "type": "menu_item"
+        },
+        {
+          "type": "menu_item"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

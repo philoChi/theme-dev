@@ -1,0 +1,128 @@
+/* ===================================
+   Collection Page Bundle - Product Grid Component
+   Purpose: Styles for product grid, pagination, and empty states
+   =================================== */
+
+/* Product Grid */
+.collection-grid {
+  display: grid;
+  gap: var(--collection-grid-gap);
+  margin-bottom: 3rem;
+  contain: layout style;
+  /* Performance: CSS containment */
+  will-change: contents;
+  /* Hint browser for optimization */
+}
+
+/* Desktop Grid Columns */
+.collection-grid--desktop-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.collection-grid--desktop-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.collection-grid--desktop-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.collection-grid--desktop-5 {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+/* Search-specific grid styling */
+.collection-grid--search {
+  /* Inherits base grid styles */
+}
+
+/* Grid Items */
+.collection-grid__item {
+  position: relative;
+  contain: layout style;
+  /* Performance: CSS containment for grid items */
+  transform: translateZ(0);
+  /* Force hardware acceleration */
+}
+
+/* Loading State */
+.collection-grid--loading .collection-grid__item {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Empty State */
+.collection-page__empty {
+  text-align: center;
+  padding: 4rem 2rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.collection-page__empty-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--color-text);
+}
+
+.collection-page__empty-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary, #666);
+  margin-bottom: 2rem;
+}
+
+.collection-page__empty-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--color-primary, #000);
+  color: var(--color-primary-text, #fff);
+  text-decoration: none;
+  border-radius: var(--collection-filter-tag-radius);
+  transition: var(--collection-transition);
+  font-weight: 500;
+}
+
+.collection-page__empty-button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* Mobile Grid Responsive */
+@media screen and (max-width: 47.9375rem) {
+  .collection-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  .collection-grid--desktop-2,
+  .collection-grid--desktop-3,
+  .collection-grid--desktop-4,
+  .collection-grid--desktop-5 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 30rem) {
+  .collection-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .collection-grid--desktop-2,
+  .collection-grid--desktop-3,
+  .collection-grid--desktop-4,
+  .collection-grid--desktop-5 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Tablet Grid */
+@media screen and (min-width: 48rem) and (max-width: 63.9375rem) {
+  .collection-grid--desktop-4,
+  .collection-grid--desktop-5 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

@@ -1,0 +1,229 @@
+{%- comment -%}
+  Snippet: Drawer Content Filter
+  Purpose: Filter content for the multi-drawer system
+  Version: 1.0
+
+  Parameters:
+    - id: The unique ID for this drawer content
+    - collection: The collection to filter (passed from collection page)
+{%- endcomment -%}
+
+{%- liquid
+  # Get current collection from page context (available on collection pages)
+  assign current_collection = collection
+  if current_collection == blank and template contains 'collection'
+    assign current_collection = collection
+  endif
+
+  # Check if we have Shopify native filters available
+  assign has_shopify_filters = false
+  if current_collection and current_collection.filters.size > 0
+    assign has_shopify_filters = true
+  endif
+-%}
+
+<div
+  class="drawer__content__item drawer__content__filter"
+  id="{{ id }}"
+  data-filter-drawer-content
+  data-has-shopify-filters="{{ has_shopify_filters }}"
+  role="region"
+  aria-label="{{ 'collections.filtering.filter_products' | t }}"
+>
+  <div class="filter-drawer__container">
+    <div class="filter-drawer__content">
+      {%- # Dynamic Shopify Filters -%}
+      {%- if has_shopify_filters -%}
+        {%- # Set available filters based on context -%}
+        {%- liquid
+          assign is_search_context = false
+          if template contains 'search'
+            assign is_search_context = true
+          endif
+
+          if is_search_context and search
+            assign available_filters = search.filters
+          else
+            assign available_filters = current_collection.filters
+          endif
+        -%}
+
+        {%- # Iterate through Shopify filters dynamically -%}
+        {%- for filter in available_filters -%}
+          {%- assign filter_id = filter.param_name | replace: '.', '-' -%}
+          {%- assign panel_id = 'filter-' | append: filter_id -%}
+
+          {%- # Build filter content based on type -%}
+          {%- liquid
+            # Check if this should be treated as a boolean toggle
+            # Only availability filter should be boolean, not all filters with 2 values
+            assign is_boolean_style = false
+            if filter.type == 'boolean'
+              assign is_boolean_style = true
+            elsif filter.param_name == 'filter.v.availability'
+              assign is_boolean_style = true
+            endif
+          -%}
+
+          {%- if is_boolean_style -%}
+            {%- # Boolean or availability filter as toggle button (no dropdown needed) -%}
+            {%- liquid
+              # For true boolean filters
+              if filter.type == 'boolean'
+                assign toggle_value = filter.true_value
+                assign toggle_active = filter.true_value.active
+                if filter.false_value.active
+                  assign toggle_value = filter.false_value
+                  assign toggle_active = filter.false_value.active
+                endif
+              else
+                # For availability filters (list type with 2 values)
+                assign toggle_value = filter.values.first
+                assign toggle_active = false
+                for value in filter.values
+                  if value.active
+                    assign toggle_value = value
+                    assign toggle_active = true
+                    break
+                  endif
+                endfor
+              endif
+            -%}
+            <div class="filter-boolean-toggle">
+              <label class="filter-switch">
+                <input
+                  type="checkbox"
+                  class="filter-switch__input"
+                  data-filter-type="boolean"
+                  data-filter-param="{{ filter.param_name }}"
+                  data-filter-value="{{ toggle_value.value }}"
+                  data-shopify-param="{{ filter.param_name }}"
+                  {% if toggle_active %}checked{% endif %}
+                  {% if toggle_value.count == 0 and toggle_active == false %}
+                    disabled
+                  {% endif %}
+                />
+                <span class="filter-switch__slider"></span>
+                <span class="filter-switch__label">{{ filter.label }}</span>
+              </label>
+            </div>
+          {%- else -%}
+            {%- capture filter_panel_content -%}
+                  <div class="filter-group" data-filter-group="{{ filter.param_name }}" data-shopify-filter="true">
+                    {%- case filter.type -%}
+                      {%- when 'list' -%}
+                    <div class="filter-options" data-filter-options="{{ filter.param_name }}">
+                      {%- # List filter (product type, vendor, variant options, etc.) -%}
+                      {%- for filter_value in filter.values -%}
+                        <label class="filter-option{% if filter_value.display.type == 'colors' %} filter-option--color{% endif %}">
+                          <input type="checkbox"
+                            name="{{ filter_value.param_name }}"
+                            value="{{ filter_value.value }}"
+                            data-filter-type="list"
+                            data-filter-value="{{ filter_value.value }}"
+                            data-shopify-param="{{ filter_value.param_name }}"
+                            {% if filter_value.active %}checked{% endif %}
+                            {% if filter_value.count == 0 and filter_value.active == false %}disabled{% endif %}>
+                          <span class="filter-option__label">
+                            {%- # Display color swatches for color filters -%}
+                            {%- if filter_value.display.type == 'colors' -%}
+                              <span class="filter-option__color-swatch" 
+                                    style="background-color: {{ filter_value.display.value }};" 
+                                    aria-hidden="true"></span>
+                            {%- endif -%}
+                            {{ filter_value.label }}
+                          </span>
+                          <span class="filter-option__count">({{ filter_value.count }})</span>
+                        </label>
+                      {%- endfor -%}
+                    </div>
+                  {%- when 'price_range' -%}
+                      {%- # Price range filter -%}
+                      <div class="filter-options--price-range">
+                        <div class="filter-price-range">
+                          <div class="filter-price-input-group">
+                            <label for="filter-price-from-{{ filter.min_value.param_name }}" class="filter-price-label">
+                              {{ 'collections.filtering.price_from' | t }}
+                            </label>
+                            <div class="filter-price-input-wrapper">
+                              <span class="filter-currency">{{ cart.currency.symbol }}</span>
+                              <input type="number"
+                                id="filter-price-from-{{ filter.min_value.param_name }}"
+                                name="{{ filter.min_value.param_name }}"
+                                {% if filter.min_value.value %}value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}"{% endif %}
+                                placeholder="0"
+                                min="0"
+                                max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                                data-shopify-param="{{ filter.min_value.param_name }}"
+                                class="filter-price-input">
+                            </div>
+                          </div>
+                          <div class="filter-price-input-group">
+                            <label for="filter-price-to-{{ filter.max_value.param_name }}" class="filter-price-label">
+                              {{ 'collections.filtering.price_to' | t }}
+                            </label>
+                            <div class="filter-price-input-wrapper">
+                              <span class="filter-currency">{{ cart.currency.symbol }}</span>
+                              <input type="number"
+                                id="filter-price-to-{{ filter.max_value.param_name }}"
+                                name="{{ filter.max_value.param_name }}"
+                                {% if filter.max_value.value %}value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}"{% endif %}
+                                placeholder="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                                min="0"
+                                max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                                data-shopify-param="{{ filter.max_value.param_name }}"
+                                class="filter-price-input">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    {%- endcase -%}
+                  </div>
+                {%- endcapture -%}
+
+            {%- # Check if this filter has active values to auto-expand dropdown -%}
+            {%- assign has_active_filter = false -%}
+            
+            {%- # First check if any filter values are marked as active by Shopify -%}
+            {%- for filter_value in filter.values -%}
+              {%- if filter_value.active -%}
+                {%- assign has_active_filter = true -%}
+                {%- break -%}
+              {%- endif -%}
+            {%- endfor -%}
+            
+            {%- # If no active values found, check URL parameters directly -%}
+            {%- # This handles cases where Shopify doesn't mark multiple comma-separated values as active -%}
+            {%- unless has_active_filter -%}
+              {%- # Check if the parameter name matches and exists in the URL query string -%}
+              {%- if filter.param_name == 'filter.p.product_type' and request.get['filter.p.product_type'] != blank -%}
+                {%- assign has_active_filter = true -%}
+              {%- elsif filter.param_name contains 'filter.' and request.get[filter.param_name] != blank -%}
+                {%- assign has_active_filter = true -%}
+              {%- endif -%}
+            {%- endunless -%}
+
+            {%- # Render dropdown with dynamic content for non-boolean filters -%}
+            {% render 'snippet-feature-dropdown',
+              trigger_text: filter.label,
+              panel_id: panel_id,
+              panel_content: filter_panel_content,
+              expanded: has_active_filter,
+              trigger_class: 'filter-dropdown__trigger',
+              panel_class: 'filter-dropdown__panel'
+            %}
+          {%- endif -%}
+        {%- endfor -%}
+
+      {%- else -%}
+        {%- # No filters available - Search & Filter App not configured -%}
+        <div class="filter-drawer__empty-state">
+          <p class="filter-drawer__empty-message">
+            {{ 'collections.filtering.no_filters_configured' | t }}
+          </p>
+        </div>
+      {%- endif -%}
+
+    </div>
+  </div>
+</div>

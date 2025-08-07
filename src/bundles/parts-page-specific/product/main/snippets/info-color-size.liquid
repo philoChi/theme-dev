@@ -1,0 +1,32 @@
+{%- comment -%} 
+Display specific variant options in desired order 
+render: {% render 'snippet-feature-product-info-color-size'
+            item: cart.item
+         %}
+
+{%- endcomment -%}
+{%- assign colour_obj = item.options_with_values | where: 'name', 'color' | first -%}
+{%- assign size_obj = item.options_with_values | where: 'name', 'size' | first -%}
+{%- assign colour_name = colour_obj.value -%}
+{%- assign size_value = size_obj.value -%}
+
+{%- comment -%} Build the i18n key: "products.colors.<colour_name>" {%- endcomment -%}
+{%- assign colour_i18n_key = 'products.colors.' | append: colour_name -%}
+
+{%- comment -%} Display specific variant options in desired order {%- endcomment -%}
+{% if only_color == true %}
+   <p class="product-card__variant-cart-text">
+   {{ 'products.colors.label' | t }}: {{ colour_i18n_key | t }}
+   </p>
+{% elsif only_size == true %}
+   <p class="product-card__variant-cart-text">
+      {{ 'products.sizes.label' | t }}: {{ size_value }}
+   </p>
+{% else %}
+   <p class="product-card__variant-cart-text">
+   {{ 'products.colors.label' | t }}: {{ colour_i18n_key | t }}
+   </p>
+   <p class="product-card__variant-cart-text">
+      {{ 'products.sizes.label' | t }}: {{ size_value }}
+   </p>
+{% endif %}

@@ -1,0 +1,77 @@
+{%- comment -%}
+  ------------------------------------------------------------------
+  Dynamic footer rows (Subtotal → Shipping → Grand Total)
+  Uses global theme settings in block “Vertriebseinstellung”:
+    • settings.shipping_costs_germany      – stored in cents
+    • settings.free_shipping_germany       – stored in cents
+    • settings.value_tax (×10)             – e.g. 19 → 19 %
+  ------------------------------------------------------------------
+{%- endcomment -%}
+
+<div
+  class="drawer__footer__item"
+  id="{{id}}"
+>
+  <!-- Row: Subtotal -->
+  <div class="cart-drawer__subtotal">
+    <span>{{ 'cart.general.subtotal' | t }}</span>
+    <span>{{ cart.total_price | money }}</span>
+  </div>
+  {%- assign free_shipping_threshold = settings.free_shipping_germany | times: 100 -%}
+  {%- if cart.total_price < free_shipping_threshold and cart.total_price > 0 -%}
+    {%- assign shipping_costs_germany = settings.shipping_costs_germany | times: 10 -%}
+    {%- assign shipping_costs = shipping_costs_germany -%}
+  {%- else -%}
+    {%- assign shipping_costs = 0 -%}
+  {%- endif -%}
+
+  <!-- Row: Transfer Costs -->
+  <div class="cart-drawer__shipping">
+    <span>{{ 'cart.general.shipping' | t }}</span>
+    {%- if cart.total_price == 0 %}
+      <span>-</span>
+    {%- elsif shipping_costs == 0 -%}
+      <span style="color: #159e00;">
+        {{ 'cart.general.free_shipping_total_label' | t }}
+      </span>
+    {%- else -%}
+      <span>
+        {{ shipping_costs | money }}
+      </span>
+    {%- endif -%}
+  </div>
+
+  <!-- Row: Total -->
+  {%- assign grand_total = cart.total_price | plus: shipping_costs -%}
+  <div class="cart-drawer__total">
+    <span>{{ 'cart.general.total' | t }}</span>
+    <span>{{ grand_total | money }}</span>
+  </div>
+
+  <!-- Hinweis: MwSt. / Gratis‑Versand (fully localised) -->
+  {%- assign tax_percent = settings.value_tax | round: 0 -%}
+  {%- assign threshold_text = free_shipping_threshold | money_without_trailing_zeros -%}
+
+  <p class="cart-drawer__tax-note">
+    {% if cart.total_price > 0 %}
+      {{ 'cart.general.tax_notice' | t: tax: tax_percent }}
+    {% endif %}
+    {% if shipping_costs == 0 and cart.total_price > 0 %}
+      {{ 'cart.general.free_shipping_notice' | t }}
+    {% else %}
+      {{ 'cart.general.free_shipping_threshold_notice' | t: threshold: threshold_text }}
+    {% endif %}
+  </p>
+
+  {%- assign checkout_text = 'cart.general.cta_checkout_text' | t -%}
+  {% render 'snippet-feature-button',
+    size: 'large',
+    button_text: checkout_text,
+    button_link: '/checkout',
+    button_id: 'cart-checkout-button',
+    background_color: 'var(--buy-green-color)',
+    hover_color: 'var(--buy-green-color-hover)',
+    text_color: 'white',
+    hover_text_color: 'white'
+  %}
+</div>

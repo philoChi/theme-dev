@@ -1,0 +1,39 @@
+<div class="drawer__content__item"
+id={{id}}>
+  {%- comment -%}
+    Dynamic Search Results Container
+    - Updated to support dynamic search results via JavaScript
+    - Includes loading, results, and empty state containers
+    - ARIA live regions for accessibility
+  {%- endcomment -%}
+
+  {%- comment -%} Search Results Container with ARIA live region {%- endcomment -%}
+  <div id="SearchResults" class="search-results-container" aria-live="polite" role="region" aria-label="{{ 'general.search.heading' | t | default: 'Suchergebnisse' }}">
+    
+    {%- comment -%} Loading State {%- endcomment -%}
+    <div id="SearchLoadingState" class="search-loading-state" aria-hidden="true" style="display: none;">
+      {% render 'snippet-section-drawer-multi-search-loading-state' %}
+    </div>
+
+    {%- comment -%} Hint State - Shows when only 1 character is typed {%- endcomment -%}
+    <div id="SearchHintState" class="search-hint-state" aria-hidden="true" style="display: none;">
+      {% render 'snippet-section-drawer-multi-search-hint-state' %}
+    </div>
+
+    {%- comment -%} Search Results List {%- endcomment -%}
+    <ul id="SearchResultsList" class="drawer__items search-results-list" aria-label="{{ 'general.search.results_with_count.other' | t: count: 0, terms: '' | default: 'Suchergebnisse' }}">
+      {%- comment -%} Dynamic results will be populated here by JavaScript {%- endcomment -%}
+    </ul>
+
+    {%- comment -%} Empty State {%- endcomment -%}
+    <div id="SearchEmptyState" class="search-empty-state" aria-hidden="true" style="display: none;">
+      {% render 'snippet-section-drawer-multi-search-empty-state' %}
+    </div>
+
+    {%- comment -%} Initial/Default State - Helpful search suggestions {%- endcomment -%}
+    <div id="SearchDefaultState" class="search-default-state">
+      {% render 'snippet-section-drawer-multi-search-welcome-state' %}
+    </div>
+
+  </div>
+</div>

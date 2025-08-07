@@ -1,0 +1,207 @@
+ /* ---------- CART-SPECIFIC STYLES begin (kept) ---------- */
+
+ .cart-drawer{
+
+  --cart-drawer-font-size: var(--main-font-size);
+  --cart-drawer-sub-font-size: var(--sub-font-size);
+  --cart-drawer-big-font-size: 18px;
+
+  --cart-drawer-atc-color: var(--buy-green-color, #107b00);
+  --cart-drawer-atc-margin-block: 0.8rem; /* ESame for product page cart atc */
+
+  --cart-drawer-quantity-button-size: 20px;
+  --cart-drawer-quantity-button-input-width: 40px;
+  --cart-drawer-quantity-button-gap-between: 5px;
+
+  --cart-drawer-button-radius: 3px;
+
+ }
+
+/* Cart drawer button styling now handled by unified style wrapper system */
+
+
+.drawer__items {
+  --cart-drawer-item-image-height: 115px;
+  --cart-drawer-item-space-below: 15px;
+  --cart-drawer-item-space-between: 10px;
+  
+  flex-grow: 1;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cart-drawer__item {
+  display: flex;
+  margin-bottom: var(--cart-drawer-item-space-below);
+}
+
+.cart-drawer__item-image{
+  margin-right: var(--cart-drawer-item-space-between);
+  height: var(--cart-drawer-item-image-height);
+}
+
+.cart-drawer__item-image img {
+  width: auto;
+  height: 100%;
+  border-radius: var(--drawer-border-radius);
+  display: block;
+}
+
+.cart-drawer__item-details {
+  text-align: left;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: 3px;
+  padding-bottom: 6px;
+}
+
+.cart-drawer__item-title:hover {
+  text-decoration: underline;
+}
+
+.cart-drawer__item-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.cart-drawer__item-actions-end {
+  align-items: center;
+}
+
+.cart-drawer__item-actions-middle {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.cart-drawer__item-quantity{
+  display: flex;
+}
+
+.quantity-button {
+  width: var(--cart-drawer-quantity-button-size);
+  height: var(--cart-drawer-quantity-button-size);
+  border: var(--drawer-border-width) solid var(--main-border-color);
+  border-radius: var(--cart-drawer-button-radius);
+  background: #ffffff;
+  cursor: pointer;
+  font-size: var(--cart-drawer-sub-font-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button--disabled {
+  background-color: #ccc !important; 
+  cursor: not-allowed !important;
+  opacity: 0.6 !important; 
+  pointer-events: none !important;
+}
+
+.quantity-input {
+  font-size: var(--cart-drawer-sub-font-size);
+  width: var(--cart-drawer-quantity-button-input-width);
+  text-align: center;
+  border: var(--drawer-border-width) solid var(--main-border-color);
+  border-radius: var(--cart-drawer-button-radius);
+  margin: 0 var(--cart-drawer-quantity-button-gap-between);
+}
+
+/* Für WebKit-basierte Browser wie Chrome, Safari, Edge */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Für Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+/* Für neuere Microsoft-Browser */
+input[type=number] {
+    -ms-appearance: textfield;
+}
+
+/* Moderne, generelle Lösung */
+input[type=number] {
+    appearance: textfield;
+}
+
+.cart-drawer__item-remove {
+  background: none;
+  border: var(--drawer-border-width) solid var(--main-border-color);
+  border-radius: var(--cart-drawer-button-radius);
+  padding: 5px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  font-size: var(--cart-drawer-sub-font-size);
+  cursor: pointer;
+  color: var(--main-font-color);
+  margin-left: 5px;
+}
+
+.cart-drawer__empty {
+  text-align: center;
+  margin-top: 50px;
+  flex-grow: 1;
+}
+
+.cart-drawer__empty-text {
+  font-size: var(--cart-drawer-big-font-size);
+  color: #666;
+}
+
+/* ----------  Dynamic footer rows  ---------- */
+
+.cart-drawer__subtotal {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--cart-drawer-font-size);
+  margin-top: 10px;
+  padding: 0 20px;
+}
+
+
+/* Versandkosten  Summe rows share the same layout */
+.cart-drawer__shipping,
+.cart-drawer__total {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--cart-drawer-font-size);
+  margin-top: 8px;            /* slightly tighter than subtotal */
+  padding: 0 20px;
+}
+
+/* Emphasise the grand total */
+.cart-drawer__total {
+  font-weight: bold;
+  font-size: var(--cart-drawer-font-size);
+}
+
+/* VAT / free‑shipping explanatory line */
+.cart-drawer__tax-note{
+  margin-top: 10px;
+  font-size: 9px;
+  font-weight: normal;
+  padding: 0 20px;
+}
+
+.drawer__content__categories{
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .cart-drawer__item-price {
+    margin-top: 10px;
+  }
+}

@@ -1,0 +1,25 @@
+{
+	"folders": [
+		{
+			"name": "workspace",
+			"path": "../"
+		},
+		{
+			"name": "src",
+			"path": "../src"
+		},
+		{
+			"name": "tests",
+			"path": "../tests"
+		},
+		{
+			"name": "theme-hyspex",
+			"path": "../theme-hyspex"
+		},
+		{
+			"name": "scripts",
+			"path": "../scripts"
+		}
+	],
+	"settings": {}
+}

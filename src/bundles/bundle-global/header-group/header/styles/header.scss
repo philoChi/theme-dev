@@ -1,0 +1,9 @@
+/* Navigation Header Main Entry Point – Modular SCSS Architecture */
+
+@import 'variables';      // CSS custom properties & design tokens
+@import 'layout';         // Flex architecture & positioning  
+@import 'header-states';  // Sticky header animations & visibility
+@import 'navigation';     // Navigation links & menu items
+@import 'mega-menu';      // Mega menu components & transitions
+@import 'icons';          // Icon buttons & interactive elements
+@import 'responsive';     // Mobile overrides & breakpoints

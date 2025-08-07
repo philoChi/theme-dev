@@ -1,0 +1,139 @@
+{%- comment -%} Navigation Header with ARIA landmarks and mega menu support {%- endcomment -%}
+
+<a href="#main-content" class="skip-navigation" aria-label="{{ 'general.accessibility.skip_to_content' | t }}">
+  {{ 'general.accessibility.skip_to_content' | t }}
+</a>
+
+<div aria-live="polite" aria-atomic="true" class="sr-only" id="navigation-announcements"></div>
+
+<header class="site-header-fixed-sizes site-header" 
+        role="banner" 
+        aria-label="{{ 'sections.header.header' | t }}"
+        style="--logo-nav-gap: {{ section.settings.logo_nav_gap }}px;">
+  <div class="site-header__inner">
+    {%- render 'snippet-section-header-logo',
+      logo_img: section.settings.logo_img,
+      show_logo_text: section.settings.show_logo_text
+    -%}
+
+    <div class="site-header__mobile-left">
+      {%- render 'snippet-section-header-icon-button',
+        type: 'hamburger',
+        id: 'hamburger-drawer-id',
+        variant: 'glassmorphism'
+      -%}
+      
+      {%- render 'snippet-section-header-icon-button',
+        type: 'search',
+        id: 'search-button-drawer-id-mobile',
+        context: 'mobile',
+        variant: 'glassmorphism'
+      -%}
+    </div>
+
+    <nav class="site-header__nav" 
+         role="menubar" 
+         aria-label="{{ 'sections.header.main_navigation' | t }}"
+         data-navigation-menu>
+      {%- for block in section.blocks -%}
+        {%- render 'snippet-section-header-nav-item', block: block -%}
+      {%- endfor -%}
+    </nav>
+
+    {%- render 'snippet-section-header-right-actions' -%}
+  </div>
+
+  <div class="mega-menu-container" 
+       role="region" 
+       aria-label="{{ 'sections.header.mega_menu_region' | t }}"
+       aria-expanded="false"
+       data-mega-menu-container>
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'mega_menu' -%}
+        {%- render 'snippet-section-header-mega-menu', block: block -%}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</header>
+
+<div class="site-header-fixed-sizes site-header-spacer" aria-hidden="true"></div>
+
+{%- schema -%}
+{
+  "name": "NavigationBar",
+  "tag": "section",
+  "class": "nav_section",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_logo_text",
+      "label": "t:sections.navigation.settings.logo.show.label",
+      "default": false
+    },
+    { "type": "image_picker", "id": "logo_img", "label": "t:sections.navigation.logo.show.image" },
+    {
+      "type": "range",
+      "id": "logo_nav_gap",
+      "label": "Gap between logo and navigation",
+      "min": 20,
+      "max": 100,
+      "step": 10,
+      "default": 60,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "mega_menu",
+      "name": "Navigation-Entry-Dropdown",
+      "limit": 4,
+      "settings": [
+        { "type": "text", "id": "label", "label": "t:sections.navigation.settings.label", "default": "Products" },
+
+        { "type": "header", "content": "t:sections.navigation.settings.categories_header" },
+        { "type": "text", "id": "cat1_name", "label": "t:sections.navigation.settings.category_name" },
+        { "type": "link_list", "id": "cat1_menu", "label": "t:sections.navigation.settings.category_menu" },
+        { "type": "text", "id": "cat2_name", "label": "t:sections.navigation.settings.category_name" },
+        { "type": "link_list", "id": "cat2_menu", "label": "t:sections.navigation.settings.category_menu" },
+        { "type": "text", "id": "cat3_name", "label": "t:sections.navigation.settings.category_name" },
+        { "type": "link_list", "id": "cat3_menu", "label": "t:sections.navigation.settings.category_menu" },
+
+        { "type": "header", "content": "t:sections.navigation.settings.promo_header" },
+        { "type": "image_picker", "id": "promo1_image", "label": "t:sections.navigation.settings.image" },
+        { "type": "text", "id": "promo1_caption", "label": "t:sections.navigation.settings.caption" },
+        { "type": "url", "id": "promo1_url", "label": "t:sections.navigation.settings.url" },
+
+        { "type": "header", "content": "t:sections.navigation.settings.promo_header" },
+        { "type": "image_picker", "id": "promo2_image", "label": "t:sections.navigation.settings.image" },
+        { "type": "text", "id": "promo2_caption", "label": "t:sections.navigation.settings.caption" },
+        { "type": "url", "id": "promo2_url", "label": "t:sections.navigation.settings.url" },
+
+        { "type": "header", "content": "t:sections.navigation.settings.promo_header" },
+        { "type": "image_picker", "id": "promo3_image", "label": "t:sections.navigation.settings.image" },
+        { "type": "text", "id": "promo3_caption", "label": "t:sections.navigation.settings.caption" },
+        { "type": "url", "id": "promo3_url", "label": "t:sections.navigation.settings.url" },
+
+        { "type": "header", "content": "t:sections.navigation.settings.promo_header" },
+        { "type": "image_picker", "id": "promo4_image", "label": "t:sections.navigation.settings.image" },
+        { "type": "text", "id": "promo4_caption", "label": "t:sections.navigation.settings.caption" },
+        { "type": "url", "id": "promo4_url", "label": "t:sections.navigation.settings.url" },
+
+        { "type": "header", "content": "t:sections.navigation.settings.common_header" },
+        { "type": "text", "id": "bottom_cta_label", "label": "CTA link text", "default": "Alles ansehen" },
+        { "type": "url", "id": "bottom_cta_url", "label": "CTA URL" }
+      ]
+    },
+    {
+      "type": "simple_link",
+      "name": "Navigation-Entry-Link",
+      "limit": 2,
+      "settings": [
+        { "type": "text", "id": "label", "label": "t:sections.navigation.settings.label", "default": "About" },
+        { "type": "url", "id": "url", "label": "t:sections.navigation.settings.url" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "NavigationBar", "category": "Header" }]
+}
+{%- endschema -%}

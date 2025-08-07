@@ -1,0 +1,19 @@
+<div class="drawer__header__item" id="{{id}}">
+  <div class="drawer__header-icon">
+    {% if icon != blank %}
+      {% case icon %}
+        {% when 'icon-cart' %}
+          <span class="icon icon-cart"></span>
+        {% when 'icon-hamburger' %}
+          <span class="icon icon-hamburger"></span>
+        {% when 'icon-filter' %}
+          <span class="icon icon-filter"></span>
+        {% else %}
+          <!-- Unknown icon -->
+      {% endcase %}
+    {% else %}
+      no icon passed
+    {% endif %}
+  </div>
+  <h2 class="cart-drawer__title">{{ text_key | t }}</h2>
+</div>

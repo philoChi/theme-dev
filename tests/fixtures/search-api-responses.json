@@ -1,0 +1,238 @@
+{
+  "successful_search": {
+    "resources": {
+      "results": {
+        "products": [
+          {
+            "id": "test-product-1",
+            "title": "Test Running Shoes",
+            "handle": "test-running-shoes",
+            "url": "/products/test-running-shoes",
+            "featured_image": "https://cdn.shopify.com/s/files/1/0000/0000/products/test-product-1.jpg",
+            "price": 9999,
+            "available": true
+          },
+          {
+            "id": "test-product-2", 
+            "title": "Premium Athletic Sneakers",
+            "handle": "premium-athletic-sneakers",
+            "url": "/products/premium-athletic-sneakers",
+            "featured_image": "https://cdn.shopify.com/s/files/1/0000/0000/products/test-product-2.jpg",
+            "price": 12999,
+            "available": true
+          },
+          {
+            "id": "test-product-3",
+            "title": "Classic Canvas Shoes", 
+            "handle": "classic-canvas-shoes",
+            "url": "/products/classic-canvas-shoes",
+            "featured_image": "https://cdn.shopify.com/s/files/1/0000/0000/products/test-product-3.jpg",
+            "price": 7999,
+            "available": false
+          }
+        ]
+      }
+    }
+  },
+  "empty_search": {
+    "resources": {
+      "results": {
+        "products": []
+      }
+    }
+  },
+  "single_product_search": {
+    "resources": {
+      "results": {
+        "products": [
+          {
+            "id": "unique-product",
+            "title": "Unique Designer Boots",
+            "handle": "unique-designer-boots", 
+            "url": "/products/unique-designer-boots",
+            "featured_image": "https://cdn.shopify.com/s/files/1/0000/0000/products/unique-product.jpg",
+            "price": 25999,
+            "available": true
+          }
+        ]
+      }
+    }
+  },
+  "large_result_set": {
+    "resources": {
+      "results": {
+        "products": [
+          {
+            "id": "bulk-product-1",
+            "title": "Bulk Product 1",
+            "handle": "bulk-product-1",
+            "url": "/products/bulk-product-1", 
+            "featured_image": "https://cdn.shopify.com/s/files/1/0000/0000/products/bulk-1.jpg",
+            "price": 5000,
+            "available": true
+          },
+          {
+            "id": "bulk-product-2",
+            "title": "Bulk Product 2", 
+            "handle": "bulk-product-2",
+            "url": "/products/bulk-product-2",
+            "featured_image": "https://cdn.shopify.com/s/files/1/0000/0000/products/bulk-2.jpg",
+            "price": 5000,
+            "available": true
+          },
+          {
+            "id": "bulk-product-3",
+            "title": "Bulk Product 3",
+            "handle": "bulk-product-3", 
+            "url": "/products/bulk-product-3",
+            "featured_image": "https://cdn.shopify.com/s/files/1/0000/0000/products/bulk-3.jpg",
+            "price": 5000,
+            "available": true
+          },
+          {
+            "id": "bulk-product-4",
+            "title": "Bulk Product 4",
+            "handle": "bulk-product-4",
+            "url": "/products/bulk-product-4",
+            "featured_image": "https://cdn.shopify.com/s/files/1/0000/0000/products/bulk-4.jpg", 
+            "price": 5000,
+            "available": true
+          },
+          {
+            "id": "bulk-product-5",
+            "title": "Bulk Product 5",
+            "handle": "bulk-product-5",
+            "url": "/products/bulk-product-5",
+            "featured_image": "https://cdn.shopify.com/s/files/1/0000/0000/products/bulk-5.jpg",
+            "price": 5000,
+            "available": true
+          },
+          {
+            "id": "bulk-product-6", 
+            "title": "Bulk Product 6",
+            "handle": "bulk-product-6",
+            "url": "/products/bulk-product-6",
+            "featured_image": "https://cdn.shopify.com/s/files/1/0000/0000/products/bulk-6.jpg",
+            "price": 5000,
+            "available": true
+          },
+          {
+            "id": "bulk-product-7",
+            "title": "Bulk Product 7",
+            "handle": "bulk-product-7",
+            "url": "/products/bulk-product-7",
+            "featured_image": "https://cdn.shopify.com/s/files/1/0000/0000/products/bulk-7.jpg",
+            "price": 5000,
+            "available": true
+          },
+          {
+            "id": "bulk-product-8",
+            "title": "Bulk Product 8",
+            "handle": "bulk-product-8", 
+            "url": "/products/bulk-product-8",
+            "featured_image": "https://cdn.shopify.com/s/files/1/0000/0000/products/bulk-8.jpg",
+            "price": 5000,
+            "available": true
+          },
+          {
+            "id": "bulk-product-9",
+            "title": "Bulk Product 9",
+            "handle": "bulk-product-9",
+            "url": "/products/bulk-product-9",
+            "featured_image": "https://cdn.shopify.com/s/files/1/0000/0000/products/bulk-9.jpg",
+            "price": 5000,
+            "available": true
+          },
+          {
+            "id": "bulk-product-10",
+            "title": "Bulk Product 10",
+            "handle": "bulk-product-10", 
+            "url": "/products/bulk-product-10",
+            "featured_image": "https://cdn.shopify.com/s/files/1/0000/0000/products/bulk-10.jpg",
+            "price": 5000,
+            "available": true
+          },
+          {
+            "id": "bulk-product-11",
+            "title": "Bulk Product 11",
+            "handle": "bulk-product-11",
+            "url": "/products/bulk-product-11", 
+            "featured_image": "https://cdn.shopify.com/s/files/1/0000/0000/products/bulk-11.jpg",
+            "price": 5000,
+            "available": true
+          },
+          {
+            "id": "bulk-product-12",
+            "title": "Bulk Product 12",
+            "handle": "bulk-product-12",
+            "url": "/products/bulk-product-12",
+            "featured_image": "https://cdn.shopify.com/s/files/1/0000/0000/products/bulk-12.jpg",
+            "price": 5000,
+            "available": true
+          }
+        ]
+      }
+    }
+  },
+  "network_error": {
+    "error": "Network request failed",
+    "status": 500,
+    "message": "Unable to connect to the search service"
+  },
+  "rate_limit_error": {
+    "error": "Rate limit exceeded",
+    "status": 429,
+    "message": "Too many requests. Please try again later."
+  },
+  "timeout_error": {
+    "error": "Request timeout",
+    "status": 408,
+    "message": "The request took too long to complete"
+  },
+  "invalid_json_response": "This is not valid JSON and should cause parsing errors",
+  "malformed_response": {
+    "resources": {
+      "results": {
+        "not_products": "This response has the wrong structure"
+      }
+    }
+  },
+  "missing_fields_response": {
+    "resources": {
+      "results": {
+        "products": [
+          {
+            "id": "incomplete-product",
+            "title": "Product Missing Fields"
+          }
+        ]
+      }
+    }
+  },
+  "edge_case_response": {
+    "resources": {
+      "results": {
+        "products": [
+          {
+            "id": "",
+            "title": "",
+            "handle": "",
+            "url": "",
+            "featured_image": null,
+            "price": 0,
+            "available": null
+          },
+          {
+            "id": null,
+            "title": null,
+            "handle": null,
+            "url": null,
+            "featured_image": "",
+            "price": null,
+            "available": null
+          }
+        ]
+      }
+    }
+  }
+}

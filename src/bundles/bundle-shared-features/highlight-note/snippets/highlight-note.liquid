@@ -1,0 +1,63 @@
+{%- comment -%}
+  Feature: Highlight Note
+  A modern highlighted note component with customizable colors and two rows of text
+  
+  @param first_text {String} - Text for the first row (optional)
+  @param second_text {String} - Text for the second row (optional)
+  @param highlight_color {String} - Custom highlight border color (optional)
+  @param background_color {String} - Custom background color (optional)
+  @param text_color {String} - Custom text color (optional)
+  @param note_class {String} - Additional CSS classes (optional)
+  @param note_type {String} - Predefined type: 'info', 'warning', 'success', 'error' (optional)
+{%- endcomment -%}
+
+{%- liquid
+  assign first_text = first_text | default: ''
+  assign second_text = second_text | default: ''
+  assign highlight_color = highlight_color | default: ''
+  assign background_color = background_color | default: ''
+  assign text_color = text_color | default: ''
+  assign note_type = note_type | default: ''
+  
+  # Build classes
+  assign note_classes = 'highlight-note'
+  if note_type != blank
+    assign note_classes = note_classes | append: ' highlight-note--' | append: note_type
+  endif
+  if note_class != blank
+    assign note_classes = note_classes | append: ' ' | append: note_class
+  endif
+  
+  # Build styles
+  assign custom_styles = ''
+  if highlight_color != blank
+    assign custom_styles = custom_styles | append: '--highlight-color: ' | append: highlight_color | append: ';'
+  endif
+  if background_color != blank
+    assign custom_styles = custom_styles | append: '--background-color: ' | append: background_color | append: ';'
+  endif
+  if text_color != blank
+    assign custom_styles = custom_styles | append: '--text-color: ' | append: text_color | append: ';'
+  endif
+-%}
+
+{%- if first_text != blank or second_text != blank -%}
+  <div class="{{ note_classes }}"
+       {%- if custom_styles != blank %} style="{{ custom_styles }}"{% endif -%}
+       role="note"
+       aria-label="{{ 'general.accessibility.note' | t | default: 'Note' }}">
+    
+    {%- if first_text != blank -%}
+      <div class="highlight-note__first-row">
+        {{- first_text | escape -}}
+      </div>
+    {%- endif -%}
+    
+    {%- if second_text != blank -%}
+      <div class="highlight-note__second-row">
+        {{- second_text | escape -}}
+      </div>
+    {%- endif -%}
+  </div>
+
+{%- endif -%}

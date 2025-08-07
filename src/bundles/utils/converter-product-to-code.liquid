@@ -1,0 +1,122 @@
+{%- comment -%}
+  Snippet: Product Data
+  Purpose: Generates standardized product data for JavaScript consumption
+  Used by: Product cards and product pages
+  Version: 2.1 - Fixed JSON syntax error in option mapping
+
+  Parameters:
+    - product: Product object
+    - container_class: Optional CSS class for the script container (default: 'product-data-container')
+    - current_variant: Optional current variant (defaults to selected_or_first_available_variant)
+{%- endcomment -%}
+
+{%- liquid
+  assign container_class = container_class | default: 'product-data-container'
+  assign current_variant = current_variant | default: product.selected_or_first_available_variant
+
+  # Create option name mapping
+  assign option_map_items = ''
+  assign size_option_index = -1
+  assign color_option_index = -1
+
+  for option in product.options_with_values
+    assign option_name_lower = option.name | downcase
+
+    # Check for size option
+    if option_name_lower == 'size' or option_name_lower == 'größe'
+      assign size_option_index = forloop.index0
+      if option_map_items != ''
+        assign option_map_items = option_map_items | append: ','
+      endif
+      assign option_map_items = option_map_items | append: '"size":' | append: forloop.index0
+      # Check for color option
+    elsif option_name_lower == 'color' or option_name_lower == 'colour' or option_name_lower == 'farbe'
+      assign color_option_index = forloop.index0
+      if option_map_items != ''
+        assign option_map_items = option_map_items | append: ','
+      endif
+      assign option_map_items = option_map_items | append: '"color":' | append: forloop.index0
+    endif
+  endfor
+  assign option_map = '{' | append: option_map_items | append: '}'
+
+  # Build color translations - now using dynamic index
+  assign color_translations = '{'
+  assign has_colors = false
+
+  if color_option_index != -1
+    for variant in product.variants
+      assign color_value = variant.options[color_option_index]
+      if color_value and color_value != blank
+        # Check if we already have this color
+        assign color_exists = false
+        if color_translations contains color_value
+          assign color_exists = true
+        endif
+
+        unless color_exists
+          assign color_key = 'products.colors.' | append: color_value
+          assign translated_color = color_key | t | default: color_value
+
+          if has_colors
+            assign color_translations = color_translations | append: ','
+          endif
+          assign color_translations = color_translations | append: '"' | append: color_value | append: '":"' | append: translated_color | append: '"'
+          assign has_colors = true
+        endunless
+      endif
+    endfor
+  endif
+  assign color_translations = color_translations | append: '}'
+-%}
+
+<script type="application/json" class="{{ container_class }}" data-product-data>
+  {
+    "productId": {{ product.id }},
+    "initialVariantId": {{ current_variant.id }},
+    "optionMapping": {{ option_map }},
+    "variants": [
+      {%- for variant in product.variants -%}
+      {
+        "id": {{ variant.id }},
+        "optionsByName": {
+          {%- if size_option_index != -1 -%}
+            "size": "{{ variant.options[size_option_index] | escape }}"{%- if color_option_index != -1 -%},{%- endif -%}
+          {%- endif -%}
+          {%- if color_option_index != -1 -%}
+            "color": "{{ variant.options[color_option_index] | escape }}"
+          {%- endif -%}
+        },
+        "price": {{ variant.price }},
+        "comparePrice": {{ variant.compare_at_price | default: 'null' }},
+        "available": {{ variant.available }},
+        "title": "{{ variant.title | escape }}",
+        "barcode": "{{ variant.barcode | escape }}",
+        "image": {% if variant.featured_media %}{{ variant.featured_media | image_url: width: 600 | json }}{% else %}null{% endif %}
+      }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ],
+    "colorTranslations": {{ color_translations }},
+    "translations": {
+      "addedToCart": "{{ 'products.product.notifications.added_to_cart' | t }}",
+      "selectSizeError": "{{ 'products.product.notifications.select_size_error' | t }}",
+      "addToCartError": "{{ 'products.product.notifications.add_to_cart_error' | t }}"
+    },
+    "options": [
+      {%- for option in product.options_with_values -%}
+      {
+        "name": "{{ option.name | escape }}",
+        "position": {{ option.position }},
+        "values": {{ option.values | json }}
+      }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ],
+    "images": [
+      {%- for media in product.media -%}
+        {%- if media.media_type == 'image' -%}
+          {{ media | image_url: width: 600 | json }}{% unless forloop.last %},{% endunless %}
+        {%- endif -%}
+      {%- endfor -%}
+    ]
+  }
+</script>

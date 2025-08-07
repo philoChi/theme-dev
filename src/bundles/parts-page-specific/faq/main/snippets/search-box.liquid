@@ -1,0 +1,36 @@
+{%- comment -%}
+  Generic search box component that can be used across different pages
+  
+  Parameters:
+  - placeholder: String - Placeholder text for search input
+  - aria_label: String - Aria label for accessibility
+  - component_class: String - Additional CSS class for the component wrapper
+  - search_data_attr: String - Data attribute for targeting search input (default: 'data-search-input')
+  - results_data_attr: String - Data attribute for search results container (default: 'data-search-results')
+{%- endcomment -%}
+
+{%- liquid
+  assign search_placeholder = placeholder | default: 'Search...'
+  assign search_aria_label = aria_label | default: search_placeholder
+  assign search_component_class = component_class | default: ''
+  assign search_input_attr = search_data_attr | default: 'data-search-input'
+  assign search_results_attr = results_data_attr | default: 'data-search-results'
+-%}
+
+<div class="search-box {{ search_component_class }}" data-search-component>
+  <div class="search-box__container">
+    <div class="search-box__input-wrapper">
+      <input 
+        type="search" 
+        class="search-box__input" 
+        placeholder="{{ search_placeholder }}"
+        {{ search_input_attr }}
+        aria-label="{{ search_aria_label }}"
+      >
+      <div class="search-box__icon">
+        <span class="icon icon-search"></span>
+      </div>
+    </div>
+    <div class="search-box__results" {{ search_results_attr }} style="display: none;"></div>
+  </div>
+</div>

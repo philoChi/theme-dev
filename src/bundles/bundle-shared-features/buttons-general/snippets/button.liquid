@@ -1,0 +1,91 @@
+{%- comment -%}
+  Feature: Button
+  A reusable button component using unified style wrapper system
+
+  @param button_text {String} - Button label text (required)
+  @param button_link {String} - URL for link buttons (optional)
+  @param size {String} - Button size: 'small', 'medium', 'large' (default: 'medium')
+  @param aria_label {String} - Accessibility label (default: button_text)
+  @param custom_class {String} - Additional CSS classes (optional)
+  @param custom_tag {String} - Custom HTML attributes (optional)
+  @param data_panel {String} - Data attribute for panel control (default: 'none')
+  @param style_wrapper {String} - Style wrapper variant: 'glassmorphism', 'flat', 'flat-basic' (default: 'flat')
+  @param disabled {Boolean} - Render button in disabled state (default: false)
+  @param button_id {String} - ID attribute for the button element (optional)
+  @param show_arrow {Boolean} - Show arrow icon (default: false)
+  @param arrow_position {String} - Arrow position: 'left', 'right' (default: 'right')
+  @param uppercase {Boolean} - Apply uppercase text transform (default: false)
+  @param background_color {String} - Custom background color for inactive state via CSS custom properties (optional)
+  @param hover_color {String} - Custom background color for hover state via CSS custom properties (optional)
+  @param text_color {String} - Custom text color for inactive state via CSS custom properties (optional)
+  @param hover_text_color {String} - Custom text color for hover state via CSS custom properties (optional)
+{%- endcomment -%}
+
+{%- liquid
+  # Parameter validation and defaults
+  assign size = size | default: 'medium'
+  assign aria_label = aria_label | default: button_text
+  assign data_panel = data_panel | default: 'none'
+  assign style_wrapper = style_wrapper | default: 'flat'
+  assign disabled = disabled | default: false
+  assign show_arrow = show_arrow | default: false
+  assign arrow_position = arrow_position | default: 'right'
+  assign uppercase = uppercase | default: false
+
+  # Build CSS classes for positioning and size only (styling handled by wrapper)
+  assign button_classes = 'feature-button feature-button--' | append: size
+  if uppercase
+    assign button_classes = button_classes | append: ' feature-button--uppercase'
+  endif
+  assign button_classes = custom_class | default: '' | append: ' ' | append: button_classes | strip
+
+  # Build data attributes
+  assign data_attrs = ''
+  if data_panel != 'none'
+    assign data_attrs = data_attrs | append: 'data-panel="' | append: data_panel | append: '"'
+  endif
+
+  # Add custom data attributes if provided
+  assign data_attrs = data_attrs | append: ' ' | append: custom_tag | default: '' | strip
+-%}
+
+{%- capture button_content -%}
+  {%- if button_link != blank -%}
+    <a href="{{ button_link }}" class="{{ button_classes | strip }}"{% if button_id != blank %} id="{{ button_id }}"{% endif %}{% if data_attrs != blank %} {{ data_attrs | strip }}{% endif %}{% if aria_label != blank %} aria-label="{{ aria_label | escape }}"{% endif %} role="button" tabindex="0"{% if disabled %} aria-disabled="true"{% else %} aria-disabled="false"{% endif %}>
+      <span class="feature-button__text">
+        {%- if show_arrow and arrow_position == 'left' -%}
+          <svg class="feature-button__arrow feature-button__arrow--left" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+          </svg>
+        {%- endif -%}
+        <span class="feature-button__label">{{ button_text }}</span>
+        {%- if show_arrow and arrow_position == 'right' -%}
+          <svg class="feature-button__arrow feature-button__arrow--right" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+          </svg>
+        {%- endif -%}
+      </span>
+    </a>
+  {%- else -%}
+    <button type="button" class="{{ button_classes | strip }}"{% if button_id != blank %} id="{{ button_id }}"{% endif %}{% if data_attrs != blank %} {{ data_attrs | strip }}{% endif %}{% if aria_label != blank %} aria-label="{{ aria_label | escape }}"{% endif %} role="button" tabindex="0"{% if disabled %} disabled aria-disabled="true"{% else %} aria-disabled="false"{% endif %}>
+      <span class="feature-button__text">
+        {%- if show_arrow and arrow_position == 'left' -%}
+          <svg class="feature-button__arrow feature-button__arrow--left" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+          </svg>
+        {%- endif -%}
+        <span class="feature-button__label">{{ button_text }}</span>
+        {%- if show_arrow and arrow_position == 'right' -%}
+          <svg class="feature-button__arrow feature-button__arrow--right" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+          </svg>
+        {%- endif -%}
+      </span>
+    </button>
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- liquid
+  # Wrap the button with the style wrapper and apply custom color properties
+  render 'snippet-feature-style-wrapper', content: button_content, variant: style_wrapper, background_color: background_color, hover_color: hover_color, text_color: text_color, hover_text_color: hover_text_color
+-%}

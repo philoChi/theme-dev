@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="100" viewBox="0 0 300 100">
+  <!-- Elephant Icon -->
+  <g fill="#333" stroke="none">
+    <!-- Body -->
+    <rect x="60" y="40" width="40" height="30" rx="5"/>
+    <!-- Head -->
+    <circle cx="40" cy="50" r="20"/>
+    <!-- Ear -->
+    <path d="M30,45 a15,15 0 1,0 0.1,0" fill-opacity="0.8"/>
+    <!-- Trunk -->
+    <path d="M55,55 q20,10 5,20" stroke="#333" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <!-- Eye -->
+    <circle cx="35" cy="45" r="2" fill="#fff"/>
+    <!-- Legs -->
+    <rect x="65" y="70" width="10" height="20" rx="2"/>
+    <rect x="85" y="70" width="10" height="20" rx="2"/>
+  </g>
+  <!-- Brand Name -->
+  <text x="120" y="65" font-family="Arial, sans-serif" font-size="36" fill="#333">TheElefant</text>
+</svg>

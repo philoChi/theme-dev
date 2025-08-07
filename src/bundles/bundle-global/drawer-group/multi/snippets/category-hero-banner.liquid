@@ -1,0 +1,41 @@
+{%- comment -%}
+  Drawer Hero Banner
+  -------------------
+  Responsive image banner with an optional overlay and a clickable link.
+
+  Expected input (passed from the section block):
+    • image        – Image object (Theme Editor picker, required)
+    • link         – URL string (optional; wraps the banner in <a>)
+    • overlay_text – Headline text over the image (optional, translatable)
+    • ratio        – Aspect‑ratio string like "16/9" (string, optional)
+
+  The inline style sets a CSS custom property used by the CSS rule:
+      padding-top: calc(100% / (var(--drawer-hero-ratio)));
+  to preserve aspect ratio without JS.
+
+  Styling lives in section‑drawer‑multi.css (added later).
+{%- endcomment -%}
+
+{% assign img = image %}
+{% assign ratio = ratio | default: '16/9' %}
+{% assign wrapper_start = '' %}
+{% assign wrapper_end = '' %}
+
+{%- if link != blank -%}
+  {% assign wrapper_start = '<a href="' | append: link | append: '" class="drawer-hero__link">' %}
+  {% assign wrapper_end   = '</a>' %}
+{%- endif -%}
+
+{% if img != blank %}
+  <div class="drawer-hero">
+    {{ wrapper_start }}
+      <div class="drawer-hero__media" style="--drawer-hero-ratio: {{ ratio }};">
+        {{ img | image_url: width: 700 | image_tag: loading: 'lazy', sizes: '700px', alt: overlay_text }}
+        {% if overlay_text != blank %}
+          <span class="drawer-hero__overlay">{{ overlay_text }}</span>
+        {% endif %}
+      </div>
+
+    {{ wrapper_end }}
+  </div>
+{% endif %}

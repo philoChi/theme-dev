@@ -1,0 +1,87 @@
+{
+  "default": {
+    "product_type": "Produkt",
+    "determiner": "dieses",
+    "feature_chips": "organic"
+  },
+  "premium-organic-hoodie": {
+    "subtitle": "Premium Organic Hoodie",
+    "product_type": "Hoodie",
+    "determiner": "diesen",
+    "description": "- Material: 81% Polyester (recycled), 14% Bio-Baumwolle, 5% Elastan\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Transferdruck\n- Ursprungsland: Made in Portugal\n- Passform: Unisex\nNachhaltigkeit trifft Performance. Nachhaltigeres Material. Umweltschonendes Stoffgemisch aus recyceltem Polyester, Bio-Baumwolle und Elastan.",
+    "properties": "- Material: 81% Polyester (recycled), 14% Bio-Baumwolle, 5% Elastan\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Transferdruck\n- Ursprungsland: Made in Portugal\n- Passform: Unisex\nNachhaltigkeit trifft Performance. Nachhaltigeres Material. Umweltschonendes Stoffgemisch aus recyceltem Polyester, Bio-Baumwolle und Elastan.",
+    "feature_chips": "organic,cozy,simple"
+  },
+  "premium-organic-sweatshirt": {
+    "subtitle": "Premium Organic Sweatshirt",
+    "product_type": "Sweatshirt",
+    "determiner": "dieses",
+    "description": "- Material: 85% Bio-Baumwolle, 15% Polyester (recycled)\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Transferdruck\n- Ursprungsland: Made in Portugal\n- Passform: Unisex\nPremium Bio-Qualität. Weiches Sweatshirt-Material mit nachhaltiger Faser-Mischung.",
+    "properties": "- Material: 85% Bio-Baumwolle, 15% Polyester (recycled)\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Transferdruck\n- Ursprungsland: Made in Portugal\n- Passform: Unisex\nPremium Bio-Qualität. Weiches Sweatshirt-Material mit nachhaltiger Faser-Mischung.",
+    "feature_chips": "organic,cozy,simple"
+  },
+  "premium-organic-t-shirt": {
+    "subtitle": "Premium Organic T-Shirt",
+    "product_type": "T-Shirt",
+    "determiner": "dieses",
+    "description": "- Material: 100% Bio-Baumwolle (Premium-Qualität)\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Transferdruck\n- Ursprungsland: Made in Portugal\n- Passform: Unisex\nHöchste Qualität trifft Nachhaltigkeit. Premium Bio-Baumwolle für ultimativen Komfort.",
+    "properties": "- Material: 100% Bio-Baumwolle (Premium-Qualität)\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Transferdruck\n- Ursprungsland: Made in Portugal\n- Passform: Unisex\nHöchste Qualität trifft Nachhaltigkeit. Premium Bio-Baumwolle für ultimativen Komfort.",
+    "feature_chips": "organic,simple,cozy"
+  },
+  "organic-hoodie": {
+    "subtitle": "Organic Hoodie",
+    "product_type": "Hoodie",
+    "determiner": "diesen",
+    "description": "- Material: 70% Polyester (recycled), 30% Bio-Baumwolle\n- Verpackt in nachhaltiger Verpackung\n- Druckverfahren: Digitaldruck\n- Ursprungsland: Made in EU\n- Passform: Unisex\nUmweltbewusster Style. Nachhaltiges Material aus recycelten und biologischen Fasern.",
+    "properties": "- Material: 70% Polyester (recycled), 30% Bio-Baumwolle\n- Verpackt in nachhaltiger Verpackung\n- Druckverfahren: Digitaldruck\n- Ursprungsland: Made in EU\n- Passform: Unisex\nUmweltbewusster Style. Nachhaltiges Material aus recycelten und biologischen Fasern.",
+    "feature_chips": "organic,simple"
+  },
+  "organic-sweatshirt": {
+    "subtitle": "Organic Sweatshirt",
+    "product_type": "Sweatshirt",
+    "determiner": "dieses",
+    "description": "- Material: 85% Bio-Baumwolle, 15% Polyester (recycled)\n- Verpackt in nachhaltiger Verpackung\n- Druckverfahren: Digitaldruck\n- Ursprungsland: Made in EU\n- Passform: Unisex\nKomfort und Stil vereint. Weiches Sweatshirt-Material mit nachhaltiger Faser-Mischung.",
+    "properties": "- Material: 85% Bio-Baumwolle, 15% Polyester (recycled)\n- Verpackt in nachhaltiger Verpackung\n- Druckverfahren: Digitaldruck\n- Ursprungsland: Made in EU\n- Passform: Unisex\nKomfort und Stil vereint. Weiches Sweatshirt-Material mit nachhaltiger Faser-Mischung.",
+    "feature_chips": "organic,cozy"
+  },
+  "organic-t-shirt": {
+    "subtitle": "Organic T-Shirt",
+    "product_type": "T-Shirt",
+    "determiner": "dieses",
+    "description": "- Material: 100% Bio-Baumwolle\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Siebdruck\n- Ursprungsland: Made in Portugal\n- Passform: Unisex\nPure Bio-Qualität. Weiches, atmungsaktives Material aus 100% zertifizierter Bio-Baumwolle.",
+    "properties": "- Material: 100% Bio-Baumwolle\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Siebdruck\n- Ursprungsland: Made in Portugal\n- Passform: Unisex\nPure Bio-Qualität. Weiches, atmungsaktives Material aus 100% zertifizierter Bio-Baumwolle.",
+    "feature_chips": "organic,simple"
+  },
+  "premium-men-hoodie": {
+    "subtitle": "Herren Premium Organic Hoodie",
+    "product_type": "Hoodie",
+    "determiner": "diesen",
+    "description": "- Material: 81% Polyester (recycled), 14% Bio-Baumwolle, 5% Elastan\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Transferdruck\n- Ursprungsland: Made in Portugal\n- Passform: Herren-Schnitt\nNachhaltigkeit trifft Performance. Nachhaltigeres Material. Umweltschonendes Stoffgemisch aus recyceltem Polyester, Bio-Baumwolle und Elastan.",
+    "properties": "- Material: 81% Polyester (recycled), 14% Bio-Baumwolle, 5% Elastan\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Transferdruck\n- Ursprungsland: Made in Portugal\n- Passform: Herren-Schnitt\nNachhaltigkeit trifft Performance. Nachhaltigeres Material. Umweltschonendes Stoffgemisch aus recyceltem Polyester, Bio-Baumwolle und Elastan.",
+    "feature_chips": "organic,cozy,simple"
+  },
+  "premium-sweatshirt": {
+    "subtitle": "Premium Sweatshirt",
+    "product_type": "Sweatshirt",
+    "determiner": "dieses",
+    "description": "- Material: 85% Bio-Baumwolle, 15% Polyester (recycled)\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Transferdruck\n- Ursprungsland: Made in Portugal\n- Passform: Unisex\nKomfort und Stil vereint. Weiches Sweatshirt-Material mit nachhaltiger Faser-Mischung.",
+    "properties": "- Material: 85% Bio-Baumwolle, 15% Polyester (recycled)\n- Verpackt in einer nachhaltigen Papier-Banderole\n- Druckverfahren: Transferdruck\n- Ursprungsland: Made in Portugal\n- Passform: Unisex\nKomfort und Stil vereint. Weiches Sweatshirt-Material mit nachhaltiger Faser-Mischung.",
+    "feature_chips": "organic,cozy,simple"
+  },
+  "eco-hoodie": {
+    "subtitle": "Eco Hoodie",
+    "product_type": "Hoodie",
+    "determiner": "diesen",
+    "description": "- Material: 70% Polyester (recycled), 30% Bio-Baumwolle\n- Verpackt in recycelter Verpackung\n- Druckverfahren: Digitaldruck\n- Ursprungsland: Made in EU\n- Passform: Unisex\nUmweltbewusster Style. Nachhaltiges Material aus recycelten und biologischen Fasern.",
+    "properties": "- Material: 70% Polyester (recycled), 30% Bio-Baumwolle\n- Verpackt in recycelter Verpackung\n- Druckverfahren: Digitaldruck\n- Ursprungsland: Made in EU\n- Passform: Unisex\nUmweltbewusster Style. Nachhaltiges Material aus recycelten und biologischen Fasern.",
+    "feature_chips": "organic,simple"
+  },
+  "classic-hoodie": {
+    "subtitle": "Classic Hoodie",
+    "product_type": "Hoodie",
+    "determiner": "diesen",
+    "description": "- Material: 80% Baumwolle, 20% Polyester\n- Standard-Verpackung\n- Druckverfahren: Siebdruck\n- Ursprungsland: Made in EU\n- Passform: Unisex\nDer Klassiker. Bewährte Qualität für jeden Tag.",
+    "properties": "- Material: 80% Baumwolle, 20% Polyester\n- Standard-Verpackung\n- Druckverfahren: Siebdruck\n- Ursprungsland: Made in EU\n- Passform: Unisex\nDer Klassiker. Bewährte Qualität für jeden Tag.",
+    "feature_chips": "simple"
+  }
+}

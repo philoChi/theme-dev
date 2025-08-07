@@ -1,0 +1,36 @@
+{%- comment -%}
+  Snippet: Drawer Footer Filter
+  Purpose: Footer for the filter drawer with apply button (deferred filter application)
+  Version: 3.0 - Updated to use feature-button component
+
+  Parameters:
+    - id: The unique ID for this footer element
+{%- endcomment -%}
+
+<div class="drawer__footer__item" id="{{ id }}">
+  {%- assign apply_filters_text = 'collections.filtering.apply_filters' | t -%}
+  {%- if apply_filters_text == blank or apply_filters_text contains 'translation' -%}
+    {%- assign apply_filters_text = 'Filter anwenden' -%}
+  {%- endif -%}
+
+  {%- # Enhanced apply button with pending filter count using feature-button -%}
+  {%- capture button_text_with_count -%}
+    {{ apply_filters_text }}
+    <span class="pending-filter-badge" data-pending-filter-count style="display: none;">
+      (<span class="count">0</span>)
+    </span>
+  {%- endcapture -%}
+
+  {% render 'snippet-feature-button',
+    button_text: button_text_with_count,
+    size: 'large',
+    style_wrapper: 'flat',
+    custom_class: 'btn--full-width',
+    custom_tag: 'data-apply-filters',
+    aria_label: apply_filters_text,
+    background_color: 'var(--button-highlight-color-bg)',
+    hover_color: 'var(--button-highlight-color-bg-hover)',
+    text_color: 'var(--button-highlight-color-text)',
+    hover_text_color: 'var(--button-highlight-color-text-hover)'
+  %}
+</div>

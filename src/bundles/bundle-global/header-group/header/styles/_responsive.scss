@@ -1,0 +1,87 @@
+/* Responsive Accessible Styles – Mobile ARIA & Touch-Friendly Design */
+
+/* Tablet and mobile layout adjustments */
+@media (max-width: 991px) {
+  /* Hide navigation on tablet/mobile but maintain accessibility */
+  .site-header__nav {
+    display: none;
+  }
+
+  /* Mobile header height with touch-friendly sizing */
+  .site-header {
+    height: var(--mobile-header-height);
+  }
+
+  /* Flex adjustments for mobile layout */
+  .site-header__inner {
+    gap: 10px;
+  }
+
+  /* Enhanced focus visibility on mobile */
+  .skip-navigation:focus {
+    font-size: 16px; /* Prevent zoom on iOS */
+    padding: 12px 16px;
+  }
+
+  [aria-expanded="true"] {
+    background-color: var(--button-active-bg, rgba(0, 0, 0, 0.15));
+    border-radius: 8px;
+    
+    &::after {
+      width: 6px;
+      height: 6px;
+      bottom: 2px;
+    }
+  }
+
+  /* Mobile left icons - visible and ordered first */
+  .site-header__mobile-left {
+    display: flex;
+    order: 1;
+    flex-shrink: 0;
+  }
+
+  /* Logo centered with flex */
+  .site-header__logo-container {
+    order: 2;
+    flex: 1;
+    justify-content: center;
+  }
+
+  /* Right icons ordered last */
+  .site-header__right {
+    order: 3;
+    flex-shrink: 0;
+  }
+
+  /* Hide desktop search on mobile */
+  .site-header__desktop-search {
+    display: none;
+  }
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 767px) {
+  /* Smaller logo on mobile */
+  .site-header__logo {
+    height: var(--mobile-logo-size);
+  }
+
+  .site-header__right {
+    gap: 7px;
+    
+    button, a {
+      min-height: 44px;
+      min-width: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+
+  [aria-current="page"]::after {
+    height: 3px;
+    bottom: -2px;
+  }
+}

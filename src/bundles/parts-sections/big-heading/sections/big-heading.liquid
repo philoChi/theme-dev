@@ -1,0 +1,40 @@
+{%- comment -%}
+  Section: Big Heading
+  Description: Displays a prominent, customizable heading.
+  Features:
+    - Mobile-first responsive design
+    - Accessibility compliant
+    - BEM naming conventions
+    - Schema for easy customization via Shopify theme editor
+{%- endcomment -%}
+
+<!-- Big Heading Section -->
+<section class="big-heading content-padding" aria-labelledby="big-heading-title">
+  <div class="big-heading__container content-width-limit-large">
+    <h2 id="big-heading-title" class="big-heading__text">
+      {{ section.settings.bigheading_text | newline_to_br }}
+    </h2>
+  </div>
+</section>
+
+{%- comment -%} Assets loaded conditionally via theme.liquid {%- endcomment -%}
+
+{% schema %}
+{
+  "name": "Big Heading",
+  "settings": [
+    {
+      "type": "text",
+      "id": "bigheading_text",
+      "label": "Heading Text",
+      "default": "Your big heading here",
+      "info": "Enter the text for the big heading. Use line breaks as needed."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Big Heading"
+    }
+  ]
+}
+{% endschema %}

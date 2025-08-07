@@ -1,0 +1,13 @@
+/**
+ * Global Theme Styles
+ * Main entry point for global theme styles
+ */
+
+// Import icon system styles
+@import './icon-system/index.scss';
+
+// Import header group styles
+@import './header-group/index.scss';
+
+// Import drawer group styles
+@import './drawer-group/index.scss';

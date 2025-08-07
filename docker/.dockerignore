@@ -1,0 +1,81 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Node
+node_modules
+npm-debug.log
+yarn-error.log
+.npm
+.yarn-integrity
+.node_repl_history
+
+# Logs
+logs
+*.log
+*.log.*
+
+# OS files
+.DS_Store
+Thumbs.db
+.Spotlight-V100
+.Trashes
+
+# Editor directories and files
+.idea
+.vscode
+*.swp
+*.swo
+*~
+
+# Build outputs
+dist
+build
+out
+.cache
+.parcel-cache
+
+# Test coverage
+coverage
+.nyc_output
+
+# Environment files (copy .env.example instead)
+.env
+.env.*
+!.env.example
+
+# Temporary files
+tmp
+temp
+*.tmp
+*.temp
+
+# Python
+__pycache__
+*.py[cod]
+*$py.class
+.Python
+*.so
+.venv
+venv/
+ENV/
+env/
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# CI/CD
+.github
+.gitlab-ci.yml
+.circleci
+
+# Documentation (can be rebuilt)
+docs/_build
+
+# Misc
+*.bak
+*.backup
+*.old

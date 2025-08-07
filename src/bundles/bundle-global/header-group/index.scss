@@ -1,0 +1,10 @@
+/**
+ * Header Group Styles
+ * Main entry point for header styles
+ */
+
+// Import announcement bar styles
+@import './announcement-bar/styles/announcement-bar.scss';
+
+// Import header styles
+@import './header/styles/header.scss';

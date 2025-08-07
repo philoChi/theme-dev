@@ -1,0 +1,38 @@
+{%- comment -%}
+  Snippet: header-logo.liquid
+  Purpose: Logo container component for header
+  Usage: {% render 'snippet-section-header-header-logo', logo_img: section.settings.logo_img, show_logo_text: section.settings.show_logo_text %}
+  
+  Parameters:
+  - logo_img: Logo image from section settings
+  - show_logo_text: Boolean to show shop name text
+  - shop_name: Shop name (defaults to shop.name)
+{%- endcomment -%}
+
+{%- liquid
+  assign shop_name = shop_name | default: shop.name
+-%}
+
+<div class="site-header__logo-container">
+  <a
+    class="site-header__logo"
+    href="{{ routes.root_url }}"
+    aria-current="page"
+  >
+    {%- if logo_img != blank -%}
+      <img
+        class="productimage grow-container__image"
+        src="{{ logo_img | img_url: '400x' }}"
+        alt="{{ caption | escape }}"
+        loading="lazy"
+        width="auto"
+        height="100%"
+      >
+    {%- else -%}
+      <span class="icon icon-logo"></span>
+    {%- endif -%}
+  </a>
+  {%- if show_logo_text -%}
+    <span class="site-header__name">{{ shop_name }}</span>
+  {%- endif -%}
+</div>

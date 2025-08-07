@@ -1,0 +1,42 @@
+/* Section: Big Heading */
+/* BEM Naming Convention Applied */
+
+.big-heading {
+    margin-top: var(--section-distance);
+    background-color: var(--big-heading-background, #ffffff);
+  }
+  
+  .big-heading__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .big-heading__text {
+    font-size: 9vw;
+    text-align: center;
+    color: var(--big-heading-text-color, #333333);
+    margin: 0;
+  }
+
+  @media (min-width: 510px) {
+    .big-heading__text {
+      font-size: 7vw;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .big-heading__text {
+      font-size: 3rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .big-heading__text {
+      font-size: 3.5rem;
+    }
+  }
+  

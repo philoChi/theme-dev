@@ -1,0 +1,362 @@
+{%- comment -%}
+  Section: Product Showcase
+  - Enhanced tab navigation with improved accessibility
+  - Features: Semantic HTML structure, ARIA attributes, keyboard navigation
+  - Version: 2.1.0
+{%- endcomment -%}
+
+{%- comment -%} Assets loaded conditionally via theme.liquid {%- endcomment -%}
+
+{%- liquid
+  # Initialize collections
+  assign primary_collection = collections[section.settings.primary_collection]
+  assign secondary_collection = collections[section.settings.secondary_collection]
+-%}
+
+<section
+  class="content-padding product-showcase section-product-showcase content-width-limit-large"
+  data-section-id="{{ section.id }}"
+  data-section-type="showcase-tab"
+  aria-labelledby="showcase-heading-{{ section.id }}"
+>
+  {%- comment -%} Wrapper for webpack-compatible custom elements {%- endcomment -%}
+  <product-showcase-tabs>
+    {%- # Tab Navigation Container -%}
+    <div
+      class="product-showcase__tabs-wrapper"
+      aria-labelledby="showcase-heading-{{ section.id }}"
+    >
+      <div class="product-showcase__tabs-container">
+        {%- # Tab List -%}
+        <div
+          class="product-showcase__tabs"
+          role="tablist"
+          aria-label="{{ 'sections.product_showcase.tab_navigation' | t }}"
+        >
+          {%- # Primary Tab -%}
+          {%- if primary_collection != blank -%}
+            <button
+              id="tab-primary-{{ section.id }}"
+              class="product-showcase__tab"
+              role="tab"
+              aria-selected="true"
+              aria-controls="panel-primary-{{ section.id }}"
+              data-tab="primary"
+              data-collection="{{ primary_collection.handle }}"
+              tabindex="0"
+            >
+              <span class="product-showcase__tab-text">
+                {{ section.settings.primary_title }}
+              </span>
+            </button>
+          {%- endif -%}
+
+          {%- # Secondary Tab -%}
+          {%- if secondary_collection != blank -%}
+            <button
+              id="tab-secondary-{{ section.id }}"
+              class="product-showcase__tab"
+              role="tab"
+              aria-selected="false"
+              aria-controls="panel-secondary-{{ section.id }}"
+              data-tab="secondary"
+              data-collection="{{ secondary_collection.handle }}"
+              tabindex="-1"
+            >
+              <span class="product-showcase__tab-text">
+                {{ section.settings.secondary_title }}
+              </span>
+            </button>
+          {%- endif -%}
+
+          {%- # Custom Category Tabs -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'custom_category' and block.settings.collection != blank -%}
+              {%- assign custom_collection = collections[block.settings.collection] -%}
+              {%- if custom_collection != blank -%}
+                <button
+                  id="tab-{{ block.id }}"
+                  class="product-showcase__tab"
+                  role="tab"
+                  aria-selected="false"
+                  aria-controls="panel-{{ block.id }}"
+                  data-tab="{{ block.id }}"
+                  data-collection="{{ custom_collection.handle }}"
+                  tabindex="-1"
+                  {{ block.shopify_attributes }}
+                >
+                  <span class="product-showcase__tab-text">
+                    {{ block.settings.tab_label | escape }}
+                  </span>
+                </button>
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+
+        {%- # View All Buttons Container (Desktop) -%}
+        <div class="product-showcase__view-all-buttons">
+          {%- # Primary View All -%}
+          {%- if primary_collection != blank -%}
+            {%- liquid
+              assign link = primary_collection.url
+              assign text = section.settings.primary_view_all_text
+              assign panel = 'panel-primary-' | append: section.id
+              render 'snippet-feature-button', button_text: text, button_link: link, data_panel: panel, show_arrow: true, arrow_position: 'right', size: 'small'
+            -%}
+          {%- endif -%}
+
+          {%- # Secondary View All (Desktop) -%}
+          {%- if secondary_collection != blank -%}
+            {%- liquid
+              assign link = secondary_collection.url
+              assign text = section.settings.secondary_view_all_text
+              assign panel = 'panel-secondary-' | append: section.id
+              render 'snippet-feature-button', button_text: text, button_link: link, data_panel: panel, show_arrow: true, arrow_position: 'right', size: 'small'
+            -%}
+          {%- endif -%}
+
+          {%- # Custom Categories View All (Desktop) -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'custom_category' and block.settings.collection != blank -%}
+              {%- assign custom_collection = collections[block.settings.collection] -%}
+              {%- if custom_collection != blank -%}
+                {%- liquid
+                  assign link = custom_collection.url
+                  assign text = block.settings.view_all_text
+                  assign panel = 'panel-' | append: block.id
+                  render 'snippet-feature-button', button_text: text, button_link: link, data_panel: panel, show_arrow: true, arrow_position: 'right', size: 'small'
+                -%}
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+
+    {%- # Tab Panels Container -%}
+    <div
+      class="product-showcase__container"
+      aria-live="polite"
+    >
+      {%- # Primary Panel -%}
+      {%- if primary_collection != blank -%}
+        <div
+          id="panel-primary-{{ section.id }}"
+          class="product-showcase__panel active"
+          role="tabpanel"
+          aria-labelledby="tab-primary-{{ section.id }}"
+          hidden="false"
+        >
+          <div class="product-showcase__grid-wrapper">
+            {%- if primary_collection.products.size > 0 -%}
+              {%-
+                render 'snippet-section-showcase-product-showcase-grid',
+                products: primary_collection.products,
+                carousel_id: 'primary-' | append: section.id
+              -%}
+            {%- else -%}
+              <div
+                class="product-showcase__empty-state"
+                role="status"
+              >
+                <p>{{ 'sections.product_showcase.no_products' | t }}</p>
+              </div>
+            {%- endif -%}
+          </div>
+
+          {%- # Move View All Button inside panel (mobile) -%}
+          <div class="product-showcase__view-all-buttons">
+            {%- liquid
+              assign link = primary_collection.url
+              assign text = section.settings.primary_view_all_text
+              assign panel = 'panel-primary-' | append: section.id
+              render 'snippet-feature-button', button_text: text, button_link: link, data_panel: panel, show_arrow: true, arrow_position: 'right', size: 'small'
+            -%}
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- # Secondary Panel -%}
+      {%- if secondary_collection != blank -%}
+        <div
+          id="panel-secondary-{{ section.id }}"
+          class="product-showcase__panel"
+          role="tabpanel"
+          aria-labelledby="tab-secondary-{{ section.id }}"
+          hidden
+        >
+          <div class="product-showcase__grid-wrapper">
+            {%- if secondary_collection.products.size > 0 -%}
+              {%-
+                render 'snippet-section-showcase-product-showcase-grid',
+                products: secondary_collection.products,
+                carousel_id: 'secondary-' | append: section.id
+              -%}
+            {%- else -%}
+              <div
+                class="product-showcase__empty-state"
+                role="status"
+              >
+                <p>{{ 'sections.product_showcase.no_products' | t }}</p>
+              </div>
+            {%- endif -%}
+          </div>
+
+          {%- # Move View All Button inside panel (mobile) -%}
+          <div class="product-showcase__view-all-buttons">
+            {%- liquid
+              assign link = secondary_collection.url
+              assign text = section.settings.secondary_view_all_text
+              assign panel = 'panel-secondary-' | append: section.id
+              render 'snippet-feature-button', button_text: text, button_link: link, data_panel: panel, show_arrow: true, arrow_position: 'right', size: 'small'
+            -%}
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- # Custom Category Panels -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'custom_category' and block.settings.collection != blank -%}
+          {%- assign custom_collection = collections[block.settings.collection] -%}
+          {%- if custom_collection != blank -%}
+            <div
+              id="panel-{{ block.id }}"
+              class="product-showcase__panel"
+              role="tabpanel"
+              aria-labelledby="tab-{{ block.id }}"
+              hidden
+              {{ block.shopify_attributes }}
+            >
+              <div class="product-showcase__grid-wrapper">
+                {%- if custom_collection.products.size > 0 -%}
+                  {%-
+                    render 'snippet-section-showcase-product-showcase-grid',
+                    products: custom_collection.products,
+                    carousel_id: 'custom-' | append: block.id
+                  -%}
+                {%- else -%}
+                  <div
+                    class="product-showcase__empty-state"
+                    role="status"
+                  >
+                    <p>{{ 'sections.product_showcase.no_products' | t }}</p>
+                  </div>
+                {%- endif -%}
+              </div>
+
+              {%- # Move View All Button inside panel (mobile) -%}
+              <div class="product-showcase__view-all-buttons">
+                {%- liquid
+                  assign link = custom_collection.url
+                  assign text = block.settings.view_all_text
+                  assign panel = 'panel-' | append: block.id
+                  render 'snippet-feature-button', button_text: text, button_link: link, data_panel: panel, show_arrow: true, arrow_position: 'right', size: 'small'
+                -%}
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </product-showcase-tabs>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.product_showcase.name",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.product_showcase.settings.collections_header"
+    },
+    {
+      "type": "text",
+      "id": "primary_title",
+      "label": "t:sections.product_showcase.settings.primary_collection.label_titel"
+    },
+    {
+      "type": "text",
+      "id": "secondary_title",
+      "label": "t:sections.product_showcase.settings.secondary_collection.label_titel"
+    },
+    {
+      "type": "collection",
+      "id": "primary_collection",
+      "label": "t:sections.product_showcase.settings.primary_collection.label_collection"
+    },
+    {
+      "type": "collection",
+      "id": "secondary_collection",
+      "label": "t:sections.product_showcase.settings.secondary_collection.label_collection"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.product_showcase.settings.buttons_header"
+    },
+    {
+      "type": "text",
+      "id": "primary_view_all_text",
+      "label": "t:sections.product_showcase.settings.primary_collection.view_all_label",
+      "default": "View All"
+    },
+    {
+      "type": "text",
+      "id": "secondary_view_all_text",
+      "label": "t:sections.product_showcase.settings.secondary_collection.view_all_label",
+      "default": "View All"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.product_showcase.settings.layout_header"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "custom_category",
+      "name": "t:sections.product_showcase.blocks.custom_category.name",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_label",
+          "label": "t:sections.product_showcase.blocks.custom_category.settings.tab_label.label",
+          "default": "Category"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "t:sections.product_showcase.blocks.custom_category.settings.collection.label"
+        },
+        {
+          "type": "text",
+          "id": "view_all_text",
+          "label": "t:sections.product_showcase.blocks.custom_category.settings.view_all_text.label",
+          "default": "View All"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.product_showcase.presets.name",
+      "settings": {},
+      "blocks": [
+        {
+          "type": "custom_category"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{%- comment -%}
+  ProductShowcase initialization is now handled by the webpack bundle
+  in src/bundles/page-product/scripts/index.js
+{%- endcomment -%}

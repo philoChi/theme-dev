@@ -1,0 +1,46 @@
+{%- comment -%}
+  Drawer Tabs
+  ------------
+  Pill‑style navigation bar displayed near the top of the category drawer.
+
+  Expected input (passed from the section):
+    tabs – array of hashes or blocks, each with:
+      • handle    – unique slug (used in data‑attributes)
+      • label     – text to show (already locale‑translated)
+      • link      – optional URL (used if the merchant wants the tab to
+                     navigate away instead of reloading accordion content)
+      • is_active – boolean; which tab is initially selected
+
+  Styling: pills are flex items; active state .is-active will get
+  background-color/font-weight overrides in section‑drawer‑multi.css.
+  Behaviour: assets/drawer-tabs.js adds click listeners that
+  toggle .is-active and show/hide the corresponding accordion content.
+{%- endcomment -%}
+
+{% assign tabs_input = tabs | default: null %}
+
+{%- if tabs_input and tabs_input.size > 0 -%}
+  <nav class="drawer-tabs" role="tablist">
+    <ul class="drawer-tabs__list list-unstyled" data-tabs>
+      {%- for tab in tabs_input -%}
+        {%- comment -%}💡 Make the snippet agnostic: works with plain hashes **or** block objects.{%- endcomment -%}
+        {%- assign tab_label   = tab.label    | default: tab.settings.label -%}
+        {%- assign tab_handle  = tab.handle   | default: tab.settings.handle | default: tab_label | handleize -%}
+        {%- assign tab_link    = tab.link     | default: tab.settings.link -%}
+        {%- assign tab_active  = tab.is_active| default: tab.settings.is_active | default: false -%}
+      
+        <li class="drawer-tabs__item">
+          <button
+            class="drawer-tabs__button {%- if tab_active %} is-active{%- endif -%} {%- if forloop.first %} is-first{%- endif -%}{%- if forloop.last %} is-last{%- endif -%}"
+            type="button"
+            data-tab-button="{{ tab_handle | escape }}"
+            {%- if tab_link != blank -%}data-tab-link="{{ tab_link | escape }}"{% endif -%}
+            aria-selected="{{ tab_active }}"
+            role="tab">
+            {{ tab_label }}
+          </button>
+        </li>
+      {% endfor %}
+    </ul>
+  </nav>
+{% endif %}

@@ -1,0 +1,68 @@
+{%- comment -%}
+  Feature: Size Pills
+  Purpose : Render clickable size‑variant pills that quick‑add the selected
+            variant to the cart.
+
+  Parameters
+    • product         – required (Product object)
+    • option_name     – optional, defaults to 'Size'
+    • initial_variant – optional, defaults to product.selected_or_first_available_variant
+
+  Notes
+    • No filtering / stock checks yet (per requirements).
+    • No image or price updates; we only add‑to‑cart immediately.
+{%- endcomment -%}
+
+{%- liquid
+  assign option_name       = option_name | default: 'Size'
+  assign option_key        = option_name | handleize
+  assign fallback_keys     = 'size,größe,taille,dimension'
+  assign match_keys        = option_key | append: ',' | append: fallback_keys | split: ','
+
+  assign size_option_idx   = -1
+  assign size_option       = nil
+
+  for opt in product.options_with_values
+    assign opt_key = opt.name | handleize
+    if match_keys contains opt_key
+      assign size_option_idx = forloop.index0
+      assign size_option     = opt
+      break
+    endif
+  endfor
+-%}
+
+{% if size_option_idx != -1 %}
+<div class="product-card__variants">
+  <div class="product-size-pills"
+       data-size-pills
+       role="group"
+       aria-label="{{ 'products.product.size_options' | t }}">
+    {%- assign rendered_sizes = '' -%}
+    {%- for value in size_option.values -%}
+      {%- comment -%}Find first variant that matches this size value{%- endcomment -%}
+      {%- assign variant_for_size = nil -%}
+      {%- for v in product.variants -%}
+        {%- if v.options[size_option_idx] == value -%}
+          {%- assign variant_for_size = v -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if variant_for_size -%}
+        {%- unless rendered_sizes contains value -%}
+          <button type="button"
+                class="size-pill{% if variant_for_size.id == current_variant.id %} is-selected{% endif %}"
+                data-size-value="{{ value | escape }}"
+                data-variant-id="{{ variant_for_size.id }}"
+                aria-label="{{ 'products.product.select_size' | t: size: value }}"
+                {% if variant_for_size.id == current_variant.id %}aria-current="true"{% endif %}>
+                {{ value }}
+          </button>
+          {%- assign rendered_sizes = rendered_sizes | append: value | append: ',' -%}
+        {%- endunless -%}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>
+{% endif %}

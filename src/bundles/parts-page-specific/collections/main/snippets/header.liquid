@@ -1,0 +1,48 @@
+{%- comment -%}
+  Snippet: Collection Header
+  Purpose: Displays header for collection or search results pages
+  
+  Parameters:
+    - is_search: Boolean indicating if this is a search results page
+    - collection: Collection object (for collection pages)
+    - search: Search object (for search pages)
+    - show_product_count: Boolean to show/hide product count
+    - section_settings: Section settings object
+{%- endcomment -%}
+
+{%- liquid
+  assign is_search = is_search | default: false
+  assign show_product_count = show_product_count | default: true
+  
+  if is_search
+    assign search_performed = false
+    if search.terms != blank
+      assign search_performed = true
+    endif
+  endif
+-%}
+
+<header class="collection-page__header{% if is_search %} search-results__header{% endif %}">
+  {%- if is_search -%}
+    {%- if search_performed -%}
+      <h1 class="collection-page__title search-results__title">
+        {%- if search.results_count > 0 -%}
+          {{ 'templates.search.results_with_count' | t: terms: search.terms, count: search.results_count }}
+        {%- else -%}
+          {{ 'templates.search.no_results' | t: terms: search.terms }}
+        {%- endif -%}
+      </h1>
+    {%- else -%}
+      <h1 class="collection-page__title search-results__title">{{ 'templates.search.title' | t }}</h1>
+    {%- endif -%}
+  {%- else -%}
+    <h1 class="collection-page__title">{{ collection.title }}</h1>
+
+
+    {%- if collection.description != blank -%}
+      <div class="collection-page__description">
+        {{ collection.description }}
+      </div>
+    {%- endif -%}
+  {%- endif -%}
+</header>

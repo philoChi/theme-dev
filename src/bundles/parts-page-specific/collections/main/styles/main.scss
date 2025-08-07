@@ -1,0 +1,155 @@
+/* ===================================
+   Collection Page Bundle - Main Styles
+   Version: 2.0 - Webpack Bundle Architecture
+   Description: Main section styles and coordination
+   =================================== */
+
+/* CSS Custom Properties */
+.section-collection-page {
+  --collection-container-max-width: 1400px;
+  --collection-grid-gap: 1.5rem;
+  --collection-header-margin-top: var(--section-distance);
+  --collection-header-margin-bottom: var(--section-distance);
+  --collection-toolbar-margin-bottom: 1rem;
+  --collection-filter-tag-bg: var(--color-background-secondary, #f5f5f5);
+  --collection-filter-tag-color: var(--color-text, #333);
+  --collection-filter-tag-padding: 0.5rem 1rem;
+  --collection-filter-tag-radius: 0.25rem;
+  --collection-transition: all 0.3s ease;
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+}
+
+/* Container & Layout */
+.collection-page__container {
+  max-width: var(--collection-container-max-width);
+  margin: 0 auto;
+  padding: 0 var(--page-gutter, 2rem);
+  contain: layout;
+  /* Performance: CSS containment for main container */
+}
+
+/* Filter Button Spacing and Icon Sizing */
+.collection-toolbar__filter-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: 1.5;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.collection-toolbar__filter-icon {
+  width: 1em !important;
+  height: 1em !important;
+  flex-shrink: 0;
+}
+
+
+/* Active Filters Display */
+.collection-page__active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  min-height: 2rem;
+  contain: layout;
+  /* Performance: CSS containment */
+}
+
+.collection-page__active-filters:empty {
+  display: none;
+}
+
+.active-filter-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: var(--collection-filter-tag-padding);
+  background: var(--collection-filter-tag-bg);
+  color: var(--collection-filter-tag-color);
+  border-radius: var(--collection-filter-tag-radius);
+  font-size: 0.875rem;
+}
+
+.active-filter-tag__remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: var(--collection-transition);
+}
+
+.active-filter-tag__remove:hover {
+  opacity: 0.7;
+}
+
+/* Separator */
+.collection-page__separator {
+  height: .8px;
+  background: var(--main-border-color, #e0e0e0);
+  margin-bottom: var(--section-distance);
+  border: none;
+}
+
+/* Accessibility Utilities */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Performance Optimizations */
+.section-collection-page {
+  /* Prevent cumulative layout shift (CLS) */
+  min-height: 50vh;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .section-collection-page {
+    --collection-filter-tag-bg: ButtonFace;
+    --collection-filter-tag-color: ButtonText;
+    --focus-ring-color: Highlight;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .section-collection-page {
+    --collection-transition: none;
+  }
+}
+
+/* Mobile Responsive Adjustments */
+@media screen and (max-width: 47.9375rem) {
+  .section-collection-page {
+    --collection-grid-gap: 1rem;
+  }
+
+  .collection-page__container {
+    padding: 0 var(--page-gutter-mobile, 1rem);
+  }
+}
+
+/* Print Styles */
+@media print {
+
+  .collection-page__toolbar,
+  .collection-page__active-filters,
+  .collection-page__pagination {
+    display: none;
+  }
+}

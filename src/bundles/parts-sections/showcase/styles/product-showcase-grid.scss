@@ -1,0 +1,170 @@
+/* Grid Container
+   ========================================================================== */
+.product-showcase__grid {
+  position: relative;
+  margin: 0 auto;
+  max-width: var(--page-width);
+  contain: layout style;
+  overflow: hidden;
+  /* Add this to ensure nothing breaks out */
+}
+
+/* Track Container - Using clip-path for precise content clipping
+     ========================================================================== */
+.product-showcase__track {
+  padding: 0;
+  /* Default padding */
+  position: relative;
+  clip-path: inset(0 0 0 0);
+}
+
+/* Inner track wrapper to handle slides
+     ========================================================================== */
+.product-showcase__track-inner {
+  display: flex;
+  position: relative;
+  transform: translateZ(0);
+  min-width: 100%;
+  will-change: transform;
+}
+
+.product-showcase__track-hide-overflow {
+  overflow: hidden;
+}
+
+/* Slides - Fixed grid system based on breakpoints
+     ========================================================================== */
+.product-showcase__slide {
+  flex: 0 0 100%;
+  /* 1 item per row on small screens */
+  width: 100%;
+  padding: 0 2px;
+  box-sizing: border-box;
+  transform: translateZ(0);
+}
+
+/* Empty State
+     ========================================================================== */
+.product-showcase__empty {
+  width: 100%;
+  padding: 3rem 1rem;
+  text-align: center;
+  color: rgba(var(--color-foreground), 0.75);
+}
+
+/* Navigation
+    ========================================================================== */
+.product-showcase__navigation {
+  position: absolute;
+  top: 1.5%;
+  left: 1.5rem;
+  right: 1.5rem;
+  z-index: 9999;
+  /* Add opacity transition */
+  opacity: 0;
+}
+
+/* Show navigation on section hover */
+.product-showcase__grid:hover .product-showcase__navigation {
+  opacity: 1;
+}
+
+/* Fixed Breakpoint Grid System !important! This has to match with javascript carousel
+     ========================================================================== */
+
+/* 2 items per row */
+@media (min-width: 501px) {
+  .product-showcase__slide {
+    flex: 0 0 50%;
+    width: 50%;
+  }
+}
+
+/* 3 items per row */
+@media (min-width: 991px) {
+  .product-showcase__slide {
+    flex: 0 0 33.3333%;
+    width: 33.3333%;
+  }
+}
+
+/* 4 items per row + track padding */
+@media (min-width: 1400px) {
+  .product-showcase__track {
+    padding: 0 30px;
+    /* Adjust track padding on large screens */
+  }
+
+  .product-showcase__slide {
+    flex: 0 0 25%;
+    width: 25%;
+    padding: 0 12px;
+    /* Spacing around slides */
+  }
+}
+
+/* Touch Device Optimizations
+     ========================================================================== */
+@media (hover: none) {
+
+  /* default is 1 items per row with preview */
+  .product-showcase__slide {
+    flex: 0 0 75%;
+    width: 75%;
+  }
+
+  .product-showcase__navigation {
+    opacity: 1;
+  }
+
+  .product-showcase__track {
+    margin: 0;
+    overflow: auto;
+  }
+
+  .product-showcase__track-inner {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+  }
+
+  .product-showcase__track-inner::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* 2 items per row with preview */
+  @media (min-width: 501px) {
+    .product-showcase__slide {
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      /* Ensure clean stops at each slide */
+      flex: 0 0 40%;
+      width: 40%;
+    }
+  }
+
+  /* 3 items per row with preview */
+  @media (min-width: 991px) {
+    .product-showcase__slide {
+      flex: 0 0 30%;
+      width: 30%;
+    }
+  }
+}
+
+/* Add momentum-based scrolling for iOS devices */
+@supports (-webkit-touch-callout: none) {
+  .product-showcase__track-inner {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Reduced Motion
+     ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .product-showcase__track-inner {
+    transition: none;
+  }
+}

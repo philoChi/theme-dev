@@ -1,0 +1,119 @@
+{%- comment -%}
+  Feature: Product Card
+  Purpose: Renders individual product cards with color variants, price updates, and ratings
+  Version: 3.1 - Updated to use feature-badges component
+
+  Parameters:
+    - product: Product object to display
+{%- endcomment -%}
+
+{%- liquid
+  # Get current variant and image
+  assign current_variant = product.selected_or_first_available_variant
+  assign fallback_image = product.featured_image | default: images['product-placeholder']
+  
+  # Find the media item for the current variant
+  assign card_media = fallback_image
+  if current_variant.featured_media
+    assign card_media = current_variant.featured_media
+  endif
+
+  # Get secondary image (second image in product media)
+  assign secondary_media = nil
+  for media in product.media offset: 1 limit: 1
+    assign secondary_media = media
+    break
+  endfor
+
+  # Price calculations for initial variant
+  assign show_compare_at_price = false
+  if current_variant.compare_at_price and current_variant.compare_at_price > current_variant.price
+    assign show_compare_at_price = true
+  endif
+-%}
+
+<article class="product-card"
+        data-product-id="{{ product.id }}"
+        itemscope 
+        itemtype="http://schema.org/Product">
+  
+  {%- # Include standardized product data -%}
+  {% render 'snippet-utils-converter-product-to-code', 
+    product: product,
+    current_variant: current_variant,
+    container_class: 'product-card-data'
+  %}
+  
+  {%- # Preload variant images for better performance -%}
+  {%- for variant in product.variants -%}
+    {%- if variant.featured_media -%}
+      <link rel="preload" as="image" href="{{ variant.featured_media | image_url: width: 600 }}" />
+    {%- endif -%}
+  {%- endfor -%}
+  
+  {%- # Image Container -%}
+  <a href="{{ product.url }}"  class="product-card__image-wrapper {% if secondary_media != blank %} has-secondary-image{% endif %}">
+    
+    {%- # Badges -%}
+    {% render 'snippet-feature-product-info-badges', 
+      product: product,
+      current_variant: current_variant,
+      position: 'absolute'
+    %}
+
+    {%- # Main Product Image -%}
+    {%- if card_media != blank -%}
+      {{ card_media | image_url: width: 400 | image_tag:
+        class: 'product-card__image product-card__image--primary',
+        widths: '200, 400, 600',
+        data-main-image: '',
+        loading: 'lazy'
+      }}
+    {%- else -%}
+      <div class="product-card__no-image" role="presentation">
+        {{- 'product-placeholder' | placeholder_svg_tag: 'product-card__placeholder' -}}
+      </div>
+    {%- endif -%}
+
+    {%- # Secondary Product Image -%}
+    {%- if secondary_media != blank -%}
+      {{ secondary_media | image_url: width: 400 | image_tag:
+        class: 'product-card__image product-card__image--secondary',
+        widths: '200, 400, 600',
+        loading: 'lazy'
+      }}
+    {%- endif -%}
+  </a>
+  
+  <div class="product-card-info-wrapper">
+    <div class="product-card__info">
+      {%- # Product Title and Info -%}
+      {% render 'snippet-feature-product-info-header',
+        product: product
+      %}
+
+      {%- # Price Display -%}
+      {% render 'snippet-feature-product-info-price',
+        show_compare_at_price: show_compare_at_price,
+        current_variant: current_variant
+      %}
+      
+      {%- # Rating Display -%}
+      {% render 'snippet-feature-product-info-star-rating',
+        product: product
+      %}
+
+      {%- comment -%} ▼ Color swatches: render only if there is a color {%- endcomment -%}
+      {% render 'snippet-feature-product-info-color-swatches',
+        product: product,
+        initial_variant: current_variant
+      %}
+
+      {%- comment -%}▼ Size pills: render only if there is a size {%- endcomment -%}
+      {% render 'snippet-feature-product-info-size-pills',
+        product: product,
+        initial_variant: current_variant
+      %}
+    </div>
+  </div>
+</article>

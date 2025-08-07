@@ -1,0 +1,47 @@
+/* Navigation Header Variables – Design Tokens & Custom Properties */
+
+.site-header-fixed-sizes {
+  --fixed-header-height: 60px;
+}
+
+.site-header {
+  /* Layout & Dimensions */
+  --content-width: var(--page-medium-width);
+  --content-mega-menu-width: var(--page-medium-width);
+  --content-mega-menu-padding-side: 25px;
+  --header-height: 80px;
+  --mobile-header-height: 50px;
+
+  /* Logo Sizing */
+  --logo-size: 60px;
+  --mobile-logo-size: 50px;
+  --logo-nav-gap: 40px;
+
+  /* Icon Sizing */
+  --icon-size: 40px;
+  --mobile-icon-size: 36px;
+
+  /* Colors */
+  --site-navigation-header-color: white;
+  --mega-menu-background: #f9f9f9;
+
+  /* Typography */
+  --mega-menu-heading: var(--main-font);
+  --link-items-font: var(--main-font);
+  --link-items-font-size: var(--main-font-weight);
+
+  /* Transitions & Animations - Optimized */
+  --transition-fast: .3s;
+  --transition-medium: .5s;
+  --transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+  --hover-transition-Y-offset: var(--main-translate-hover-y-offset);
+
+  /* Borders & Radii */
+  --border-radius: var(--main-border-radius);
+  --border-color: var(--main-border-color);
+  --border-width: var(--main-border-width);
+
+  /* Mega Menu Promo Images */
+  --promo-image-grow-scale: var(--main-image-grow-hover-scale);
+  --promo-image-grow-time: var(--transition-fast);
+}

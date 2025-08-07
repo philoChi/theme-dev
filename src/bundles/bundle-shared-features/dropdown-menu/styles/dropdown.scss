@@ -1,0 +1,184 @@
+/* ===================================
+   Feature: Dropdown
+   Accessible dropdown/accordion component
+   =================================== */
+
+/* 1. CSS Custom Properties */
+.dropdown-feature {
+  --dropdown-bg: var(--color-background, #ffffff);
+  --dropdown-bg-hover: var(--color-background-hover, #f8f8f8);
+  --dropdown-border-color: var(--color-border, #e5e5e5);
+  --dropdown-border-radius: var(--border-radius, 4px);
+  --dropdown-primary-color: var(--color-primary, #000);
+  --dropdown-text-color: var(--color-foreground, #000);
+  --dropdown-padding: 0.75rem 1rem;
+  --dropdown-padding-mobile: 0.625rem 0.875rem;
+  --dropdown-font-size: 1rem;
+  --dropdown-font-size-mobile: 0.875rem;
+  --dropdown-transition: all 0.2s ease;
+  --dropdown-animation-duration: 0.2s;
+  --dropdown-shadow: none;
+
+  position: relative;
+  width: 100%;
+}
+
+/* 2. Element: Trigger Button */
+.dropdown-feature__trigger {
+  background: var(--dropdown-bg);
+  border: 1px solid var(--dropdown-border-color);
+  border-radius: var(--dropdown-border-radius);
+  padding: var(--dropdown-padding);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: var(--dropdown-font-size);
+  color: var(--dropdown-text-color);
+  transition: var(--dropdown-transition);
+  box-shadow: var(--dropdown-shadow);
+}
+
+.dropdown-feature__trigger:hover {
+  background: var(--dropdown-bg-hover);
+}
+
+/* 3. Modifier: Open State */
+.dropdown-feature__trigger.is-open {
+  /* Ensure border and background are maintained when open */
+  border: 1px solid var(--dropdown-border-color);
+  background: var(--dropdown-bg);
+  border-radius: var(--dropdown-border-radius) var(--dropdown-border-radius) 0 0;
+}
+
+.dropdown-feature__trigger.is-open .dropdown-feature__icon {
+  transform: rotate(180deg);
+}
+
+/* 4. Element: Trigger Text */
+.dropdown-feature__trigger-text {
+  flex: 1;
+  text-align: left;
+}
+
+/* 5. Element: Icon */
+.dropdown-feature__icon {
+  margin-left: 0.5rem;
+  transition: transform var(--dropdown-animation-duration) ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dropdown-feature__icon svg {
+  display: block;
+}
+
+/* 6. Element: Panel */
+.dropdown-feature__panel {
+  border: 1px solid var(--dropdown-border-color);
+  border-top: none;
+  border-radius: 0 0 var(--dropdown-border-radius) var(--dropdown-border-radius);
+  background: var(--dropdown-bg);
+  padding: 1rem;
+  margin-top: 0;
+  box-shadow: var(--dropdown-shadow);
+  position: relative;
+  z-index: 1;
+}
+
+.dropdown-feature__panel[hidden] {
+  display: none;
+}
+
+/* Initially expanded panels - no animation on load */
+.dropdown-feature__panel--expanded {
+  animation: none;
+}
+
+/* Override hidden attribute for initially expanded panels */
+.dropdown-feature__panel--expanded[hidden] {
+  display: block !important;
+}
+
+/* Animation class for panels that are being toggled */
+.dropdown-feature__panel--animating {
+  animation: dropdown-slideDown var(--dropdown-animation-duration) ease-out;
+}
+
+/* 7. Animations */
+@keyframes dropdown-slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 8. State: Hiding */
+.dropdown-feature__panel.is-hiding {
+  animation: dropdown-slideUp var(--dropdown-animation-duration) ease-in;
+}
+
+@keyframes dropdown-slideUp {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+/* 9. Responsive Design */
+@media screen and (max-width: 767px) {
+  .dropdown-feature__trigger {
+    padding: var(--dropdown-padding-mobile);
+    font-size: var(--dropdown-font-size-mobile);
+  }
+
+  .dropdown-feature__panel {
+    padding: 0.875rem;
+  }
+}
+
+/* 10. High Contrast Mode */
+@media (prefers-contrast: high) {
+  .dropdown-feature__trigger {
+    border-width: 2px;
+  }
+
+  .dropdown-feature__trigger:focus {
+    outline-width: 3px;
+  }
+}
+
+/* 11. Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .dropdown-feature {
+    --dropdown-transition: none;
+    --dropdown-animation-duration: 0s;
+  }
+
+  .dropdown-feature__trigger,
+  .dropdown-feature__icon,
+  .dropdown-feature__panel {
+    transition: none;
+  }
+
+  .dropdown-feature__panel {
+    animation: none;
+  }
+
+  .dropdown-feature__panel.is-hiding {
+    animation: none;
+  }
+}

@@ -1,0 +1,94 @@
+{%- comment -%}
+  Feature: Product Type-Based Feature-Chip Group
+  Purpose: Renders feature chips based on product type configuration
+
+  Usage:
+  {% render 'feature-chip-group-tag-based', product: product %}
+
+  Parameters:
+  - product: Product object
+{%- endcomment -%}
+
+{%- capture tag_feature_chips -%}
+  {%- render 'snippet-utils-converter-product-type', product: product, output: 'feature_chips' -%}
+{%- endcapture -%}
+
+{%- assign max_chips = 3 -%}
+{%- assign chip_count = 0 -%}
+
+{%- if tag_feature_chips != blank -%}
+  {%- assign feature_list = tag_feature_chips | split: ',' -%}
+
+  <div class="feature-chip-group">
+    {%- for feature in feature_list -%}
+      {%- if chip_count >= max_chips -%}
+        {%- break -%}
+      {%- endif -%}
+
+      {%- assign feature = feature | strip -%}
+
+      {%- case feature -%}
+        {%- when 'simple' -%}
+          <div
+            class="feature-chip"
+            data-feature="simple"
+            role="button"
+            aria-expanded="false"
+          >
+            <span class="feature-chip__icon">
+              <span class="icon icon-feature-chips-simple"></span>
+            </span>
+            <span class="feature-chip__label">
+              {{ 'products.product.feature_simple' | t }}
+            </span>
+            <span class="feature-chip__message">
+              {{ 'products.product.feature_simple_msg' | t }}
+            </span>
+          </div>
+          {%- assign chip_count = chip_count | plus: 1 -%}
+
+        {%- when 'organic' -%}
+          <div
+            class="feature-chip"
+            data-feature="organic"
+            role="button"
+            aria-expanded="false"
+          >
+            <span class="feature-chip__icon">
+              <span class="icon icon-feature-chips-organic"></span>
+            </span>
+            <span class="feature-chip__label">
+              {{ 'products.product.feature_organic' | t }}
+            </span>
+            <span class="feature-chip__message">
+              {{ 'products.product.feature_organic_msg' | t }}
+            </span>
+          </div>
+          {%- assign chip_count = chip_count | plus: 1 -%}
+
+        {%- when 'cozy' -%}
+          <div
+            class="feature-chip"
+            data-feature="cozy"
+            role="button"
+            aria-expanded="false"
+          >
+            <span class="feature-chip__icon">
+              <span class="icon icon-feature-chips-cozy"></span>
+            </span>
+            <span class="feature-chip__label">
+              {{ 'products.product.feature_cozy' | t }}
+            </span>
+            <span class="feature-chip__message">
+              {{
+                'products.product.feature_cozy_msg'
+                | t
+                | default: 'Ultra-soft brushed fleece for an extra-snuggly feel'
+              }}
+            </span>
+          </div>
+          {%- assign chip_count = chip_count | plus: 1 -%}
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+{%- endif -%}

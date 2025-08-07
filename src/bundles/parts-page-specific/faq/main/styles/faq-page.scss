@@ -1,0 +1,111 @@
+/* FAQ Section - Base Styles */
+.section-faq-page {
+  margin-top: var(--section-distance);
+}
+
+.faq-section {
+  --faq-padding: calc(var(--spacing-unit) * 4);
+  --faq-content-gap: calc(var(--spacing-unit) * 3);
+  --faq-item-gap: calc(var(--spacing-unit) * 2);
+
+  padding: var(--faq-padding) 0;
+  min-height: 50vh;
+}
+
+/* Container */
+.faq-container {
+  contain: layout style;
+  max-width: var(--page-medium-width, 1150px);
+  margin: 0 auto;
+}
+
+/* Title */
+.faq-section__title {
+  font-size: var(--font-size-h1, 2rem);
+  font-weight: var(--font-weight-bold, 700);
+  margin: 0 0 var(--faq-content-gap) 0;
+  text-align: center;
+  color: var(--color-text-primary);
+}
+
+/* Search Section */
+.faq-section__search {
+  margin-bottom: var(--faq-content-gap);
+}
+
+/* Content Area */
+.faq-section__content {
+  margin-top: var(--section-distance);
+  position: relative;
+}
+
+/* FAQ List */
+.faq-section__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--faq-item-gap);
+}
+
+/* Empty State */
+.faq-section__empty {
+  text-align: center;
+  padding: calc(var(--spacing-unit) * 8) var(--spacing-unit);
+  color: var(--color-text-secondary, #666666);
+}
+
+.faq-section__empty p {
+  margin: 0;
+  font-size: var(--font-size-base, 1rem);
+}
+
+/* Highlight for search results */
+.faq-highlight {
+  background-color: var(--color-highlight, #fff3cd);
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+/* Loading State */
+.faq-section--loading .faq-section__list {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Responsive - Tablet and up */
+@media screen and (min-width: 48rem) {
+  .faq-section {
+    --faq-padding: calc(var(--spacing-unit) * 6);
+  }
+
+  .faq-section__title {
+    font-size: var(--font-size-h1-desktop, 2.5rem);
+    margin-bottom: calc(var(--faq-content-gap) * 1.5);
+  }
+}
+
+/* Responsive - Desktop */
+@media screen and (min-width: 64rem) {
+  .faq-section {
+    --faq-padding: calc(var(--spacing-unit) * 8);
+  }
+}
+
+/* Print Styles */
+@media print {
+  .faq-section__search {
+    display: none;
+  }
+
+  /* Animation for FAQ appearance */
+  @keyframes faq-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}

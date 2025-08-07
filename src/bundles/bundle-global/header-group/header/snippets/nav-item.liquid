@@ -1,0 +1,51 @@
+{%- comment -%}
+  Snippet: header-nav-item.liquid
+  Purpose: Navigation item renderer for both mega menu and simple link blocks
+  Usage: {% render 'snippet-section-header-header-nav-item', block: block %}
+  
+  Parameters:
+  - block: Section block containing navigation item settings
+{%- endcomment -%}
+
+{%- case block.type -%}
+  {%- when 'mega_menu' -%}
+    {%- capture mega_menu_button -%}
+      <button
+        class="navigation-item"
+        data-menu="{{ block.id }}"
+        role="menuitem"
+        aria-haspopup="menu"
+        aria-expanded="false"
+        aria-controls="{{ block.id }}"
+        aria-describedby="nav-help-{{ block.id }}"
+        aria-label="{{ 'sections.header.open_submenu' | t: menu_name: block.settings.label }}"
+        {{ block.shopify_attributes }}
+      >
+        <span>{{ block.settings.label | escape }}</span>
+        <span class="sr-only" id="nav-help-{{ block.id }}">
+          {{ 'sections.header.submenu_helper' | t }}
+        </span>
+      </button>
+    {%- endcapture -%}
+    {%- render 'snippet-feature-style-wrapper', content: mega_menu_button, variant: 'flat-basic' -%}
+    
+  {%- when 'simple_link' -%}
+    {%- liquid
+      assign link = block.settings.url
+      assign label = block.settings.label | escape
+      assign is_current_page = false
+      if link == request.path or link contains request.path
+        assign is_current_page = true
+      endif
+    -%}
+    <div class="navigation-item-wrapper" role="none">
+      {%- render 'snippet-feature-button',
+        button_text: label,
+        button_link: link,
+        show_arrow: true,
+        arrow_position: 'right',
+        style_wrapper: 'flat-basic',
+        custom_tag: 'role="menuitem"' | append: (is_current_page ? ' aria-current="page"' : '')
+      -%}
+    </div>
+{%- endcase -%}

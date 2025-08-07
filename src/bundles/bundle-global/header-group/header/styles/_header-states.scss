@@ -1,0 +1,75 @@
+/* Navigation Header States – Sticky Header with ARIA Support */
+
+/* Utility classes for smooth hide/reveal */
+.site-header--visible {
+  transform: translateY(0);
+}
+
+.site-header--hidden {
+  transform: translateY(-100%);
+}
+
+/* Sticky header state - fixed positioning with banner role support */
+.site-header.is-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--site-navigation-header-color);
+  height: var(--fixed-header-height);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  transform: translateY(-100%);
+  
+  /* Enhanced focus management when fixed */
+  &:focus-within {
+    z-index: 1001; /* Ensure focus visibility above other elements */
+  }
+}
+
+
+/* Animations for smooth transitions */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes moveVisible {
+    from {
+      transform: translateY(-100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes moveHidden {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-100%);
+    }
+  }
+
+  .site-header--visible {
+    animation: moveVisible var(--transition-medium) ease-in-out forwards;
+  }
+
+  .site-header--hidden {
+    animation: moveHidden var(--transition-medium) ease-in-out forwards;
+  }
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .site-header--visible,
+  .site-header--hidden {
+    animation: none !important;
+  }
+}
+
+/* Layout shift prevention spacer */
+.site-header-spacer {
+  height: 0;
+  transition: height var(--transition-medium) ease-in-out;
+}
+
+.site-header.is-fixed + .site-header-spacer {
+  height: var(--fixed-header-height);
+}

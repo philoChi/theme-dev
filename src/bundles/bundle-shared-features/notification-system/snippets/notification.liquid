@@ -1,0 +1,30 @@
+{%- comment -%}
+  Feature: Notification
+  Global notification system for displaying messages
+  
+  @param enabled {Boolean} - Enable notification system (default: true)
+  @param position {String} - Position: 'top-right', 'top-left', 'bottom-right', 'bottom-left' (default: 'top-right')
+  @param container_class {String} - Additional classes for container (optional)
+{%- endcomment -%}
+
+{%- liquid
+  assign enabled = enabled | default: true
+  assign position = position | default: 'top-right'
+  
+  assign container_classes = 'notification-container notification-container--' | append: position
+  if container_class != blank
+    assign container_classes = container_classes | append: ' ' | append: container_class
+  endif
+-%}
+
+{%- if enabled -%}
+  <div class="{{ container_classes }}" 
+       aria-live="polite" 
+       aria-atomic="true"
+       data-notification-container>
+  </div>
+
+  {%- comment -%}
+    Notification styles and JavaScript are now included in feature-shared-bundle loaded in theme.liquid
+  {%- endcomment -%}
+{%- endif -%}
