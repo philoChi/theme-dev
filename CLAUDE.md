@@ -74,7 +74,7 @@ github-repository: git@github.com:philoChi/theme-dev.git
 - Optimize web fonts with font-display
 - Monitor Shopify Web Performance dashboard
 
-### Asset Management
+### Source Management
 - **Source directories**: `src/bundles/`, `src/localization-common/`, `src/theme-hyspex/`
 - **Output directory**: `theme-hyspex/` (complete Shopify theme, git-ignored)
 - **Build command**: `npm run build:dev` compiles everything
