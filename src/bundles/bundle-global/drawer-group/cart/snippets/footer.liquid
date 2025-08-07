@@ -14,7 +14,7 @@
 >
   <!-- Row: Subtotal -->
   <div class="cart-drawer__subtotal">
-    <span>{{ 'cart.general.subtotal' | t }}</span>
+    <span>{{ 'drawer-group.cart.general.subtotal' | t }}</span>
     <span>{{ cart.total_price | money }}</span>
   </div>
   {%- assign free_shipping_threshold = settings.free_shipping_germany | times: 100 -%}
@@ -27,12 +27,12 @@
 
   <!-- Row: Transfer Costs -->
   <div class="cart-drawer__shipping">
-    <span>{{ 'cart.general.shipping' | t }}</span>
+    <span>{{ 'drawer-group.cart.general.shipping' | t }}</span>
     {%- if cart.total_price == 0 %}
       <span>-</span>
     {%- elsif shipping_costs == 0 -%}
       <span style="color: #159e00;">
-        {{ 'cart.general.free_shipping_total_label' | t }}
+        {{ 'drawer-group.cart.general.free_shipping_total_label' | t }}
       </span>
     {%- else -%}
       <span>
@@ -44,7 +44,7 @@
   <!-- Row: Total -->
   {%- assign grand_total = cart.total_price | plus: shipping_costs -%}
   <div class="cart-drawer__total">
-    <span>{{ 'cart.general.total' | t }}</span>
+    <span>{{ 'drawer-group.cart.general.total' | t }}</span>
     <span>{{ grand_total | money }}</span>
   </div>
 
@@ -54,16 +54,16 @@
 
   <p class="cart-drawer__tax-note">
     {% if cart.total_price > 0 %}
-      {{ 'cart.general.tax_notice' | t: tax: tax_percent }}
+      {{ 'drawer-group.cart.general.tax_notice' | t: tax: tax_percent }}
     {% endif %}
     {% if shipping_costs == 0 and cart.total_price > 0 %}
-      {{ 'cart.general.free_shipping_notice' | t }}
+      {{ 'drawer-group.cart.general.free_shipping_notice' | t }}
     {% else %}
-      {{ 'cart.general.free_shipping_threshold_notice' | t: threshold: threshold_text }}
+      {{ 'drawer-group.cart.general.free_shipping_threshold_notice' | t: threshold: threshold_text }}
     {% endif %}
   </p>
 
-  {%- assign checkout_text = 'cart.general.cta_checkout_text' | t -%}
+  {%- assign checkout_text = 'drawer-group.cart.general.cta_checkout_text' | t -%}
   {% render 'snippet-feature-button',
     size: 'large',
     button_text: checkout_text,

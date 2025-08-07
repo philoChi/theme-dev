@@ -21,18 +21,18 @@
     when 'hamburger'
       assign icon_class = 'icon-hamburger'
       assign button_class = 'icon-button icon-button--menu'
-      assign default_aria_label = 'sections.Navigation.open_menu' | t
+      assign default_aria_label = 'header-group.header.navigation.open_menu' | t
     when 'search'
       assign icon_class = 'icon-search'
       assign button_class = 'icon-button icon-button--search'
-      assign default_aria_label = 'sections.Navigation.open_search' | t
+      assign default_aria_label = 'header-group.header.navigation.open_search' | t
       if context == 'desktop'
         assign button_class = button_class | append: ' site-header__desktop-search'
       endif
     when 'cart'
       assign icon_class = 'icon-cart'
       assign button_class = 'icon-button icon-button--cart'
-      assign default_aria_label = 'sections.Navigation.open_cart' | t
+      assign default_aria_label = 'header-group.header.navigation.open_cart' | t
     when 'account'
       assign icon_class = 'icon-login'
       assign button_class = 'icon-button icon-button--login'
@@ -90,15 +90,15 @@
       <span class="icon {{ icon_class }}" aria-hidden="true"></span>
       {%- if type == 'cart' -%}
         <span class="cart-count-container" style="display: {% if cart.item_count > 0 %}block{% else %}none{% endif %}">
-          <span class="cart-count" aria-label="{{ 'sections.cart.item_count' | t: count: cart.item_count }}">
+          <span class="cart-count" aria-label="{{ 'header-group.header.cart.item_count' | t: count: cart.item_count }}"
             {{ cart.item_count | default: 0 }}
           </span>
         </span>
         <span class="sr-only" id="cart-status">
           {%- if cart.item_count > 0 -%}
-            {{ 'sections.cart.items_in_cart' | t: count: cart.item_count }}
+            {{ 'header-group.header.cart.items_in_cart' | t: count: cart.item_count }}
           {%- else -%}
-            {{ 'sections.cart.empty' | t }}
+            {{ 'header-group.header.cart.empty' | t }}
           {%- endif -%}
         </span>
       {%- endif -%}

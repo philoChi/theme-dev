@@ -8,7 +8,7 @@
 {%- endcomment -%}
 
 <div class="drawer__footer__item" id="{{ id }}">
-  {%- assign apply_filters_text = 'collections.filtering.apply_filters' | t -%}
+  {%- assign apply_filters_text = 'drawer-group.multi.collections.filtering.apply_filters' | t -%}
   {%- if apply_filters_text == blank or apply_filters_text contains 'translation' -%}
     {%- assign apply_filters_text = 'Filter anwenden' -%}
   {%- endif -%}

@@ -6,6 +6,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const LocaleMergePlugin = require('./webpack/plugins/locale-merge-plugin');
+const BundleLocaleMergePlugin = require('./webpack/plugins/bundle-locale-merge-plugin');
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 const isAnalyze = process.env.ANALYZE_BUNDLE === 'true';
@@ -225,10 +226,13 @@ module.exports = {
       }
     },
     
-    // Merge product tags configuration into locale files
-    new LocaleMergePlugin({
+    // Merge bundle-specific locale files with central locales and product configuration
+    new BundleLocaleMergePlugin({
+      bundleBasePath: 'src/bundles',
+      centralLocalesPath: 'src/localization-common/locales',
       configPath: 'src/localization-common/products-metadata/product-info.de.json',
-      localesPath: 'theme-hyspex/locales'
+      metadataPath: 'src/localization-common/products-metadata/locale-metadata.json',
+      outputPath: 'theme-hyspex/locales'
     }),
     
     // Clean webpack generated files AND liquid template files
@@ -248,8 +252,7 @@ module.exports = {
         '../snippets/root-*.liquid',
         '../sections/section-*.liquid',
         '../layout/*.liquid',
-        // Clean locale files before copying from source
-        '../locales/*.json',
+        // Note: Locale files are handled by BundleLocaleMergePlugin - no need to clean
         // Clean config and template files before copying from source
         '../config/*.json',
         '../templates/**/*'
@@ -469,13 +472,7 @@ module.exports = {
           to: '../sections/[name][ext]',
           noErrorOnMissing: true
         },
-        // Locale files from source (excluding en.json)
-        {
-          from: 'src/localization-common/locales/*.json',
-          to: '../locales/[name][ext]',
-          noErrorOnMissing: true,
-          filter: (filepath) => !filepath.includes('en.json')
-        },
+        // Note: Locale files are now handled by BundleLocaleMergePlugin
         // Config files from theme-hyspex
         {
           from: 'src/theme-hyspex/config/*.json',

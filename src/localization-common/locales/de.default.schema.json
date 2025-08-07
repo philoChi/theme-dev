@@ -1,34 +1,5 @@
 {
   "sections": {
-    "header_group": {
-      "label": "Header Gruppe"
-    },
-    "footer_group": {
-      "label": "Footer Gruppe"
-    },
-    "aside_group": {
-      "label": "Seitenrand"
-    },
-    "navigation": {
-      "name": "Navigation",
-      "settings": {
-        "logo": {
-          "show": {
-            "label": "Logo-Name Anzeigen",
-            "imgage": "Logo Bild"
-          }
-        },
-        "label": "Kennzeichnung",
-        "category_name": "Name der Kategorie",
-        "category_menu": "Menu",
-        "promo_header": "Bild-Link",
-        "common_header": "Einstellung CTA unten",
-        "image": "Bild",
-        "caption": "Caption",
-        "url": "Link",
-        "categories_header": "Kategorie Einstellungen"
-      }
-    },
     "product_showcase": {
       "name": "Produkt-Showcase",
       "settings": {

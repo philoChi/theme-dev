@@ -11,24 +11,7 @@
       "NoCollection": "Keine Kollektion ausgewählt",
       "EMail_Form_Placeholder": "Hier deine E-Mail eingeben"
     },
-    "Navigation": {
-      "open_menu": "Menu Öffnen",
-      "open_search": "Suche Öffnen",
-      "logo_alt": "Logo",
-      "open_login": "Login",
-      "open_cart": "Navigation öffnen",
-      "mega_menu": {
-        "empty_heading": "Missing"
-      }
-    },
     "collections": {
-      "filtering": {
-        "clear_all": "Filter zurücksetzen",
-        "clear_all_aria": "Alle Filter zurücksetzen"
-      }
-    },
-    "Announcement_Bar": {
-      "Heading_1": "Kostenloser Versand ab %{free_shipping_value}"
     },
     "product_showcase": {
       "view_all_in": "Alle ansehen in {{ collection }}",
@@ -67,7 +50,6 @@
     }
   },
   "general": {
-    "view_all": "Alles anzeigen",
     "loading": "Wird geladen...",
     "accessibility": {
       "unit_price_separator": "per"
@@ -75,55 +57,6 @@
     "meta": {
       "tags": "Tagged \"{{ tags }}\"",
       "page": "Page {{ page }}"
-    },
-    "search": {
-      "search": "Suche",
-      "placeholder": "Wonach suchst Du?",
-      "submit": "Suche starten",
-      "results": "Suchergebnisse",
-      "heading": "Suchergebnisse",
-      "no_results": "Keine Produkte für \"{{ query }}\" gefunden. Versuche andere Suchbegriffe oder durchstöbere unsere Kollektionen.",
-      "no_results_html": "Deine Suche nach \"{{ terms }}\" ergab keine Treffer.",
-      "results_count": "{{ count }} {{ count | pluralize: 'Ergebnis', 'Ergebnisse' }} für \"{{ query }}\"",
-      "results_with_count": {
-        "one": "1 Ergebnis für \"{{ terms }}\"",
-        "other": "{{ count }} Ergebnisse für \"{{ terms }}\""
-      },
-      "show_all_results": "Alle {{ count }} Ergebnisse anzeigen",
-      "recent_searches": "Letzte Suchanfragen:",
-      "clear_recent": "Suchverlauf löschen",
-      "loading": "Suche läuft...",
-      "searching": "Suche läuft...",
-      "please_wait": "Bitte einen Moment warten",
-      "error": "Die Suche ist vorübergehend nicht verfügbar. Bitte versuche es erneut.",
-      "network_error": "Die Suche ist vorübergehend nicht verfügbar. Bitte überprüfe deine Internetverbindung und versuche es erneut.",
-      "timeout_error": "Die Suche dauert länger als erwartet. Bitte versuche es erneut.",
-      "rate_limit_error": "Zu viele Suchanfragen. Bitte warte einen Moment bevor du es erneut versuchst.",
-      "validation_error": "Bitte gib einen gültigen Suchbegriff ein.",
-      "query_too_long": "Der Suchbegriff ist zu lang. Bitte kürze deine Suchanfrage.",
-      "input_sanitized": "Deine Suchanfrage wurde aus Sicherheitsgründen bereinigt. Suche nach der sicheren Version.",
-      "cached_results": "Zeige gespeicherte Ergebnisse. Einige Produkte sind möglicherweise nicht aktuell.",
-      "try_again": "Erneut versuchen",
-      "suggestions_title": "Probiere diese Vorschläge:",
-      "suggestion_spelling": "Überprüfe deine Schreibweise",
-      "suggestion_keywords": "Versuche andere Suchbegriffe",
-      "suggestion_shorter": "Verwende kürzere Suchbegriffe",
-      "suggestion_general": "Verwende allgemeinere Suchbegriffe",
-      "browse_all": "Alle Produkte durchstöbern",
-      "suggestions": {
-        "heading": "Suchvorschläge",
-        "popular": "Beliebte Suchanfragen",
-        "categories": "Kategorien durchsuchen",
-        "brands": "Nach Marke suchen"
-      },
-      "hint": "Suchhinweis",
-      "type_more_characters": "Bitte gib mindestens 2 Zeichen ein",
-      "hint_description": "Tippe weiter, um nach Produkten zu suchen",
-      "welcome": "Produktsuche",
-      "welcome_title": "Was suchst du?",
-      "welcome_subtitle": "Finde deine Lieblingsprodukte schnell und einfach",
-      "popular_categories": "Beliebte Kategorien",
-      "search_tip": "Verwende Begriffe wie \"T-Shirt\", \"Hoodie\" oder \"Schwarz\""
     },
     "products": "Produkte",
     "navigation": {
@@ -142,32 +75,6 @@
       "message": "Für die beste Erfahrung aktivieren Sie bitte JavaScript in Ihrem Browser. Alle Produkte sind weiterhin unten sichtbar."
     }
   },
-  "cart": {
-    "general": {
-      "title": "Warenkorb",
-      "empty": "Der Warenkorb ist zur Zeit leer",
-      "subtotal": "Zwischensumme",
-      "shipping": "Versandkosten",
-      "total": "Insgesamt",
-      "free_shipping_total_label": "Kostenlos",
-      "tax_notice": "Die Gesamtsumme beinhaltet bereits %{tax}% MwSt.",
-      "free_shipping_threshold_notice": "Kostenloser Versand ab einem Bestellwert von %{threshold}.",
-      "free_shipping_notice": "Der Versand ist Kostenlos.",
-      "cta_checkout_text": "Sicher Bezahlen"
-    }
-  },
-  "multi-drawer": {
-    "filter": {
-      "header_text": "Filter",
-      "button_text": "Filter Anwenden"
-    },
-    "search": {
-      "result_button": "Alles Anzeigen"
-    },
-    "hamburger": {
-      "header_text": "Kategorien"
-    }
-  },
   "collections": {
     "general": {
       "items_with_count": {
@@ -178,36 +85,6 @@
       "no_products_text": "Leider wurden keine Produkte in dieser Kollektion gefunden.",
       "continue_shopping": "Weiter einkaufen",
       "product_grid": "Produktraster"
-    },
-    "filtering": {
-      "filters": "Filter",
-      "show_filters": "Filter anzeigen",
-      "clear_all": "Filter zurücksetzen",
-      "clear_all_aria": "Alle Filter zurücksetzen",
-      "clear_all_filters": "Alle Filter zurücksetzen",
-      "apply_filters": "Filter anwenden",
-      "product_type": "Produkttyp",
-      "size": "Größe",
-      "color": "Farbe",
-      "gender": "Zielgruppe",
-      "gender_men": "Herren",
-      "gender_women": "Damen",
-      "gender_kids": "Kinder",
-      "tags": "Tags",
-      "availability": "Verfügbarkeit",
-      "in_stock": "Auf Lager",
-      "out_of_stock": "Ausverkauft",
-      "no_results_title": "Keine Ergebnisse gefunden",
-      "no_results_text": "Versuchen Sie, einige Filter zu entfernen oder andere Suchbegriffe zu verwenden.",
-      "active_filters": "Aktive Filter",
-      "clear_filters_help": "Alle Filter entfernen um alle Produkte anzuzeigen",
-      "filter_help": "Filter auswählen",
-      "filter_products": "Produkte filtern",
-      "price_from": "Von",
-      "price_to": "Bis",
-      "clear_all_help": "Alle Filter zurücksetzen",
-      "filter_actions": "Filter-Aktionen",
-      "no_filters_configured": "Keine Filter konfiguriert. Bitte konfigurieren Sie Filter in der Search & Filter App."
     },
     "sorting": {
       "sort_by_label": "Sortieren nach",
@@ -309,26 +186,7 @@
     }
   },
   "accessibility": {
-    "skip_to_content": "Zum Inhalt springen",
-    "loading": "Wird geladen",
-    "search": {
-      "landmark": "Suche",
-      "results_landmark": "Suchergebnisse",
-      "input_label": "Produkte suchen",
-      "clear_button": "Suche löschen",
-      "close_search": "Suche schließen",
-      "item_position": "Element {{ current }} von {{ total }}",
-      "announcement": {
-        "searching": "Suche nach {{ query }}",
-        "results_found": "{{ count }} Produkte für {{ query }} gefunden",
-        "no_results": "Keine Produkte für {{ query }} gefunden",
-        "error": "Suchfehler aufgetreten",
-        "cleared": "Suche gelöscht"
-      }
-    }
-  },
-  "search": {
-    "show_all_results": "Alle Suchergebnisse anzeigen"
+    "loading": "Wird geladen"
   },
   "templates": {
     "search": {

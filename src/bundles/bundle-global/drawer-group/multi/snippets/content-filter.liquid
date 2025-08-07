@@ -28,7 +28,7 @@
   data-filter-drawer-content
   data-has-shopify-filters="{{ has_shopify_filters }}"
   role="region"
-  aria-label="{{ 'collections.filtering.filter_products' | t }}"
+  aria-label="{{ 'drawer-group.multi.collections.filtering.filter_products' | t }}"
 >
   <div class="filter-drawer__container">
     <div class="filter-drawer__content">
@@ -143,7 +143,7 @@
                         <div class="filter-price-range">
                           <div class="filter-price-input-group">
                             <label for="filter-price-from-{{ filter.min_value.param_name }}" class="filter-price-label">
-                              {{ 'collections.filtering.price_from' | t }}
+                              {{ 'drawer-group.multi.collections.filtering.price_from' | t }}
                             </label>
                             <div class="filter-price-input-wrapper">
                               <span class="filter-currency">{{ cart.currency.symbol }}</span>
@@ -160,7 +160,7 @@
                           </div>
                           <div class="filter-price-input-group">
                             <label for="filter-price-to-{{ filter.max_value.param_name }}" class="filter-price-label">
-                              {{ 'collections.filtering.price_to' | t }}
+                              {{ 'drawer-group.multi.collections.filtering.price_to' | t }}
                             </label>
                             <div class="filter-price-input-wrapper">
                               <span class="filter-currency">{{ cart.currency.symbol }}</span>
@@ -219,7 +219,7 @@
         {%- # No filters available - Search & Filter App not configured -%}
         <div class="filter-drawer__empty-state">
           <p class="filter-drawer__empty-message">
-            {{ 'collections.filtering.no_filters_configured' | t }}
+            {{ 'drawer-group.multi.collections.filtering.no_filters_configured' | t }}
           </p>
         </div>
       {%- endif -%}

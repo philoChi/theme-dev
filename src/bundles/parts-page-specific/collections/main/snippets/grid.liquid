@@ -88,18 +88,18 @@
     <div class="collection-page__empty search-results__form">
       <form action="{{ routes.search_url }}" method="get" role="search">
         <div class="search-form__field">
-          <label for="search-input" class="visually-hidden">{{ 'general.search.search' | t }}</label>
+          <label for="search-input" class="visually-hidden">{{ 'drawer-group.multi.search.search' | t }}</label>
           <input
             type="search"
             id="search-input"
             name="q"
-            placeholder="{{ 'general.search.placeholder' | t }}"
+            placeholder="{{ 'drawer-group.multi.search.placeholder' | t }}"
             class="search-form__input"
             value="{{ search.terms | escape }}"
           >
           <button type="submit" class="search-form__submit">
             <span class="icon icon-search"></span>
-            <span class="visually-hidden">{{ 'general.search.submit' | t }}</span>
+            <span class="visually-hidden">{{ 'drawer-group.multi.search.submit' | t }}</span>
           </button>
         </div>
       </form>
