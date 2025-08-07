@@ -28,7 +28,7 @@ cypress/downloads/**
 working-url.md
 .theme-dev-config
 .theme-dev.lock
-theme-hyspex/
+/theme-hyspex/
 
 # Claude Flow generated files
 .claude/settings.local.json

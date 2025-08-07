@@ -1,0 +1,398 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.aside_group.label",
+  "type": "aside",
+  "sections": {
+    "cart-drawer": {
+      "type": "section-drawer-cart",
+      "settings": {}
+    },
+    "multi-drawer": {
+      "type": "section-drawer-multi",
+      "blocks": {
+        "hero_banner_tVik8A": {
+          "type": "hero_banner",
+          "settings": {
+            "image": "shopify://shop_images/FULL-HD_2K_16zu9_2a224a38-37af-476a-a9dd-b9b43d799144.png",
+            "link": "shopify://pages/homepage",
+            "overlay_text": "Neuheiten",
+            "ratio": "16/9"
+          }
+        },
+        "tab_Jzd6iJ": {
+          "type": "tab",
+          "settings": {
+            "label": "Alle Produkte",
+            "handle": "all",
+            "link": "",
+            "is_active": true
+          }
+        },
+        "tab_3jwqxi": {
+          "type": "tab",
+          "settings": {
+            "label": "Herren",
+            "handle": "men",
+            "link": "",
+            "is_active": false
+          }
+        },
+        "tab_wdxe7h": {
+          "type": "tab",
+          "settings": {
+            "label": "Damen",
+            "handle": "women",
+            "link": "",
+            "is_active": false
+          }
+        },
+        "tab_Ld8yd7": {
+          "type": "tab",
+          "settings": {
+            "label": "Kids",
+            "handle": "kids",
+            "link": "",
+            "is_active": false
+          }
+        },
+        "category_group_VJVw6k": {
+          "type": "category_group",
+          "settings": {
+            "group_label": "Alle Bekleidung",
+            "parent_tab_handle": "all",
+            "default_open": true,
+            "item1_label": "T-Shirts",
+            "item1_url": "shopify://collections",
+            "item1_icon": "icon-t-shirt",
+            "item2_label": "Kapuzenpullover",
+            "item2_url": "shopify://collections",
+            "item2_icon": "icon-hoodie",
+            "item3_label": "Socken",
+            "item3_url": "shopify://collections",
+            "item3_icon": "icon-socks",
+            "item4_label": "",
+            "item4_url": "",
+            "item4_icon": "",
+            "item5_label": "",
+            "item5_url": "",
+            "item5_icon": "",
+            "item6_label": "",
+            "item6_url": "",
+            "item6_icon": "",
+            "item7_label": "",
+            "item7_url": "",
+            "item7_icon": "",
+            "item8_label": "",
+            "item8_url": "",
+            "item8_icon": "",
+            "item9_label": "",
+            "item9_url": "",
+            "item9_icon": "",
+            "item10_label": "",
+            "item10_url": "",
+            "item10_icon": ""
+          }
+        },
+        "category_group_Q4zNL3": {
+          "type": "category_group",
+          "settings": {
+            "group_label": "Accessoirs",
+            "parent_tab_handle": "all",
+            "default_open": false,
+            "item1_label": "T-Shirts",
+            "item1_url": "shopify://collections",
+            "item1_icon": "icon-t-shirt",
+            "item2_label": "Kapuzenpullover",
+            "item2_url": "shopify://collections",
+            "item2_icon": "icon-hoodie",
+            "item3_label": "Socken",
+            "item3_url": "shopify://collections",
+            "item3_icon": "icon-socks",
+            "item4_label": "",
+            "item4_url": "",
+            "item4_icon": "",
+            "item5_label": "",
+            "item5_url": "",
+            "item5_icon": "",
+            "item6_label": "",
+            "item6_url": "",
+            "item6_icon": "",
+            "item7_label": "",
+            "item7_url": "",
+            "item7_icon": "",
+            "item8_label": "",
+            "item8_url": "",
+            "item8_icon": "",
+            "item9_label": "",
+            "item9_url": "",
+            "item9_icon": "",
+            "item10_label": "",
+            "item10_url": "",
+            "item10_icon": ""
+          }
+        },
+        "category_group_zKK9Fb": {
+          "type": "category_group",
+          "settings": {
+            "group_label": "Kleidung",
+            "parent_tab_handle": "men",
+            "default_open": true,
+            "item1_label": "T-Shirts",
+            "item1_url": "shopify://collections",
+            "item1_icon": "icon-t-shirt",
+            "item2_label": "Kapuzenpullover",
+            "item2_url": "shopify://collections",
+            "item2_icon": "icon-hoodie",
+            "item3_label": "Socken",
+            "item3_url": "shopify://collections",
+            "item3_icon": "icon-socks",
+            "item4_label": "",
+            "item4_url": "",
+            "item4_icon": "",
+            "item5_label": "",
+            "item5_url": "",
+            "item5_icon": "",
+            "item6_label": "",
+            "item6_url": "",
+            "item6_icon": "",
+            "item7_label": "",
+            "item7_url": "",
+            "item7_icon": "",
+            "item8_label": "",
+            "item8_url": "",
+            "item8_icon": "",
+            "item9_label": "",
+            "item9_url": "",
+            "item9_icon": "",
+            "item10_label": "",
+            "item10_url": "",
+            "item10_icon": ""
+          }
+        },
+        "category_group_MQ9zJR": {
+          "type": "category_group",
+          "settings": {
+            "group_label": "Kleidung",
+            "parent_tab_handle": "women",
+            "default_open": true,
+            "item1_label": "T-Shirts",
+            "item1_url": "shopify://collections",
+            "item1_icon": "icon-t-shirt",
+            "item2_label": "Kapuzenpullover",
+            "item2_url": "shopify://collections",
+            "item2_icon": "icon-hoodie",
+            "item3_label": "Socken",
+            "item3_url": "shopify://collections",
+            "item3_icon": "icon-socks",
+            "item4_label": "",
+            "item4_url": "",
+            "item4_icon": "",
+            "item5_label": "",
+            "item5_url": "",
+            "item5_icon": "",
+            "item6_label": "",
+            "item6_url": "",
+            "item6_icon": "",
+            "item7_label": "",
+            "item7_url": "",
+            "item7_icon": "",
+            "item8_label": "",
+            "item8_url": "",
+            "item8_icon": "",
+            "item9_label": "",
+            "item9_url": "",
+            "item9_icon": "",
+            "item10_label": "",
+            "item10_url": "",
+            "item10_icon": ""
+          }
+        },
+        "category_group_8FEAGt": {
+          "type": "category_group",
+          "settings": {
+            "group_label": "Kleidung",
+            "parent_tab_handle": "kids",
+            "default_open": true,
+            "item1_label": "T-Shirts",
+            "item1_url": "shopify://collections",
+            "item1_icon": "icon-t-shirt",
+            "item2_label": "Kapuzenpullover",
+            "item2_url": "shopify://collections",
+            "item2_icon": "icon-hoodie",
+            "item3_label": "Socken",
+            "item3_url": "shopify://collections",
+            "item3_icon": "icon-socks",
+            "item4_label": "",
+            "item4_url": "",
+            "item4_icon": "",
+            "item5_label": "",
+            "item5_url": "",
+            "item5_icon": "",
+            "item6_label": "",
+            "item6_url": "",
+            "item6_icon": "",
+            "item7_label": "",
+            "item7_url": "",
+            "item7_icon": "",
+            "item8_label": "",
+            "item8_url": "",
+            "item8_icon": "",
+            "item9_label": "",
+            "item9_url": "",
+            "item9_icon": "",
+            "item10_label": "",
+            "item10_url": "",
+            "item10_icon": ""
+          }
+        },
+        "category_group_nKbLyr": {
+          "type": "category_group",
+          "settings": {
+            "group_label": "Accessoirs",
+            "parent_tab_handle": "kids",
+            "default_open": false,
+            "item1_label": "T-Shirts",
+            "item1_url": "shopify://collections",
+            "item1_icon": "icon-t-shirt",
+            "item2_label": "Kapuzenpullover",
+            "item2_url": "shopify://collections",
+            "item2_icon": "icon-hoodie",
+            "item3_label": "Socken",
+            "item3_url": "shopify://collections",
+            "item3_icon": "icon-socks",
+            "item4_label": "",
+            "item4_url": "",
+            "item4_icon": "",
+            "item5_label": "",
+            "item5_url": "",
+            "item5_icon": "",
+            "item6_label": "",
+            "item6_url": "",
+            "item6_icon": "",
+            "item7_label": "",
+            "item7_url": "",
+            "item7_icon": "",
+            "item8_label": "",
+            "item8_url": "",
+            "item8_icon": "",
+            "item9_label": "",
+            "item9_url": "",
+            "item9_icon": "",
+            "item10_label": "",
+            "item10_url": "",
+            "item10_icon": ""
+          }
+        },
+        "category_group_TtGDbY": {
+          "type": "category_group",
+          "settings": {
+            "group_label": "Accessoirs",
+            "parent_tab_handle": "women",
+            "default_open": false,
+            "item1_label": "T-Shirts",
+            "item1_url": "shopify://collections",
+            "item1_icon": "icon-t-shirt",
+            "item2_label": "Kapuzenpullover",
+            "item2_url": "shopify://collections",
+            "item2_icon": "icon-hoodie",
+            "item3_label": "Socken",
+            "item3_url": "shopify://collections",
+            "item3_icon": "icon-socks",
+            "item4_label": "",
+            "item4_url": "",
+            "item4_icon": "",
+            "item5_label": "",
+            "item5_url": "",
+            "item5_icon": "",
+            "item6_label": "",
+            "item6_url": "",
+            "item6_icon": "",
+            "item7_label": "",
+            "item7_url": "",
+            "item7_icon": "",
+            "item8_label": "",
+            "item8_url": "",
+            "item8_icon": "",
+            "item9_label": "",
+            "item9_url": "",
+            "item9_icon": "",
+            "item10_label": "",
+            "item10_url": "",
+            "item10_icon": ""
+          }
+        },
+        "category_group_FWGn8X": {
+          "type": "category_group",
+          "settings": {
+            "group_label": "Accessoirs",
+            "parent_tab_handle": "men",
+            "default_open": false,
+            "item1_label": "T-Shirts",
+            "item1_url": "shopify://collections",
+            "item1_icon": "icon-t-shirt",
+            "item2_label": "Kapuzenpullover",
+            "item2_url": "shopify://collections",
+            "item2_icon": "icon-hoodie",
+            "item3_label": "Socken",
+            "item3_url": "shopify://collections",
+            "item3_icon": "icon-socks",
+            "item4_label": "",
+            "item4_url": "",
+            "item4_icon": "",
+            "item5_label": "",
+            "item5_url": "",
+            "item5_icon": "",
+            "item6_label": "",
+            "item6_url": "",
+            "item6_icon": "",
+            "item7_label": "",
+            "item7_url": "",
+            "item7_icon": "",
+            "item8_label": "",
+            "item8_url": "",
+            "item8_icon": "",
+            "item9_label": "",
+            "item9_url": "",
+            "item9_icon": "",
+            "item10_label": "",
+            "item10_url": "",
+            "item10_icon": ""
+          }
+        }
+      },
+      "block_order": [
+        "hero_banner_tVik8A",
+        "tab_Jzd6iJ",
+        "tab_3jwqxi",
+        "tab_wdxe7h",
+        "tab_Ld8yd7",
+        "category_group_VJVw6k",
+        "category_group_Q4zNL3",
+        "category_group_zKK9Fb",
+        "category_group_MQ9zJR",
+        "category_group_8FEAGt",
+        "category_group_nKbLyr",
+        "category_group_TtGDbY",
+        "category_group_FWGn8X"
+      ],
+      "settings": {
+        "search_collection": "men-clothing",
+        "bottom_menu": "footer",
+        "bottom_cta_label": "",
+        "bottom_cta_link": ""
+      }
+    }
+  },
+  "order": [
+    "cart-drawer",
+    "multi-drawer"
+  ]
+}

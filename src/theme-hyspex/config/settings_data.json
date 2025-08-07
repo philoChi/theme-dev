@@ -1,0 +1,119 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "current": {
+    "color_primary_background": "#ffffff",
+    "color_primary_foreground": "#798682",
+    "color_button_background_color": "#5e7987",
+    "color_button_overlay_color": "#ffffff",
+    "color_drawer_background": "#fffdf8",
+    "collection_all_products": "all-products",
+    "collection_all_products_limit": 20,
+    "sections": {
+      "section-cart-drawer": {
+        "type": "section-cart-drawer",
+        "settings": {}
+      },
+      "section-image-menu": {
+        "type": "section-image-menu",
+        "blocks": {
+          "menu_item_6HiEtE": {
+            "type": "menu_item",
+            "settings": {
+              "image": "shopify://shop_images/666eca8786042a99be3fd00a_unisex-premium-hoodie-navy-blazer-front-666ec1ce175e1_4beed838-ac5f-4a01-9c13-8ac66d7c03b0.jpg",
+              "label": "Hoodies",
+              "link": "shopify://pages/homepage"
+            }
+          },
+          "menu_item_RYTRKD": {
+            "type": "menu_item",
+            "settings": {
+              "image": "shopify://shop_images/6658dea8ba2ee8a71c0b1189_unisex-organic-cotton-t-shirt-dark-heather-blue-front-6658dd5242d78_5b34d3bc-479a-4cd6-86c0-212c8470dbcc.jpg",
+              "label": "T-Shirts",
+              "link": ""
+            }
+          },
+          "menu_item_rUzGWm": {
+            "type": "menu_item",
+            "settings": {
+              "image": "shopify://shop_images/6658db6cf28c2969ebe362fa_unisex-crew-neck-sweatshirt-light-pink-front-656e42f8b2d17.jpg",
+              "label": "Sweatshirts",
+              "link": ""
+            }
+          },
+          "menu_item_RcTTXW": {
+            "type": "menu_item",
+            "settings": {
+              "image": "shopify://shop_images/8a029d2035bfb80e473361dfc08449be.jpg",
+              "label": "Bags",
+              "link": ""
+            }
+          },
+          "menu_item_it84fq": {
+            "type": "menu_item",
+            "settings": {
+              "image": "shopify://shop_images/c1a864cb74de0e0fd0004872d6a00edd.jpg",
+              "label": "Caps",
+              "link": ""
+            }
+          }
+        },
+        "block_order": [
+          "menu_item_6HiEtE",
+          "menu_item_RYTRKD",
+          "menu_item_rUzGWm",
+          "menu_item_RcTTXW",
+          "menu_item_it84fq"
+        ],
+        "settings": {
+          "max_items": 6
+        }
+      },
+      "section-big-heading": {
+        "type": "section-big-heading",
+        "settings": {
+          "bigheading_text": "Das wird dir gefallen..."
+        }
+      },
+      "section-product-showcase": {
+        "type": "section-product-showcase",
+        "blocks": {
+          "custom_category_ReBTMV": {
+            "type": "custom_category",
+            "settings": {
+              "tab_label": "WinterIsComing",
+              "collection": "vans",
+              "view_all_text": "Fast"
+            }
+          }
+        },
+        "block_order": [
+          "custom_category_ReBTMV"
+        ],
+        "settings": {
+          "primary_title": "Am beliebtesten",
+          "secondary_title": "Neuheiten",
+          "primary_collection": "men-clothing",
+          "secondary_collection": "all-products",
+          "primary_view_all_text": "Alle Bestseller",
+          "secondary_view_all_text": "Alle Neuheiten"
+        }
+      }
+    },
+    "content_for_index": [],
+    "blocks": {
+      "14060646107696862457": {
+        "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "disabled": false,
+        "settings": {}
+      }
+    }
+  }
+}

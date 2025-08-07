@@ -1,0 +1,84 @@
+{% comment %}
+  Customer Account Dashboard
+  Displays customer information and navigation to account sections
+{% endcomment %}
+
+<div class="account-page account-dashboard">
+  <div class="account-page__container">
+    <div class="account-dashboard__welcome">
+      <h1 class="account-dashboard__customer-name">
+        {{ 'customer.account.welcome' | t: first_name: customer.first_name | default: customer.email }}
+      </h1>
+      <a href="{{ routes.account_logout_url }}" class="account-dashboard__logout-link">
+        {{ 'customer.log_out' | t }}
+      </a>
+    </div>
+
+    <nav class="account-dashboard__navigation" role="navigation" aria-label="{{ 'customer.account.navigation' | t }}">
+      <a href="{{ routes.account_orders_url }}" class="account-nav-card">
+        <h2 class="account-nav-card__title">{{ 'customer.orders.title' | t }}</h2>
+        <p class="account-nav-card__description">{{ 'customer.orders.description' | t }}</p>
+      </a>
+
+      <a href="{{ routes.account_addresses_url }}" class="account-nav-card">
+        <h2 class="account-nav-card__title">{{ 'customer.addresses.title' | t }}</h2>
+        <p class="account-nav-card__description">{{ 'customer.addresses.description' | t }}</p>
+      </a>
+
+      <a href="{{ routes.account_url }}" class="account-nav-card">
+        <h2 class="account-nav-card__title">{{ 'customer.account.details' | t }}</h2>
+        <p class="account-nav-card__description">{{ 'customer.account.view_addresses' | t }}</p>
+      </a>
+    </nav>
+
+    {% if customer.orders.size > 0 %}
+      <section class="account-dashboard__recent-orders">
+        <h2>{{ 'customer.account.recent_orders' | t }}</h2>
+        <div class="order-list">
+          {% for order in customer.orders limit: 3 %}
+            <div class="order-card">
+              <header class="order-card__header">
+                <h3 class="order-card__number">{{ 'customer.order.title' | t: name: order.name }}</h3>
+                <time class="order-card__date" datetime="{{ order.created_at | date: '%Y-%m-%d' }}">
+                  {{ order.created_at | date: format: 'abbreviated_date' }}
+                </time>
+                <span class="order-card__status order-card__status--{{ order.fulfillment_status | default: 'pending' }}">
+                  {{ order.fulfillment_status | default: 'pending' | replace: '_', ' ' | capitalize }}
+                </span>
+              </header>
+
+              <div class="order-card__total">
+                {{ order.total_price | money }}
+              </div>
+
+              <div class="order-card__actions">
+                <a href="{{ order.customer_url }}" class="order-card__link order-card__link--primary">
+                  {{ 'customer.order.view' | t }}
+                </a>
+                {% if order.fulfillment_status == 'fulfilled' %}
+                  <a href="{{ order.customer_url }}" class="order-card__link">
+                    {{ 'customer.order.track' | t }}
+                  </a>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
+        <p>
+          <a href="{{ routes.account_orders_url }}" class="account-nav-card__link">
+            {{ 'customer.account.view_all_orders' | t }}
+          </a>
+        </p>
+      </section>
+    {% else %}
+      <div class="order-history__empty">
+        <h2 class="order-history__empty-title">{{ 'customer.orders.none' | t }}</h2>
+        <p class="order-history__empty-description">{{ 'customer.orders.none_description' | t }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="order-history__empty-link">
+          {{ 'collections.general.continue_shopping' | t }}
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</div>

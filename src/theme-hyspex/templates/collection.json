@@ -1,0 +1,29 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "collection-page": {
+      "type": "section-page-collections-main",
+      "settings": {
+        "desktop_columns": 4,
+        "tablet_columns": 2,
+        "mobile_columns": "1",
+        "products_per_page": 24,
+        "enable_filtering": true,
+        "enable_sorting": true,
+        "show_product_count": true,
+        "show_filters_on_mobile": true
+      }
+    }
+  },
+  "order": [
+    "collection-page"
+  ]
+}

@@ -1,0 +1,222 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "section-image-slider": {
+      "type": "section-image-slider",
+      "blocks": {
+        "slide_a3EhVj": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Hero-Jungle.png",
+            "title": "New Slide",
+            "description": "Describe your promotion here",
+            "cta_text_1": "Click here",
+            "cta_link_1": "",
+            "cta_color_1": "#000000",
+            "cta_text_2": "",
+            "cta_link_2": "",
+            "cta_color_2": "#000000",
+            "cta_text_3": "",
+            "cta_link_3": "",
+            "cta_color_3": "#000000"
+          }
+        },
+        "slide_ejqfXV": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/FULL-HD_2K_16zu9.png",
+            "title": "New Slide",
+            "description": "Describe your promotion here",
+            "cta_text_1": "Test",
+            "cta_link_1": "shopify://pages/homepage",
+            "cta_color_1": "#000000",
+            "cta_text_2": "Test 2",
+            "cta_link_2": "shopify://pages/homepage",
+            "cta_color_2": "#000000",
+            "cta_text_3": "Test 3",
+            "cta_link_3": "shopify://collections/all",
+            "cta_color_3": "#000000"
+          }
+        },
+        "slide_PyDDzP": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/rack-of-womens-clothing.jpg",
+            "title": "New Slide",
+            "description": "Describe your promotion here",
+            "cta_text_1": "",
+            "cta_link_1": "",
+            "cta_color_1": "#000000",
+            "cta_text_2": "",
+            "cta_link_2": "",
+            "cta_color_2": "#000000",
+            "cta_text_3": "",
+            "cta_link_3": "",
+            "cta_color_3": "#000000"
+          }
+        },
+        "slide_a4MMnQ": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/65c25d4964f40d0f40deaf9b_image11_037205ea-3391-471e-ac16-86ec93bc67db.jpg",
+            "title": "New Slide",
+            "description": "Describe your promotion here",
+            "cta_text_1": "Test",
+            "cta_link_1": "shopify://pages/homepage",
+            "cta_color_1": "#000000",
+            "cta_text_2": "",
+            "cta_link_2": "",
+            "cta_color_2": "#000000",
+            "cta_text_3": "",
+            "cta_link_3": "",
+            "cta_color_3": "#000000"
+          }
+        }
+      },
+      "block_order": [
+        "slide_a3EhVj",
+        "slide_ejqfXV",
+        "slide_PyDDzP",
+        "slide_a4MMnQ"
+      ],
+      "settings": {
+        "enable_autoplay": false,
+        "autoplay_interval": 10,
+        "transition_duration": 500,
+        "slide_gap": 40,
+        "section_padding": 16,
+        "blur_amount": 0,
+        "side_opacity": 1,
+        "side_scale": 1,
+        "background_image": "shopify://shop_images/phiolo_A_retrostyle_logo_featuring_a_seagull_wearing_a_striped__d892a362-64c0-4081-b3f9-a160f9ea1eb7.svg",
+        "background_opacity": 0.1,
+        "background_tile_size": 80
+      }
+    },
+    "section_image_menu_6DRmPC": {
+      "type": "section-image-menu",
+      "blocks": {
+        "menu_item_UBjkz6": {
+          "type": "menu_item",
+          "settings": {
+            "image": "shopify://shop_images/unisex-premium-hoodie-black-front-666ec1ce15633.jpg",
+            "label": "Hoodies",
+            "link": ""
+          }
+        },
+        "menu_item_8re8jD": {
+          "type": "menu_item",
+          "settings": {
+            "image": "shopify://shop_images/unisex-crew-neck-sweatshirt-dark-heather-front-656e42f8afcee.jpg",
+            "label": "Sweatshirts",
+            "link": ""
+          }
+        },
+        "menu_item_XxwFXk": {
+          "type": "menu_item",
+          "settings": {
+            "image": "shopify://shop_images/unisex-organic-cotton-t-shirt-dark-heather-blue-front-6658dd5242d78.jpg",
+            "label": "T-Shirts",
+            "link": ""
+          }
+        },
+        "menu_item_h3MTQj": {
+          "type": "menu_item",
+          "settings": {
+            "image": "shopify://shop_images/c1a864cb74de0e0fd0004872d6a00edd.jpg",
+            "label": "Caps",
+            "link": ""
+          }
+        },
+        "menu_item_BYBBcq": {
+          "type": "menu_item",
+          "settings": {
+            "image": "shopify://shop_images/97da9be116d931319e458251c546a8cc.jpg",
+            "label": "Rucksack",
+            "link": ""
+          }
+        },
+        "menu_item_kLktkM": {
+          "type": "menu_item",
+          "settings": {
+            "image": "shopify://shop_images/7883dc186e15bf29dad696e1e989e914.jpg",
+            "label": "Schuhe",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "menu_item_UBjkz6",
+        "menu_item_8re8jD",
+        "menu_item_XxwFXk",
+        "menu_item_h3MTQj",
+        "menu_item_BYBBcq",
+        "menu_item_kLktkM"
+      ],
+      "settings": {
+        "max_items": 6
+      }
+    },
+    "section_big_heading_dpx9Rx": {
+      "type": "section-big-heading",
+      "settings": {
+        "bigheading_text": "Das wird dir gefallen."
+      }
+    },
+    "section_product_showcase_6xHGh4": {
+      "type": "section-showcase-tab",
+      "blocks": {
+        "custom_category_9wWfPU": {
+          "type": "custom_category",
+          "settings": {
+            "tab_label": "Nook's Hoodie",
+            "collection": "all-products",
+            "view_all_text": "Alle Nooks"
+          }
+        }
+      },
+      "block_order": [
+        "custom_category_9wWfPU"
+      ],
+      "settings": {
+        "primary_title": "Am beliebtesten",
+        "secondary_title": "Neuheiten",
+        "primary_collection": "men-clothing",
+        "secondary_collection": "women-clothing",
+        "primary_view_all_text": "Alle Bestseller",
+        "secondary_view_all_text": "Ganze Auswahl"
+      }
+    },
+    "section_big_heading_UTxhKA": {
+      "type": "section-big-heading",
+      "settings": {
+        "bigheading_text": "Neu im Shop"
+      }
+    },
+    "section_simple_showcase_izT8Gh": {
+      "type": "section-showcase-simple",
+      "settings": {
+        "collection": "men-clothing",
+        "show_header": true,
+        "title": "Neu bei uns",
+        "view_all_text": "Alle Neuheiten"
+      }
+    }
+  },
+  "order": [
+    "section-image-slider",
+    "section_image_menu_6DRmPC",
+    "section_big_heading_dpx9Rx",
+    "section_product_showcase_6xHGh4",
+    "section_big_heading_UTxhKA",
+    "section_simple_showcase_izT8Gh"
+  ]
+}

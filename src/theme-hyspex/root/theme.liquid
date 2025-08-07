@@ -1,0 +1,220 @@
+{%- capture root_styles -%}
+    :root {
+        /* Colors */
+        --main-background: {{ settings.color_primary_background }};
+        --main-foreground: {{ settings.color_primary_foreground }};
+        --main-font-color: {{ settings.color_main_font_color }};
+        --sub-font-color: {{ settings.color_second_font_color }};
+        --error: {{ settings.color_error }};
+        --shadow-5: {{ settings.color_shadow_5 }};
+        --discount-color: {{ settings.color_discount_color }};
+        --buy-green-color: {{ settings.color_buy }};
+        --buy-green-color-hover: {{ settings.color_buy_hover | default: '#16a34a' }};  
+        --background-accent:  #007bff;
+        --color-text-accent: var(--main-background);
+        /* Highlight button colors */
+        --button-highlight-color-bg: #e0f2fe;
+        --button-highlight-color-bg-hover: #2563eb;
+        --button-highlight-color-text: var(--main-font-color);
+        --button-highlight-color-text-hover: var(--main-background);
+        /* Subile button colors (flat-basic default) */
+        --button-subtile-color-bg: #f8f9fa;
+        --button-subtile-color-bg-hover: var(--main-font-color);
+        --button-subtile-color-text: var(--main-font-color);
+        --button-subtile-color-text-hover: var(--main-background);
+    
+        /* Page width, distance and padding */
+        --page-max-width: 1400px;
+        --page-medium-width: 1150px;
+        --page-small-width: 1000px;
+        --page-side-distance: 70px;
+        --tablet-page-side-distance: 40px;
+        --mobile-page-side-distance: 5px;
+        --section-distance: 60px;
+        
+        /* Spacing system */
+        --spacing-unit: 8px;
+    
+        /* Fonts */
+        --main-font-size: 15px;
+        --main-font-weight: 500;
+        --main-font: "Lato Bold", sans-serif;
+        --sub-font-size: 12px;
+        --sub-font: "Lato", sans-serif;
+        --sub-font-weight: 400;
+        
+        /* Typography scale */
+        --font-size-base: 1rem;
+        --font-size-h1: 2rem;
+        --font-size-h1-desktop: 2.5rem;
+        --font-weight-bold: 700;
+        
+        /* Text colors */
+        --color-text-primary: {{ settings.color_main_font_color }};
+        --color-text-secondary: #666666;
+        --color-highlight: #fff3cd;
+    
+        /* Borders */
+        --main-border-radius: 8px;
+        --main-border-width: 1px;
+        --main-border-color: {{ settings.color_border_color }};
+    
+        /* Button default color */
+        --button-basic-color__default: {{ settings.color_button_background_color }};
+        --button-basic__overlaycolor__default: {{ settings.color_button_overlay_color }};
+    
+        /* Sizing / Hover */
+        --main-image-grow-hover-scale: 1.05;
+        --main-image-grow-hover-time: 0.2s;
+        --main-translate-hover-y-offset: -4px;
+    
+        /* Arrow Navigation Variables */
+        --arrow-nav-color: {{ settings.arrow_nav_color }};
+        --arrow-nav-bg: {{ settings.arrow_nav_bg }};
+        --arrow-nav-border: {{ settings.arrow_nav_border }};
+        --arrow-nav-hover-bg: {{ settings.arrow_nav_hover_bg }};
+        --arrow-nav-hover-color: {{ settings.arrow_nav_hover_color }};
+        --arrow-nav-focus-ring: {{ settings.arrow_nav_focus_ring }};
+        --arrow-nav-size-minimal: {{ settings.arrow_nav_size_minimal }};
+        --arrow-nav-size-default: {{ settings.arrow_nav_size_default }};
+        --arrow-nav-size-prominent: {{ settings.arrow_nav_size_prominent }};
+        --arrow-nav-transition: all 0.2s ease-in-out;
+        --arrow-nav-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        --arrow-nav-disabled-opacity: 0.4;
+        --arrow-nav-disabled-color: var(--main-font-color);
+        --arrow-nav-radius: var(--radius-sm, 4px);
+        --arrow-nav-radius-large: var(--radius-md, 8px);
+        --arrow-nav-z-index: 10;
+        --arrow-nav-z-index-overlay: 20;
+        --arrow-nav-z-index-absolute: 30;
+    }
+    {%- endcapture -%}
+
+<style>
+    {{ root_styles }}
+
+  html,
+  body {
+    font-family: var(--main-font);
+    font-weight: var(--main-font-weight);
+    color: var(--main-font-color);
+    margin: 0px;
+    padding: 0px;
+    max-width: 100%;
+    touch-action: pan-y;
+  }
+
+  li {
+    font-weight: var(--sub-font-weight);
+  }
+
+  .list-unstyled {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  a {
+    color: var(--main-font-color);
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    outline: none;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    color: var(--main-font-color);
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .content-for-layout {
+    padding: 0;
+    margin: 0;
+    /* margin-top: var(--header-height); */
+  }
+
+  .content-padding {
+    padding-left: var(--page-side-distance);
+    padding-right: var(--page-side-distance);
+  }
+
+  .content-width-limit-small {
+    max-width: var(--page-small-width);
+  }
+
+  .content-width-limit-large {
+    max-width: var(--page-max-width);
+  }
+
+  .grow-container {
+    align-items: center;
+    border-radius: var(--main-border-radius);
+    border: var(--nav-border-width) solid var(--main-border-color);
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    align-self: center;
+  }
+
+  /* Set initial scale for image */
+  [mpe='grow-container'] .grow-container__image {
+    transition: transform 0.3s ease;
+    transform: scale(1.05);
+  }
+
+  /* Scale image when container is hovered */
+  [mpe='grow-container']:hover .grow-container__image {
+    transform: scale(1.15);
+  }
+
+  @media screen and (max-width: 991px) {
+    .content-padding {
+        padding-left: var(--tablet-page-side-distance);
+        padding-right: var(--tablet-page-side-distance);
+    }
+
+    .content-for-layout {
+        padding: 0;
+        margin: 0;
+        margin-top: var(--mobile-nav-gap);
+    }
+
+    .hide-tablet {
+        display: none !important;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .content-padding {
+        padding-left: var(--mobile-page-side-distance);
+        padding-right: var(--mobile-page-side-distance);
+    }
+  }
+
+  @media screen and (max-width: 479px) {
+    .hide-mobile {
+        display: none !important;
+    }
+
+    .content-padding {
+        padding-left: var(--mobile-page-side-distance);
+        padding-right: var(--mobile-page-side-distance);
+    }
+  }
+</style>

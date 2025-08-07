@@ -1,0 +1,129 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.header_group.label",
+  "type": "header",
+  "sections": {
+    "announcement-bar": {
+      "type": "section-announcement-bar",
+      "settings": {
+        "infoicon_right_visibility": true,
+        "infoicon_left_visibility": true,
+        "show_faq_link": true,
+        "faq_link": ""
+      }
+    },
+    "navigation-header": {
+      "type": "section-header",
+      "blocks": {
+        "mega_menu_tqXnHz": {
+          "type": "mega_menu",
+          "settings": {
+            "label": "Herren",
+            "cat1_name": "Bekleidung",
+            "cat1_menu": "navigation-men-clothing",
+            "cat2_name": "Accessoirses",
+            "cat2_menu": "navigation-men-accessoires",
+            "cat3_name": "Themen",
+            "cat3_menu": "navigation-men-themes",
+            "promo1_image": "shopify://shop_images/section-navbar-jpg-dropdownimage.jpg",
+            "promo1_caption": "Specials",
+            "promo1_url": "shopify://pages/homepage",
+            "promo2_caption": "",
+            "promo2_url": "shopify://pages/homepage",
+            "promo3_caption": "",
+            "promo3_url": "",
+            "promo4_caption": "",
+            "promo4_url": "",
+            "bottom_cta_label": "Alles ansehen",
+            "bottom_cta_url": ""
+          }
+        },
+        "mega_menu_Y6Lbqr": {
+          "type": "mega_menu",
+          "settings": {
+            "label": "Damen",
+            "cat1_name": "Bekleidung",
+            "cat1_menu": "navigation-women-clothing",
+            "cat2_name": "Accessoirses",
+            "cat2_menu": "navigation-women-accessoires",
+            "cat3_name": "Themen",
+            "cat3_menu": "navigation-women-themes",
+            "promo1_image": "shopify://shop_images/section-navbar-jpg-dropdownimage.jpg",
+            "promo1_caption": "Specials",
+            "promo1_url": "shopify://pages/homepage",
+            "promo2_image": "shopify://shop_images/section-navbar-jpg-dropdownimage.jpg",
+            "promo2_caption": "Specials2",
+            "promo2_url": "shopify://pages/homepage",
+            "promo3_caption": "",
+            "promo3_url": "",
+            "promo4_caption": "",
+            "promo4_url": "",
+            "bottom_cta_label": "Alles ansehen",
+            "bottom_cta_url": ""
+          }
+        },
+        "mega_menu_UJ6yxN": {
+          "type": "mega_menu",
+          "settings": {
+            "label": "Kids",
+            "cat1_name": "Bekleidung",
+            "cat1_menu": "navigation-women-clothing",
+            "cat2_name": "Accessoirses",
+            "cat2_menu": "navigation-men-accessoires",
+            "cat3_name": "Themen",
+            "cat3_menu": "navigation-women-themes",
+            "promo1_image": "shopify://shop_images/section-navbar-jpg-dropdownimage.jpg",
+            "promo1_caption": "Specials",
+            "promo1_url": "shopify://pages/homepage",
+            "promo2_image": "shopify://shop_images/section-navbar-jpg-dropdownimage.jpg",
+            "promo2_caption": "Upcoming",
+            "promo2_url": "shopify://pages/homepage",
+            "promo3_caption": "",
+            "promo3_url": "",
+            "promo4_caption": "",
+            "promo4_url": "",
+            "bottom_cta_label": "Alles ansehen",
+            "bottom_cta_url": ""
+          }
+        },
+        "simple_link_RiwKTL": {
+          "type": "simple_link",
+          "settings": {
+            "label": "Alles anzeigen",
+            "url": "shopify://pages/homepage"
+          }
+        },
+        "simple_link_knAEbA": {
+          "type": "simple_link",
+          "settings": {
+            "label": "Sommer",
+            "url": "shopify://pages/homepage"
+          }
+        }
+      },
+      "block_order": [
+        "mega_menu_tqXnHz",
+        "mega_menu_Y6Lbqr",
+        "mega_menu_UJ6yxN",
+        "simple_link_RiwKTL",
+        "simple_link_knAEbA"
+      ],
+      "settings": {
+        "show_logo_text": false,
+        "logo_nav_gap": 60
+      }
+    }
+  },
+  "order": [
+    "announcement-bar",
+    "navigation-header"
+  ]
+}

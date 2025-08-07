@@ -1,0 +1,145 @@
+{% comment %}
+  Customer Order History Page
+  Displays all customer orders with filtering and details
+{% endcomment %}
+
+<div class="account-page order-history">
+  <div class="account-page__container">
+    <header class="account-page__header">
+      <h1 class="account-page__title">{{ 'customer.orders.title' | t }}</h1>
+      <p class="account-page__description">{{ 'customer.orders.description' | t }}</p>
+    </header>
+
+    {% if customer.orders.size > 0 %}
+      <div class="order-list">
+        {% paginate customer.orders by 10 %}
+          {% for order in customer.orders %}
+            <article class="order-card">
+              <header class="order-card__header">
+                <h2 class="order-card__number">
+                  <a href="{{ order.customer_url }}" class="order-card__link order-card__link--primary">
+                    {{ 'customer.order.title' | t: name: order.name }}
+                  </a>
+                </h2>
+                <time class="order-card__date" datetime="{{ order.created_at | date: '%Y-%m-%d' }}">
+                  {{ order.created_at | date: format: 'month_day_year' }}
+                </time>
+                <span class="order-card__status order-card__status--{{ order.fulfillment_status | default: 'pending' }}">
+                  {{ order.fulfillment_status | default: 'pending' | replace: '_', ' ' | capitalize }}
+                </span>
+              </header>
+
+              <div class="order-card__details">
+                <div class="order-card__total">
+                  {{ order.total_price | money }}
+                </div>
+
+                {% if order.financial_status %}
+                  <div class="order-card__payment-status">
+                    <strong>{{ 'customer.order.payment_status' | t }}:</strong>
+                    {{ order.financial_status | replace: '_', ' ' | capitalize }}
+                  </div>
+                {% endif %}
+
+                {% if order.fulfillment_status == 'fulfilled' and order.tracking_number %}
+                  <div class="order-card__tracking">
+                    <strong>{{ 'customer.order.tracking_number' | t }}:</strong>
+                    {% if order.tracking_url %}
+                      <a href="{{ order.tracking_url }}" target="_blank" rel="noopener">
+                        {{ order.tracking_number }}
+                      </a>
+                    {% else %}
+                      {{ order.tracking_number }}
+                    {% endif %}
+                  </div>
+                {% endif %}
+              </div>
+
+              <div class="order-card__actions">
+                <a href="{{ order.customer_url }}" class="order-card__link order-card__link--primary">
+                  {{ 'customer.order.view' | t }}
+                </a>
+
+                {% if order.fulfillment_status == 'fulfilled' %}
+                  <a href="{{ order.customer_url }}" class="order-card__link">
+                    {{ 'customer.order.track' | t }}
+                  </a>
+                {% endif %}
+
+                {% if order.fulfillment_status == 'fulfilled' %}
+                  <a href="{{ order.customer_url }}" class="order-card__link">
+                    {{ 'customer.order.reorder' | t }}
+                  </a>
+                {% endif %}
+              </div>
+            </article>
+          {% endfor %}
+
+          {% if paginate.pages > 1 %}
+            <nav class="pagination" role="navigation" aria-label="{{ 'general.pagination.label' | t }}">
+              <ul class="pagination__list">
+                {% if paginate.previous %}
+                  <li class="pagination__item">
+                    <a
+                      href="{{ paginate.previous.url }}"
+                      class="pagination__link"
+                      aria-label="{{ 'general.pagination.previous' | t }}"
+                    >
+                      {{ 'general.pagination.previous' | t }}
+                    </a>
+                  </li>
+                {% endif %}
+
+                {% for part in paginate.parts %}
+                  {% if part.is_link %}
+                    <li class="pagination__item">
+                      <a href="{{ part.url }}" class="pagination__link">{{ part.title }}</a>
+                    </li>
+                  {% else %}
+                    {% if part.title == paginate.current_page %}
+                      <li class="pagination__item pagination__item--current">
+                        <span class="pagination__link pagination__link--current" aria-current="page">
+                          {{- part.title -}}
+                        </span>
+                      </li>
+                    {% else %}
+                      <li class="pagination__item">
+                        <span class="pagination__text">{{ part.title }}</span>
+                      </li>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+
+                {% if paginate.next %}
+                  <li class="pagination__item">
+                    <a
+                      href="{{ paginate.next.url }}"
+                      class="pagination__link"
+                      aria-label="{{ 'general.pagination.next' | t }}"
+                    >
+                      {{ 'general.pagination.next' | t }}
+                    </a>
+                  </li>
+                {% endif %}
+              </ul>
+            </nav>
+          {% endif %}
+        {% endpaginate %}
+      </div>
+    {% else %}
+      <div class="order-history__empty">
+        <h2 class="order-history__empty-title">{{ 'customer.orders.none' | t }}</h2>
+        <p class="order-history__empty-description">{{ 'customer.orders.none_description' | t }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="order-history__empty-link">
+          {{ 'collections.general.continue_shopping' | t }}
+        </a>
+      </div>
+    {% endif %}
+
+    <div class="account-page__navigation">
+      <a href="{{ routes.account_url }}" class="order-card__link">
+        {{ 'customer.account.return_to_account' | t }}
+      </a>
+    </div>
+  </div>
+</div>

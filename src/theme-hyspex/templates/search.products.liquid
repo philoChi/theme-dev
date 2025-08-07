@@ -1,0 +1,49 @@
+{%- layout none -%}
+{%- comment -%}
+  Search Products JSON Template
+  
+  Returns JSON with pre-rendered HTML for each product.
+  This provides more flexibility for JavaScript processing while still using Liquid rendering.
+  
+  Usage: /search?q=QUERY&type=product&view=products
+{%- endcomment -%}
+{%- paginate search.results by 50 -%}
+{
+  "results_count": {{ search.results_count }},
+  "terms": {{ search.terms | json }},
+  "products": [
+    {%- for item in search.results -%}
+      {%- if item.object_type == 'product' -%}
+        {
+          "id": {{ item.id | json }},
+          "handle": {{ item.handle | json }},
+          "title": {{ item.title | json }},
+          "url": {{ item.url | json }},
+          "price": {{ item.price | json }},
+          "price_formatted": {{ item.price | money | json }},
+          "compare_at_price": {{ item.compare_at_price | json }},
+          "available": {{ item.available | json }},
+          "featured_image": {
+            {%- if item.featured_image -%}
+              "url": {{ item.featured_image | img_url: 'medium' | json }},
+              "alt": {{ item.featured_image.alt | json }}
+            {%- else -%}
+              "url": null,
+              "alt": null
+            {%- endif -%}
+          },
+          "html": {%- capture product_html -%}
+            {%- render 'snippet-drawer-content-cart-item', 
+               item: item, 
+               data_line: forloop.index, 
+               show_quantity: false -%}
+          {%- endcapture -%}{{ product_html | strip_newlines | json }}
+        }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endif -%}
+    {%- endfor -%}
+  ],
+  "has_more": {{ paginate.pages > 1 | json }},
+  "total_pages": {{ paginate.pages }},
+  "current_page": {{ paginate.current_page }}
+}
+{%- endpaginate -%}
