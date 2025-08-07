@@ -21,8 +21,8 @@ Issue #<number>
 Where <number> is provided by the user.
 
 
-Github: Use `npm run git:info` to verify that the active issue has changed.
-
+Github: 
+- Use `npm run git:info` to gather information on the github repository and also the issue you are working with.
 
 Important constraints:
 - You must NOT read or analyze the repository code

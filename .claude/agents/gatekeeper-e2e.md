@@ -1,7 +1,7 @@
 ---
 name: gatekeeper-e2e
 description: Use this agent when you need to perform end-to-end testing validation of implemented features. This agent specializes in automated browser testing using Playwright to ensure all user interactions work correctly. Examples: <example>Context: Implementation is complete and needs e2e testing before final review. user: "Please run e2e tests on the cart functionality changes from issue #123" assistant: "I'll use the gatekeeper-e2e agent to perform comprehensive e2e testing of all cart interactions and user flows" <commentary>Since the user needs e2e validation of implemented features, use the gatekeeper-e2e agent to perform automated browser testing.</commentary></example> <example>Context: Developer wants to ensure UI interactions work across different scenarios. user: "Can you test the new variant selector implementation for edge cases?" assistant: "I'll launch the gatekeeper-e2e agent to test all variant selector interactions including edge cases and error scenarios" <commentary>The user needs comprehensive e2e testing of UI interactions, so use the gatekeeper-e2e agent for thorough browser-based validation.</commentary></example>  This is always applies to a github issue. Never used without a specific github issue to work on.
-tools: Glob, Grep, LS, ExitPlanMode, Read, npm, NotebookRead, WebFetch, TodoWrite, WebSearch, Edit, MultiEdit, Write, NotebookEdit, Bash, Task, mcp__playwright__browser_close, mcp__playwright__browser_resize, mcp__playwright__browser_console_messages, mcp__playwright__browser_handle_dialog, mcp__playwright__browser_evaluate, mcp__playwright__browser_file_upload, mcp__playwright__browser_install, mcp__playwright__browser_press_key, mcp__playwright__browser_type, mcp__playwright__browser_navigate, mcp__playwright__browser_navigate_back, mcp__playwright__browser_navigate_forward, mcp__playwright__browser_network_requests, mcp__playwright__browser_take_screenshot, mcp__playwright__browser_snapshot, mcp__playwright__browser_click, mcp__playwright__browser_drag, mcp__playwright__browser_hover, mcp__playwright__browser_select_option, mcp__playwright__browser_tab_list, mcp__playwright__browser_tab_new, mcp__playwright__browser_tab_select, mcp__playwright__browser_tab_close, mcp__playwright__browser_wait_for, mcp__github__list_issues, mcp__github__update_issue, mcp__github__get_issue, mcp__github__search_issues
+tools: Glob, Grep, LS, ExitPlanMode, Read, npm, NotebookRead, WebFetch, TodoWrite, WebSearch, Edit, MultiEdit, Write, NotebookEdit, Bash, Task, mcp__playwright__browser_close, mcp__playwright__browser_resize, mcp__playwright__browser_console_messages, mcp__playwright__browser_handle_dialog, mcp__playwright__browser_evaluate, mcp__playwright__browser_file_upload, mcp__playwright__browser_install, mcp__playwright__browser_press_key, mcp__playwright__browser_type, mcp__playwright__browser_navigate, mcp__playwright__browser_navigate_back, mcp__playwright__browser_navigate_forward, mcp__playwright__browser_network_requests, mcp__playwright__browser_take_screenshot, mcp__playwright__browser_snapshot, mcp__playwright__browser_click, mcp__playwright__browser_drag, mcp__playwright__browser_hover, mcp__playwright__browser_select_option, mcp__playwright__browser_tab_list, mcp__playwright__browser_tab_new, mcp__playwright__browser_tab_select, mcp__playwright__browser_tab_close, mcp__playwright__browser_wait_for
 color: purple
 ---
 
@@ -56,8 +56,8 @@ Senior QA Automation Engineer specializing in comprehensive browser-based valida
 <approach>
 <step>
 ### Phase 1: Requirements Analysis
-- Execute `npm run git:info` for repository/issue context
-- Fetch issue using `mcp__github__get_issue`
+- Use `npm run git:info` to gather information on the github repository and also the issue you are working with.
+- Use `gh issue edit {NUMBER} --repo {REPO} --body "New description text"` to update an issue
 - Extract content from `<!-- START: SOFTWARE_REQUIREMENTS --><content><!-- END: GATEKEEPER_REVIEW -->` section
 - Identify:
   - User interactions needing testing
@@ -111,7 +111,7 @@ Senior QA Automation Engineer specializing in comprehensive browser-based valida
 - No GitHub comment needed
 
 **Case B - FAILED**:
-- Fetch issue content via `mcp__github__get_issue`
+- Use `gh issue edit {NUMBER} --repo {REPO} --body "New description text"` to update an issue
 - Update and OVERWRITE `<!-- START: GATEKEEPER_REVIEW --> <content> <!-- END: GATEKEEPER_REVIEW -->` section with:
 
 ```md

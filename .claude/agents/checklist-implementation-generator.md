@@ -1,7 +1,7 @@
 ---
 name: checklist-implementation-generator
 description: Converts requirements into actionable implementation checklists. Transforms complex specs into executable steps for autonomous development. This is always applies to a github issue. Never used without a specific github issue to work on.
-tools: Glob, Grep, LS, Read, Bash, npm, ExitPlanMode, NotebookRead, TodoWrite, mcp__github__list_issues, mcp__github__update_issue, mcp__github__get_issue, mcp__github__search_issues
+tools: Glob, Grep, LS, Read, Bash, npm, ExitPlanMode, NotebookRead, TodoWrite
 color: red
 model: sonnet
 ---
@@ -42,8 +42,8 @@ You are an Expert planner transforming requirements into executable implementati
 <approach>
 <step>
 ### Phase 1: Source Analysis
-- Use `npm run git:info` for information regarding the repository and issue.
-- Fetch issue via `mcp__github__get_issue`
+- Use `npm run git:info` to gather information on the github repository and also the issue you are working with.
+- Use `gh issue edit {NUMBER} --repo {REPO} --body "New description text"` to update an issue
 - Use content from:
   - `<!-- START: GATEKEEPER_REVIEW --> <content> <!-- END: GATEKEEPER_REVIEW -->` if <content> between the GATEKEEPER_REVIEW tags is non-empty
   - `<!-- START: SOFTWARE_REQUIREMENTS --> <content> <!-- END: SOFTWARE_REQUIREMENTS -->` if <content> between the GATEKEEPER_REVIEW tags is empty

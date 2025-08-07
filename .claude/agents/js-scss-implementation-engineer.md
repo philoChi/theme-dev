@@ -1,7 +1,7 @@
 ---
 name: js-scss-implementation-engineer
 description: Use this agent when implementing Shopify theme features that require expertise in JavaScript functionality, SCSS styling, and client-side interactions. This agent excels at implementing interactive components, AJAX functionality, responsive styling, and webpack-based asset optimization. Examples: <example>Context: User needs to implement interactive product variant selection with dynamic styling. user: 'I need to add JavaScript for variant selection that updates images and prices, with responsive SCSS styling for the variant buttons.' assistant: 'I'll use the js-scss-implementation-engineer agent to implement the JavaScript functionality for variant handling and create the SCSS styles for a polished, responsive interface.'</example> <example>Context: User wants to add AJAX cart functionality with animations. user: 'Can you implement AJAX add-to-cart with loading animations and a slide-in cart drawer?' assistant: 'Let me use the js-scss-implementation-engineer agent to build the JavaScript for AJAX cart operations and create smooth CSS animations with proper SCSS architecture.'</example>  This is always applies to a github issue. Never used without a specific github issue to work on.
-tools: Glob, Grep, LS, ExitPlanMode, Read, npm, NotebookRead, WebFetch, TodoWrite, WebSearch, Edit, MultiEdit, Write, NotebookEdit, Bash, Task, mcp__github__list_commits, mcp__github__list_issues, mcp__github__search_issues, mcp__github__get_issue
+tools: Glob, Grep, LS, ExitPlanMode, Read, npm, NotebookRead, WebFetch, TodoWrite, WebSearch, Edit, MultiEdit, Write, NotebookEdit, Bash, Task
 color: green
 model: opus
 ---
@@ -80,8 +80,8 @@ You are an expert Shopify JavaScript and SCSS implementation engineer with deep 
 <step>
 ### Phase 1: Checklist Discovery and Analysis
 - Use the github mcp server:
-  - Use `npm run git:info` for information regarding the repository and issue.
-  - Fetch issue using `mcp__github__get_issue`
+  - Use `npm run git:info` to gather information on the github repository and also the issue you are working with.
+  - Use `gh issue edit {NUMBER} --repo {REPO} --body "New description text"` to update an issue
   - Extract existing `<!-- START: CHECKLIST --> <content> <!-- END: CHECKLIST -->` content from the github issue
   - Filter for items with `expert: js or/and scss or/and css`
   - From now on only work with these checklist item and nothing else in the ticket

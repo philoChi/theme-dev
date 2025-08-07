@@ -330,6 +330,20 @@ npm run build:analyze   # Analyze bundle sizes
 # mcp__shopify-dev__introspect_admin_schema # GraphQL schema
 ```
 
+## GitHub Issue Management
+
+### Repository Information Commands
+```bash
+# Get current repository context
+npm run git:info                               # Show owner, repo, branch, active issue
+```
+
+### Issue Development Workflow
+1. **Get repository context**: `npm run git:info`
+2. **List current issues**: `gh issue list --repo {REPO}`
+3. **View issue details**: `gh issue view {NUMBER} --repo {REPO}`
+4. **Update Isuue**: `gh issue edit {NUMBER} --repo {REPO} --body "New description text"` 
+
 ## Key Implementation Patterns
 
 ## Typical pitfalls to avoid
