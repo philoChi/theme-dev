@@ -33,7 +33,7 @@
   data-carousel-id="{{ carousel_id }}"
   role="region"
   aria-roledescription="carousel"
-  aria-label="{{ 'sections.product_showcase.carousel' | t }}"
+  aria-label="{{ 'parts_sections.showcase.sections.product_showcase.carousel' | t }}"
 >
   <div
     class="product-showcase__track"
@@ -49,14 +49,14 @@
             data-slide-index="{{ forloop.index0 }}"
             role="group"
             aria-roledescription="slide"
-            aria-label="{{ 'sections.product_showcase.slide' | t: number: forloop.index }}"
+            aria-label="{{ 'parts_sections.showcase.sections.product_showcase.slide' | t: number: forloop.index }}"
             {{ block.shopify_attributes }}
           >
             {%- render 'snippet-feature-product-card', product: product -%}
           </div>
         {%- else -%}
           <div class="product-showcase__empty">
-            <p>{{ 'sections.product_showcase.no_products' | t }}</p>
+            <p>{{ 'parts_sections.showcase.sections.product_showcase.no_products' | t }}</p>
           </div>
         {%- endfor -%}
       </div>

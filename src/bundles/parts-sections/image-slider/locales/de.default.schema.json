@@ -1,0 +1,36 @@
+{
+  "parts_sections": {
+    "image-slider": {
+      "sections": {
+        "hero-slider": {
+          "name": "Hero Slider",
+          "settings": {
+            "slide_image": {
+              "label": "Slide Image",
+              "info": "Recommended size: 2000 x 1125 pixels"
+            },
+            "heading": {
+              "label": "Heading",
+              "info": "Main title displayed on the slide"
+            },
+            "text": {
+              "label": "Text content",
+              "info": "Description text displayed below the heading"
+            },
+            "button_label": {
+              "label": "Button label",
+              "info": "Leave empty to hide button"
+            },
+            "button_link": {
+              "label": "Button link",
+              "info": "Where the button leads when clicked"
+            }
+          },
+          "presets": {
+            "name": "Hero Slider"
+          }
+        }
+      }
+    }
+  }
+}

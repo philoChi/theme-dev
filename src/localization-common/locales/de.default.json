@@ -10,32 +10,6 @@
       "search_placeholder_text": "Wonach suchst Du ?",
       "NoCollection": "Keine Kollektion ausgewählt",
       "EMail_Form_Placeholder": "Hier deine E-Mail eingeben"
-    },
-    "product_showcase": {
-      "view_all_in": "Alle ansehen in {{ collection }}",
-      "no_products": "Keine Produkte gefunden",
-      "no_products_in_collection": "Diese Kollektion enthält keine Produkte",
-      "error_no_collections": "Bitte wählen Sie mindestens eine Kollektion aus",
-      "previous": "Vorherige Produkte",
-      "next": "Nächste Produkte",
-      "slide": "Slide {{ number }}",
-      "carousel": "Produkt-Karussell",
-      "browse_all": "Alle Produkte durchstöbern",
-      "view": "Anzeigen",
-      "loading": "Laden...",
-      "quick_add": "In den Warenkorb",
-      "quick_add_to_cart": "{{ title }} in den Warenkorb legen",
-      "tab_navigation": "test",
-      "sold_out": "Ausverkauft",
-      "view_all_aria": "Alle anzeigen",
-      "blocks": {
-        "custom_category": {
-          "name": "Eigene Kategorie",
-          "tab_label": "Tab-Label",
-          "collection_label": "Kollektion",
-          "cta_text_label": "Text für 'Alle anzeigen'-Button"
-        }
-      }
     }
   },
   "general": {

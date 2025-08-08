@@ -85,14 +85,18 @@ class BundleLocaleMergePlugin {
       const defaultPath = path.join(centralPath, 'de.default.json');
       if (fs.existsSync(defaultPath)) {
         const content = fs.readFileSync(defaultPath, 'utf8');
-        locales['de.default.json'] = JSON.parse(this.cleanJsonContent(content));
+        const parsed = JSON.parse(content);
+        
+        locales['de.default.json'] = parsed;
       }
 
       // Read de.default.schema.json
       const schemaPath = path.join(centralPath, 'de.default.schema.json');
       if (fs.existsSync(schemaPath)) {
         const content = fs.readFileSync(schemaPath, 'utf8');
-        locales['de.default.schema.json'] = JSON.parse(this.cleanJsonContent(content));
+        const parsed = JSON.parse(content);
+        
+        locales['de.default.schema.json'] = parsed;
       }
     } catch (error) {
       console.warn('Warning: Could not read central locale files:', error.message);
@@ -104,7 +108,9 @@ class BundleLocaleMergePlugin {
     try {
       if (fs.existsSync(filePath)) {
         const content = fs.readFileSync(filePath, 'utf8');
-        return JSON.parse(this.cleanJsonContent(content));
+        const parsed = JSON.parse(content);
+        
+        return parsed;
       }
     } catch (error) {
       console.warn(`Warning: Could not read ${filePath}:`, error.message);
@@ -115,16 +121,16 @@ class BundleLocaleMergePlugin {
   async processLocale(localeName, { bundleLocaleFiles, centralLocales, configData, metadataData, outputPath }) {
     // Start with central locale as base
     let mergedLocale = centralLocales[localeName] || {};
-
+    
     // Merge bundle-specific locales
     const relevantBundleFiles = bundleLocaleFiles.filter(file => path.basename(file) === localeName);
     
     for (const bundleFile of relevantBundleFiles) {
       try {
         const content = fs.readFileSync(bundleFile, 'utf8');
-        const bundleLocale = JSON.parse(this.cleanJsonContent(content));
+        const bundleLocale = JSON.parse(content);
         
-        // Deep merge the bundle locale into the merged locale
+        // Simply merge the bundle locale directly without flattening
         mergedLocale = this.deepMerge(mergedLocale, bundleLocale);
         
         console.log(`✓ Merged ${path.relative(process.cwd(), bundleFile)}`);
@@ -163,19 +169,6 @@ class BundleLocaleMergePlugin {
     }
     
     return result;
-  }
-
-  cleanJsonContent(content) {
-    // Remove single-line comments (// ...)
-    content = content.replace(/\/\/.*$/gm, '');
-    
-    // Remove multi-line comments (/* ... */)
-    content = content.replace(/\/\*[\s\S]*?\*\//g, '');
-    
-    // Remove trailing commas
-    content = content.replace(/,(\s*[}\]])/g, '$1');
-    
-    return content;
   }
 }
 

@@ -1,0 +1,73 @@
+{
+  "parts_sections": {
+    "showcase": {
+      "sections": {
+        "product_showcase": {
+          "name": "Produkt-Showcase",
+          "settings": {
+            "header_content": "Allgemeine Einstellungen",
+            "title": {
+              "label": "Überschrift"
+            },
+            "description": {
+              "label": "Beschreibung"
+            },
+            "collections_header": "Kollektionen",
+            "buttons_header": "Link-Text",
+            "primary_collection": {
+              "view_all_label": "Erste Auswahl: Button-Text",
+              "label_collection": "Erste Auswahl: Kollektion",
+              "label_titel": "Erste Auswahl: Tab-Bezeichnung"
+            },
+            "secondary_collection": {
+              "view_all_label": "Zweite Auswahl: Button-Text",
+              "label_collection": "Zweite Auswahl: Kollektion",
+              "label_titel": "Zweite Auswahl: Tab-Bezeichnung"
+            },
+            "layout_header": "Layout-Einstellungen",
+            "show_rating": {
+              "label": "Bewertungen anzeigen"
+            },
+            "enable_quick_view": {
+              "label": "Schnellansicht aktivieren",
+              "info": "Ermöglicht Kunden, Produktdetails in einem Popup anzusehen"
+            },
+            "show_view_all": {
+              "label": "\"Alle anzeigen\"-Button anzeigen"
+            },
+            "show_empty_state_cta": {
+              "label": "Call-to-Action bei leerer Kollektion anzeigen"
+            },
+            "carousel_header": "Karussell-Einstellungen",
+            "enable_autoplay": {
+              "label": "Automatische Wiedergabe aktivieren"
+            },
+            "autoplay_speed": {
+              "label": "Geschwindigkeit der automatischen Wiedergabe",
+              "info": "Zeit in Sekunden zwischen den Slides"
+            }
+          },
+          "blocks": {
+            "custom_category": {
+              "name": "Benutzerdefinierte Kategorie",
+              "settings": {
+                "tab_label": {
+                  "label": "Auswahl: Tab-Bezeichnung"
+                },
+                "collection": {
+                  "label": "Auswahl: Kollektion"
+                },
+                "view_all_text": {
+                  "label": "Auswahl: Button-Text"
+                }
+              }
+            }
+          },
+          "presets": {
+            "name": "Produkt-Showcase"
+          }
+        }
+      }
+    }
+  }
+}

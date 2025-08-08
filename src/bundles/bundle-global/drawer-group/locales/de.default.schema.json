@@ -1,5 +1,7 @@
 {
-  "drawer_group": {
-    "_note": "Schema translations for drawer-group components - most drawer functionality is not user-configurable"
+  "bundle-global": {
+    "drawer-group": {
+      "sections": {}
+    }
   }
 }
