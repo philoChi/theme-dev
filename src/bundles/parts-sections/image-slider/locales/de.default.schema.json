@@ -1,36 +1,18 @@
 {
   "parts_sections": {
     "image-slider": {
-      "sections": {
-        "hero-slider": {
-          "name": "Hero Slider",
-          "settings": {
-            "slide_image": {
-              "label": "Slide Image",
-              "info": "Recommended size: 2000 x 1125 pixels"
-            },
-            "heading": {
-              "label": "Heading",
-              "info": "Main title displayed on the slide"
-            },
-            "text": {
-              "label": "Text content",
-              "info": "Description text displayed below the heading"
-            },
-            "button_label": {
-              "label": "Button label",
-              "info": "Leave empty to hide button"
-            },
-            "button_link": {
-              "label": "Button link",
-              "info": "Where the button leads when clicked"
-            }
-          },
-          "presets": {
-            "name": "Hero Slider"
-          }
-        }
-      }
+      "hero_slider_name": "Hero Slider",
+      "hero_slider_slide_image_label": "Slide Image",
+      "hero_slider_slide_image_info": "Recommended size: 2000 x 1125 pixels",
+      "hero_slider_heading_label": "Heading",
+      "hero_slider_heading_info": "Main title displayed on the slide",
+      "hero_slider_text_label": "Text content",
+      "hero_slider_text_info": "Description text displayed below the heading",
+      "hero_slider_button_label_label": "Button label",
+      "hero_slider_button_label_info": "Leave empty to hide button",
+      "hero_slider_button_link_label": "Button link",
+      "hero_slider_button_link_info": "Where the button leads when clicked",
+      "hero_slider_presets_name": "Hero Slider"
     }
   }
 }

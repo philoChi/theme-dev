@@ -11,9 +11,7 @@
           "logo_alt": "Logo",
           "open_login": "Login",
           "open_cart": "Navigation öffnen",
-          "mega_menu": {
-            "empty_heading": "Missing"
-          }
+          "mega_menu_empty_heading": "Missing"
         },
         "main": {
           "header": "Kopfzeile",

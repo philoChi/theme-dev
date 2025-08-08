@@ -24,7 +24,7 @@
     {%- for idx in (1..3) -%}
       {%- assign cat_name_key = 'cat' | append: idx | append: '_name' -%}
       {%- assign cat_menu_key = 'cat' | append: idx | append: '_menu' -%}
-      {%- assign cat_name = block.settings[cat_name_key] | default: 'global.header-group.header.navigation.mega_menu.empty_heading' -%}
+      {%- assign cat_name = block.settings[cat_name_key] | default: 'global.header-group.header.navigation.mega_menu_empty_heading' -%}
       {%- assign cat_menu = block.settings[cat_menu_key] -%}
       {%- if cat_name or linklists[cat_menu] -%}
         <div class="mega-menu-lists" role="group" aria-labelledby="heading-{{ block.id }}-{{ idx }}">

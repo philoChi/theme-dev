@@ -1,13 +1,9 @@
 {
   "parts-sections": {
     "image-slider": {
-      "sections": {
-        "hero-slider": {
-          "heading": "Welcome to our store",
-          "text": "Share information about your brand with your customers",
-          "button_label": "Shop Now"
-        }
-      }
+      "hero_slider_heading": "Welcome to our store",
+      "hero_slider_text": "Share information about your brand with your customers",
+      "hero_slider_button_label": "Shop Now"
     }
   }
 }

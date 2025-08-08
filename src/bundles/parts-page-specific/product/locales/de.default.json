@@ -57,11 +57,9 @@
       "thumbnail": "Vorschaubild",
       "image": "Bild",
       "no_image": "Kein Produktbild verfügbar",
-      "notifications": {
-        "added_to_cart": "Zum Warenkorb hinzugefügt!",
-        "select_size_error": "Bitte wählen Sie eine {{ size_label }} aus, bevor Sie zum Warenkorb hinzufügen",
-        "add_to_cart_error": "Fehler: Artikel konnte nicht zum Warenkorb hinzugefügt werden."
-      }
+      "notifications_added_to_cart": "Zum Warenkorb hinzugefügt!",
+      "notifications_select_size_error": "Bitte wählen Sie eine {{ size_label }} aus, bevor Sie zum Warenkorb hinzufügen",
+      "notifications_add_to_cart_error": "Fehler: Artikel konnte nicht zum Warenkorb hinzugefügt werden."
     }
   }
 }

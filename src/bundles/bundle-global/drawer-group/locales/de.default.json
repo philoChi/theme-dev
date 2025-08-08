@@ -26,10 +26,8 @@
         "no_results": "Keine Produkte für \"{{ query }}\" gefunden. Versuche andere Suchbegriffe oder durchstöbere unsere Kollektionen.",
         "no_results_html": "Deine Suche nach \"{{ terms }}\" ergab keine Treffer.",
         "results_count": "{{ count }} {{ count | pluralize: 'Ergebnis', 'Ergebnisse' }} für \"{{ query }}\"",
-        "results_with_count": {
-          "one": "1 Ergebnis für \"{{ terms }}\"",
-          "other": "{{ count }} Ergebnisse für \"{{ terms }}\""
-        },
+        "results_with_count_one": "1 Ergebnis für \"{{ terms }}\"",
+        "results_with_count_other": "{{ count }} Ergebnisse für \"{{ terms }}\"",
         "show_all_results": "Alle {{ count }} Ergebnisse anzeigen",
         "recent_searches": "Letzte Suchanfragen:",
         "clear_recent": "Suchverlauf löschen",
@@ -51,12 +49,10 @@
         "suggestion_shorter": "Verwende kürzere Suchbegriffe",
         "suggestion_general": "Verwende allgemeinere Suchbegriffe",
         "browse_all": "Alle Produkte durchstöbern",
-        "suggestions": {
-          "heading": "Suchvorschläge",
-          "popular": "Beliebte Suchanfragen",
-          "categories": "Kategorien durchsuchen",
-          "brands": "Nach Marke suchen"
-        },
+        "suggestions_heading": "Suchvorschläge",
+        "suggestions_popular": "Beliebte Suchanfragen",
+        "suggestions_categories": "Kategorien durchsuchen",
+        "suggestions_brands": "Nach Marke suchen",
         "hint": "Suchhinweis",
         "type_more_characters": "Bitte gib mindestens 2 Zeichen ein",
         "hint_description": "Tippe weiter, um nach Produkten zu suchen",
