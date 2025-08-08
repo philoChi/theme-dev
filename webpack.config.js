@@ -27,19 +27,19 @@ function generateEntriesAutomatically() {
   }
   
   // 1. Global theme bundle
-  const globalFiles = findIndexFiles(`${srcPath}/bundle-global`);
+  const globalFiles = findIndexFiles(`${srcPath}/global`);
   if (globalFiles.length > 0) {
     entries['global'] = globalFiles;
   }
   
   // 2. Shared features bundle
-  const featuresFiles = findIndexFiles(`${srcPath}/bundle-shared-features`);
+  const featuresFiles = findIndexFiles(`${srcPath}/shared-features`);
   if (featuresFiles.length > 0) {
     entries['features-shared-all'] = featuresFiles;
   }
   
   // 3. Page-specific sections
-  glob.sync(`${srcPath}/parts-page-specific/*/`).forEach(dir => {
+  glob.sync(`${srcPath}/page-specific/*/`).forEach(dir => {
     const indexFiles = findIndexFiles(dir);
     if (indexFiles.length > 0) {
       const pageName = path.basename(dir);
@@ -48,7 +48,7 @@ function generateEntriesAutomatically() {
   });
   
   // 4. Individual sections
-  glob.sync(`${srcPath}/parts-sections/*/`).forEach(dir => {
+  glob.sync(`${srcPath}/section-specific/*/`).forEach(dir => {
     const sectionName = path.basename(dir);
     
     // Check for index files first (unified bundle approach)
@@ -149,7 +149,7 @@ module.exports = {
             options: {
               sassOptions: {
                 includePaths: [
-                  path.resolve(__dirname, 'src/bundles/bundle-global/styles'),
+                  path.resolve(__dirname, 'src/bundles/global/styles'),
                   path.resolve(__dirname, 'src/bundles')
                 ]
               }
@@ -272,30 +272,30 @@ module.exports = {
     // Copy non-bundled assets (maintain existing assets)
     new CopyWebpackPlugin({
       patterns: [
-        // Bundle-global section templates with section- prefix
+        // Global section templates with section- prefix
         {
-          from: 'src/bundles/bundle-global/**/sections/*.liquid',
+          from: 'src/bundles/global/**/sections/*.liquid',
           to: ({ absoluteFilename }) => {
             const filename = path.basename(absoluteFilename, '.liquid');
             return `../sections/section-${filename}.liquid`;
           },
           noErrorOnMissing: true
         },
-        // Parts-sections templates with section- prefix
+        // Section-specific templates with section- prefix
         {
-          from: 'src/bundles/parts-sections/*/sections/*.liquid',
+          from: 'src/bundles/section-specific/*/sections/*.liquid',
           to: ({ absoluteFilename }) => {
             const filename = path.basename(absoluteFilename, '.liquid');
             return `../sections/section-${filename}.liquid`;
           },
           noErrorOnMissing: true
         },
-        // Parts-page-specific templates with section-page- prefix
+        // Page-specific templates with section-page- prefix
         {
-          from: 'src/bundles/parts-page-specific/*/sections/*.liquid',
+          from: 'src/bundles/page-specific/*/sections/*.liquid',
           to: ({ absoluteFilename }) => {
             const filename = path.basename(absoluteFilename, '.liquid');
-            const relativePath = path.relative(path.resolve(__dirname, 'src/bundles/parts-page-specific'), absoluteFilename);
+            const relativePath = path.relative(path.resolve(__dirname, 'src/bundles/page-specific'), absoluteFilename);
             const pathParts = relativePath.split(path.sep);
             const pageDir = pathParts[0]; // Extract page name (e.g., "faq")
             return `../sections/section-page-${pageDir}-${filename}.liquid`;
@@ -312,14 +312,14 @@ module.exports = {
           noErrorOnMissing: true,
           filter: (filepath) => {
             // Exclude files already handled by above patterns
-            return !filepath.includes('bundle-global') && 
-                   !filepath.includes('parts-sections') && 
-                   !filepath.includes('parts-page-specific');
+            return !filepath.includes('global') && 
+                   !filepath.includes('section-specific') && 
+                   !filepath.includes('page-specific');
           }
         },
         // Drawer-specific section templates with custom naming
         {
-          from: 'src/bundles/bundle-global/drawer-group/cart/sections/*.liquid',
+          from: 'src/bundles/global/drawer-group/cart/sections/*.liquid',
           to: ({ absoluteFilename }) => {
             const filename = path.basename(absoluteFilename, '.liquid');
             return `../sections/section-drawer-cart.liquid`;
@@ -327,7 +327,7 @@ module.exports = {
           noErrorOnMissing: true
         },
         {
-          from: 'src/bundles/bundle-global/drawer-group/multi/sections/*.liquid',
+          from: 'src/bundles/global/drawer-group/multi/sections/*.liquid',
           to: ({ absoluteFilename }) => {
             const filename = path.basename(absoluteFilename, '.liquid');
             return `../sections/section-drawer-multi.liquid`;
@@ -336,7 +336,7 @@ module.exports = {
         },
         // Drawer-specific snippet templates with custom naming
         {
-          from: 'src/bundles/bundle-global/drawer-group/cart/snippets/*.liquid',
+          from: 'src/bundles/global/drawer-group/cart/snippets/*.liquid',
           to: ({ absoluteFilename }) => {
             const filename = path.basename(absoluteFilename, '.liquid');
             return `../snippets/snippet-section-drawer-cart-${filename}.liquid`;
@@ -344,7 +344,7 @@ module.exports = {
           noErrorOnMissing: true
         },
         {
-          from: 'src/bundles/bundle-global/drawer-group/multi/snippets/*.liquid',
+          from: 'src/bundles/global/drawer-group/multi/snippets/*.liquid',
           to: ({ absoluteFilename }) => {
             const filename = path.basename(absoluteFilename, '.liquid');
             return `../snippets/snippet-section-drawer-multi-${filename}.liquid`;
@@ -352,19 +352,19 @@ module.exports = {
           noErrorOnMissing: true
         },
         {
-          from: 'src/bundles/bundle-global/drawer-group/base/snippets/*.liquid',
+          from: 'src/bundles/global/drawer-group/base/snippets/*.liquid',
           to: ({ absoluteFilename }) => {
             const filename = path.basename(absoluteFilename, '.liquid');
             return `../snippets/snippet-section-drawer-base-${filename}.liquid`;
           },
           noErrorOnMissing: true
         },
-        // Section-scoped snippets with snippet-section-<section>- prefix for bundle-global
+        // Section-scoped snippets with snippet-section-<section>- prefix for global
         {
-          from: 'src/bundles/bundle-global/**/snippets/*.liquid',
+          from: 'src/bundles/global/**/snippets/*.liquid',
           to: ({ absoluteFilename }) => {
             const filename = path.basename(absoluteFilename, '.liquid');
-            const relativePath = path.relative(path.resolve(__dirname, 'src/bundles/bundle-global'), absoluteFilename);
+            const relativePath = path.relative(path.resolve(__dirname, 'src/bundles/global'), absoluteFilename);
             const pathParts = relativePath.split(path.sep);
             // Extract section name (e.g., "navigation-bar" from "header-group/navigation-bar/snippets/...")
             const sectionName = pathParts[pathParts.length - 3]; // Get parent of snippets folder
@@ -376,23 +376,23 @@ module.exports = {
             return !filepath.includes('/drawer/');
           }
         },
-        // Section-scoped snippets with snippet-section-<section>- prefix for parts-sections
+        // Section-scoped snippets with snippet-section-<section>- prefix for section-specific
         {
-          from: 'src/bundles/parts-sections/*/snippets/*.liquid',
+          from: 'src/bundles/section-specific/*/snippets/*.liquid',
           to: ({ absoluteFilename }) => {
             const filename = path.basename(absoluteFilename, '.liquid');
-            const relativePath = path.relative(path.resolve(__dirname, 'src/bundles/parts-sections'), absoluteFilename);
+            const relativePath = path.relative(path.resolve(__dirname, 'src/bundles/section-specific'), absoluteFilename);
             const sectionName = relativePath.split(path.sep)[0]; // First folder is section name
             return `../snippets/snippet-section-${sectionName}-${filename}.liquid`;
           },
           noErrorOnMissing: true
         },
-        // Parts-page-specific snippets with snippet-section-page-<page>- prefix
+        // Page-specific snippets with snippet-section-page-<page>- prefix
         {
-          from: 'src/bundles/parts-page-specific/*/snippets/*.liquid',
+          from: 'src/bundles/page-specific/*/snippets/*.liquid',
           to: ({ absoluteFilename }) => {
             const filename = path.basename(absoluteFilename, '.liquid');
-            const relativePath = path.relative(path.resolve(__dirname, 'src/bundles/parts-page-specific'), absoluteFilename);
+            const relativePath = path.relative(path.resolve(__dirname, 'src/bundles/page-specific'), absoluteFilename);
             const pathParts = relativePath.split(path.sep);
             const pageDir = pathParts[0]; // Extract page name (e.g., "faq")
             return `../snippets/snippet-section-page-${pageDir}-${filename}.liquid`;
@@ -401,7 +401,7 @@ module.exports = {
         },
         // Feature snippets with snippet-feature- prefix for shared features
         {
-          from: 'src/bundles/bundle-shared-features/**/snippets/*.liquid',
+          from: 'src/bundles/shared-features/**/snippets/*.liquid',
           to: ({ absoluteFilename }) => {
             const filename = path.basename(absoluteFilename, '.liquid');
             return `../snippets/snippet-feature-${filename}.liquid`;
@@ -446,7 +446,7 @@ module.exports = {
           }
         },
         {
-          from: 'src/bundles/bundle-global/icon-system/icons/*.svg',
+          from: 'src/bundles/global/icon-system/icons/*.svg',
           to: '[name][ext]',
           noErrorOnMissing: true
         },
@@ -512,10 +512,10 @@ module.exports = {
     alias: {
       '@': path.resolve(__dirname, 'src'),
       '@assets': path.resolve(__dirname, 'assets'),
-      '@global': path.resolve(__dirname, 'src/bundles/bundle-global'),
-      '@features': path.resolve(__dirname, 'src/bundles/bundle-shared-features'),
-      '@page-specific': path.resolve(__dirname, 'src/bundles/parts-page-specific'),
-      '@sections': path.resolve(__dirname, 'src/bundles/parts-sections')
+      '@global': path.resolve(__dirname, 'src/bundles/global'),
+      '@features': path.resolve(__dirname, 'src/bundles/shared-features'),
+      '@page-specific': path.resolve(__dirname, 'src/bundles/page-specific'),
+      '@sections': path.resolve(__dirname, 'src/bundles/section-specific')
     }
   },
   
@@ -541,7 +541,7 @@ module.exports = {
         // },
         // Common code used in multiple features
         'common-features': {
-          test: /[\\/]src[\\/]bundle-shared-features[\\/]/,
+          test: /[\\/]src[\\/]shared-features[\\/]/,
           minChunks: 3,
           name: 'common-features',
           chunks: 'all',

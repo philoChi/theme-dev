@@ -55,7 +55,7 @@
         endif
 
         unless color_exists
-          assign color_key = 'parts-page-specific.product.colors.' | append: color_value
+          assign color_key = 'page-specific.product.colors.' | append: color_value
           assign translated_color = color_key | t | default: color_value
 
           if has_colors
@@ -98,9 +98,9 @@
     ],
     "colorTranslations": {{ color_translations }},
     "translations": {
-      "addedToCart": "{{ 'parts-page-specific.product.notifications_added_to_cart' | t }}",
-      "selectSizeError": "{{ 'parts-page-specific.product.notifications_select_size_error' | t }}",
-      "addToCartError": "{{ 'parts-page-specific.product.notifications_add_to_cart_error' | t }}"
+      "addedToCart": "{{ 'page-specific.product.notifications_added_to_cart' | t }}",
+      "selectSizeError": "{{ 'page-specific.product.notifications_select_size_error' | t }}",
+      "addToCartError": "{{ 'page-specific.product.notifications_add_to_cart_error' | t }}"
     },
     "options": [
       {%- for option in product.options_with_values -%}

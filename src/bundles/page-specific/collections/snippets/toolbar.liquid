@@ -1,0 +1,125 @@
+{%- comment -%}
+  Snippet: Collection Toolbar
+  Purpose: Filter and sorting controls for collection/search pages
+
+  Parameters:
+    - is_search: Boolean indicating if this is a search results page
+    - section_id: Section ID for unique identifiers
+    - settings: Section settings object containing:
+      - enable_filtering: Boolean
+      - enable_sorting: Boolean
+      - show_filters_on_mobile: Boolean
+      - custom_filter_label: String
+      - default_sort_order: String
+{%- endcomment -%}
+
+{%- liquid
+  assign is_search = is_search | default: false
+
+  # Define sorting options
+  assign sort_options = 'manual,created-descending,price-ascending,price-descending,best-selling' | split: ','
+  assign sort_labels = 'page-specific.collections.featured,page-specific.collections.date_descending,page-specific.collections.price_ascending,page-specific.collections.price_descending,page-specific.collections.best_selling' | split: ','
+  
+  # Get current sort from URL parameters
+  assign current_sort = request.get.sort_by | default: settings.default_sort_order
+  if current_sort == blank
+    assign current_sort = 'manual'
+  endif
+-%}
+
+<div class="collection-page__toolbar{% if is_search %} search-results__toolbar{% endif %}">
+  {%- if settings.enable_filtering and settings.show_filters_on_mobile -%}
+    {%- liquid
+      if settings.custom_filter_label and settings.custom_filter_label != blank
+        assign filter_text = settings.custom_filter_label
+      else
+        assign filter_text = 'page-specific.collections.filters' | t
+      endif
+    -%}
+    {%- capture filter_button_content -%}
+      <button
+        type="button"
+        class="collection-toolbar__filter-button"
+        data-drawer-trigger="filter"
+        aria-expanded="false"
+        aria-controls="filter-drawer"
+        aria-label="{{ 'page-specific.collections.show_filters' | t }}"
+      >
+        <span>{{ filter_text }}</span>
+        <span class="icon icon-filter collection-toolbar__filter-icon" aria-hidden="true"></span>
+      </button>
+    {%- endcapture -%}
+    {% render 'snippet-feature-style-wrapper',
+      content: filter_button_content,
+      variant: 'flat-basic',
+      background_color: 'var(--button-highlight-color-bg)',
+      hover_color: 'var(--button-highlight-color-bg-hover)',
+      text_color: 'var(--button-highlight-color-text)',
+      hover_text_color: 'var(--button-highlight-color-text-hover)'
+    %}
+  {%- endif -%}
+
+  {%- if settings.enable_sorting -%}
+    <div class="collection-page__sort">
+      <label for="sort-by-{{ section_id }}" class="visually-hidden">
+        {{ 'page-specific.collections.sort_by_label' | t }}
+      </label>
+      <span class="collection-page__sort-label"> {{ 'page-specific.collections.sort_by_label' | t }}: </span>
+      <div class="collection-page__sort-container">
+        {%- capture sort_button_content -%}
+          <div class="collection-page__sort-wrapper" data-sort-dropdown tabindex="0" role="button" aria-expanded="false" aria-haspopup="listbox">
+            <span class="collection-page__sort-display">
+              {%- if is_search -%}
+                {{ 'templates.search.sort_by_relevance' | t }}
+              {%- else -%}
+                {%- for sort_option in sort_options -%}
+                  {%- if current_sort == sort_option -%}
+                    {{ sort_labels[forloop.index0] | t }}
+                    {%- break -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
+            </span>
+            <span class="icon icon-dropdown-arrow collection-page__sort-arrow" aria-hidden="true"></span>
+          </div>
+        {%- endcapture -%}
+        {% render 'snippet-feature-style-wrapper',
+          content: sort_button_content,
+          variant: 'flat-basic',
+          background_color: 'var(--button-highlight-color-bg)',
+          hover_color: 'var(--button-highlight-color-bg-hover)',
+          text_color: 'var(--button-highlight-color-text)',
+          hover_text_color: 'var(--button-highlight-color-text-hover)'
+        %}
+        <div
+          class="collection-page__sort-dropdown"
+          data-sort-dropdown-menu
+          role="listbox"
+          aria-labelledby="sort-by-{{ section_id }}"
+        >
+          {%- if is_search -%}
+            <div class="collection-page__sort-option" data-sort-value="relevance" role="option" aria-selected="true">
+              {{ 'templates.search.sort_by_relevance' | t }}
+            </div>
+          {%- endif -%}
+          {%- for sort_option in sort_options -%}
+            {%- assign sort_label = sort_labels[forloop.index0] | t -%}
+            <div
+              class="collection-page__sort-option"
+              data-sort-value="{{ sort_option }}"
+              role="option"
+              {%- unless is_search -%}
+                {%- if current_sort == sort_option %} aria-selected="true"{%- endif -%}
+              {%- endunless -%}
+            >
+              {{ sort_label }}
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+      <div id="sort-help-{{ section_id }}" class="visually-hidden">
+        {{ 'page-specific.collections.sort_help_text' | t }}
+      </div>
+    </div>
+  {%- endif -%}
+</div>

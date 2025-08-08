@@ -1,0 +1,33 @@
+{%- comment -%} 
+Display specific variant options in desired order 
+render: {% render 'snippet-feature-product-info-color-size'
+            item: cart.item
+         %}
+
+{%- endcomment -%}
+{%- assign colour_obj = item.options_with_values | where: 'name', 'color' | first -%}
+{%- assign size_obj = item.options_with_values | where: 'name', 'size' | first -%}
+{%- assign colour_name = colour_obj.value -%}
+{%- assign size_value = size_obj.value -%}
+
+{%- comment -%} Build the i18n key: "page-specific.product.colors.<colour_name>" {%- endcomment -%}
+{%- assign colour_i18n_key = 'page-specific.product.colors.' | append: colour_name -%}
+
+{%- if colour_name != blank and colour_name != 'Default Title' -%}
+  <p class="product-info__text">
+    {{ 'page-specific.product.colors.label' | t }}: {{ colour_i18n_key | t }}
+  </p>
+{%- elsif size_value != blank and size_value != 'Default Title' -%}
+  <p class="product-info__text">
+    {{ 'page-specific.product.sizes.label' | t }}: {{ size_value }}
+  </p>
+{%- endif -%}
+
+{%- if colour_name != blank and colour_name != 'Default Title' and size_value != blank and size_value != 'Default Title' -%}
+  <p class="product-info__text">
+    {{ 'page-specific.product.colors.label' | t }}: {{ colour_i18n_key | t }}
+  </p>
+  <p class="product-info__text">
+    {{ 'page-specific.product.sizes.label' | t }}: {{ size_value }}
+  </p>
+{%- endif -%}

@@ -171,23 +171,23 @@ github-repository: git@github.com:philoChi/theme-dev.git
 ```
 src/                                   # Source files for webpack compilation
 ├── bundles/                           # JS/SCSS bundles and component templates
-│   ├── bundle-global/                 # Global theme bundles (→ global.js/css)
+│   ├── global/                        # Global theme bundles (→ global.js/css)
 │   │   ├── icon-system/               # CSS-based icon system
 │   │   │   ├── icons/                 # SVG source files
 │   │   │   └── styles/                # Icon CSS definitions
 │   │   ├── header-group/              # Header components
 │   │   ├── drawer-group/              # Drawer components (cart, multi)
 │   │   └── index.js/scss              # Global bundle entry points
-│   ├── bundle-shared-features/        # Shared features (→ features-shared-all.js/css)
+│   ├── shared-features/               # Shared features (→ features-shared-all.js/css)
 │   │   ├── dropdown-menu/
 │   │   ├── product-card/
 │   │   ├── notification-system/
 │   │   └── index.js/scss              # Features bundle entry points
-│   ├── parts-page-specific/           # Page-specific sections
+│   ├── page-specific/                 # Page-specific sections
 │   │   ├── collections/               # → section-page-collections.js/css
 │   │   ├── product/                   # → section-page-product.js/css
 │   │   └── faq/                       # → section-page-faq.js/css
-│   ├── parts-sections/                # Individual sections
+│   ├── section-specific/              # Individual sections
 │   │   ├── big-heading/               # → section-big-heading.js/css
 │   │   ├── image-slider/              # → section-image-slider.js/css
 │   │   └── showcase/                  # → section-showcase.js/css
@@ -220,10 +220,10 @@ planning/                              # Development planning documents
 The build system compiles source files from three directories into a complete Shopify theme:
 
 **Source → Output Mapping:**
-1. **Bundle-Global**: `src/bundles/bundle-global/` → `theme-hyspex/assets/global.js` + `.css`
-2. **Shared-Features**: `src/bundles/bundle-shared-features/` → `theme-hyspex/assets/features-shared-all.js` + `.css`
-3. **Page-Specific**: `src/bundles/parts-page-specific/[page]/[name]/` → `theme-hyspex/assets/section-page-[page]-[name].js` + `.css`
-4. **Sections**: `src/bundles/parts-sections/[name]/` → `theme-hyspex/assets/section-[name].js` + `.css`
+1. **Global**: `src/bundles/global/` → `theme-hyspex/assets/global.js` + `.css`
+2. **Shared-Features**: `src/bundles/shared-features/` → `theme-hyspex/assets/features-shared-all.js` + `.css`
+3. **Page-Specific**: `src/bundles/page-specific/[page]/[name]/` → `theme-hyspex/assets/section-page-[page]-[name].js` + `.css`
+4. **Section-Specific**: `src/bundles/section-specific/[name]/` → `theme-hyspex/assets/section-[name].js` + `.css`
 
 **Build Process:**
 - Webpack bundles JS/SCSS from `src/bundles/`
@@ -260,11 +260,11 @@ The build system compiles source files from three directories into a complete Sh
 
 ### Development Workflow Example
 
-1. **Create new section**: `mkdir src/bundles/parts-sections/testimonials`
+1. **Create new section**: `mkdir src/bundles/section-specific/testimonials`
 2. **Add source files**: 
-   - `src/bundles/parts-sections/testimonials/index.js`
-   - `src/bundles/parts-sections/testimonials/index.scss`
-   - `src/bundles/parts-sections/testimonials/sections/testimonials.liquid`
+   - `src/bundles/section-specific/testimonials/index.js`
+   - `src/bundles/section-specific/testimonials/index.scss`
+   - `src/bundles/section-specific/testimonials/sections/testimonials.liquid`
 3. **Build theme**: `npm run build:dev` (generates complete theme in `theme-hyspex/`)
 4. **Start server**: `npm run theme:start` (uses `theme-hyspex/` directory)
 5. **Generated output**: 

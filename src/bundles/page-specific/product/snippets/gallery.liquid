@@ -1,0 +1,263 @@
+{%- comment -%}
+  Snippet: snippet-product-gallery.liquid
+  Product image gallery component with enhanced navigation
+  - Displays actual product images in a responsive gallery
+  - Supports thumbnails on the left of the main image
+  - Enhanced with arrow navigation and color swatch integration
+  - Handles cases where no images are available
+  - Fully keyboard accessible with ARIA attributes
+  - Version: 2.0 - Enhanced with ProductGalleryNavigation
+{%- endcomment -%}
+
+{%- liquid
+  assign main_image = product.featured_image | default: product.images.first
+-%}
+
+{% comment %}
+  Load gallery navigation styles and scripts
+  Progressive Enhancement: Styles load immediately in noscript for no-JS users
+{% endcomment %}
+{%- comment -%} Product gallery CSS is now included in the main product bundle loaded in theme.liquid {%- endcomment -%}
+
+{% comment %}
+  Progressive Enhancement: Add no-js class by default, removed by JavaScript
+{% endcomment %}
+<script>
+  // Remove no-js class immediately if JavaScript is enabled
+  document.documentElement.classList.remove('no-js');
+</script>
+
+{% comment %}
+  The outer .product-main__gallery wrapper is in section-product-main.liquid.
+  This snippet outputs the direct children wrapped in our enhanced navigation component.
+{% endcomment %}
+
+{% if product.images.size > 0 %}
+  <product-gallery-navigation
+    data-product-id="{{ product.id }}"
+    data-section-id="{{ section.id }}"
+    class="product-gallery-navigation no-js"
+  >
+    <div
+      class="product-gallery__thumbnails"
+      data-gallery-thumbnails
+      role="tablist"
+      aria-label="{{ 'page-specific.product.gallery_thumbnails' | t | default: 'Product image thumbnails' }}"
+    >
+      {% for image in product.images %}
+        <button
+          class="product-gallery__thumbnail-item {% if image.id == main_image.id %}is-active{% endif %}"
+          data-thumbnail-id="{{ image.id }}"
+          role="tab"
+          aria-selected="{% if image.id == main_image.id %}true{% else %}false{% endif %}"
+          aria-controls="product-image-{{ section.id }}"
+          aria-label="{{ 'page-specific.product.view_image' | t | default: 'View image' }} {{ forloop.index }} {{ 'page-specific.product.of' | t | default: 'of' }} {{ product.images.size }}"
+          tabindex="{% if image.id == main_image.id %}0{% else %}-1{% endif %}"
+        >
+          <img
+            class="product-gallery__thumbnail-image"
+            src="{{ image | image_url: width: 150, height: 150, crop: 'center' }}"
+            alt="{{ image.alt | escape | default: product.title | append: ' - ' | append: 'page-specific.product.thumbnail' | t | default: 'thumbnail' | append: ' ' | append: forloop.index }}"
+            data-main-image-src="{{ image | image_url: width: 800 }}"
+            data-main-image-srcset="{{ image | image_url: width: 400 }} 400w, {{ image | image_url: width: 600 }} 600w, {{ image | image_url: width: 800 }} 800w, {{ image | image_url: width: 1000 }} 1000w"
+            data-image-id="{{ image.id }}"
+            loading="lazy"
+            width="150"
+            height="150"
+          >
+        </button>
+      {% endfor %}
+    </div>
+
+    <div
+      class="product-gallery__main-image-container"
+      data-gallery-main-image-container
+      role="tabpanel"
+      id="product-image-{{ section.id }}"
+      aria-label="{{ 'page-specific.product.main_image' | t | default: 'Main product image' }}"
+      aria-live="polite"
+      aria-busy="false"
+    >
+      {%- comment -%} 
+        Unified Arrow Navigation: Server-side rendered arrows for consistency
+        Only render if multiple images exist to avoid unnecessary elements
+      {%- endcomment -%}
+      {%- if product.images.size > 1 -%}
+        {%- render 'snippet-feature-arrow-navigation', 
+            data_attributes: 'data-gallery-prev',
+            style_wrapper: 'glassmorphism', 
+            position: 'overlay',
+            direction: 'prev'
+        -%}
+        {%- render 'snippet-feature-arrow-navigation', 
+            data_attributes: 'data-gallery-next',
+            style_wrapper: 'glassmorphism', 
+            position: 'overlay',
+            direction: 'next'
+        -%}
+      {%- endif -%}
+      {%- comment -%}
+        Progressive Enhancement: Show all images in no-JS mode for SEO and accessibility
+        JavaScript will handle showing only the active image
+      {%- endcomment -%}
+
+      {%- comment -%} Main featured image - always visible {%- endcomment -%}
+      {%- if main_image -%}
+        <img
+          class="product-gallery__image is-active"
+          id="ProductMainImage-{{ section.id }}"
+          src="{{ main_image | image_url: width: 800 }}"
+          srcset="
+            {{ main_image | image_url: width: 400 }} 400w,
+            {{ main_image | image_url: width: 600 }} 600w,
+            {{ main_image | image_url: width: 800 }} 800w,
+            {{ main_image | image_url: width: 1000 }} 1000w
+          "
+          sizes="(max-width: 767px) 100vw, (min-width: 768px) calc(100% - {{ settings.gallery_thumbnail_width | default: '90px' }} - (var(--pm-gap)/2) )"
+          alt="{{ main_image.alt | escape | default: product.title | append: ' - ' | append: 'page-specific.product.main_image' | t | default: 'main product image' }}"
+          loading="eager"
+          data-main-image
+          data-image-index="0"
+          width="800"
+          height="800"
+        >
+      {%- endif -%}
+
+      {%- comment -%} All other product images - hidden by CSS when JS is enabled {%- endcomment -%}
+      {%- for image in product.images -%}
+        {%- unless image.id == main_image.id -%}
+          <img
+            class="product-gallery__image product-gallery__image--alternate"
+            src="{{ image | image_url: width: 800 }}"
+            srcset="
+              {{ image | image_url: width: 400 }} 400w,
+              {{ image | image_url: width: 600 }} 600w,
+              {{ image | image_url: width: 800 }} 800w,
+              {{ image | image_url: width: 1000 }} 1000w
+            "
+            sizes="(max-width: 767px) 100vw, (min-width: 768px) calc(100% - {{ settings.gallery_thumbnail_width | default: '90px' }} - (var(--pm-gap)/2) )"
+            alt="{{ image.alt | escape | default: product.title | append: ' - ' | append: 'page-specific.product.image' | t | default: 'product image' | append: ' ' | append: forloop.index }}"
+            loading="lazy"
+            data-image-index="{{ forloop.index }}"
+            width="800"
+            height="800"
+          >
+        {%- endunless -%}
+      {%- endfor -%}
+
+      {%- if product.images.size == 0 -%}
+        <div
+          class="product-gallery__placeholder"
+          role="img"
+          aria-label="{{ 'page-specific.product.no_image' | t | default: 'No product image available' }}"
+        >
+          {{ 'product-1' | placeholder_svg_tag: 'product-gallery__placeholder-svg' }}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%}
+      Progressive Enhancement: Basic thumbnail navigation for when JS custom element fails
+      This provides a fallback for older browsers or when the main JS fails to load
+    {%- endcomment -%}
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        // Remove no-js class when JavaScript runs
+        const galleryElement = document.querySelector('product-gallery-navigation');
+        if (galleryElement) {
+          galleryElement.classList.remove('no-js');
+        }
+        const galleryRoot = document.currentScript ? document.currentScript.closest('.product-main__gallery') : null;
+        if (!galleryRoot) return;
+
+        const thumbnailButtons = galleryRoot.querySelectorAll('.product-gallery__thumbnail-item');
+        const mainImageElement = galleryRoot.querySelector('[data-main-image]');
+
+        if (!mainImageElement || thumbnailButtons.length === 0) return;
+
+        function selectThumbnail(button) {
+          const thumb = button.querySelector('.product-gallery__thumbnail-image');
+          const newMainImageSrc = thumb.dataset.mainImageSrc;
+          const newMainImageSrcset = thumb.dataset.mainImageSrcset || '';
+
+          // Update main image
+          mainImageElement.src = newMainImageSrc;
+          mainImageElement.srcset = newMainImageSrcset;
+
+          // Update ARIA attributes and active states
+          thumbnailButtons.forEach((btn) => {
+            btn.classList.remove('is-active');
+            btn.setAttribute('aria-selected', 'false');
+            btn.tabIndex = -1;
+          });
+
+          button.classList.add('is-active');
+          button.setAttribute('aria-selected', 'true');
+          button.tabIndex = 0;
+        }
+
+        // Click handler
+        thumbnailButtons.forEach((button) => {
+          button.addEventListener('click', function (event) {
+            event.preventDefault();
+            selectThumbnail(this);
+          });
+        });
+
+        // Keyboard navigation
+        thumbnailButtons.forEach((button, index) => {
+          button.addEventListener('keydown', function (event) {
+            let targetIndex = index;
+
+            switch (event.key) {
+              case 'ArrowLeft':
+              case 'ArrowUp':
+                event.preventDefault();
+                targetIndex = index > 0 ? index - 1 : thumbnailButtons.length - 1;
+                break;
+
+              case 'ArrowRight':
+              case 'ArrowDown':
+                event.preventDefault();
+                targetIndex = index < thumbnailButtons.length - 1 ? index + 1 : 0;
+                break;
+
+              case 'Home':
+                event.preventDefault();
+                targetIndex = 0;
+                break;
+
+              case 'End':
+                event.preventDefault();
+                targetIndex = thumbnailButtons.length - 1;
+                break;
+
+              case 'Enter':
+              case ' ':
+                event.preventDefault();
+                selectThumbnail(this);
+                return;
+
+              default:
+                return;
+            }
+
+            // Focus and select the target thumbnail
+            const targetButton = thumbnailButtons[targetIndex];
+            targetButton.focus();
+            selectThumbnail(targetButton);
+          });
+        });
+      });
+    </script>
+  </product-gallery-navigation>
+
+{% else %}
+  <div
+    class="product-gallery__placeholder"
+    role="img"
+    aria-label="{{ 'page-specific.product.no_image' | t | default: 'No product image available' }}"
+  >
+    {{ 'product-1' | placeholder_svg_tag: 'product-gallery__placeholder-svg' }}
+  </div>
+{% endif %}
