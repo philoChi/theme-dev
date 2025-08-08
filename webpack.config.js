@@ -5,7 +5,6 @@ const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const LocaleMergePlugin = require('./webpack/plugins/locale-merge-plugin');
 const BundleLocaleMergePlugin = require('./webpack/plugins/bundle-locale-merge-plugin');
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
@@ -226,12 +225,11 @@ module.exports = {
       }
     },
     
-    // Merge bundle-specific locale files with central locales and product configuration
+    // Merge bundle-specific locale files with product configuration
     new BundleLocaleMergePlugin({
       bundleBasePath: 'src/bundles',
-      centralLocalesPath: 'src/localization-common/locales',
-      configPath: 'src/localization-common/products-metadata/product-info.de.json',
-      metadataPath: 'src/localization-common/products-metadata/locale-metadata.json',
+      configPath: 'src/config/product-info.de.json',
+      metadataPath: 'src/config/locale-metadata.json',
       outputPath: 'theme-hyspex/locales'
     }),
     

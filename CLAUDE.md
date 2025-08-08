@@ -195,9 +195,9 @@ src/                                   # Source files for webpack compilation
 │   │   ├── layout/                    # theme.liquid and other layouts
 │   │   └── snippets/                  # Core theme snippets
 │   └── utils/                         # Utility snippets and helpers
-├── localization-common/               # Localization files
-│   ├── locales/                       # Locale JSON files (de.json, fr.json, etc.)
-│   └── products-metadata/             # Product metadata configuration
+├── config/                            # Product configuration files
+│   ├── product-info.de.json           # Product metadata configuration
+│   └── locale-metadata.json           # Locale metadata
 └── theme-hyspex/                      # Theme-specific configurations
     ├── config/                        # settings_schema.json, settings_data.json
     ├── groups/                        # Section groups (JSON)
@@ -228,7 +228,8 @@ The build system compiles source files from three directories into a complete Sh
 **Build Process:**
 - Webpack bundles JS/SCSS from `src/bundles/`
 - Copies liquid templates with proper prefixes (section-, snippet-feature-, etc.)
-- Merges localization from `src/localization-common/`
+- Merges distributed localization from individual bundles
+- Merges product configuration from `src/config/`
 - Copies theme config from `src/theme-hyspex/`
 - Outputs complete Shopify theme to `theme-hyspex/` (git-ignored)
 

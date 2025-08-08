@@ -2,7 +2,7 @@
  * Bundle Locale Merge Plugin
  * 
  * This webpack plugin collects locale files from individual bundle directories and merges them
- * with central locale files and product configuration, maintaining Shopify's locale file structure.
+ * with product configuration, maintaining Shopify's locale file structure.
  */
 
 const fs = require('fs');
@@ -13,9 +13,8 @@ class BundleLocaleMergePlugin {
   constructor(options = {}) {
     this.options = {
       bundleBasePath: 'src/bundles',
-      centralLocalesPath: 'src/localization-common/locales',
-      configPath: 'src/localization-common/products-metadata/product-info.de.json',
-      metadataPath: 'src/localization-common/products-metadata/locale-metadata.json',
+      configPath: 'src/config/product-info.de.json',
+      metadataPath: 'src/config/locale-metadata.json',
       outputPath: 'theme-hyspex/locales',
       ...options
     };
@@ -31,7 +30,6 @@ class BundleLocaleMergePlugin {
 
   async mergeAllLocales(context) {
     const bundleBasePath = path.resolve(context, this.options.bundleBasePath);
-    const centralLocalesPath = path.resolve(context, this.options.centralLocalesPath);
     const configPath = path.resolve(context, this.options.configPath);
     const metadataPath = path.resolve(context, this.options.metadataPath);
     const outputPath = path.resolve(context, this.options.outputPath);
@@ -45,9 +43,6 @@ class BundleLocaleMergePlugin {
       // Find all bundle locale files
       const bundleLocaleFiles = this.findBundleLocaleFiles(bundleBasePath);
 
-      // Read central locale files
-      const centralLocales = this.readCentralLocales(centralLocalesPath);
-
       // Read product configuration and metadata
       const configData = this.readJsonFile(configPath);
       const metadataData = this.readJsonFile(metadataPath);
@@ -58,7 +53,6 @@ class BundleLocaleMergePlugin {
       for (const localeName of localeNames) {
         await this.processLocale(localeName, {
           bundleLocaleFiles,
-          centralLocales,
           configData,
           metadataData,
           outputPath
@@ -78,31 +72,7 @@ class BundleLocaleMergePlugin {
     return glob.sync(localePattern);
   }
 
-  readCentralLocales(centralPath) {
-    const locales = {};
-    try {
-      // Read de.default.json
-      const defaultPath = path.join(centralPath, 'de.default.json');
-      if (fs.existsSync(defaultPath)) {
-        const content = fs.readFileSync(defaultPath, 'utf8');
-        const parsed = JSON.parse(content);
-        
-        locales['de.default.json'] = parsed;
-      }
 
-      // Read de.default.schema.json
-      const schemaPath = path.join(centralPath, 'de.default.schema.json');
-      if (fs.existsSync(schemaPath)) {
-        const content = fs.readFileSync(schemaPath, 'utf8');
-        const parsed = JSON.parse(content);
-        
-        locales['de.default.schema.json'] = parsed;
-      }
-    } catch (error) {
-      console.warn('Warning: Could not read central locale files:', error.message);
-    }
-    return locales;
-  }
 
   readJsonFile(filePath) {
     try {
@@ -118,9 +88,9 @@ class BundleLocaleMergePlugin {
     return {};
   }
 
-  async processLocale(localeName, { bundleLocaleFiles, centralLocales, configData, metadataData, outputPath }) {
-    // Start with central locale as base
-    let mergedLocale = centralLocales[localeName] || {};
+  async processLocale(localeName, { bundleLocaleFiles, configData, metadataData, outputPath }) {
+    // Start with empty object as base
+    let mergedLocale = {};
     
     // Merge bundle-specific locales
     const relevantBundleFiles = bundleLocaleFiles.filter(file => path.basename(file) === localeName);
