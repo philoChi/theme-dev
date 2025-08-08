@@ -39,12 +39,11 @@ function generateEntriesAutomatically() {
   }
   
   // 3. Page-specific sections
-  glob.sync(`${srcPath}/parts-page-specific/*/*/`).forEach(dir => {
+  glob.sync(`${srcPath}/parts-page-specific/*/`).forEach(dir => {
     const indexFiles = findIndexFiles(dir);
     if (indexFiles.length > 0) {
-      const dirName = path.basename(dir);
-      const pageName = path.basename(path.dirname(dir));
-      entries[`section-page-${pageName}-${dirName}`] = indexFiles;
+      const pageName = path.basename(dir);
+      entries[`section-page-${pageName}`] = indexFiles;
     }
   });
   
@@ -293,7 +292,7 @@ module.exports = {
         },
         // Parts-page-specific templates with section-page- prefix
         {
-          from: 'src/bundles/parts-page-specific/*/*/sections/*.liquid',
+          from: 'src/bundles/parts-page-specific/*/sections/*.liquid',
           to: ({ absoluteFilename }) => {
             const filename = path.basename(absoluteFilename, '.liquid');
             const relativePath = path.relative(path.resolve(__dirname, 'src/bundles/parts-page-specific'), absoluteFilename);
@@ -388,16 +387,15 @@ module.exports = {
           },
           noErrorOnMissing: true
         },
-        // Parts-page-specific snippets with snippet-section-page-<page>-<component>- prefix
+        // Parts-page-specific snippets with snippet-section-page-<page>- prefix
         {
-          from: 'src/bundles/parts-page-specific/*/*/snippets/*.liquid',
+          from: 'src/bundles/parts-page-specific/*/snippets/*.liquid',
           to: ({ absoluteFilename }) => {
             const filename = path.basename(absoluteFilename, '.liquid');
             const relativePath = path.relative(path.resolve(__dirname, 'src/bundles/parts-page-specific'), absoluteFilename);
             const pathParts = relativePath.split(path.sep);
             const pageDir = pathParts[0]; // Extract page name (e.g., "faq")
-            const componentDir = pathParts[1]; // Extract component name (e.g., "main")
-            return `../snippets/snippet-section-page-${pageDir}-${componentDir}-${filename}.liquid`;
+            return `../snippets/snippet-section-page-${pageDir}-${filename}.liquid`;
           },
           noErrorOnMissing: true
         },

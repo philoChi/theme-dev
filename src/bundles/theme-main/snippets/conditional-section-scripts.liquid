@@ -27,26 +27,26 @@
 {% elsif template contains 'product' %}
   {%- comment -%} Product Page: Load page-specific product scripts {%- endcomment -%}
   {% if shop.domain contains 'myshopify.com' or request.host contains '127.0.0.1' or request.host contains 'localhost' %}
-    <script src="{{ 'section-page-product-main.js' | asset_url | append: '?v=' | append: cache_buster }}" defer></script>
+    <script src="{{ 'section-page-product.js' | asset_url | append: '?v=' | append: cache_buster }}" defer></script>
   {% else %}
-    <script src="{{ 'section-page-product-main.js' | asset_url }}" defer></script>
+    <script src="{{ 'section-page-product.js' | asset_url }}" defer></script>
   {% endif %}
 
 {% elsif template contains 'collection' or template contains 'search' %}
   {%- comment -%} Collection & Search Pages: Load page-specific collection scripts {%- endcomment -%}
   {% if shop.domain contains 'myshopify.com' or request.host contains '127.0.0.1' or request.host contains 'localhost' %}
-    <script src="{{ 'section-page-collections-main.js' | asset_url | append: '?v=' | append: cache_buster }}" defer></script>
+    <script src="{{ 'section-page-collections.js' | asset_url | append: '?v=' | append: cache_buster }}" defer></script>
   {% else %}
-    <script src="{{ 'section-page-collections-main.js' | asset_url }}" defer></script>
+    <script src="{{ 'section-page-collections.js' | asset_url }}" defer></script>
   {% endif %}
 
 {% elsif template contains 'page' %}
   {%- comment -%} Other Pages: Load page-specific scripts based on template suffix {%- endcomment -%}
   {% if template contains 'page.faq' %}
     {% if shop.domain contains 'myshopify.com' or request.host contains '127.0.0.1' or request.host contains 'localhost' %}
-      <script src="{{ 'section-page-faq-main.js' | asset_url | append: '?v=' | append: cache_buster }}" defer></script>
+      <script src="{{ 'section-page-faq.js' | asset_url | append: '?v=' | append: cache_buster }}" defer></script>
     {% else %}
-      <script src="{{ 'section-page-faq-main.js' | asset_url }}" defer></script>
+      <script src="{{ 'section-page-faq.js' | asset_url }}" defer></script>
     {% endif %}
   {% endif %}
   {% if template contains 'page.account' %}

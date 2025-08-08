@@ -167,9 +167,9 @@ src/                                   # Source files for webpack compilation
 │   │   ├── notification-system/
 │   │   └── index.js/scss              # Features bundle entry points
 │   ├── parts-page-specific/           # Page-specific sections
-│   │   ├── collections/main/          # → section-page-collections-main.js/css
-│   │   ├── product/main/              # → section-page-product-main.js/css
-│   │   └── faq/main/                  # → section-page-faq-main.js/css
+│   │   ├── collections/               # → section-page-collections.js/css
+│   │   ├── product/                   # → section-page-product.js/css
+│   │   └── faq/                       # → section-page-faq.js/css
 │   ├── parts-sections/                # Individual sections
 │   │   ├── big-heading/               # → section-big-heading.js/css
 │   │   ├── image-slider/              # → section-image-slider.js/css

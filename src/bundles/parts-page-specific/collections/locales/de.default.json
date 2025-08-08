@@ -25,6 +25,13 @@
       "pagination_label": "Produktnavigation",
       "all_loaded": "Alle Produkte geladen"
     },
+    "filtering": {
+      "active_filters": "Aktive Filter",
+      "clear_all": "Alle löschen",
+      "filter_by": "Filtern nach",
+      "no_filters": "Keine Filter angewendet",
+      "filter_help_text": "Wählen Sie Filteroptionen"
+    },
     "errors": {
       "network_error": "Netzwerkfehler. Bitte prüfe deine Verbindung und versuche es erneut.",
       "timeout_error": "Zeitüberschreitung. Bitte versuche es erneut.",

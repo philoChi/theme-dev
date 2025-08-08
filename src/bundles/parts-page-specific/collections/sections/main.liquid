@@ -63,7 +63,7 @@
 >
   <div class="collection-page__container">
     {%- # Header - Collection or Search -%}
-    {% render 'snippet-section-page-collections-main-header',
+    {% render 'snippet-section-page-collections-header',
       is_search: is_search_context,
       collection: collection,
       search: search,
@@ -73,7 +73,7 @@
 
     {%- # Toolbar (filters and sorting) - Show only if we have results -%}
     {%- if show_toolbar -%}
-      {% render 'snippet-section-page-collections-main-toolbar',
+      {% render 'snippet-section-page-collections-toolbar',
         is_search: is_search_context,
         section_id: section.id,
         settings: section.settings
@@ -82,7 +82,7 @@
 
     {%- # Active Filters Display -%}
     {%- if show_toolbar -%}
-      {% render 'snippet-section-page-collections-main-active-filters',
+      {% render 'snippet-section-page-collections-active-filters',
         collection: collection,
         show_clear_all: true
       %}
@@ -92,7 +92,7 @@
     <div class="collection-page__separator" aria-hidden="true"></div>
 
     {%- # Product Grid -%}
-    {% render 'snippet-section-page-collections-main-grid',
+    {% render 'snippet-section-page-collections-grid',
       is_search: is_search_context,
       collection: collection,
       search: search,

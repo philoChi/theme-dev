@@ -27,27 +27,27 @@
 {% elsif template contains 'product' %}
   {%- comment -%} Product Page: Load page-specific product assets {%- endcomment -%}
   {% if shop.domain contains 'myshopify.com' or request.host contains '127.0.0.1' or request.host contains 'localhost' %}
-    {{ 'section-page-product-main.css' | asset_url | append: '?v=' | append: cache_buster | stylesheet_tag }}
+    {{ 'section-page-product.css' | asset_url | append: '?v=' | append: cache_buster | stylesheet_tag }}
   {% else %}
-    {{ 'section-page-product-main.css' | asset_url | stylesheet_tag }}
+    {{ 'section-page-product.css' | asset_url | stylesheet_tag }}
   {% endif %}
 
 {% elsif template contains 'collection' or template contains 'search' %}
   {%- comment -%} Collection & Search Pages: Load page-specific collection assets {%- endcomment -%}
   {% if shop.domain contains 'myshopify.com' or request.host contains '127.0.0.1' or request.host contains 'localhost' %}
-    {{ 'section-page-collections-main.css' | asset_url | append: '?v=' | append: cache_buster | stylesheet_tag }}
+    {{ 'section-page-collections.css' | asset_url | append: '?v=' | append: cache_buster | stylesheet_tag }}
   {% else %}
-    {{ 'section-page-collections-main.css' | asset_url | stylesheet_tag }}
+    {{ 'section-page-collections.css' | asset_url | stylesheet_tag }}
   {% endif %}
 
 {% elsif template contains 'page' %}
   {%- comment -%} Other Pages: Load page-specific assets based on template suffix {%- endcomment -%}
   {% if template contains 'page.faq' %}
     {% if shop.domain contains 'myshopify.com' or request.host contains '127.0.0.1' or request.host contains 'localhost' %}
-      {{ 'section-page-faq-main.css' | asset_url | append: '?v=' | append: cache_buster | stylesheet_tag }}
+      {{ 'section-page-faq.css' | asset_url | append: '?v=' | append: cache_buster | stylesheet_tag }}
       {{ 'section-big-heading.css' | asset_url | append: '?v=' | append: cache_buster | stylesheet_tag }}
     {% else %}
-      {{ 'section-page-faq-main.css' | asset_url | stylesheet_tag }}
+      {{ 'section-page-faq.css' | asset_url | stylesheet_tag }}
       {{ 'section-big-heading.css' | asset_url | stylesheet_tag }}
     {% endif %}
   {% endif %}

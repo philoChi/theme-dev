@@ -37,7 +37,7 @@
       {%- endcomment -%}
       <div class="product-main__gallery-column">
         <div class="product-main__gallery">
-          {% render 'snippet-section-page-product-main-gallery', product: product, section: section %}
+          {% render 'snippet-section-page-product-gallery', product: product, section: section %}
         </div>
       </div>
 
@@ -142,7 +142,7 @@
               endif
             -%}
             {{ features_text }}
-            {% render 'snippet-section-page-product-main-feature-chips', product: product %}
+            {% render 'snippet-section-page-product-feature-chips', product: product %}
           </span>
         </div>
         {%- comment -%} End .product-main__info-card {%- endcomment -%}

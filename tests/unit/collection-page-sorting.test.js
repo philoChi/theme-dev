@@ -9,7 +9,7 @@ const path = require('path');
 
 // Read and evaluate the CollectionPageController
 const controllerCode = fs.readFileSync(
-  path.join(__dirname, '../../assets/section-page-collections-main-collection.js'),
+  path.join(__dirname, '../../assets/section-page-collections.js'),
   'utf8'
 );
 
