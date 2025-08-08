@@ -18,7 +18,7 @@
 
   # Define sorting options
   assign sort_options = 'manual,created-descending,price-ascending,price-descending,best-selling' | split: ','
-  assign sort_labels = 'parts-page-specific.collections.sorting.featured,parts-page-specific.collections.sorting.date_descending,parts-page-specific.collections.sorting.price_ascending,parts-page-specific.collections.sorting.price_descending,parts-page-specific.collections.sorting.best_selling' | split: ','
+  assign sort_labels = 'parts-page-specific.collections.featured,parts-page-specific.collections.date_descending,parts-page-specific.collections.price_ascending,parts-page-specific.collections.price_descending,parts-page-specific.collections.best_selling' | split: ','
   
   # Get current sort from URL parameters
   assign current_sort = request.get.sort_by | default: settings.default_sort_order
@@ -33,7 +33,7 @@
       if settings.custom_filter_label and settings.custom_filter_label != blank
         assign filter_text = settings.custom_filter_label
       else
-        assign filter_text = 'parts-page-specific.collections.filtering.filters' | t
+        assign filter_text = 'parts-page-specific.collections.filters' | t
       endif
     -%}
     {%- capture filter_button_content -%}
@@ -43,7 +43,7 @@
         data-drawer-trigger="filter"
         aria-expanded="false"
         aria-controls="filter-drawer"
-        aria-label="{{ 'parts-page-specific.collections.filtering.show_filters' | t }}"
+        aria-label="{{ 'parts-page-specific.collections.show_filters' | t }}"
       >
         <span>{{ filter_text }}</span>
         <span class="icon icon-filter collection-toolbar__filter-icon" aria-hidden="true"></span>
@@ -62,9 +62,9 @@
   {%- if settings.enable_sorting -%}
     <div class="collection-page__sort">
       <label for="sort-by-{{ section_id }}" class="visually-hidden">
-        {{ 'parts-page-specific.collections.sorting.sort_by_label' | t }}
+        {{ 'parts-page-specific.collections.sort_by_label' | t }}
       </label>
-      <span class="collection-page__sort-label"> {{ 'parts-page-specific.collections.sorting.sort_by_label' | t }}: </span>
+      <span class="collection-page__sort-label"> {{ 'parts-page-specific.collections.sort_by_label' | t }}: </span>
       <div class="collection-page__sort-container">
         {%- capture sort_button_content -%}
           <div class="collection-page__sort-wrapper" data-sort-dropdown tabindex="0" role="button" aria-expanded="false" aria-haspopup="listbox">
@@ -118,7 +118,7 @@
         </div>
       </div>
       <div id="sort-help-{{ section_id }}" class="visually-hidden">
-        {{ 'parts-page-specific.collections.sorting.sort_help_text' | t }}
+        {{ 'parts-page-specific.collections.sort_help_text' | t }}
       </div>
     </div>
   {%- endif -%}

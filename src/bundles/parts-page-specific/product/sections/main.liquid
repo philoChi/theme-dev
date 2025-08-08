@@ -62,7 +62,7 @@
               %}
               {% render 'snippet-feature-product-info-star-rating', product: product %}
             </div>
-            <small class="product-main__tax-note">{{ 'parts-page-specific.product.product.tax_note' | t }}</small>
+            <small class="product-main__tax-note">{{ 'parts-page-specific.product.tax_note' | t }}</small>
           </div>
 
           <div class="product-main__variant-selector">
@@ -94,18 +94,18 @@
 
           {%- comment -%} Stock and Shipping Information {%- endcomment -%}
           <div class="product-main__stock-shipping-info">
-            {%- assign available_note = 'parts-page-specific.product.product.stock_available' | t: count: '2-3' | default: 'Auf Lager' -%}
-            {%- assign in_stock_note = 'parts-page-specific.product.product.stock_delivery_time'
+            {%- assign available_note = 'parts-page-specific.product.stock_available' | t: count: '2-3' | default: 'Auf Lager' -%}
+            {%- assign in_stock_note = 'parts-page-specific.product.stock_delivery_time'
               | t: count: '2-3'
               | default: '(in etwa 2-3 Werktagen bei Dir)'
             -%}
-            {%- assign delivery_note = 'parts-page-specific.product.product.shipping_note' | t | default: 'Versand mit DHL' -%}
+            {%- assign delivery_note = 'parts-page-specific.product.shipping_note' | t | default: 'Versand mit DHL' -%}
             {% render 'snippet-feature-highlight-note', first_text: available_note, second_text: in_stock_note %}
             {% render 'snippet-feature-highlight-note', first_text: delivery_note %}
           </div>
 
           {%- comment -%} Add-to-cart button {%- endcomment -%}
-          {%- assign add_to_cart_text = 'parts-page-specific.product.product.add_to_cart' | t -%}
+          {%- assign add_to_cart_text = 'parts-page-specific.product.add_to_cart' | t -%}
           {% render 'snippet-feature-button',
             size: 'large',
             button_text: add_to_cart_text,
@@ -130,7 +130,7 @@
 
               # Use dynamic product type and determiner in heading with translation variables
               if tag_product_type != blank and tag_determiner != blank
-                assign features_text = 'parts-page-specific.product.product.features_heading' | t: determiner: tag_determiner, product_type: tag_product_type | default: 'What makes this Product special ?'
+                assign features_text = 'parts-page-specific.product.features_heading' | t: determiner: tag_determiner, product_type: tag_product_type | default: 'What makes this Product special ?'
                 if features_text == 'What makes this Product special ?'
                   assign features_text = features_text | replace: 'hoodie', tag_product_type
                 endif
@@ -138,7 +138,7 @@
                 # Default to "Product" if no tag configuration found
                 assign default_determiner = 'product_configurations.default.determiner' | t
                 assign default_product_type = 'product_configurations.default.product_type' | t
-                assign features_text = 'parts-page-specific.product.product.features_heading' | t: determiner: default_determiner, product_type: default_product_type | default: 'What makes this Product special ?'
+                assign features_text = 'parts-page-specific.product.features_heading' | t: determiner: default_determiner, product_type: default_product_type | default: 'What makes this Product special ?'
               endif
             -%}
             {{ features_text }}
@@ -160,7 +160,7 @@
           -%}
 
           {%- if properties_content != blank -%}
-            {%- assign text_properties = 'parts-page-specific.product.product.properties' | t | default: 'Produkteigenschaften' -%}
+            {%- assign text_properties = 'parts-page-specific.product.properties' | t | default: 'Produkteigenschaften' -%}
             {% render 'snippet-feature-dropdown',
               trigger_text: text_properties,
               panel_id: 'dropdown-nav-text_properties',
@@ -170,7 +170,7 @@
           {%- endif -%}
 
           {%- if product.description != blank -%}
-            {%- assign text_description = 'parts-page-specific.product.product.description' | t | default: 'Produktbeschreibung' -%}
+            {%- assign text_description = 'parts-page-specific.product.description' | t | default: 'Produktbeschreibung' -%}
             {% render 'snippet-feature-dropdown',
               trigger_text: text_description,
               panel_id: 'dropdown-nav-text_description',

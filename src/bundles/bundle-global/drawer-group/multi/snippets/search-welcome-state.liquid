@@ -8,7 +8,7 @@
   - Clear call-to-action to start searching
 {%- endcomment -%}
 
-<div class="search-welcome-content" role="region" aria-label="{{ 'global.drawer-group.multi.search.welcome' | t | default: 'Search for products' }}">
+<div class="search-welcome-content" role="region" aria-label="{{ 'global.drawer-group.search.welcome' | t | default: 'Search for products' }}">
   <div class="search-welcome-header">
     <div class="search-welcome-icon">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="icon-search-welcome" aria-hidden="true">
@@ -16,13 +16,13 @@
       </svg>
     </div>
     <div class="search-welcome-text">
-      <h3 class="search-welcome-title">{{ 'global.drawer-group.multi.search.welcome_title' | t | default: 'Was suchst du?' }}</h3>
-      <p class="search-welcome-subtitle">{{ 'global.drawer-group.multi.search.welcome_subtitle' | t | default: 'Finde deine Lieblingsprodukte schnell und einfach' }}</p>
+      <h3 class="search-welcome-title">{{ 'global.drawer-group.search.welcome_title' | t | default: 'Was suchst du?' }}</h3>
+      <p class="search-welcome-subtitle">{{ 'global.drawer-group.search.welcome_subtitle' | t | default: 'Finde deine Lieblingsprodukte schnell und einfach' }}</p>
     </div>
   </div>
 
   <div class="search-welcome-categories">
-    <p class="search-welcome-categories-title">{{ 'global.drawer-group.multi.search.popular_categories' | t | default: 'Beliebte Kategorien' }}</p>
+    <p class="search-welcome-categories-title">{{ 'global.drawer-group.search.popular_categories' | t | default: 'Beliebte Kategorien' }}</p>
     <div class="search-welcome-categories-grid">
       {% for link in linklists.main-menu.links limit: 6 %}
         {% if link.title != blank %}
@@ -46,7 +46,7 @@
         </svg>
       </div>
       <div class="search-welcome-tip-text">
-        <p>{{ 'global.drawer-group.multi.search.search_tip' | t | default: 'Verwende Begriffe wie "T-Shirt", "Hoodie" oder "Schwarz"' }}</p>
+        <p>{{ 'global.drawer-group.search.search_tip' | t | default: 'Verwende Begriffe wie "T-Shirt", "Hoodie" oder "Schwarz"' }}</p>
       </div>
     </div>
   </div>

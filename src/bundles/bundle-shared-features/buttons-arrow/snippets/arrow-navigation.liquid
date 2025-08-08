@@ -49,9 +49,9 @@
 
   # Determine appropriate ARIA label with localization
   if direction == 'prev'
-    assign aria_label = 'shared-features.buttons-arrow.navigation.previous' | t | default: 'Previous'
+    assign aria_label = 'shared-features.buttons-arrow.previous' | t | default: 'Previous'
   else
-    assign aria_label = 'shared-features.buttons-arrow.navigation.next' | t | default: 'Next'
+    assign aria_label = 'shared-features.buttons-arrow.next' | t | default: 'Next'
   endif
 
   # Build comprehensive data attributes

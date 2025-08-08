@@ -19,7 +19,7 @@
   <div class="active-filters" data-active-filters>
     <div class="active-filters__container">
       <div class="active-filters__header">
-        <span class="active-filters__label">{{ 'parts-page-specific.collections.filtering.active_filters' | t }}:</span>
+        <span class="active-filters__label">{{ 'parts-page-specific.collections.active_filters' | t }}:</span>
       </div>
       <div class="active-filters__chips">
         {%- if collection and collection.filters -%}
@@ -32,7 +32,7 @@
                   data-filter-chip
                   data-filter-param="{{ filter_value.param_name }}"
                   data-filter-value="{{ filter_value.value }}"
-                  aria-label="{{ 'parts-page-specific.collections.filtering.remove_filter' | t }}: {{ filter_value.label }}"
+                  aria-label="{{ 'parts-page-specific.collections.remove_filter' | t }}: {{ filter_value.label }}"
                 >
                   <span class="active-filter-chip__text">{{ filter_value.label }}</span>
                   <span class="active-filter-chip__remove" aria-hidden="true">×</span>
@@ -43,8 +43,8 @@
         {%- endif -%}
       </div>
 
-      {%- assign clear_all_text = 'parts-page-specific.collections.filtering.clear_all' | t -%}
-      {%- assign clear_all_aria = 'parts-page-specific.collections.filtering.clear_all_aria' | t -%}
+      {%- assign clear_all_text = 'parts-page-specific.collections.clear_all' | t -%}
+      {%- assign clear_all_aria = 'parts-page-specific.collections.clear_all_aria' | t -%}
       {%- assign clear_all_url = collection.url | append: '?sort_by=' | append: collection.sort_by -%}
       <a 
         href="{{ clear_all_url }}"

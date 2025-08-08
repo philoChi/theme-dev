@@ -1,44 +1,34 @@
 {
   "parts-page-specific": {
     "collections": {
-      "general": {
-        "items_with_count": {
-          "one": "{{ count }} Artikel",
-          "other": "{{ count }} Artikel"
-        },
-        "no_products_title": "Keine Produkte gefunden",
-        "no_products_text": "Leider wurden keine Produkte in dieser Kollektion gefunden.",
-        "continue_shopping": "Weiter einkaufen",
-        "product_grid": "Produktraster"
+      "items_with_count": {
+        "one": "{{ count }} Artikel",
+        "other": "{{ count }} Artikel"
       },
-      "sorting": {
-        "sort_by_label": "Sortieren nach",
-        "featured": "Empfohlen",
-        "date_descending": "Neueste zuerst",
-        "price_ascending": "Preis aufsteigend",
-        "price_descending": "Preis absteigend",
-        "best_selling": "Bestseller",
-        "sort_help_text": "Wählen Sie eine Sortieroption"
-      },
-      "pagination": {
-        "load_more": "Mehr laden",
-        "showing": "Zeige {{ current }} von {{ total }} Produkten",
-        "pagination_label": "Produktnavigation",
-        "all_loaded": "Alle Produkte geladen"
-      },
-      "filtering": {
-        "active_filters": "Aktive Filter",
-        "clear_all": "Alle löschen",
-        "filter_by": "Filtern nach",
-        "no_filters": "Keine Filter angewendet",
-        "filter_help_text": "Wählen Sie Filteroptionen"
-      },
-      "errors": {
-        "network_error": "Netzwerkfehler. Bitte prüfe deine Verbindung und versuche es erneut.",
-        "timeout_error": "Zeitüberschreitung. Bitte versuche es erneut.",
-        "load_error": "Fehler beim Laden. Bitte aktualisiere die Seite.",
-        "filter_error": "Filter sind vorübergehend nicht verfügbar. Du kannst trotzdem Produkte durchstöbern."
-      }
+      "no_products_title": "Keine Produkte gefunden",
+      "no_products_text": "Leider wurden keine Produkte in dieser Kollektion gefunden.",
+      "continue_shopping": "Weiter einkaufen",
+      "product_grid": "Produktraster",
+      "sort_by_label": "Sortieren nach",
+      "featured": "Empfohlen",
+      "date_descending": "Neueste zuerst",
+      "price_ascending": "Preis aufsteigend",
+      "price_descending": "Preis absteigend",
+      "best_selling": "Bestseller",
+      "sort_help_text": "Wählen Sie eine Sortieroption",
+      "load_more": "Mehr laden",
+      "showing": "Zeige {{ current }} von {{ total }} Produkten",
+      "pagination_label": "Produktnavigation",
+      "all_loaded": "Alle Produkte geladen",
+      "active_filters": "Aktive Filter",
+      "clear_all": "Alle löschen",
+      "filter_by": "Filtern nach",
+      "no_filters": "Keine Filter angewendet",
+      "filter_help_text": "Wählen Sie Filteroptionen",
+      "network_error": "Netzwerkfehler. Bitte prüfe deine Verbindung und versuche es erneut.",
+      "timeout_error": "Zeitüberschreitung. Bitte versuche es erneut.",
+      "load_error": "Fehler beim Laden. Bitte aktualisiere die Seite.",
+      "filter_error": "Filter sind vorübergehend nicht verfügbar. Du kannst trotzdem Produkte durchstöbern."
     }
   }
 }
