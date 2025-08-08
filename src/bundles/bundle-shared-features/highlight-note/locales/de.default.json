@@ -1,7 +1,9 @@
 {
-  "highlight_note": {
-    "accessibility": {
-      "note": "Hinweis"
+  "shared-features": {
+    "highlight-note": {
+      "accessibility": {
+        "note": "Hinweis"
+      }
     }
   }
 }

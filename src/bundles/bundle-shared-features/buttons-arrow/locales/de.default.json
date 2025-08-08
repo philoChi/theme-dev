@@ -1,8 +1,10 @@
 {
-  "buttons_arrow": {
-    "navigation": {
-      "previous": "Zurück",
-      "next": "Weiter"
+  "shared-features": {
+    "buttons-arrow": {
+      "navigation": {
+        "previous": "Zurück",
+        "next": "Weiter"
+      }
     }
   }
 }

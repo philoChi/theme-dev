@@ -42,7 +42,7 @@
       class="product-gallery__thumbnails"
       data-gallery-thumbnails
       role="tablist"
-      aria-label="{{ 'products.product.gallery_thumbnails' | t | default: 'Product image thumbnails' }}"
+      aria-label="{{ 'parts-page-specific.product.product.gallery_thumbnails' | t | default: 'Product image thumbnails' }}"
     >
       {% for image in product.images %}
         <button
@@ -51,13 +51,13 @@
           role="tab"
           aria-selected="{% if image.id == main_image.id %}true{% else %}false{% endif %}"
           aria-controls="product-image-{{ section.id }}"
-          aria-label="{{ 'products.product.view_image' | t | default: 'View image' }} {{ forloop.index }} {{ 'products.product.of' | t | default: 'of' }} {{ product.images.size }}"
+          aria-label="{{ 'parts-page-specific.product.product.view_image' | t | default: 'View image' }} {{ forloop.index }} {{ 'parts-page-specific.product.product.of' | t | default: 'of' }} {{ product.images.size }}"
           tabindex="{% if image.id == main_image.id %}0{% else %}-1{% endif %}"
         >
           <img
             class="product-gallery__thumbnail-image"
             src="{{ image | image_url: width: 150, height: 150, crop: 'center' }}"
-            alt="{{ image.alt | escape | default: product.title | append: ' - ' | append: 'products.product.thumbnail' | t | default: 'thumbnail' | append: ' ' | append: forloop.index }}"
+            alt="{{ image.alt | escape | default: product.title | append: ' - ' | append: 'parts-page-specific.product.product.thumbnail' | t | default: 'thumbnail' | append: ' ' | append: forloop.index }}"
             data-main-image-src="{{ image | image_url: width: 800 }}"
             data-main-image-srcset="{{ image | image_url: width: 400 }} 400w, {{ image | image_url: width: 600 }} 600w, {{ image | image_url: width: 800 }} 800w, {{ image | image_url: width: 1000 }} 1000w"
             data-image-id="{{ image.id }}"
@@ -74,7 +74,7 @@
       data-gallery-main-image-container
       role="tabpanel"
       id="product-image-{{ section.id }}"
-      aria-label="{{ 'products.product.main_image' | t | default: 'Main product image' }}"
+      aria-label="{{ 'parts-page-specific.product.product.main_image' | t | default: 'Main product image' }}"
       aria-live="polite"
       aria-busy="false"
     >
@@ -114,7 +114,7 @@
             {{ main_image | image_url: width: 1000 }} 1000w
           "
           sizes="(max-width: 767px) 100vw, (min-width: 768px) calc(100% - {{ settings.gallery_thumbnail_width | default: '90px' }} - (var(--pm-gap)/2) )"
-          alt="{{ main_image.alt | escape | default: product.title | append: ' - ' | append: 'products.product.main_image' | t | default: 'main product image' }}"
+          alt="{{ main_image.alt | escape | default: product.title | append: ' - ' | append: 'parts-page-specific.product.product.main_image' | t | default: 'main product image' }}"
           loading="eager"
           data-main-image
           data-image-index="0"
@@ -136,7 +136,7 @@
               {{ image | image_url: width: 1000 }} 1000w
             "
             sizes="(max-width: 767px) 100vw, (min-width: 768px) calc(100% - {{ settings.gallery_thumbnail_width | default: '90px' }} - (var(--pm-gap)/2) )"
-            alt="{{ image.alt | escape | default: product.title | append: ' - ' | append: 'products.product.image' | t | default: 'product image' | append: ' ' | append: forloop.index }}"
+            alt="{{ image.alt | escape | default: product.title | append: ' - ' | append: 'parts-page-specific.product.product.image' | t | default: 'product image' | append: ' ' | append: forloop.index }}"
             loading="lazy"
             data-image-index="{{ forloop.index }}"
             width="800"
@@ -149,7 +149,7 @@
         <div
           class="product-gallery__placeholder"
           role="img"
-          aria-label="{{ 'products.product.no_image' | t | default: 'No product image available' }}"
+          aria-label="{{ 'parts-page-specific.product.product.no_image' | t | default: 'No product image available' }}"
         >
           {{ 'product-1' | placeholder_svg_tag: 'product-gallery__placeholder-svg' }}
         </div>
@@ -256,7 +256,7 @@
   <div
     class="product-gallery__placeholder"
     role="img"
-    aria-label="{{ 'products.product.no_image' | t | default: 'No product image available' }}"
+    aria-label="{{ 'parts-page-specific.product.product.no_image' | t | default: 'No product image available' }}"
   >
     {{ 'product-1' | placeholder_svg_tag: 'product-gallery__placeholder-svg' }}
   </div>

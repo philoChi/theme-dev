@@ -18,12 +18,12 @@
         aria-expanded="false"
         aria-controls="{{ block.id }}"
         aria-describedby="nav-help-{{ block.id }}"
-        aria-label="{{ 'header-group.header.main.open_submenu' | t: menu_name: block.settings.label }}"
+        aria-label="{{ 'global.header-group.header.main.open_submenu' | t: menu_name: block.settings.label }}"
         {{ block.shopify_attributes }}
       >
         <span>{{ block.settings.label | escape }}</span>
         <span class="sr-only" id="nav-help-{{ block.id }}">
-          {{ 'header-group.header.main.submenu_helper' | t }}
+          {{ 'global.header-group.header.main.submenu_helper' | t }}
         </span>
       </button>
     {%- endcapture -%}

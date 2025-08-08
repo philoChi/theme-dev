@@ -10,7 +10,7 @@
 
 {%- paginate search.results by 50 -%}
   {%- if search.results_count > 0 -%}
-    <ul id="SearchResultsList" class="drawer__items search-results-list" aria-label="{{ 'drawer-group.multi.search.results_count' | t: count: search.results_count, query: search.terms }}" aria-hidden="false" style="display: block !important;">
+    <ul id="SearchResultsList" class="drawer__items search-results-list" aria-label="{{ 'global.drawer-group.multi.search.results_count' | t: count: search.results_count, query: search.terms }}" aria-hidden="false" style="display: block !important;">
       {%- for item in search.results -%}
         {%- if item.object_type == 'product' -%}
           {%- comment -%} Use the existing cart item snippet for consistent rendering {%- endcomment -%}
@@ -25,8 +25,8 @@
     {%- comment -%} Show All Results button - only show if there are more results {%- endcomment -%}
     {%- if search.results_count > 50 -%}
       <div class="search-show-all-container" style="padding: 15px;">
-        {% capture show_all_text %}{{ 'drawer-group.multi.search.show_all_results' | t: count: search.results_count }}{% endcapture %}
-        {% assign show_all_aria = 'drawer-group.multi.search.results_count' | t: count: search.results_count, query: search.terms %}
+        {% capture show_all_text %}{{ 'global.drawer-group.multi.search.show_all_results' | t: count: search.results_count }}{% endcapture %}
+        {% assign show_all_aria = 'global.drawer-group.multi.search.results_count' | t: count: search.results_count, query: search.terms %}
         {% render 'snippet-feature-button',
           button_text: show_all_text,
           button_link: routes.search_url | append: '?q=' | append: search.terms | url_encode | append: '&type=product',
@@ -42,10 +42,10 @@
       <div style="text-align: center; padding: 40px 20px;">
         <div class="search-empty-icon" style="font-size: 48px; opacity: 0.5; margin-bottom: 16px;">🔍</div>
         <h3 style="margin-bottom: 12px; color: var(--color-text, #000); font-size: 18px;">
-          {{ 'drawer-group.multi.search.no_results' | t: query: search.terms }}
+          {{ 'global.drawer-group.multi.search.no_results' | t: query: search.terms }}
         </h3>
         <p style="color: var(--color-text-secondary, #666); margin-bottom: 20px; font-size: 14px;">
-          {{ 'drawer-group.multi.search.suggestions_title' | t }}
+          {{ 'global.drawer-group.multi.search.suggestions_title' | t }}
         </p>
       </div>
     </div>

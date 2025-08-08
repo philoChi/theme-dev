@@ -1,7 +1,9 @@
 {
-  "search_form": {
-    "search": "Suche",
-    "placeholder": "Wonach suchst Du?",
-    "submit": "Suche starten"
+  "shared-features": {
+    "search-form": {
+      "search": "Suche",
+      "placeholder": "Wonach suchst Du?",
+      "submit": "Suche starten"
+    }
   }
 }

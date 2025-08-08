@@ -9,15 +9,15 @@
   class="faq-section"
   data-single-dropdown="{{ section.settings.single_dropdown }}"
   data-enable-direct-links="{{ section.settings.enable_direct_links }}"
-  data-i18n-no-results="{{ 'sections.faq.no_results' | t }}"
-  data-i18n-results-one="{{ 'sections.faq.results_count.one' | t }}"
-  data-i18n-results-other="{{ 'sections.faq.results_count.other' | t }}"
+  data-i18n-no-results="{{ 'parts-page-specific.faq.sections.faq.no_results' | t }}"
+  data-i18n-results-one="{{ 'parts-page-specific.faq.sections.faq.results_count.one' | t }}"
+  data-i18n-results-other="{{ 'parts-page-specific.faq.sections.faq.results_count.other' | t }}"
 >
   <div class="faq-container content-padding">
     {%- if section.settings.show_search -%}
       <div class="faq-section__search" data-faq-search>
         {%- liquid
-          assign search_placeholder_text = 'sections.faq.search_placeholder' | t
+          assign search_placeholder_text = 'parts-page-specific.faq.sections.faq.search_placeholder' | t
         -%}
         {%- render 'snippet-section-page-faq-search-box',
           placeholder: search_placeholder_text,
@@ -53,7 +53,7 @@
         </div>
       {%- else -%}
         <div class="faq-section__empty">
-          <p>{{ 'sections.faq.no_faqs' | t }}</p>
+          <p>{{ 'parts-page-specific.faq.sections.faq.no_faqs' | t }}</p>
         </div>
       {%- endif -%}
     </div>

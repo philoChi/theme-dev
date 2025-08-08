@@ -1,41 +1,43 @@
 {
-  "header-group": {
-    "announcement-bar": {
-      "Heading_1": "Kostenloser Versand ab %{free_shipping_value}"
-    },
-    "header": {
-      "navigation": {
-        "open_menu": "Menu Öffnen",
-        "open_search": "Suche Öffnen",
-        "logo_alt": "Logo",
-        "open_login": "Login",
-        "open_cart": "Navigation öffnen",
-        "mega_menu": {
-          "empty_heading": "Missing"
+  "global": {
+    "header-group": {
+      "announcement-bar": {
+        "Heading_1": "Kostenloser Versand ab %{free_shipping_value}"
+      },
+      "header": {
+        "navigation": {
+          "open_menu": "Menu Öffnen",
+          "open_search": "Suche Öffnen",
+          "logo_alt": "Logo",
+          "open_login": "Login",
+          "open_cart": "Navigation öffnen",
+          "mega_menu": {
+            "empty_heading": "Missing"
+          }
+        },
+        "main": {
+          "header": "Kopfzeile",
+          "main_navigation": "Hauptnavigation",
+          "mega_menu_region": "Mega-Menü Bereich",
+          "menu_categories": "Menü-Kategorien",
+          "featured_promotions": "Beworbene Aktionen",
+          "promo_link": "Aktions-Link für {{ promo_name }}",
+          "menu_actions": "Menü-Aktionen",
+          "view_all_in_category": "Alle in {{ category }} anzeigen",
+          "open_submenu": "Untermenü für {{ menu_name }} öffnen",
+          "submenu_helper": "Untermenü Navigation"
+        },
+        "cart": {
+          "item_count": "{{ count }} {{ count | pluralize: 'Artikel', 'Artikel' }} im Warenkorb",
+          "items_in_cart": "{{ count }} Artikel im Warenkorb",
+          "empty": "Warenkorb ist leer"
         }
       },
-      "main": {
-        "header": "Kopfzeile",
-        "main_navigation": "Hauptnavigation",
-        "mega_menu_region": "Mega-Menü Bereich",
-        "menu_categories": "Menü-Kategorien",
-        "featured_promotions": "Beworbene Aktionen",
-        "promo_link": "Aktions-Link für {{ promo_name }}",
-        "menu_actions": "Menü-Aktionen",
-        "view_all_in_category": "Alle in {{ category }} anzeigen",
-        "open_submenu": "Untermenü für {{ menu_name }} öffnen",
-        "submenu_helper": "Untermenü Navigation"
-      },
-      "cart": {
-        "item_count": "{{ count }} {{ count | pluralize: 'Artikel', 'Artikel' }} im Warenkorb",
-        "items_in_cart": "{{ count }} Artikel im Warenkorb",
-        "empty": "Warenkorb ist leer"
-      }
-    },
-    "general": {
-      "view_all": "Alles anzeigen",
-      "accessibility": {
-        "skip_to_content": "Zum Inhalt springen"
+      "general": {
+        "view_all": "Alles anzeigen",
+        "accessibility": {
+          "skip_to_content": "Zum Inhalt springen"
+        }
       }
     }
   }

@@ -8,7 +8,7 @@
 
 <header class="site-header-fixed-sizes site-header" 
         role="banner" 
-        aria-label="{{ 'header-group.header.main.header' | t }}"
+        aria-label="{{ 'global.header-group.header.main.header' | t }}"
         style="--logo-nav-gap: {{ section.settings.logo_nav_gap }}px;">
   <div class="site-header__inner">
     {%- render 'snippet-section-header-logo',
@@ -33,7 +33,7 @@
 
     <nav class="site-header__nav" 
          role="menubar" 
-         aria-label="{{ 'header-group.header.main.main_navigation' | t }}"
+         aria-label="{{ 'global.header-group.header.main.main_navigation' | t }}"
          data-navigation-menu>
       {%- for block in section.blocks -%}
         {%- render 'snippet-section-header-nav-item', block: block -%}
@@ -45,7 +45,7 @@
 
   <div class="mega-menu-container" 
        role="region" 
-       aria-label="{{ 'header-group.header.main.mega_menu_region' | t }}"
+       aria-label="{{ 'global.header-group.header.main.mega_menu_region' | t }}"
        aria-expanded="false"
        data-mega-menu-container>
     {%- for block in section.blocks -%}

@@ -1,23 +1,27 @@
 {
-  "sections": {
+  "parts-page-specific": {
     "faq": {
-      "no_faqs": "Es sind noch keine FAQs vorhanden.",
-      "search_placeholder": "Suche in den FAQs...",
-      "no_results": "Keine Ergebnisse gefunden für \"{{ query }}\"",
-      "results_count": {
-        "one": "1 Ergebnis gefunden",
-        "other": "{{ count }} Ergebnisse gefunden"
-      }
-    }
-  },
-  "products": {
-    "faq": {
-      "no_faqs": "Es sind noch keine FAQs vorhanden.",
-      "search_placeholder": "Suche in den FAQs...",
-      "no_results": "Keine Ergebnisse gefunden für \"{{ query }}\"",
-      "results_count": {
-        "one": "1 Ergebnis gefunden",
-        "other": "{{ count }} Ergebnisse gefunden"
+      "sections": {
+        "faq": {
+          "no_faqs": "Es sind noch keine FAQs vorhanden.",
+          "search_placeholder": "Suche in den FAQs...",
+          "no_results": "Keine Ergebnisse gefunden für \"{{ query }}\"",
+          "results_count": {
+            "one": "1 Ergebnis gefunden",
+            "other": "{{ count }} Ergebnisse gefunden"
+          }
+        }
+      },
+      "products": {
+        "faq": {
+          "no_faqs": "Es sind noch keine FAQs vorhanden.",
+          "search_placeholder": "Suche in den FAQs...",
+          "no_results": "Keine Ergebnisse gefunden für \"{{ query }}\"",
+          "results_count": {
+            "one": "1 Ergebnis gefunden",
+            "other": "{{ count }} Ergebnisse gefunden"
+          }
+        }
       }
     }
   }

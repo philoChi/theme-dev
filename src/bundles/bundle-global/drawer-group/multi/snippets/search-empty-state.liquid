@@ -10,7 +10,7 @@
 <div
   class="search-empty-content"
   role="status"
-  aria-label="{{ 'drawer-group.multi.search.no_results' | t | default: 'No results found' }}"
+  aria-label="{{ 'global.drawer-group.multi.search.no_results' | t | default: 'No results found' }}"
 >
   <div class="search-empty-icon">
     <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -22,27 +22,27 @@
 
   <div class="search-empty-text">
     <h3 class="search-empty-title" id="search-empty-title">
-      {{ 'drawer-group.multi.search.no_results' | t: query: '' | default: 'No products found' }}
+      {{ 'global.drawer-group.multi.search.no_results' | t: query: '' | default: 'No products found' }}
     </h3>
     <p class="search-empty-message" id="search-empty-query-message">
-      {{ 'drawer-group.multi.search.no_results_html' | t: terms: '' | default: 'Your search did not yield any results.' }}
+      {{ 'global.drawer-group.multi.search.no_results_html' | t: terms: '' | default: 'Your search did not yield any results.' }}
     </p>
 
     <div class="search-empty-suggestions">
       <p class="search-empty-suggestions-title">
-        {{ 'drawer-group.multi.search.suggestions_title' | t | default: 'Try these suggestions:' }}
+        {{ 'global.drawer-group.multi.search.suggestions_title' | t | default: 'Try these suggestions:' }}
       </p>
       <ul class="search-empty-suggestions-list">
-        <li>{{ 'drawer-group.multi.search.suggestion_spelling' | t | default: 'Check your spelling' }}</li>
-        <li>{{ 'drawer-group.multi.search.suggestion_keywords' | t | default: 'Try different keywords' }}</li>
-        <li>{{ 'drawer-group.multi.search.suggestion_shorter' | t | default: 'Use shorter search terms' }}</li>
-        <li>{{ 'drawer-group.multi.search.suggestion_general' | t | default: 'Try more general search terms' }}</li>
+        <li>{{ 'global.drawer-group.multi.search.suggestion_spelling' | t | default: 'Check your spelling' }}</li>
+        <li>{{ 'global.drawer-group.multi.search.suggestion_keywords' | t | default: 'Try different keywords' }}</li>
+        <li>{{ 'global.drawer-group.multi.search.suggestion_shorter' | t | default: 'Use shorter search terms' }}</li>
+        <li>{{ 'global.drawer-group.multi.search.suggestion_general' | t | default: 'Try more general search terms' }}</li>
       </ul>
     </div>
 
     <div class="search-empty-actions">
-      {% assign browse_all_text = 'drawer-group.multi.search.browse_all' | t | default: 'Browse all products' %}
-      {% assign brwose_all_aria_label = 'drawer-group.multi.search.browse_all' | t | default: 'Browse all products' %}
+      {% assign browse_all_text = 'global.drawer-group.multi.search.browse_all' | t | default: 'Browse all products' %}
+      {% assign brwose_all_aria_label = 'global.drawer-group.multi.search.browse_all' | t | default: 'Browse all products' %}
       {% render 'snippet-feature-button',
         button_text: browse_all_text,
         button_link: routes.all_products_collection_url,

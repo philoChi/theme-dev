@@ -31,7 +31,7 @@
         <div
           class="product-showcase__tabs"
           role="tablist"
-          aria-label="{{ 'parts_sections.showcase.sections.product_showcase.tab_navigation' | t }}"
+          aria-label="{{ 'parts-sections.showcase.sections.product_showcase.tab_navigation' | t }}"
         >
           {%- # Primary Tab -%}
           {%- if primary_collection != blank -%}
@@ -160,7 +160,7 @@
                 class="product-showcase__empty-state"
                 role="status"
               >
-                <p>{{ 'parts_sections.showcase.sections.product_showcase.no_products' | t }}</p>
+                <p>{{ 'parts-sections.showcase.sections.product_showcase.no_products' | t }}</p>
               </div>
             {%- endif -%}
           </div>
@@ -198,7 +198,7 @@
                 class="product-showcase__empty-state"
                 role="status"
               >
-                <p>{{ 'parts_sections.showcase.sections.product_showcase.no_products' | t }}</p>
+                <p>{{ 'parts-sections.showcase.sections.product_showcase.no_products' | t }}</p>
               </div>
             {%- endif -%}
           </div>
@@ -240,7 +240,7 @@
                     class="product-showcase__empty-state"
                     role="status"
                   >
-                    <p>{{ 'parts_sections.showcase.sections.product_showcase.no_products' | t }}</p>
+                    <p>{{ 'parts-sections.showcase.sections.product_showcase.no_products' | t }}</p>
                   </div>
                 {%- endif -%}
               </div>
@@ -264,7 +264,7 @@
 
 {% schema %}
 {
-  "name": "t:parts_sections.showcase.sections.product_showcase.name",
+  "name": "t:parts-sections.showcase.sections.product_showcase.name",
   "tag": "section",
   "class": "section",
   "disabled_on": {
@@ -273,70 +273,70 @@
   "settings": [
     {
       "type": "header",
-      "content": "t:parts_sections.showcase.sections.product_showcase.settings.collections_header"
+      "content": "t:parts-sections.showcase.sections.product_showcase.settings.collections_header"
     },
     {
       "type": "text",
       "id": "primary_title",
-      "label": "t:parts_sections.showcase.sections.product_showcase.settings.primary_collection.label_titel"
+      "label": "t:parts-sections.showcase.sections.product_showcase.settings.primary_collection.label_titel"
     },
     {
       "type": "text",
       "id": "secondary_title",
-      "label": "t:parts_sections.showcase.sections.product_showcase.settings.secondary_collection.label_titel"
+      "label": "t:parts-sections.showcase.sections.product_showcase.settings.secondary_collection.label_titel"
     },
     {
       "type": "collection",
       "id": "primary_collection",
-      "label": "t:parts_sections.showcase.sections.product_showcase.settings.primary_collection.label_collection"
+      "label": "t:parts-sections.showcase.sections.product_showcase.settings.primary_collection.label_collection"
     },
     {
       "type": "collection",
       "id": "secondary_collection",
-      "label": "t:parts_sections.showcase.sections.product_showcase.settings.secondary_collection.label_collection"
+      "label": "t:parts-sections.showcase.sections.product_showcase.settings.secondary_collection.label_collection"
     },
     {
       "type": "header",
-      "content": "t:parts_sections.showcase.sections.product_showcase.settings.buttons_header"
+      "content": "t:parts-sections.showcase.sections.product_showcase.settings.buttons_header"
     },
     {
       "type": "text",
       "id": "primary_view_all_text",
-      "label": "t:parts_sections.showcase.sections.product_showcase.settings.primary_collection.view_all_label",
+      "label": "t:parts-sections.showcase.sections.product_showcase.settings.primary_collection.view_all_label",
       "default": "View All"
     },
     {
       "type": "text",
       "id": "secondary_view_all_text",
-      "label": "t:parts_sections.showcase.sections.product_showcase.settings.secondary_collection.view_all_label",
+      "label": "t:parts-sections.showcase.sections.product_showcase.settings.secondary_collection.view_all_label",
       "default": "View All"
     },
     {
       "type": "header",
-      "content": "t:parts_sections.showcase.sections.product_showcase.settings.layout_header"
+      "content": "t:parts-sections.showcase.sections.product_showcase.settings.layout_header"
     }
   ],
   "blocks": [
     {
       "type": "custom_category",
-      "name": "t:parts_sections.showcase.sections.product_showcase.blocks.custom_category.name",
+      "name": "t:parts-sections.showcase.sections.product_showcase.blocks.custom_category.name",
       "limit": 4,
       "settings": [
         {
           "type": "text",
           "id": "tab_label",
-          "label": "t:parts_sections.showcase.sections.product_showcase.blocks.custom_category.settings.tab_label.label",
+          "label": "t:parts-sections.showcase.sections.product_showcase.blocks.custom_category.settings.tab_label.label",
           "default": "Category"
         },
         {
           "type": "collection",
           "id": "collection",
-          "label": "t:parts_sections.showcase.sections.product_showcase.blocks.custom_category.settings.collection.label"
+          "label": "t:parts-sections.showcase.sections.product_showcase.blocks.custom_category.settings.collection.label"
         },
         {
           "type": "text",
           "id": "view_all_text",
-          "label": "t:parts_sections.showcase.sections.product_showcase.blocks.custom_category.settings.view_all_text.label",
+          "label": "t:parts-sections.showcase.sections.product_showcase.blocks.custom_category.settings.view_all_text.label",
           "default": "View All"
         }
       ]
@@ -344,7 +344,7 @@
   ],
   "presets": [
     {
-      "name": "t:parts_sections.showcase.sections.product_showcase.presets.name",
+      "name": "t:parts-sections.showcase.sections.product_showcase.presets.name",
       "settings": {},
       "blocks": [
         {

@@ -20,11 +20,11 @@
      aria-hidden="true"
      data-mega-menu-content>
   {%- comment -%} ───────── Category columns ───────── {%- endcomment -%}
-  <div class="mega-menu-categories" role="group" aria-label="{{ 'header-group.header.main.menu_categories' | t }}">
+  <div class="mega-menu-categories" role="group" aria-label="{{ 'global.header-group.header.main.menu_categories' | t }}">
     {%- for idx in (1..3) -%}
       {%- assign cat_name_key = 'cat' | append: idx | append: '_name' -%}
       {%- assign cat_menu_key = 'cat' | append: idx | append: '_menu' -%}
-      {%- assign cat_name = block.settings[cat_name_key] | default: 'header-group.header.navigation.mega_menu.empty_heading' -%}
+      {%- assign cat_name = block.settings[cat_name_key] | default: 'global.header-group.header.navigation.mega_menu.empty_heading' -%}
       {%- assign cat_menu = block.settings[cat_menu_key] -%}
       {%- if cat_name or linklists[cat_menu] -%}
         <div class="mega-menu-lists" role="group" aria-labelledby="heading-{{ block.id }}-{{ idx }}">
@@ -58,7 +58,7 @@
   {%- endfor -%}
   <div class="mega-menu-product-images{% unless has_categories %} mega-menu-image-only{% endunless %}" 
        role="group" 
-       aria-label="{{ 'header-group.header.main.featured_promotions' | t }}">
+       aria-label="{{ 'global.header-group.header.main.featured_promotions' | t }}">
     {%- for idx in (1..4) -%}
       {%- assign img_key = 'promo' | append: idx | append: '_image' -%}
       {%- assign img = block.settings[img_key] -%}
@@ -71,7 +71,7 @@
            href="{{ url }}" 
            role="menuitem"
            tabindex="-1"
-           aria-label="{{ 'header-group.header.main.promo_link' | t: promo_name: caption }}"
+           aria-label="{{ 'global.header-group.header.main.promo_link' | t: promo_name: caption }}"
            data-promo="promo{{ idx }}">
           <div class="hide-overflow">
             <img
@@ -93,14 +93,14 @@
   </div>
 
   {%- comment -%} ───────── Bottom CTA row ───────── {%- endcomment -%}
-  <div class="mega-menu-bottom" role="group" aria-label="{{ 'header-group.header.main.menu_actions' | t }}">
+  <div class="mega-menu-bottom" role="group" aria-label="{{ 'global.header-group.header.main.menu_actions' | t }}">
     <div class="mega-menu-separator" aria-hidden="true"></div>
     <a
       class="mega-menu-cta-link"
       href="{{ block.settings["bottom_cta_url"] | default: '#' }}"
       role="menuitem"
       tabindex="-1"
-      aria-label="{{ 'header-group.header.main.view_all_in_category' | t: category: block.settings.label }}"
+      aria-label="{{ 'global.header-group.header.main.view_all_in_category' | t: category: block.settings.label }}"
     >
       <span class="mega-menu-cta-text">
         {% assign cta_text = 'general.view_all' | t %}

@@ -12,8 +12,8 @@
 
 {%- liquid
   assign unique_id = form_id | default: 'SearchForm-' | append: section.id
-  assign search_label = 'search_form.search' | t | default: 'Search'
-  assign search_placeholder = 'search_form.placeholder' | t | default: 'Search our store'
+  assign search_label = 'shared-features.search-form.search' | t | default: 'Search'
+  assign search_placeholder = 'shared-features.search-form.placeholder' | t | default: 'Search our store'
 -%}
 
 <div
@@ -42,7 +42,7 @@
     <button
       type="submit"
       class="search-button"
-      aria-label="{{ 'search_form.submit' | t | default: 'Submit search' }}"
+      aria-label="{{ 'shared-features.search-form.submit' | t | default: 'Submit search' }}"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

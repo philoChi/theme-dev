@@ -43,16 +43,16 @@
   <div class="feature-badges {{ position_class }}" data-badges>
     {%- if sale_percentage > 0 -%}
       <div class="feature-badges__item">
-        <div class="feature-badges__badge feature-badges__badge--sale" aria-label="{{ 'product_info.on_sale' | t }}">
-          {{ 'product_info.on_sale' | t }} -<span class="badge-percentage">{{ sale_percentage }}</span>%
+        <div class="feature-badges__badge feature-badges__badge--sale" aria-label="{{ 'shared-features.product-info.on_sale' | t }}">
+          {{ 'shared-features.product-info.on_sale' | t }} -<span class="badge-percentage">{{ sale_percentage }}</span>%
         </div>
       </div>
     {%- endif -%}
     
     {%- if is_new -%}
       <div class="feature-badges__item">
-        <div class="feature-badges__badge feature-badges__badge--new" aria-label="{{ 'product_info.new_tag' | t }}">
-          {{ 'product_info.new_tag' | t | default: "NEU" }}
+        <div class="feature-badges__badge feature-badges__badge--new" aria-label="{{ 'shared-features.product-info.new_tag' | t }}">
+          {{ 'shared-features.product-info.new_tag' | t | default: "NEU" }}
         </div>
       </div>
     {%- endif -%}
