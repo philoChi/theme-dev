@@ -1,20 +1,43 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="300" height="100" viewBox="0 0 300 100">
-  <!-- Elephant Icon -->
-  <g fill="#333" stroke="none">
-    <!-- Body -->
-    <rect x="60" y="40" width="40" height="30" rx="5"/>
-    <!-- Head -->
-    <circle cx="40" cy="50" r="20"/>
-    <!-- Ear -->
-    <path d="M30,45 a15,15 0 1,0 0.1,0" fill-opacity="0.8"/>
-    <!-- Trunk -->
-    <path d="M55,55 q20,10 5,20" stroke="#333" stroke-width="5" fill="none" stroke-linecap="round"/>
-    <!-- Eye -->
-    <circle cx="35" cy="45" r="2" fill="#fff"/>
-    <!-- Legs -->
-    <rect x="65" y="70" width="10" height="20" rx="2"/>
-    <rect x="85" y="70" width="10" height="20" rx="2"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="50" viewBox="0 0 180 50">
+  <!-- Ape Icon - Keep blue colors -->
+  <g stroke="none">
+    <!-- Head with dark outline -->
+    <circle cx="25" cy="25" r="18" fill="#1e40af" stroke="#0f172a" stroke-width="2"/>
+    <!-- Face area -->
+    <circle cx="25" cy="25" r="14" fill="#f8fafc"/>
+    <!-- Face border -->
+    <circle cx="25" cy="25" r="14" fill="none" stroke="#1e40af" stroke-width="1.5"/>
+    
+    <!-- Ears -->
+    <circle cx="12" cy="20" r="6" fill="#1e40af" stroke="#0f172a" stroke-width="1.5"/>
+    <circle cx="38" cy="20" r="6" fill="#1e40af" stroke="#0f172a" stroke-width="1.5"/>
+    <!-- Inner ears -->
+    <circle cx="12" cy="20" r="3" fill="#f8fafc"/>
+    <circle cx="38" cy="20" r="3" fill="#f8fafc"/>
+    
+    <!-- Eyes -->
+    <circle cx="20" cy="22" r="2.5" fill="#0f172a"/>
+    <circle cx="30" cy="22" r="2.5" fill="#0f172a"/>
+    <!-- Eye shine -->
+    <circle cx="21" cy="21" r="1" fill="#ffffff"/>
+    <circle cx="31" cy="21" r="1" fill="#ffffff"/>
+    
+    <!-- Nose -->
+    <ellipse cx="25" cy="26" rx="2" ry="1.5" fill="#1e40af"/>
+    
+    <!-- Mouth -->
+    <path d="M22,29 Q25,32 28,29" stroke="#1e40af" stroke-width="2" fill="none" stroke-linecap="round"/>
+    
+    <!-- Eyebrows for expression -->
+    <path d="M18,19 Q20,17 22,19" stroke="#1e40af" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <path d="M28,19 Q30,17 32,19" stroke="#1e40af" stroke-width="1.5" fill="none" stroke-linecap="round"/>
   </g>
+  
+  <!-- Subtle separator -->
+  <line x1="52" y1="15" x2="52" y2="35" stroke="#1e293b" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+  
   <!-- Brand Name -->
-  <text x="120" y="65" font-family="Arial, sans-serif" font-size="36" fill="#333">TheElefant</text>
+  <text x="62" y="32" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="24" font-weight="700" fill="var(--main-font-color)" letter-spacing="-0.02em">
+    ApeEscp
+  </text>
 </svg>

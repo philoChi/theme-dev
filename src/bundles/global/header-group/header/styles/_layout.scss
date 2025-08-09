@@ -51,6 +51,14 @@
   height: var(--logo-size);
   width: auto;
   transition: transform var(--transition-fast);
+  
+  /* Logo icon sizing - proper aspect ratio (3.2:1) for rectangular logo */
+  .icon-logo {
+    width: calc(var(--logo-size) * 3.2) !important; /* 3.2:1 aspect ratio */
+    height: var(--logo-size) !important;
+    font-size: var(--logo-size) !important;
+    background-size: contain !important; /* Maintain aspect ratio for background-image */
+  }
 }
 
 /* Site name typography */

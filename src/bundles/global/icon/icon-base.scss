@@ -178,10 +178,9 @@
    ========================================================================== */
 
 /* Background-image icons (for colored icons that shouldn't use mask) */
-.icon-logo,
 .icon-dhl,
-.icon-flag-german {
-  background-image: var(--icon-logo);
+.icon-flag-german,
+.icon-logo {
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -195,4 +194,8 @@
 
 .icon-flag-german {
   background-image: var(--icon-flag-german);
+}
+
+.icon-logo {
+  background-image: var(--icon-logo);
 }
