@@ -1,48 +1,8 @@
 /* Icon System Manager
    CSS-based inline SVG icon system
-   Replaces liquid-based icon rendering
+   CSS variables are now generated via snippets/icon-system-vars.liquid
+   This ensures proper Shopify asset URLs with CDN and cache-busting
 */
-
-/* Import icons from assets directory (copied by webpack) */
-:root {
-  /* Navigation & UI Icons */
-  --icon-close: url('/assets/icon-close.svg');
-  --icon-cart: url('/assets/icon-cart.svg');
-  --icon-search: url('/assets/icon-search.svg');
-  --icon-login: url('/assets/icon-login.svg');
-  --icon-hamburger: url('/assets/icon-hamburger.svg');
-  --icon-filter: url('/assets/icon-filter.svg');
-  --icon-dropdown-arrow: url('/assets/icon-dropdown-arrow.svg');
-  --icon-question: url('/assets/icon-question.svg');
-  --icon-feature-chips: url('/assets/icon-feature-chips.svg');
-  --icon-feature-chips-simple: url('/assets/icon-feature-chips-simple.svg');
-  --icon-feature-chips-organic: url('/assets/icon-feature-chips-organic.svg');
-  --icon-feature-chips-cozy: url('/assets/icon-feature-chips-cozy.svg');
-
-  /* Clothing Category Icons */
-  --icon-t-shirt: url('/assets/icon-t-shirt.svg');
-  --icon-socks: url('/assets/icon-socks.svg');
-  --icon-sweatshirt: url('/assets/icon-sweatshirt.svg');
-  --icon-hoodie: url('/assets/icon-hoodie.svg');
-
-  /* Social Icons */
-  --icon-social-newletter: url('/assets/icon-social-newletter.svg');
-  --icon-social-mailbox: url('/assets/icon-social-mailbox.svg');
-  --icon-social-instagram: url('/assets/icon-social-instagram.svg');
-
-  /* Arrow Navigation Icons */
-  --icon-arrow-next-arrow: url('/assets/icon-arrow-next-arrow.svg');
-  --icon-arrow-next-chevron: url('/assets/icon-arrow-next-chevron.svg');
-  --icon-arrow-prev-arrow: url('/assets/icon-arrow-prev-arrow.svg');
-  --icon-arrow-prev-chevron: url('/assets/icon-arrow-prev-chevron.svg');
-
-  /* Brand & Logo Icons */
-  --icon-logo: url('/assets/icon-logo.svg');
-  --icon-dhl: url('/assets/icon-dhl.svg');
-
-  /* Flags */
-  --icon-flag-german: url('/assets/icon-flag-german.svg');
-}
 
 /* Base icon class using mask for color control */
 .icon {

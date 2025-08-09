@@ -432,6 +432,15 @@ module.exports = {
           },
           noErrorOnMissing: true
         },
+        // Extract icon-system snippet files with snippet- prefix
+        {
+          from: 'src/bundles/global/icon-system/snippets/*.liquid',
+          to: ({ absoluteFilename }) => {
+            const filename = path.basename(absoluteFilename, '.liquid');
+            return `../snippets/snippet-${filename}.liquid`;
+          },
+          noErrorOnMissing: true
+        },
         // Legacy fallback for any remaining liquid files (maintain old behavior)
         {
           from: 'src/bundles/**/*.liquid',
