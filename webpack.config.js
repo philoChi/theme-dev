@@ -6,6 +6,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const BundleLocaleMergePlugin = require('./webpack/plugins/bundle-locale-merge-plugin');
+const IconSystemAggregatorPlugin = require('./webpack/plugins/icon-system-aggregator-plugin');
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 const isAnalyze = process.env.ANALYZE_BUNDLE === 'true';
@@ -232,6 +233,14 @@ module.exports = {
       outputPath: 'theme-hyspex/locales'
     }),
     
+    // Aggregate icon system from distributed bundle assets
+    new IconSystemAggregatorPlugin({
+      bundleBasePath: 'src/bundles',
+      outputPath: 'theme-hyspex',
+      iconFilePattern: /^icon-.*\.svg$/,
+      masterSnippetName: 'snippet-icon-system-vars.liquid'
+    }),
+    
     // Clean webpack generated files AND liquid template files
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: [
@@ -432,14 +441,23 @@ module.exports = {
           },
           noErrorOnMissing: true
         },
-        // Extract icon-system snippet files with snippet- prefix
+        // Note: Icon system snippets are now handled by IconSystemAggregatorPlugin
+        // This pattern is kept for any remaining non-icon snippets in the icon-system folder
         {
           from: 'src/bundles/global/icon-system/snippets/*.liquid',
           to: ({ absoluteFilename }) => {
             const filename = path.basename(absoluteFilename, '.liquid');
+            // Skip icon-system-vars as it's handled by the aggregator plugin
+            if (filename === 'icon-system-vars') {
+              return false; // Skip this file
+            }
             return `../snippets/snippet-${filename}.liquid`;
           },
-          noErrorOnMissing: true
+          noErrorOnMissing: true,
+          filter: (filepath) => {
+            const filename = path.basename(filepath, '.liquid');
+            return filename !== 'icon-system-vars'; // Skip the main icon vars file
+          }
         },
         // Legacy fallback for any remaining liquid files (maintain old behavior)
         {
@@ -454,11 +472,9 @@ module.exports = {
                    !filepath.includes('/theme-main/');
           }
         },
-        {
-          from: 'src/bundles/global/icon-system/icons/*.svg',
-          to: '[name][ext]',
-          noErrorOnMissing: true
-        },
+        // Note: Icon assets are now handled by IconSystemAggregatorPlugin
+        // This aggregates icons from all bundle-specific assets/ folders
+        // No longer copying from centralized icon-system/icons as it's being phased out
         // Theme-specific liquid files (moved from src/theme-hyspex structure)
         {
           from: 'src/theme-hyspex/**/theme.liquid',

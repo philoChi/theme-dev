@@ -90,7 +90,7 @@
       endif
     -%}
 
-    <span class="u-visually-hidden">{{ aria_label | escape }}</span>
+    <span class="visually-hidden">{{ aria_label | escape }}</span>
   </button>
 {%- endcapture -%}
 
@@ -98,12 +98,3 @@
   # Wrap the button with the style wrapper
   render 'snippet-feature-style-wrapper', content: button_content, variant: style_wrapper
 -%}
-
-{%- comment -%}
-  Screen reader instructions (rendered only once per page)
-{%- endcomment -%}
-{%- unless request.page_type == 'gift_card' -%}
-  <div id="arrow-nav-instructions" class="u-visually-hidden" aria-hidden="true">
-    Use arrow keys, Enter, or Space to navigate between content items.
-  </div>
-{%- endunless -%}
