@@ -65,15 +65,15 @@
   /* Smaller logo on mobile */
   .site-header__logo {
     height: var(--mobile-logo-size);
-    
-    /* Mobile logo icon sizing */
+  }
+  
+  /* Mobile logo icon sizing */
     .icon-logo {
-      width: var(--mobile-logo-size) !important;
+      width: calc(var(--mobile-logo-size) * 3.2) !important; /* 3.2:1 aspect ratio */
       height: var(--mobile-logo-size) !important;
       font-size: var(--mobile-logo-size) !important;
       mask-size: 100% 100% !important; /* Fill container completely */
     }
-  }
 
   .site-header__right {
     gap: 7px;

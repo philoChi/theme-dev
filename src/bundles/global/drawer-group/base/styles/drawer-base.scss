@@ -13,6 +13,8 @@
 .drawer {
   --drawer-width: 450px;
   --header-icon-size: 30px;
+  --logo-size: 35px; /* Match header logo size */
+  --mobile-logo-size: 25px; /* Match header mobile logo size */
   --drawer-border-width: var(--main-border-width);
   --drawer-border-color: var(--main-border-color);
   --drawer-border-radius: var(--main-border-radius);
@@ -241,6 +243,14 @@
   width: var(--header-icon-size);
 }
 
+/* Logo icon sizing in drawer - match header logo sizing */
+.drawer__header-icon .icon-logo {
+  width: calc(var(--logo-size) * 3.2) !important; /* 3.2:1 aspect ratio */
+  height: var(--logo-size) !important;
+  font-size: var(--logo-size) !important;
+  background-size: contain !important; /* Maintain aspect ratio for background-image */
+}
+
 .drawer__close {
   margin-right: var(--drawer-padding-side);
   background: none;
@@ -333,6 +343,14 @@ html {
     position: absolute;
     top: 10px;
     right: 10px;
+  }
+
+  /* Mobile logo icon sizing in drawer - match header mobile sizing */
+  .drawer__header-icon .icon-logo {
+    width: calc(var(--mobile-logo-size) * 3.2) !important; /* 3.2:1 aspect ratio */
+    height: var(--mobile-logo-size) !important;
+    font-size: var(--mobile-logo-size) !important;
+    mask-size: 100% 100% !important; /* Fill container completely */
   }
 }
 
