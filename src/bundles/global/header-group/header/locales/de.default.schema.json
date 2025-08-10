@@ -4,12 +4,6 @@
       "header_group": {
         "label": "Header Gruppe"
       },
-      "footer_group": {
-        "label": "Footer Gruppe"
-      },
-      "aside_group": {
-        "label": "Seitenrand"
-      },
       "navigation": {
         "name": "Navigation",
         "settings": {

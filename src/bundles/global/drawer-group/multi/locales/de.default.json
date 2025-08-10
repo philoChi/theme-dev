@@ -1,22 +1,6 @@
 {
   "global": {
     "drawer-group": {
-      "base": {
-        "overlay": "Overlay",
-        "header_text": "Navigation"
-      },
-      "cart": {
-        "title": "Warenkorb",
-        "empty": "Der Warenkorb ist zur Zeit leer",
-        "subtotal": "Zwischensumme",
-        "shipping": "Versandkosten",
-        "total": "Insgesamt",
-        "free_shipping_total_label": "Kostenlos",
-        "tax_notice": "Die Gesamtsumme beinhaltet bereits %{tax}% MwSt.",
-        "free_shipping_threshold_notice": "Kostenloser Versand ab einem Bestellwert von %{threshold}.",
-        "free_shipping_notice": "Der Versand ist Kostenlos.",
-        "cta_checkout_text": "Sicher Bezahlen"
-      },
       "search": {
         "search": "Suche",
         "placeholder": "Wonach suchst Du?",

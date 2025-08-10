@@ -1,0 +1,10 @@
+{
+  "global": {
+    "drawer-group": {
+      "base": {
+        "overlay": "Overlay",
+        "header_text": "Navigation"
+      }
+    }
+  }
+}

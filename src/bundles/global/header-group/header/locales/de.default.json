@@ -1,9 +1,6 @@
 {
   "global": {
     "header-group": {
-      "announcement-bar": {
-        "Heading_1": "Kostenloser Versand ab %{free_shipping_value}"
-      },
       "header": {
         "navigation": {
           "open_menu": "Menu Öffnen",
@@ -29,12 +26,6 @@
           "item_count": "{{ count }} {{ count | pluralize: 'Artikel', 'Artikel' }} im Warenkorb",
           "items_in_cart": "{{ count }} Artikel im Warenkorb",
           "empty": "Warenkorb ist leer"
-        }
-      },
-      "general": {
-        "view_all": "Alles anzeigen",
-        "accessibility": {
-          "skip_to_content": "Zum Inhalt springen"
         }
       }
     }

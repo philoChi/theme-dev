@@ -178,29 +178,30 @@ bundle-name/                          # Bundle root directory
 ├── index.scss                        # SCSS entry point (optional)
 ├── styles/                           # Component-specific stylesheets
 │   ├── _variables.scss              # SCSS variables and custom properties
-│   ├── _layout.scss                 # Layout and positioning styles
+│   ├── _layout.scss                 # Layout and positioning styles (optional)
 │   ├── _responsive.scss             # Media queries and responsive behavior
-│   ├── _states.scss                 # Interactive states (hover, focus, active)
-│   ├── _utilities.scss              # Utility classes and helpers
+│   ├── _states.scss                 # Interactive states (hover, focus, active) (optional)
+│   ├── _utilities.scss              # Utility classes and helpers (optional)
 │   └── main.scss                    # Main component styles (imports all partials)
 ├── scripts/                          # JavaScript component logic
 │   ├── ComponentController.js       # Main component controller class
-│   ├── ComponentStateManager.js     # State management utilities
-│   ├── ComponentConfig.js           # Configuration and constants
-│   └── ComponentHelpers.js          # Helper functions and utilities
-├── sections/                         # Liquid section templates
+│   ├── ComponentStateManager.js     # State management utilities (optional)
+│   ├── ComponentConfig.js           # Configuration and constants (optional)
+│   └── ComponentHelpers.js          # Helper functions and utilities (optional)
+├── sections/                        # Liquid section templates 
 │   └── section-name.liquid          # Main section template with schema
-├── snippets/                         # Reusable Liquid snippets
+├── snippets/                        # Reusable Liquid snippets
 │   ├── component-part.liquid        # Component sub-parts
-│   ├── component-variant.liquid     # Component variants
-│   └── component-helper.liquid      # Helper snippets
+│   ├── component-variant.liquid     # Component variants (optional)
+│   └── component-helper.liquid      # Helper snippets (optional)
 ├── assets/                           # Static assets (images, icons, fonts)
 │   ├── icon-component.svg           # Component-specific icons
 │   └── image-placeholder.jpg        # Placeholder images
 └── locales/                          # Localization files
-    ├── de.default.json              # German translations
-    └──  de.default.schema.json       # German schema translations
+    ├── de.default.json              # German translations 
+    └── de.default.schema.json       # German schema translations 
 ```
+- Not all folders are always needed and available. If no content can be added, do not create the folder or files.
 
 #### Bundle Types and Organization
 
