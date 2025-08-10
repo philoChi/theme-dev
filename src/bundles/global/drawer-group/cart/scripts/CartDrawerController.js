@@ -172,8 +172,33 @@ class CartDrawerController extends DrawerBase {
   _toggleCheckoutButton(itemCount) {
     const btn = this.drawer.querySelector('#cart-checkout-button');
     if (!btn) return;
-    btn.disabled = itemCount === 0;
-    btn.setAttribute('aria-disabled', itemCount === 0 ? 'true' : 'false');
+    
+    const isDisabled = itemCount === 0;
+    
+    // Handle both button and link elements
+    if (btn.tagName === 'A') {
+      // For link elements, set aria-disabled and prevent clicks
+      btn.setAttribute('aria-disabled', isDisabled ? 'true' : 'false');
+      btn.setAttribute('tabindex', isDisabled ? '-1' : '0');
+      
+      // Remove existing click handlers to prevent memory leaks
+      btn.removeEventListener('click', this._preventDisabledClick);
+      
+      if (isDisabled) {
+        // Add click prevention for disabled state
+        btn.addEventListener('click', this._preventDisabledClick);
+      }
+    } else {
+      // For button elements, use the disabled attribute
+      btn.disabled = isDisabled;
+      btn.setAttribute('aria-disabled', isDisabled ? 'true' : 'false');
+    }
+  }
+
+  _preventDisabledClick(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    return false;
   }
 
   _openCartContent() {

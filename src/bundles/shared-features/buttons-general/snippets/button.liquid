@@ -51,7 +51,7 @@
 
 {%- capture button_content -%}
   {%- if button_link != blank -%}
-    <a href="{{ button_link }}" class="{{ button_classes | strip }}"{% if button_id != blank %} id="{{ button_id }}"{% endif %}{% if data_attrs != blank %} {{ data_attrs | strip }}{% endif %}{% if aria_label != blank %} aria-label="{{ aria_label | escape }}"{% endif %} role="button" tabindex="0"{% if disabled %} aria-disabled="true"{% else %} aria-disabled="false"{% endif %}>
+    <a href="{% if disabled %}#{% else %}{{ button_link }}{% endif %}" class="{{ button_classes | strip }}"{% if button_id != blank %} id="{{ button_id }}"{% endif %}{% if data_attrs != blank %} {{ data_attrs | strip }}{% endif %}{% if aria_label != blank %} aria-label="{{ aria_label | escape }}"{% endif %} role="button" tabindex="{% if disabled %}-1{% else %}0{% endif %}"{% if disabled %} aria-disabled="true"{% else %} aria-disabled="false"{% endif %}>
       <span class="feature-button__text">
         {%- if show_arrow and arrow_position == 'left' -%}
           <svg class="feature-button__arrow feature-button__arrow--left" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">

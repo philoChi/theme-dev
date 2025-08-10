@@ -93,16 +93,20 @@
 /* Disabled states */
 .style-wrapper--glassmorphism>*:disabled,
 .style-wrapper--glassmorphism>*[aria-disabled="true"] {
-  opacity: 0.3;
+  opacity: 0.6;
   cursor: default;
-  pointer-events: auto;
+  pointer-events: none;
   transform: none !important;
+  background-color: #ccc !important;
+  color: #666 !important;
 }
 
 /* Prevent hover effects on disabled elements */
 .style-wrapper--glassmorphism>*:disabled:hover,
 .style-wrapper--glassmorphism>*[aria-disabled="true"]:hover {
   transform: none !important;
+  background-color: #ccc !important;
+  color: #666 !important;
 }
 
 /* Generic styling for all nested text elements */
@@ -347,16 +351,20 @@
 /* Disabled states */
 .style-wrapper--flat>*:disabled,
 .style-wrapper--flat>*[aria-disabled="true"] {
-  opacity: 0.3;
+  opacity: 0.6;
   cursor: default;
-  pointer-events: auto;
+  pointer-events: none;
   transform: none !important;
+  background-color: #ccc !important;
+  color: #666 !important;
 }
 
 /* Prevent hover effects on disabled elements */
 .style-wrapper--flat>*:disabled:hover,
 .style-wrapper--flat>*[aria-disabled="true"]:hover {
   transform: none !important;
+  background-color: #ccc !important;
+  color: #666 !important;
 }
 
 /* Generic styling for all nested text elements */
@@ -517,15 +525,19 @@
 /* Disabled states */
 .style-wrapper--flat-basic>*:disabled,
 .style-wrapper--flat-basic>*[aria-disabled="true"] {
-  opacity: 0.3;
+  opacity: 0.6;
   cursor: default;
-  pointer-events: auto;
+  pointer-events: none;
+  background-color: #ccc !important;
+  color: #666 !important;
 }
 
 /* Prevent hover effects on disabled elements */
 .style-wrapper--flat-basic>*:disabled:hover,
 .style-wrapper--flat-basic>*[aria-disabled="true"]:hover {
   transform: none !important;
+  background-color: #ccc !important;
+  color: #666 !important;
 }
 
 /* Generic styling for all nested text elements */

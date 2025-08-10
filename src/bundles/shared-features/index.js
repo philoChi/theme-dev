@@ -38,6 +38,23 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
+    // Set up global disabled link prevention
+    const preventDisabledLinkClicks = (event) => {
+      const target = event.target.closest('a[aria-disabled="true"]');
+      if (target) {
+        event.preventDefault();
+        event.stopPropagation();
+        return false;
+      }
+    };
+
+    // Add event listener for disabled link prevention
+    document.addEventListener('click', preventDisabledLinkClicks, true);
+    
+    if (window.logger) {
+      window.logger.log('Disabled link click prevention initialized');
+    }
+
     // Set up global logger (preserve original API)
     if (!window.logger) {
       window.logger = globalLogger;
