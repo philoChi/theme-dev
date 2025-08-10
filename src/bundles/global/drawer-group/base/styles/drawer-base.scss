@@ -13,8 +13,8 @@
 .drawer {
   --drawer-width: 450px;
   --header-icon-size: 30px;
-  --logo-size: 35px; /* Match header logo size */
-  --mobile-logo-size: 25px; /* Match header mobile logo size */
+  --logo-size: 40px; /* Match header logo size */
+  --mobile-logo-size: 35px; /* Match header mobile logo size */
   --drawer-border-width: var(--main-border-width);
   --drawer-border-color: var(--main-border-color);
   --drawer-border-radius: var(--main-border-radius);
@@ -175,6 +175,7 @@
   margin-top: var(--drawer-padding-vertical);
   margin-left: var(--drawer-padding-side);
   display: none;
+  align-items: center;
 }
 
 /* Search header specific styling - full width, no borders */
@@ -237,10 +238,18 @@
 }
 
 .drawer__header-icon {
-  margin-right: 20px;
-  padding-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: var(--header-icon-size);
-  width: var(--header-icon-size);
+  flex-shrink: 0;
+}
+
+/* Ensure proper centering for header items with icons and titles when they are open */
+.drawer__header__item:not(#drawer__header__search).is-open {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 /* Logo icon sizing in drawer - match header logo sizing */

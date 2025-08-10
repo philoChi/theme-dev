@@ -13,8 +13,8 @@
 
 .icon {
   display: inline-block;
-  width: 1em;
-  height: 1em;
+  width: 1.2em;
+  height: 1.2em;
   background-color: currentColor;
   mask-repeat: no-repeat;
   mask-position: center;
@@ -179,8 +179,7 @@
 
 /* Background-image icons (for colored icons that shouldn't use mask) */
 .icon-dhl,
-.icon-flag-german,
-.icon-logo {
+.icon-flag-german {
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -196,6 +195,12 @@
   background-image: var(--icon-flag-german);
 }
 
+/* Logo icon - uses mask for currentColor support */
 .icon-logo {
-  background-image: var(--icon-logo);
+  color: var(--main-font-color);
+}
+
+.icon-close {
+  width: .8em;
+  height: .8em;
 }
