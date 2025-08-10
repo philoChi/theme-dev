@@ -1,0 +1,146 @@
+## Architecture
+### Directory Structure
+
+#### Generic Bundle Organization Pattern
+Each bundle follows a standardized internal structure for consistent organization and automatic webpack discovery:
+
+```
+bundle-name/                          # Bundle root directory
+├── index.js                          # JavaScript entry point (optional)
+├── index.scss                        # SCSS entry point (optional)
+├── styles/                           # Component-specific stylesheets
+│   ├── _variables.scss              # SCSS variables and custom properties
+│   ├── _layout.scss                 # Layout and positioning styles
+│   ├── _responsive.scss             # Media queries and responsive behavior
+│   ├── _states.scss                 # Interactive states (hover, focus, active)
+│   ├── _utilities.scss              # Utility classes and helpers
+│   └── main.scss                    # Main component styles (imports all partials)
+├── scripts/                          # JavaScript component logic
+│   ├── ComponentController.js       # Main component controller class
+│   ├── ComponentStateManager.js     # State management utilities
+│   ├── ComponentConfig.js           # Configuration and constants
+│   └── ComponentHelpers.js          # Helper functions and utilities
+├── sections/                         # Liquid section templates
+│   └── section-name.liquid          # Main section template with schema
+├── snippets/                         # Reusable Liquid snippets
+│   ├── component-part.liquid        # Component sub-parts
+│   ├── component-variant.liquid     # Component variants
+│   └── component-helper.liquid      # Helper snippets
+├── assets/                           # Static assets (images, icons, fonts)
+│   ├── icon-component.svg           # Component-specific icons
+│   ├── image-placeholder.jpg        # Placeholder images
+│   └── fonts/                       # Custom fonts (if applicable)
+└── locales/                          # Localization files
+    ├── de.default.json              # German translations
+    ├── de.default.schema.json       # German schema translations
+    ├── en.default.json              # English translations (if applicable)
+    └── en.default.schema.json       # English schema translations (if applicable)
+```
+
+#### Bundle Types and Organization
+
+**Global Bundles** (`src/bundles/global/`)
+- **Purpose**: Theme-wide components and functionality
+- **Structure**: Grouped by feature (header-group, drawer-group, icon-system)
+- **Output**: `global.js` + `global.css`
+- **Examples**: Header, navigation, cart drawer, icon system
+
+**Shared Features** (`src/bundles/shared-features/`)
+- **Purpose**: Reusable components across multiple pages/sections
+- **Structure**: Individual feature folders (product-card, dropdown-menu, etc.)
+- **Output**: `features-shared-all.js` + `features-shared-all.css`
+- **Examples**: Product cards, dropdown menus, notification system
+
+**Page-Specific** (`src/bundles/page-specific/[page]/`)
+- **Purpose**: Functionality specific to particular page types
+- **Structure**: Page name folders containing page-specific components
+- **Output**: `section-page-[page].js` + `section-page-[page].css`
+- **Examples**: Collections page, product page, FAQ page
+
+**Section-Specific** (`src/bundles/section-specific/[section]/`)
+- **Purpose**: Individual Shopify sections
+- **Structure**: Section name folders with complete section implementation
+- **Output**: `section-[section].js` + `section-[section].css`
+- **Examples**: Hero banner, image slider, testimonials
+
+**Theme-Main** (`src/bundles/theme-main/`)
+- **Purpose**: Core theme files (layout, core snippets)
+- **Structure**: layout/ and snippets/ folders
+- **Output**: Direct copy to theme-hyspex/layout/ and theme-hyspex/snippets/
+- **Examples**: theme.liquid, conditional loading snippets
+
+**Utils** (`src/bundles/utils/`)
+- **Purpose**: Utility snippets and helpers
+- **Structure**: Individual .liquid files
+- **Output**: `snippet-utils-[name].liquid`
+- **Examples**: Product converters, logging utilities
+
+#### Webpack Build System Organization
+
+**Automatic Discovery**: Webpack automatically discovers bundles based on folder structure:
+- **Entry Points**: Looks for `index.js` and `index.scss` in bundle roots
+- **Asset Processing**: Processes all files in standard folders (styles/, scripts/, assets/)
+- **Template Copying**: Copies liquid files with appropriate prefixes
+- **Locale Merging**: Collects and merges locale files from all bundles
+- **Icon Aggregation**: Collects icons from distributed assets/ folders
+
+**Output Naming Conventions**:
+- **Sections**: `section-[name].liquid` (from sections/ folders)
+- **Snippets**: `snippet-[type]-[name].liquid` (type = feature, section, utils, theme)
+- **Assets**: `[name].[ext]` (copied to theme-hyspex/assets/)
+- **Bundles**: `[bundle-name].js` + `[bundle-name].css`
+
+**Prefix System**:
+- **Feature snippets**: `snippet-feature-[name].liquid`
+- **Section snippets**: `snippet-section-[section]-[name].liquid`
+- **Page snippets**: `snippet-section-page-[page]-[name].liquid`
+- **Utils snippets**: `snippet-utils-[name].liquid`
+- **Theme snippets**: `snippet-theme-[name].liquid`
+
+```
+src/                                   # Source files for webpack compilation
+├── bundles/                           # JS/SCSS bundles and component templates
+│   ├── global/                        # Global theme bundles (→ global.js/css)
+│   │   ├── icon-system/               # CSS-based icon system
+│   │   │   ├── icons/                 # SVG source files
+│   │   │   └── styles/                # Icon CSS definitions
+│   │   ├── header-group/              # Header components
+│   │   ├── drawer-group/              # Drawer components (cart, multi)
+│   │   └── index.js/scss              # Global bundle entry points
+│   ├── shared-features/               # Shared features (→ features-shared-all.js/css)
+│   │   ├── dropdown-menu/
+│   │   ├── product-card/
+│   │   ├── notification-system/
+│   │   └── index.js/scss              # Features bundle entry points
+│   ├── page-specific/                 # Page-specific sections
+│   │   ├── collections/               # → section-page-collections.js/css
+│   │   ├── product/                   # → section-page-product.js/css
+│   │   └── faq/                       # → section-page-faq.js/css
+│   ├── section-specific/              # Individual sections
+│   │   ├── big-heading/               # → section-big-heading.js/css
+│   │   ├── image-slider/              # → section-image-slider.js/css
+│   │   └── showcase/                  # → section-showcase.js/css
+│   ├── theme-main/                    # Main theme layout and core snippets
+│   │   ├── layout/                    # theme.liquid and other layouts
+│   │   └── snippets/                  # Core theme snippets
+│   └── utils/                         # Utility snippets and helpers
+├── config/                            # Product configuration files
+│   ├── product-info.de.json           # Product metadata configuration
+│   └── locale-metadata.json           # Locale metadata
+└── theme-hyspex/                      # Theme-specific configurations
+    ├── config/                        # settings_schema.json, settings_data.json
+    ├── groups/                        # Section groups (JSON)
+    ├── root/                          # Root theme files
+    └── templates/                     # Page templates (JSON/liquid)
+
+theme-hyspex/                          # Webpack generated output (git-ignored, Shopify CLI compliant, do not modify files here)
+├── assets/                            # Webpack bundles + copied assets
+├── config/                            # Theme configuration
+├── layout/                            # Theme layouts
+├── locales/                           # Merged locale files
+├── sections/                          # Liquid sections with prefixes
+├── snippets/                          # Liquid snippets with prefixes
+└── templates/                         # Page templates
+
+planning/                              # Development planning documents
+```
