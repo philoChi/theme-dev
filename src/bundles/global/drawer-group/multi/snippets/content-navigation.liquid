@@ -12,7 +12,7 @@
 
   {%- comment -%}1 • Hero banner (optional) ----------------------------------{%- endcomment -%}
   {% if hero_block %}
-  {% render 'snippet-section-drawer-multi-category-hero-banner',
+  {% render 'snippet-section-multi-category-hero-banner',
     image:        hero_block.settings.image,
     link:         hero_block.settings.link,
     overlay_text: hero_block.settings.overlay_text,
@@ -20,7 +20,7 @@
   {% endif %}
 
   {%- comment -%}2 • Tab / pill bar -----------------------------------------{%- endcomment -%}
-  {% render 'snippet-section-drawer-multi-category-tabs', tabs: tab_blocks %}
+  {% render 'snippet-section-multi-category-tabs', tabs: tab_blocks %}
 
   {%- comment -%}3 • Accordion category via generic dropdown --------------{%- endcomment -%}
   <div class="drawer-dropdowns">

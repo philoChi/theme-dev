@@ -12,12 +12,12 @@ id={{id}}>
     
     {%- comment -%} Loading State {%- endcomment -%}
     <div id="SearchLoadingState" class="search-loading-state" aria-hidden="true" style="display: none;">
-      {% render 'snippet-section-drawer-multi-search-loading-state' %}
+      {% render 'snippet-section-multi-search-loading-state' %}
     </div>
 
     {%- comment -%} Hint State - Shows when only 1 character is typed {%- endcomment -%}
     <div id="SearchHintState" class="search-hint-state" aria-hidden="true" style="display: none;">
-      {% render 'snippet-section-drawer-multi-search-hint-state' %}
+      {% render 'snippet-section-multi-search-hint-state' %}
     </div>
 
     {%- comment -%} Search Results List {%- endcomment -%}
@@ -27,12 +27,12 @@ id={{id}}>
 
     {%- comment -%} Empty State {%- endcomment -%}
     <div id="SearchEmptyState" class="search-empty-state" aria-hidden="true" style="display: none;">
-      {% render 'snippet-section-drawer-multi-search-empty-state' %}
+      {% render 'snippet-section-multi-search-empty-state' %}
     </div>
 
     {%- comment -%} Initial/Default State - Helpful search suggestions {%- endcomment -%}
     <div id="SearchDefaultState" class="search-default-state">
-      {% render 'snippet-section-drawer-multi-search-welcome-state' %}
+      {% render 'snippet-section-multi-search-welcome-state' %}
     </div>
 
   </div>

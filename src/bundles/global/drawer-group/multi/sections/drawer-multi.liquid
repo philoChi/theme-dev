@@ -1,14 +1,14 @@
 <!-- Overlay (one single instance) -->
-{%  render 'snippet-section-drawer-base-overlay' %}
+{%  render 'snippet-section-base-overlay' %}
 
 <!-- Main container for the Drawer element -->
 <div id="multi-drawer" class="multi-drawer drawer drawer-common-vars drawer--left">
  
   <!-- Drawer Headers -->
   <div class="drawer__header">
-    {% render 'snippet-section-drawer-multi-header-search', id:"drawer__header__search" %}
-    {% render 'snippet-section-drawer-multi-header-label-icon', id:"drawer__header__category" %}
-    {% render 'snippet-section-drawer-base-header-text', id:"drawer__header__filter", icon: 'icon-filter', text_key: 'global.drawer-group.filter.header_text' %}
+    {% render 'snippet-section-multi-header-search', id:"drawer__header__search" %}
+    {% render 'snippet-section-multi-header-label-icon', id:"drawer__header__category" %}
+    {% render 'snippet-section-base-header-text', id:"drawer__header__filter", icon: 'icon-filter', text_key: 'global.drawer-group.filter.header_text' %}
     <button class="drawer__close" aria-label="Schließen" mpe="drawer-close">
       <span class="icon icon-close"></span>
     </button>
@@ -16,16 +16,16 @@
 
   <!-- Drawer Contents -->
   <div class="drawer__content">
-    {% render 'snippet-section-drawer-multi-content-search', id:"drawer__content__search", section: section %}
-    {% render 'snippet-section-drawer-multi-content-navigation', id:"drawer__content__category" %}
-    {% render 'snippet-section-drawer-multi-content-filter', id:"drawer__content__filter" %}
+    {% render 'snippet-section-multi-content-search', id:"drawer__content__search", section: section %}
+    {% render 'snippet-section-multi-content-navigation', id:"drawer__content__category" %}
+    {% render 'snippet-section-multi-content-filter', id:"drawer__content__filter" %}
   </div>
   
   <!-- Drawer Footer -->
   <div class="drawer__footer">
-    {% render 'snippet-section-drawer-multi-footer-search', id:"drawer__footer__search", section: section %}
-    {% render 'snippet-section-drawer-multi-footer-navigation', id:"drawer__footer__category" %}
-    {% render 'snippet-section-drawer-multi-footer-filter', id:"drawer__footer__filter" %}
+    {% render 'snippet-section-multi-footer-search', id:"drawer__footer__search", section: section %}
+    {% render 'snippet-section-multi-footer-navigation', id:"drawer__footer__category" %}
+    {% render 'snippet-section-multi-footer-filter', id:"drawer__footer__filter" %}
   </div>
 </div>
 

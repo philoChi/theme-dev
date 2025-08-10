@@ -1,22 +1,22 @@
 <!-- Overlay (one single instance) -->
-{%  render 'snippet-section-drawer-base-overlay' %}
+{%  render 'snippet-section-base-overlay' %}
 
 <!-- Drawer -------------------------------------------------------------- -->
 <div class="cart-drawer drawer drawer-common-vars drawer--right" id="cart-drawer">
   
   <div class="drawer__header">
-    {% render 'snippet-section-drawer-base-header-text', id: 'drawer__header__cart', icon:"icon-cart", text_key: 'global.drawer-group.cart.title' %}
+    {% render 'snippet-section-base-header-text', id: 'drawer__header__cart', icon:"icon-cart", text_key: 'global.drawer-group.cart.title' %}
     <button class="drawer__close" aria-label="Schließen" mpe="drawer-close">
       <span class="icon icon-close"></span>
     </button>
   </div>
 
   <div class="drawer__content">
-    {% render 'snippet-section-drawer-cart-content', id:"drawer__content__cart" %}
+    {% render 'snippet-section-cart-content', id:"drawer__content__cart" %}
   </div>
 
   <div class="drawer__footer">
-    {% render 'snippet-section-drawer-cart-footer', id:"drawer__footer__cart" %}
+    {% render 'snippet-section-cart-footer', id:"drawer__footer__cart" %}
   </div>
 </div>
 

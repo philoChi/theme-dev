@@ -48,43 +48,144 @@ function generateEntriesAutomatically() {
     }
   });
   
-  // 4. Individual sections
+  // 4. Individual sections (unified approach)
   glob.sync(`${srcPath}/section-specific/*/`).forEach(dir => {
     const sectionName = path.basename(dir);
-    
-    // Check for index files first (unified bundle approach)
     const indexFiles = findIndexFiles(dir);
     if (indexFiles.length > 0) {
-      // If index files exist, use them for a unified bundle
       entries[`section-${sectionName}`] = indexFiles;
-    } else if (sectionName === 'showcase') {
-      // Fallback: Special case for showcase if no index files exist
-      // Check for showcase-specific entry files
-      const showcaseTabJs = path.join(dir, 'showcase-tab.js');
-      const showcaseTabScss = path.join(dir, 'showcase-tab.scss');
-      const showcaseSimpleJs = path.join(dir, 'showcase-simple.js');
-      const showcaseSimpleScss = path.join(dir, 'showcase-simple.scss');
-      
-      // Create showcase-tab bundle
-      const tabFiles = [];
-      if (glob.sync(showcaseTabJs).length > 0) tabFiles.push(showcaseTabJs);
-      if (glob.sync(showcaseTabScss).length > 0) tabFiles.push(showcaseTabScss);
-      if (tabFiles.length > 0) {
-        entries['section-showcase-tab'] = tabFiles;
-      }
-      
-      // Create showcase-simple bundle
-      const simpleFiles = [];
-      if (glob.sync(showcaseSimpleJs).length > 0) simpleFiles.push(showcaseSimpleJs);
-      if (glob.sync(showcaseSimpleScss).length > 0) simpleFiles.push(showcaseSimpleScss);
-      if (simpleFiles.length > 0) {
-        entries['section-showcase-simple'] = simpleFiles;
-      }
     }
   });
   
   console.log('Generated entries:', Object.keys(entries));
   return entries;
+}
+
+// Unified copy pattern generator for standardized bundle structure
+function generateCopyPatterns() {
+  const patterns = [];
+  
+  // Helper function to generate snippet prefix based on bundle type and path
+  function getSnippetPrefix(absoluteFilename) {
+    const relativePath = path.relative(path.resolve(__dirname, 'src/bundles'), absoluteFilename);
+    const pathParts = relativePath.split(path.sep);
+    
+    // Determine bundle type from path structure
+    if (pathParts[0] === 'global') {
+      // Extract section name from global bundle structure
+      const sectionName = pathParts[pathParts.length - 3]; // Parent of snippets folder
+      return `snippet-section-${sectionName}`;
+    } else if (pathParts[0] === 'shared-features') {
+      return 'snippet-feature';
+    } else if (pathParts[0] === 'page-specific') {
+      const pageName = pathParts[1];
+      return `snippet-section-page-${pageName}`;
+    } else if (pathParts[0] === 'section-specific') {
+      const sectionName = pathParts[1];
+      return `snippet-section-${sectionName}`;
+    } else if (pathParts[0] === 'theme-main') {
+      return 'snippet-theme';
+    } else if (pathParts[0] === 'utils') {
+      return 'snippet-utils';
+    }
+    
+    return 'snippet';
+  }
+  
+  // Helper function to generate section prefix
+  function getSectionPrefix(absoluteFilename) {
+    const relativePath = path.relative(path.resolve(__dirname, 'src/bundles'), absoluteFilename);
+    const pathParts = relativePath.split(path.sep);
+    
+    if (pathParts[0] === 'page-specific') {
+      const pageName = pathParts[1];
+      return `section-page-${pageName}`;
+    }
+    
+    return 'section';
+  }
+  
+  // 1. Unified section templates copy pattern
+  patterns.push({
+    from: 'src/bundles/**/sections/*.liquid',
+    to: ({ absoluteFilename }) => {
+      const filename = path.basename(absoluteFilename, '.liquid');
+      const prefix = getSectionPrefix(absoluteFilename);
+      return `../sections/${prefix}-${filename}.liquid`;
+    },
+    noErrorOnMissing: true
+  });
+  
+  // 2. Unified snippet templates copy pattern
+  patterns.push({
+    from: 'src/bundles/**/snippets/*.liquid',
+    to: ({ absoluteFilename }) => {
+      const filename = path.basename(absoluteFilename, '.liquid');
+      const prefix = getSnippetPrefix(absoluteFilename);
+      return `../snippets/${prefix}-${filename}.liquid`;
+    },
+    noErrorOnMissing: true,
+    filter: (filepath) => {
+      // Skip icon-system-vars as it's handled by the aggregator plugin
+      const filename = path.basename(filepath, '.liquid');
+      return filename !== 'icon-system-vars';
+    }
+  });
+  
+  // 3. Theme layout files
+  patterns.push({
+    from: 'src/bundles/theme-main/layout/*.liquid',
+    to: '../layout/[name][ext]',
+    noErrorOnMissing: true
+  });
+  
+  // 4. Utils snippets (direct copy from utils bundle)
+  patterns.push({
+    from: 'src/bundles/utils/*.liquid',
+    to: ({ absoluteFilename }) => {
+      const filename = path.basename(absoluteFilename, '.liquid');
+      return `../snippets/snippet-utils-${filename}.liquid`;
+    },
+    noErrorOnMissing: true
+  });
+  
+  // 5. Theme-specific liquid files
+  patterns.push({
+    from: 'src/theme-hyspex/**/theme.liquid',
+    to: ({ absoluteFilename }) => {
+      const relativePath = path.relative(path.resolve(__dirname, 'src/theme-hyspex'), absoluteFilename);
+      const pathParts = relativePath.split(path.sep);
+      const folderName = pathParts[0];
+      return `../snippets/${folderName}-theme.liquid`;
+    },
+    noErrorOnMissing: true
+  });
+  
+  // 6. Theme group files
+  patterns.push({
+    from: 'src/theme-hyspex/groups/*.json',
+    to: '../sections/[name][ext]',
+    noErrorOnMissing: true
+  });
+  
+  // 7. Config files
+  patterns.push({
+    from: 'src/theme-hyspex/config/*.json',
+    to: '../config/[name][ext]',
+    noErrorOnMissing: true
+  });
+  
+  // 8. Template files
+  patterns.push({
+    from: 'src/theme-hyspex/templates/**/*',
+    to: ({ absoluteFilename }) => {
+      const relativePath = path.relative(path.resolve(__dirname, 'src/theme-hyspex/templates'), absoluteFilename);
+      return `../templates/${relativePath}`;
+    },
+    noErrorOnMissing: true
+  });
+  
+  return patterns;
 }
 
 module.exports = {
@@ -278,238 +379,9 @@ module.exports = {
       chunkFilename: 'chunks/[name].[contenthash:8].css'
     }),
     
-    // Copy non-bundled assets (maintain existing assets)
+    // Unified copy patterns for all bundle types
     new CopyWebpackPlugin({
-      patterns: [
-        // Global section templates with section- prefix
-        {
-          from: 'src/bundles/global/**/sections/*.liquid',
-          to: ({ absoluteFilename }) => {
-            const filename = path.basename(absoluteFilename, '.liquid');
-            return `../sections/section-${filename}.liquid`;
-          },
-          noErrorOnMissing: true
-        },
-        // Section-specific templates with section- prefix
-        {
-          from: 'src/bundles/section-specific/*/sections/*.liquid',
-          to: ({ absoluteFilename }) => {
-            const filename = path.basename(absoluteFilename, '.liquid');
-            return `../sections/section-${filename}.liquid`;
-          },
-          noErrorOnMissing: true
-        },
-        // Page-specific templates with section-page- prefix
-        {
-          from: 'src/bundles/page-specific/*/sections/*.liquid',
-          to: ({ absoluteFilename }) => {
-            const filename = path.basename(absoluteFilename, '.liquid');
-            const relativePath = path.relative(path.resolve(__dirname, 'src/bundles/page-specific'), absoluteFilename);
-            const pathParts = relativePath.split(path.sep);
-            const pageDir = pathParts[0]; // Extract page name (e.g., "faq")
-            return `../sections/section-page-${pageDir}-${filename}.liquid`;
-          },
-          noErrorOnMissing: true
-        },
-        // Legacy fallback for old section structure (backwards compatibility)
-        {
-          from: 'src/bundles/**/sections/*.liquid',
-          to: ({ absoluteFilename }) => {
-            const filename = path.basename(absoluteFilename, '.liquid');
-            return `../sections/section-${filename}.liquid`;
-          },
-          noErrorOnMissing: true,
-          filter: (filepath) => {
-            // Exclude files already handled by above patterns
-            return !filepath.includes('global') && 
-                   !filepath.includes('section-specific') && 
-                   !filepath.includes('page-specific');
-          }
-        },
-        // Drawer-specific section templates with custom naming
-        {
-          from: 'src/bundles/global/drawer-group/cart/sections/*.liquid',
-          to: ({ absoluteFilename }) => {
-            const filename = path.basename(absoluteFilename, '.liquid');
-            return `../sections/section-drawer-cart.liquid`;
-          },
-          noErrorOnMissing: true
-        },
-        {
-          from: 'src/bundles/global/drawer-group/multi/sections/*.liquid',
-          to: ({ absoluteFilename }) => {
-            const filename = path.basename(absoluteFilename, '.liquid');
-            return `../sections/section-drawer-multi.liquid`;
-          },
-          noErrorOnMissing: true
-        },
-        // Drawer-specific snippet templates with custom naming
-        {
-          from: 'src/bundles/global/drawer-group/cart/snippets/*.liquid',
-          to: ({ absoluteFilename }) => {
-            const filename = path.basename(absoluteFilename, '.liquid');
-            return `../snippets/snippet-section-drawer-cart-${filename}.liquid`;
-          },
-          noErrorOnMissing: true
-        },
-        {
-          from: 'src/bundles/global/drawer-group/multi/snippets/*.liquid',
-          to: ({ absoluteFilename }) => {
-            const filename = path.basename(absoluteFilename, '.liquid');
-            return `../snippets/snippet-section-drawer-multi-${filename}.liquid`;
-          },
-          noErrorOnMissing: true
-        },
-        {
-          from: 'src/bundles/global/drawer-group/base/snippets/*.liquid',
-          to: ({ absoluteFilename }) => {
-            const filename = path.basename(absoluteFilename, '.liquid');
-            return `../snippets/snippet-section-drawer-base-${filename}.liquid`;
-          },
-          noErrorOnMissing: true
-        },
-        // Section-scoped snippets with snippet-section-<section>- prefix for global
-        {
-          from: 'src/bundles/global/**/snippets/*.liquid',
-          to: ({ absoluteFilename }) => {
-            const filename = path.basename(absoluteFilename, '.liquid');
-            const relativePath = path.relative(path.resolve(__dirname, 'src/bundles/global'), absoluteFilename);
-            const pathParts = relativePath.split(path.sep);
-            // Extract section name (e.g., "navigation-bar" from "header-group/navigation-bar/snippets/...")
-            const sectionName = pathParts[pathParts.length - 3]; // Get parent of snippets folder
-            return `../snippets/snippet-section-${sectionName}-${filename}.liquid`;
-          },
-          noErrorOnMissing: true,
-          filter: (filepath) => {
-            // Exclude drawer snippets already handled by above patterns
-            return !filepath.includes('/drawer/');
-          }
-        },
-        // Section-scoped snippets with snippet-section-<section>- prefix for section-specific
-        {
-          from: 'src/bundles/section-specific/*/snippets/*.liquid',
-          to: ({ absoluteFilename }) => {
-            const filename = path.basename(absoluteFilename, '.liquid');
-            const relativePath = path.relative(path.resolve(__dirname, 'src/bundles/section-specific'), absoluteFilename);
-            const sectionName = relativePath.split(path.sep)[0]; // First folder is section name
-            return `../snippets/snippet-section-${sectionName}-${filename}.liquid`;
-          },
-          noErrorOnMissing: true
-        },
-        // Page-specific snippets with snippet-section-page-<page>- prefix
-        {
-          from: 'src/bundles/page-specific/*/snippets/*.liquid',
-          to: ({ absoluteFilename }) => {
-            const filename = path.basename(absoluteFilename, '.liquid');
-            const relativePath = path.relative(path.resolve(__dirname, 'src/bundles/page-specific'), absoluteFilename);
-            const pathParts = relativePath.split(path.sep);
-            const pageDir = pathParts[0]; // Extract page name (e.g., "faq")
-            return `../snippets/snippet-section-page-${pageDir}-${filename}.liquid`;
-          },
-          noErrorOnMissing: true
-        },
-        // Feature snippets with snippet-feature- prefix for shared features
-        {
-          from: 'src/bundles/shared-features/**/snippets/*.liquid',
-          to: ({ absoluteFilename }) => {
-            const filename = path.basename(absoluteFilename, '.liquid');
-            return `../snippets/snippet-feature-${filename}.liquid`;
-          },
-          noErrorOnMissing: true
-        },
-        // Utils snippets with snippet-utils- prefix
-        {
-          from: 'src/bundles/utils/*.liquid',
-          to: ({ absoluteFilename }) => {
-            const filename = path.basename(absoluteFilename, '.liquid');
-            return `../snippets/snippet-utils-${filename}.liquid`;
-          },
-          noErrorOnMissing: true
-        },
-        // Extract theme layout files
-        {
-          from: 'src/bundles/theme-main/layout/*.liquid',
-          to: '../layout/[name][ext]',
-          noErrorOnMissing: true
-        },
-        // Extract theme snippet files with snippet-theme- prefix
-        {
-          from: 'src/bundles/theme-main/snippets/*.liquid',
-          to: ({ absoluteFilename }) => {
-            const filename = path.basename(absoluteFilename, '.liquid');
-            return `../snippets/snippet-theme-${filename}.liquid`;
-          },
-          noErrorOnMissing: true
-        },
-        // Note: Icon system snippets are now handled by IconSystemAggregatorPlugin
-        // This pattern is kept for any remaining non-icon snippets in the icon-system folder
-        {
-          from: 'src/bundles/global/icon-system/snippets/*.liquid',
-          to: ({ absoluteFilename }) => {
-            const filename = path.basename(absoluteFilename, '.liquid');
-            // Skip icon-system-vars as it's handled by the aggregator plugin
-            if (filename === 'icon-system-vars') {
-              return false; // Skip this file
-            }
-            return `../snippets/snippet-${filename}.liquid`;
-          },
-          noErrorOnMissing: true,
-          filter: (filepath) => {
-            const filename = path.basename(filepath, '.liquid');
-            return filename !== 'icon-system-vars'; // Skip the main icon vars file
-          }
-        },
-        // Legacy fallback for any remaining liquid files (maintain old behavior)
-        {
-          from: 'src/bundles/**/*.liquid',
-          to: '../snippets/[name][ext]',
-          noErrorOnMissing: true,
-          filter: (filepath) => {
-            // Exclude files already handled by above patterns
-            return !filepath.includes('/sections/') && 
-                   !filepath.includes('/snippets/') && 
-                   !filepath.includes('/utils/') &&
-                   !filepath.includes('/theme-main/');
-          }
-        },
-        // Note: Icon assets are now handled by IconSystemAggregatorPlugin
-        // This aggregates icons from all bundle-specific assets/ folders
-        // No longer copying from centralized icon-system/icons as it's being phased out
-        // Theme-specific liquid files (moved from src/theme-hyspex structure)
-        {
-          from: 'src/theme-hyspex/**/theme.liquid',
-          to: ({ absoluteFilename }) => {
-            const relativePath = path.relative(path.resolve(__dirname, 'src/theme-hyspex'), absoluteFilename);
-            const pathParts = relativePath.split(path.sep);
-            // Convert root/theme.liquid -> root-theme.liquid
-            const folderName = pathParts[0]; // e.g., "root"
-            return `../snippets/${folderName}-theme.liquid`;
-          },
-          noErrorOnMissing: true
-        },
-        // Theme group files (section groups from src/theme-hyspex/groups)
-        {
-          from: 'src/theme-hyspex/groups/*.json',
-          to: '../sections/[name][ext]',
-          noErrorOnMissing: true
-        },
-        // Note: Locale files are now handled by BundleLocaleMergePlugin
-        // Config files from theme-hyspex
-        {
-          from: 'src/theme-hyspex/config/*.json',
-          to: '../config/[name][ext]',
-          noErrorOnMissing: true
-        },
-        // Template files from theme-hyspex (all file types: .json, .liquid)
-        {
-          from: 'src/theme-hyspex/templates/**/*',
-          to: ({ absoluteFilename }) => {
-            const relativePath = path.relative(path.resolve(__dirname, 'src/theme-hyspex/templates'), absoluteFilename);
-            return `../templates/${relativePath}`;
-          },
-          noErrorOnMissing: true
-        }
-      ]
+      patterns: generateCopyPatterns()
     }),
     
     // Bundle analyzer for optimization
@@ -555,15 +427,6 @@ module.exports = {
           chunks: 'all',
           priority: 20
         },
-        // Common code used in multiple sections (disabled for now - using unified bundles)
-        // 'common-sections': {
-        //   test: /[\\/]src[\\/]parts-sections[\\/]/,
-        //   minChunks: 2,
-        //   name: 'common-sections',
-        //   chunks: 'all',
-        //   priority: 10,
-        //   reuseExistingChunk: true
-        // },
         // Common code used in multiple features
         'common-features': {
           test: /[\\/]src[\\/]shared-features[\\/]/,
