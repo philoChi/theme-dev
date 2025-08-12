@@ -135,23 +135,16 @@
             "label": "Caps",
             "link": ""
           }
-        },
-        "menu_item_BYBBcq": {
+        }/*,
+         "menu_item_BYBBcq": {
           "type": "menu_item",
           "settings": {
             "image": "shopify://shop_images/97da9be116d931319e458251c546a8cc.jpg",
             "label": "Rucksack",
             "link": ""
           }
-        },
-        "menu_item_kLktkM": {
-          "type": "menu_item",
-          "settings": {
-            "image": "shopify://shop_images/7883dc186e15bf29dad696e1e989e914.jpg",
-            "label": "Schuhe",
-            "link": ""
-          }
         }
+        */
       },
       "block_order": [
         "menu_item_UBjkz6",
