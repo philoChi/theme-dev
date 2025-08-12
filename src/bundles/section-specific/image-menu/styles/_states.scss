@@ -8,15 +8,12 @@
   
   /* Hover state */
   &:hover {
-    transform: translateY(-2px);
-    
     .image-menu__item-image-container {
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      transform: scale(1.05);
     }
     
-    .image-menu__item-label {
-      opacity: 0.8;
+    .image-menu__item-image {
+      transform: scale(var(--image-menu-image-hover-scale));
     }
   }
   
@@ -72,14 +69,13 @@
 @media (prefers-reduced-motion: reduce) {
   .image-menu__item,
   .image-menu__item-image-container,
-  .image-menu__item-label {
+  .image-menu__item-label,
+  .image-menu__item-image {
     transition: none;
   }
   
   .image-menu__item:hover {
-    transform: none;
-    
-    .image-menu__item-image-container {
+    .image-menu__item-image {
       transform: none;
     }
   }

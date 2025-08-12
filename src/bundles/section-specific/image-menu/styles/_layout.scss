@@ -15,7 +15,7 @@
 
 .image-menu__container {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   max-width: var(--image-menu-container-max-width);
   width: 100%;
@@ -51,6 +51,7 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform var(--image-menu-transition-duration) var(--image-menu-transition-easing);
 }
 
 .image-menu__item-label {

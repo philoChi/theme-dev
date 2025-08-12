@@ -32,12 +32,15 @@
   --image-menu-font-weight: 600;
 
   /* Layout Variables */
-  --image-menu-container-max-width: var(--page-small-width);
+  --image-menu-container-max-width: var(--page-medium-width);
   --image-menu-z-index: 50;
 
   /* Transition Variables */
   --image-menu-transition-duration: 0.3s;
   --image-menu-transition-easing: ease-in-out;
+
+  /* Interaction Variables */
+  --image-menu-image-hover-scale: 1.10;
 }
 
 /* SCSS Breakpoint Variables */
