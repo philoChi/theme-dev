@@ -1,7 +1,40 @@
 {
-  "parts_sections": {
-    "image-menu": {
-      "sections": {}
+  "sections": {
+    "image_menu": {
+      "name": "Bild-Menü",
+      "settings": {
+        "display_settings": {
+          "content": "Anzeigeeinstellungen"
+        },
+        "max_items": {
+          "label": "Maximale Anzahl der anzuzeigenden Elemente",
+          "info": "Elemente werden auf kleineren Bildschirmen automatisch ausgeblendet für bessere mobile Erfahrung"
+        }
+      },
+      "blocks": {
+        "menu_item": {
+          "name": "Menü-Element",
+          "settings": {
+            "image": {
+              "label": "Bild",
+              "info": "Empfohlen: Quadratisches Bild, mindestens 150x150px"
+            },
+            "label": {
+              "label": "Bezeichnung",
+              "placeholder": "Name des Menü-Elements"
+            },
+            "link": {
+              "label": "Link",
+              "info": "Wohin soll dieses Element verlinken?"
+            }
+          }
+        }
+      },
+      "presets": {
+        "image_menu": {
+          "name": "Bild-Menü"
+        }
+      }
     }
   }
 }

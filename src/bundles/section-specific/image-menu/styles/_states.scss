@@ -1,0 +1,86 @@
+/* Image Menu Section Interactive States */
+/* Hover, focus, active, and other interaction states */
+
+.image-menu__item {
+  transition: 
+    transform var(--image-menu-transition-duration) var(--image-menu-transition-easing),
+    opacity var(--image-menu-transition-duration) var(--image-menu-transition-easing);
+  
+  /* Hover state */
+  &:hover {
+    transform: translateY(-2px);
+    
+    .image-menu__item-image-container {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transform: scale(1.05);
+    }
+    
+    .image-menu__item-label {
+      opacity: 0.8;
+    }
+  }
+  
+  /* Focus state for keyboard navigation */
+  &:focus {
+    outline: 2px solid var(--image-menu-item-border-color);
+    outline-offset: 2px;
+    border-radius: 4px;
+    
+    .image-menu__item-image-container {
+      box-shadow: 0 0 0 2px var(--image-menu-iconbackground),
+                  0 0 0 4px var(--image-menu-item-border-color);
+    }
+  }
+  
+  /* Active state */
+  &:active {
+    transform: translateY(0);
+    opacity: 0.9;
+  }
+  
+  /* Focus-visible for modern browsers */
+  &:focus-visible {
+    outline: 2px solid var(--image-menu-item-border-color);
+    outline-offset: 2px;
+  }
+  
+  /* Remove outline for mouse users */
+  &:focus:not(:focus-visible) {
+    outline: none;
+  }
+}
+
+.image-menu__item-image-container {
+  transition: 
+    transform var(--image-menu-transition-duration) var(--image-menu-transition-easing),
+    box-shadow var(--image-menu-transition-duration) var(--image-menu-transition-easing);
+}
+
+.image-menu__item-label {
+  transition: opacity var(--image-menu-transition-duration) var(--image-menu-transition-easing);
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .image-menu__item:focus {
+    outline: 3px solid;
+    outline-offset: 2px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .image-menu__item,
+  .image-menu__item-image-container,
+  .image-menu__item-label {
+    transition: none;
+  }
+  
+  .image-menu__item:hover {
+    transform: none;
+    
+    .image-menu__item-image-container {
+      transform: none;
+    }
+  }
+}

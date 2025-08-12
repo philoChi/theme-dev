@@ -1,30 +1,62 @@
 {% comment %}
   Image Menu Section
-  This section displays a customizable image menu with up to 6 items.
-  Users can add, edit, or remove menu items via the Shopify theme editor.
+  Displays a customizable horizontal menu with circular images and labels.
+  Features accessibility support, responsive design, and performance optimization.
+  Supports up to 6 items with automatic responsive hiding on smaller screens.
 {% endcomment %}
 {%- comment -%} Assets loaded conditionally via theme.liquid {%- endcomment -%}
 
-<section class="image-menu-section">
-  <div class="image-menu-section__container">
-    {% assign max_items = section.settings.max_items | default: 6 %}
+{%- liquid
+  assign max_items = section.settings.max_items | default: 6
+  assign section_id = 'image-menu-' | append: section.id
+-%}
+
+<section 
+  class="image-menu" 
+  id="{{ section_id }}"
+  role="navigation"
+  aria-label="{{ 'section-specific.image-menu.sections.navigation_label' | t }}"
+>
+  <div class="image-menu__container">
     {% for block in section.blocks limit: max_items %}
-      {% comment %} Menu Item {% endcomment %}
-      <a href="{{ block.settings.link }}" class="image-menu-item">
-        <div mpe="grow-container" class="image-menu-item__image-container">
-          {% comment %} Menu Item Image {% endcomment %}
-          <img
-            src="{{ block.settings.image | img_url: '200x200' }}"
-            width="auto"
-            height="auto"
-            alt="{{ block.settings.label | escape }}"
-            class="image-menu-item__image grow-container__image"
-          >
+      {%- liquid
+        assign item_label = block.settings.label | default: 'section-specific.image-menu.sections.default_label'
+        assign item_link = block.settings.link
+        assign has_image = false
+        if block.settings.image != blank
+          assign has_image = true
+        endif
+      -%}
+      
+      <a 
+        href="{{ item_link }}" 
+        class="image-menu__item"
+        aria-label="{{ item_label | escape }}"
+        {{ block.shopify_attributes }}
+      >
+        <div class="image-menu__item-image-container">
+          {% if has_image %}
+            <img
+              src="{{ block.settings.image | image_url: width: 150 }}"
+              srcset="{{ block.settings.image | image_url: width: 75 }} 75w,
+                      {{ block.settings.image | image_url: width: 150 }} 150w,
+                      {{ block.settings.image | image_url: width: 200 }} 200w"
+              sizes="(max-width: 479px) 50px, (max-width: 767px) 50px, (max-width: 991px) 65px, 75px"
+              width="75"
+              height="75"
+              alt="{{ item_label | escape }}"
+              loading="lazy"
+              class="image-menu__item-image"
+            >
+          {% else %}
+            {%- comment -%} Placeholder for missing images {%- endcomment -%}
+            <div class="image-menu__item-image image-menu__item-image--placeholder" aria-hidden="true"></div>
+          {% endif %}
         </div>
-        {% comment %} Menu Item Label {% endcomment %}
-        <div class="image-menu-item__label">
-          {{ block.settings.label }}
-        </div>
+        
+        <span class="image-menu__item-label">
+          {{ item_label }}
+        </span>
       </a>
     {% endfor %}
   </div>
@@ -32,40 +64,80 @@
 
 {% schema %}
 {
-  "name": "Image Menu",
+  "name": {
+    "en": "Image Menu",
+    "de": "Bild-Menü"
+  },
+  "tag": "section",
+  "class": "image-menu-section",
   "settings": [
     {
       "type": "header",
-      "content": "Section Settings"
+      "content": {
+        "en": "Display Settings",
+        "de": "Anzeigeeinstellungen"
+      }
     },
     {
       "type": "range",
       "id": "max_items",
-      "label": "Maximum items to display",
+      "label": {
+        "en": "Maximum items to display",
+        "de": "Maximale Anzahl der anzuzeigenden Elemente"
+      },
+      "info": {
+        "en": "Items automatically hide on smaller screens for better mobile experience",
+        "de": "Elemente werden auf kleineren Bildschirmen automatisch ausgeblendet für bessere mobile Erfahrung"
+      },
       "min": 1,
       "max": 6,
+      "step": 1,
       "default": 6
     }
   ],
   "blocks": [
     {
       "type": "menu_item",
-      "name": "Menu Item",
+      "name": {
+        "en": "Menu Item",
+        "de": "Menü-Element"
+      },
       "settings": [
         {
           "type": "image_picker",
           "id": "image",
-          "label": "Image"
+          "label": {
+            "en": "Image",
+            "de": "Bild"
+          },
+          "info": {
+            "en": "Recommended: Square image, minimum 150x150px",
+            "de": "Empfohlen: Quadratisches Bild, mindestens 150x150px"
+          }
         },
         {
           "type": "text",
           "id": "label",
-          "label": "Label"
+          "label": {
+            "en": "Label",
+            "de": "Bezeichnung"
+          },
+          "placeholder": {
+            "en": "Menu item name",
+            "de": "Name des Menü-Elements"
+          }
         },
         {
           "type": "url",
           "id": "link",
-          "label": "Link"
+          "label": {
+            "en": "Link",
+            "de": "Link"
+          },
+          "info": {
+            "en": "Where should this item link to?",
+            "de": "Wohin soll dieses Element verlinken?"
+          }
         }
       ],
       "limit": 6
@@ -73,16 +145,28 @@
   ],
   "presets": [
     {
-      "name": "Image Menu",
+      "name": {
+        "en": "Image Menu",
+        "de": "Bild-Menü"
+      },
       "blocks": [
         {
-          "type": "menu_item"
+          "type": "menu_item",
+          "settings": {
+            "label": "Shop All"
+          }
         },
         {
-          "type": "menu_item"
+          "type": "menu_item",
+          "settings": {
+            "label": "New Arrivals"
+          }
         },
         {
-          "type": "menu_item"
+          "type": "menu_item",
+          "settings": {
+            "label": "Sale"
+          }
         }
       ]
     }

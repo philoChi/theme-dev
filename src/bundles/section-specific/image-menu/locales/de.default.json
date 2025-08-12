@@ -1,7 +1,10 @@
 {
   "section-specific": {
     "image-menu": {
-      "sections": {}
+      "sections": {
+        "navigation_label": "Bild-Navigationsmenü",
+        "default_label": "Menü-Element"
+      }
     }
   }
 }

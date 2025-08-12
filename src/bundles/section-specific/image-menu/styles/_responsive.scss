@@ -1,0 +1,104 @@
+/* Image Menu Section Responsive Styles */
+/* Mobile-first responsive design with progressive enhancement */
+
+/* Tablet styles - reduce item count and adjust sizes */
+@media screen and (max-width: #{$breakpoint-md}) {
+  .image-menu__container {
+    gap: var(--image-menu-gap-tablet);
+  }
+  
+  .image-menu__item-image-container {
+    width: var(--image-menu-item-size-tablet);
+    height: var(--image-menu-item-size-tablet);
+  }
+  
+  .image-menu__item-label {
+    max-width: calc(var(--image-menu-item-size-tablet) + 20px);
+  }
+  
+  /* Hide items beyond the 5th on tablet */
+  .image-menu__item:nth-child(n + #{$items-tablet + 1}) {
+    display: none;
+  }
+}
+
+/* Mobile styles - further reduction and size adjustments */
+@media screen and (max-width: #{$breakpoint-sm}) {
+  .image-menu__container {
+    gap: var(--image-menu-gap-mobile);
+    justify-content: space-around;
+  }
+  
+  .image-menu__item-image-container {
+    width: var(--image-menu-item-size-mobile);
+    height: var(--image-menu-item-size-mobile);
+  }
+  
+  .image-menu__item-label {
+    font-size: var(--image-menu-font-size);
+    max-width: calc(var(--image-menu-item-size-mobile) + 20px);
+  }
+  
+  /* Hide items beyond the 4th on mobile */
+  .image-menu__item:nth-child(n + #{$items-mobile + 1}) {
+    display: none;
+  }
+}
+
+/* Extra small screens - minimal items and compact layout */
+@media screen and (max-width: #{$breakpoint-xs}) {
+  .image-menu__container {
+    gap: calc(var(--image-menu-gap-mobile) - 5px);
+  }
+  
+  .image-menu__item-label {
+    font-size: var(--image-menu-font-size-small);
+    margin-top: calc(var(--image-menu-label-margin-top) - 2px);
+  }
+  
+  /* Hide items beyond the 3rd on extra small screens */
+  .image-menu__item:nth-child(n + #{$items-xs + 1}) {
+    display: none;
+  }
+}
+
+/* Touch-friendly improvements for mobile devices */
+@media (hover: none) and (pointer: coarse) {
+  .image-menu__item {
+    /* Increase touch target size */
+    min-width: 44px;
+    min-height: 44px;
+    padding: 8px;
+    
+    /* Remove hover effects on touch devices */
+    &:hover {
+      transform: none;
+      
+      .image-menu__item-image-container {
+        transform: none;
+        box-shadow: none;
+      }
+      
+      .image-menu__item-label {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+/* Landscape orientation adjustments for mobile */
+@media screen and (max-width: #{$breakpoint-sm}) and (orientation: landscape) {
+  .image-menu {
+    padding: calc(var(--image-menu-padding) / 2);
+  }
+  
+  .image-menu__item-image-container {
+    width: calc(var(--image-menu-item-size-mobile) - 5px);
+    height: calc(var(--image-menu-item-size-mobile) - 5px);
+  }
+  
+  .image-menu__item-label {
+    font-size: var(--image-menu-font-size-small);
+    margin-top: calc(var(--image-menu-label-margin-top) - 3px);
+  }
+}

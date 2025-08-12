@@ -1,0 +1,80 @@
+/* Image Menu Section Layout */
+/* Core layout and positioning styles following BEM methodology */
+
+.image-menu {
+  background-color: var(--image-menu-background);
+  border-top: var(--image-menu-border-width) solid var(--image-menu-border-color);
+  border-bottom: var(--image-menu-border-width) solid var(--image-menu-border-color);
+  position: relative;
+  z-index: var(--image-menu-z-index);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--image-menu-padding);
+}
+
+.image-menu__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: var(--image-menu-container-max-width);
+  width: 100%;
+  height: 100%;
+  flex-wrap: wrap;
+  gap: var(--image-menu-gap);
+}
+
+.image-menu__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  margin: var(--image-menu-item-margin);
+  position: relative;
+}
+
+.image-menu__item-image-container {
+  width: var(--image-menu-item-size);
+  height: var(--image-menu-item-size);
+  border: var(--image-menu-item-border-width) solid var(--image-menu-item-border-color);
+  background-color: var(--image-menu-iconbackground);
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.image-menu__item-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.image-menu__item-label {
+  color: var(--image-menu-font-color);
+  text-transform: uppercase;
+  font-size: var(--image-menu-font-size);
+  font-weight: var(--image-menu-font-weight);
+  margin-top: var(--image-menu-label-margin-top);
+  text-align: center;
+  line-height: 1.2;
+  max-width: calc(var(--image-menu-item-size) + 20px);
+  word-wrap: break-word;
+}
+
+/* Placeholder styling for missing images */
+.image-menu__item-image--placeholder {
+  background-color: var(--image-menu-iconbackground);
+  background-image: linear-gradient(45deg, 
+    rgba(0, 0, 0, 0.1) 25%, 
+    transparent 25%, 
+    transparent 75%, 
+    rgba(0, 0, 0, 0.1) 75%
+  );
+  background-size: 10px 10px;
+  border-radius: 0;
+}
+
