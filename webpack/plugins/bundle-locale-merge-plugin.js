@@ -13,8 +13,8 @@ class BundleLocaleMergePlugin {
   constructor(options = {}) {
     this.options = {
       bundleBasePath: 'src/bundles',
-      configPath: 'src/config/product-info.de.json',
-      metadataPath: 'src/config/locale-metadata.json',
+      configPath: 'src/localization/product-info.de.json',
+      metadataPath: 'src/localization/locale-metadata.json',
       outputPath: 'theme-hyspex/locales',
       ...options
     };

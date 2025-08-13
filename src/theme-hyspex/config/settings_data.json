@@ -17,10 +17,6 @@
     "collection_all_products": "all-products",
     "collection_all_products_limit": 20,
     "sections": {
-      "section-cart-drawer": {
-        "type": "section-cart-drawer",
-        "settings": {}
-      },
       "section-image-menu": {
         "type": "section-image-menu",
         "blocks": {
@@ -80,30 +76,6 @@
         "type": "section-big-heading",
         "settings": {
           "bigheading_text": "Das wird dir gefallen..."
-        }
-      },
-      "section-product-showcase": {
-        "type": "section-product-showcase",
-        "blocks": {
-          "custom_category_ReBTMV": {
-            "type": "custom_category",
-            "settings": {
-              "tab_label": "WinterIsComing",
-              "collection": "vans",
-              "view_all_text": "Fast"
-            }
-          }
-        },
-        "block_order": [
-          "custom_category_ReBTMV"
-        ],
-        "settings": {
-          "primary_title": "Am beliebtesten",
-          "secondary_title": "Neuheiten",
-          "primary_collection": "men-clothing",
-          "secondary_collection": "all-products",
-          "primary_view_all_text": "Alle Bestseller",
-          "secondary_view_all_text": "Alle Neuheiten"
         }
       }
     },

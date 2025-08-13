@@ -37,12 +37,13 @@
         <div class="image-menu__item-image-container">
           {% if has_image %}
             <img
-              src="{{ block.settings.image | image_url: width: 150 }}"
-              srcset="{{ block.settings.image | image_url: width: 75 }} 75w,
-                      {{ block.settings.image | image_url: width: 150 }} 150w,
-                      {{ block.settings.image | image_url: width: 200 }} 200w"
-              sizes="(max-width: 479px) 50px, (max-width: 767px) 50px, (max-width: 991px) 65px, 75px"
-              width="75"
+              src="{{ block.settings.image | image_url: width: 480 }}"
+              srcset="{{ block.settings.image | image_url: width: 100 }} 100w,
+                      {{ block.settings.image | image_url: width: 200 }} 200w,
+                      {{ block.settings.image | image_url: width: 300 }} 300w,
+                      {{ block.settings.image | image_url: width: 480 }} 480w"
+              sizes="(max-width: 479px) 100px, (max-width: 767px) 130px, (max-width: 991px) 130px, 240px"
+              width="240"
               alt="{{ item_label | escape }}"
               loading="lazy"
               class="image-menu__item-image"
@@ -110,8 +111,8 @@
             "de": "Bild"
           },
           "info": {
-            "en": "Recommended: Square image, minimum 150x150px",
-            "de": "Empfohlen: Quadratisches Bild, mindestens 150x150px"
+            "en": "Recommended: Square image, minimum 480x480px for crisp display",
+            "de": "Empfohlen: Quadratisches Bild, mindestens 480x480px für scharfe Darstellung"
           }
         },
         {

@@ -15,7 +15,7 @@
     "theme:logs": "./scripts/manager-theme-dev.sh logs",
     "theme:cleanup": "./scripts/manager-theme-dev.sh cleanup",
     "theme:help": "./scripts/manager-theme-dev.sh help",
-    "theme:pull": "cd theme-hyspex && shopify theme pull --only config/settings_data.json",
+    "theme:pull": "./scripts/deploy.sh pull",
     "build": "webpack",
     "build:dev": "NODE_ENV=development webpack && sleep 2 && touch theme-hyspex/assets/global.css",
     "build:clean": "rm -rf theme-hyspex/",

@@ -3,10 +3,6 @@
 
 /* Tablet styles - reduce item count and adjust sizes */
 @media screen and (max-width: #{$breakpoint-md}) {
-  .image-menu__container {
-    gap: var(--image-menu-gap-tablet);
-  }
-  
   .image-menu__item-image-container {
     width: var(--image-menu-item-width-tablet);
   }
@@ -24,7 +20,6 @@
 /* Mobile styles - further reduction and size adjustments */
 @media screen and (max-width: #{$breakpoint-sm}) {
   .image-menu__container {
-    gap: var(--image-menu-gap-mobile);
     justify-content: space-around;
   }
   
@@ -45,10 +40,6 @@
 
 /* Extra small screens - minimal items and compact layout */
 @media screen and (max-width: #{$breakpoint-xs}) {
-  .image-menu__container {
-    gap: calc(var(--image-menu-gap-mobile) - 5px);
-  }
-  
   .image-menu__item-label {
     font-size: var(--image-menu-font-size-small);
     margin-top: calc(var(--image-menu-label-margin-top) - 2px);

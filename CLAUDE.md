@@ -75,7 +75,7 @@ github-repository: git@github.com:philoChi/theme-dev.git
 - Monitor Shopify Web Performance dashboard
 
 ### Source Management
-- **Source directories**: `src/bundles/`, `src/localization-common/`, `src/theme-hyspex/`
+- **Source directories**: `src/bundles/`, `src/localization/`, `src/theme-hyspex/`
 - **Output directory**: `theme-hyspex/` (complete Shopify theme, git-ignored)
 - **Build command**: `npm run build:dev` compiles everything
 - **Never edit output**: All changes in source directories only
@@ -427,7 +427,7 @@ npm run git:info                               # Show owner, repo, branch, activ
 ## Typical pitfalls to avoid
 
 - **Never edit files in `theme-hyspex/`** - it's generated and git-ignored
-- **Always work in source directories** - `src/bundles/`, `src/localization-common/`, `src/theme-hyspex/`
+- **Always work in source directories** - `src/bundles/`, `src/localization/`, `src/theme-hyspex/`
 - **Run `npm run build:dev` after any changes** - rebuilds the complete theme
 - **The `theme-hyspex/` folder is your complete Shopify theme** - use it with all Shopify CLI commands
 - Load the `features-shared-all` bundle once in `theme.liquid` since features are shared

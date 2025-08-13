@@ -329,8 +329,8 @@ module.exports = {
     // Merge bundle-specific locale files with product configuration
     new BundleLocaleMergePlugin({
       bundleBasePath: 'src/bundles',
-      configPath: 'src/config/product-info.de.json',
-      metadataPath: 'src/config/locale-metadata.json',
+      configPath: 'src/localization/product-info.de.json',
+      metadataPath: 'src/localization/locale-metadata.json',
       outputPath: 'theme-hyspex/locales'
     }),
     

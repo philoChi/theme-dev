@@ -452,11 +452,14 @@ show_help() {
 Hyspex Theme Deployment Script v1.0.0
 
 USAGE:
-    deploy.sh <mode>
+    deploy.sh <mode|command>
 
 MODES:
     development     Deploy with development webpack build
     production      Deploy with production webpack build (minified/optimized)
+
+COMMANDS:
+    pull           Pull changes from Shopify and sync to source directories
 
 DESCRIPTION:
     This script deploys webpack-generated theme content to a separate 
@@ -473,6 +476,7 @@ FEATURES:
 EXAMPLES:
     ./scripts/deploy.sh development     # Deploy development build
     ./scripts/deploy.sh production      # Deploy production build
+    ./scripts/deploy.sh pull           # Pull changes from Shopify to source
 
 ENVIRONMENT:
     DEBUG=1                            # Enable debug logging
@@ -503,6 +507,108 @@ handle_error() {
     exit $exit_code
 }
 
+# Sync functions
+pull_from_shopify() {
+    log_info "🔄 Pulling changes from Shopify to deploy repository..."
+    
+    # Ensure deploy repository exists and is ready
+    if ! validate_git_repository "$TARGET_REPO_DIR"; then
+        initialize_target_repository || return 1
+    fi
+    
+    # Change to deploy repository
+    cd "$TARGET_REPO_DIR"
+    
+    # Pull all changes from Shopify
+    log_info "Pulling from Shopify..."
+    npx shopify theme pull || {
+        log_error "Failed to pull from Shopify"
+        return 1
+    }
+    
+    log_info "✅ Successfully pulled changes from Shopify"
+}
+
+sync_to_source() {
+    log_info "📁 Syncing files to source directories..."
+    
+    local source_config="$TARGET_REPO_DIR/config/settings_data.json"
+    local target_config="$PROJECT_ROOT/src/theme-hyspex/config/settings_data.json"
+    local source_templates="$TARGET_REPO_DIR/templates"
+    local target_templates="$PROJECT_ROOT/src/theme-hyspex/templates"
+    
+    local synced_count=0
+    
+    # Sync settings_data.json
+    if [[ -f "$source_config" ]]; then
+        mkdir -p "$(dirname "$target_config")"
+        cp "$source_config" "$target_config"
+        log_info "✅ Synced settings_data.json"
+        ((synced_count++))
+    else
+        log_warn "settings_data.json not found in deploy repository"
+    fi
+    
+    # Sync template files
+    if [[ -d "$source_templates" ]]; then
+        mkdir -p "$target_templates"
+        
+        # Sync JSON templates
+        for json_file in "$source_templates"/*.json; do
+            if [[ -f "$json_file" ]]; then
+                local filename=$(basename "$json_file")
+                cp "$json_file" "$target_templates/$filename"
+                log_info "✅ Synced template: $filename"
+                ((synced_count++))
+            fi
+        done
+        
+        # Sync customers directory if it exists
+        if [[ -d "$source_templates/customers" ]]; then
+            mkdir -p "$target_templates/customers"
+            for file in "$source_templates/customers"/*; do
+                if [[ -f "$file" ]]; then
+                    local filename=$(basename "$file")
+                    cp "$file" "$target_templates/customers/$filename"
+                    log_info "✅ Synced customer template: customers/$filename"
+                    ((synced_count++))
+                fi
+            done
+        fi
+    else
+        log_warn "Templates directory not found in deploy repository"
+    fi
+    
+    if [[ $synced_count -gt 0 ]]; then
+        log_info "✅ Synced $synced_count files to source directories"
+    else
+        log_info "ℹ️  No files to sync"
+    fi
+}
+
+pull_and_sync() {
+    log_info "🚀 Starting pull and sync operation..."
+    
+    # Pull from Shopify to deploy repository
+    pull_from_shopify || return 1
+    
+    # Sync from deploy repository to source
+    sync_to_source || return 1
+    
+    # Rebuild theme with webpack after sync
+    log_info "🔨 Rebuilding theme after sync..."
+    cd "$PROJECT_ROOT"
+    npm run build:dev || {
+        log_error "Webpack build failed after sync"
+        return 1
+    }
+    
+    log_info "🎉 Pull, sync, and build completed successfully!"
+    log_info "📍 Deploy repository: $TARGET_REPO_DIR"
+    log_info "📁 Source synced to: $PROJECT_ROOT/src/"
+    log_info "🏗️  Theme rebuilt: $PROJECT_ROOT/theme-hyspex/"
+}
+
 # Main function
 main() {
     local mode=${1:-""}
@@ -513,6 +619,13 @@ main() {
     # Show help if requested or no arguments
     if [[ "$mode" == "help" ]] || [[ "$mode" == "--help" ]] || [[ "$mode" == "-h" ]] || [[ -z "$mode" ]]; then
         show_help
+        exit 0
+    fi
+    
+    # Handle pull command (no lock needed for read operations)
+    if [[ "$mode" == "pull" ]]; then
+        pull_and_sync
+        log_info "🎉 Pull operation completed successfully!"
         exit 0
     fi
     

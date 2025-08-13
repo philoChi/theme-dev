@@ -107,52 +107,41 @@
         "menu_item_UBjkz6": {
           "type": "menu_item",
           "settings": {
-            "image": "shopify://shop_images/unisex-premium-hoodie-black-front-666ec1ce15633.jpg",
-            "label": "Hoodies",
-            "link": ""
+            "image": "shopify://shop_images/phiolo_Create_an_ultra-realistic_amateur_photo_shoot_with_sof_50153868-69f2-4880-a855-5d1de87d3f51_2.png",
+            "label": "Herren",
+            "link": "shopify://collections/men-clothing"
           }
         },
         "menu_item_8re8jD": {
           "type": "menu_item",
           "settings": {
-            "image": "shopify://shop_images/unisex-crew-neck-sweatshirt-dark-heather-front-656e42f8afcee.jpg",
-            "label": "Sweatshirts",
-            "link": ""
+            "image": "shopify://shop_images/phiolo_Create_an_ultra-realistic_amateur_photo_shoot_with_sof_a9221460-c312-443e-b251-6176145b9d9f_0.png",
+            "label": "Damen",
+            "link": "shopify://collections/women-clothing"
           }
         },
         "menu_item_XxwFXk": {
           "type": "menu_item",
           "settings": {
-            "image": "shopify://shop_images/unisex-organic-cotton-t-shirt-dark-heather-blue-front-6658dd5242d78.jpg",
-            "label": "T-Shirts",
-            "link": ""
+            "image": "shopify://shop_images/phiolo_Create_an_ultra-realistic_amateur_photo_shoot_with_sof_310ca70b-1771-4a2c-b772-a7e6129922fa_0.png",
+            "label": "Shirts",
+            "link": "shopify://collections/kapuzenpullover"
           }
         },
         "menu_item_h3MTQj": {
           "type": "menu_item",
           "settings": {
-            "image": "shopify://shop_images/c1a864cb74de0e0fd0004872d6a00edd.jpg",
-            "label": "Caps",
-            "link": ""
-          }
-        }/*,
-         "menu_item_BYBBcq": {
-          "type": "menu_item",
-          "settings": {
-            "image": "shopify://shop_images/97da9be116d931319e458251c546a8cc.jpg",
-            "label": "Rucksack",
-            "link": ""
+            "image": "shopify://shop_images/phiolo_Create_an_ultra-realistic_amateur_photo_shoot_with_sof_06f82228-99b4-4c4e-a221-6b36e12c48c0_1.png",
+            "label": "Hoodie",
+            "link": "shopify://collections/kapuzenpullover"
           }
         }
-        */
       },
       "block_order": [
         "menu_item_UBjkz6",
         "menu_item_8re8jD",
         "menu_item_XxwFXk",
-        "menu_item_h3MTQj",
-        "menu_item_BYBBcq",
-        "menu_item_kLktkM"
+        "menu_item_h3MTQj"
       ],
       "settings": {
         "max_items": 6

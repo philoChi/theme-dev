@@ -9,11 +9,14 @@
   /* Hover state */
   &:hover {
     .image-menu__item-image-container {
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      box-shadow: 
+        0 0 0 var(--image-menu-item-border-width) var(--image-menu-item-border-color),
+        0 2px 8px rgba(0, 0, 0, 0.1);
     }
     
     .image-menu__item-image {
-      transform: scale(var(--image-menu-image-hover-scale));
+      transform: scale3d(var(--image-menu-image-hover-scale), var(--image-menu-image-hover-scale), 1);
+      transform-origin: center center;
     }
   }
   
@@ -51,6 +54,9 @@
   transition: 
     transform var(--image-menu-transition-duration) var(--image-menu-transition-easing),
     box-shadow var(--image-menu-transition-duration) var(--image-menu-transition-easing);
+  
+  /* Optimize for smooth transforms */
+  transform-style: preserve-3d;
 }
 
 .image-menu__item-label {
