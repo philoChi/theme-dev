@@ -1,12 +1,8 @@
 /* Announcement Bar Interactive States */
 
-/* Hover states */
+/* Hover and focus states for links */
 .announcement__social-link:hover,
-.announcement__social-link:focus-visible {
-  background-color: rgba(255, 255, 255, 0.1);
-  outline: none;
-}
-
+.announcement__social-link:focus-visible,
 .announcement__faq-link:hover,
 .announcement__faq-link:focus-visible {
   background-color: rgba(255, 255, 255, 0.1);
@@ -20,21 +16,16 @@
   outline-offset: 2px;
 }
 
-/* Active states */
-.announcement__social-link:active {
-  background-color: rgba(255, 255, 255, 0.15);
-  transform: translateY(1px);
-}
-
+/* Active states - removed translateY to prevent layout shift */
+.announcement__social-link:active,
 .announcement__faq-link:active {
   background-color: rgba(255, 255, 255, 0.15);
-  transform: translateY(1px);
 }
 
 /* Icon hover effects */
 .announcement__icon:hover {
   transform: scale(1.05);
-  transition: transform var(--transition-duration) var(--transition-timing);
+  transition: var(--transition);
 }
 
 /* Loading state for icons */

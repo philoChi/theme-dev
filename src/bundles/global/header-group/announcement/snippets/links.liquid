@@ -4,10 +4,9 @@ Renders social media links and FAQ link with proper accessibility
 {%- endcomment -%}
 
 {%- liquid
-  # Assign parameters with defaults
+  # Set parameters with defaults
   assign show_faq = show_faq | default: true
-  assign faq_url = faq_url | default: pages.faq.url
-  assign faq_fallback_url = faq_fallback_url | default: '/pages/faq'
+  assign final_faq_url = faq_url | default: pages.faq.url | default: '/pages/faq'
   
   # Get social links from shop metafields
   assign instagram_url = shop.brand.metafields.social_links.instagram.value
@@ -50,9 +49,6 @@ Renders social media links and FAQ link with proper accessibility
 
   {%- comment -%} FAQ Link {%- endcomment -%}
   {%- if show_faq -%}
-    {%- liquid
-      assign final_faq_url = faq_url | default: faq_fallback_url
-    -%}
     <a href="{{ final_faq_url }}" 
        class="announcement__faq-link" 
        aria-label="Häufig gestellte Fragen"

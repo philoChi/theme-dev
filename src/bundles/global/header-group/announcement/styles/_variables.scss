@@ -16,15 +16,16 @@
   /* Colors */
   --announcement-bg-color: var(--main-foreground);
   --announcement-text-color: var(--main-background);
+  --announcement-text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
   --icon-border-color: var(--main-foreground);
   
   /* Typography */
-  --announcement-font-weight: var(--main-font-weight);
-  --announcement-font-size-mobile: 0.8rem;
-  --announcement-font-size-tablet: 0.9rem;
-  --announcement-font-size-desktop: 1rem;
-  --faq-font-size-mobile: 0.8rem;
-  --faq-font-size-desktop: 0.7rem;
+  --announcement-font-weight: 600;
+  --announcement-font-size: clamp(0.85rem, 2vw, 0.95rem);
+  --announcement-line-height: 1.3;
+  --announcement-letter-spacing: 0.02em;
+  --faq-font-size: clamp(0.75rem, 1.8vw, 0.8rem);
+  --faq-font-weight: 600;
   
   /* Border Radius */
   --border-radius-container: 12px;
@@ -32,6 +33,5 @@
   --border-radius-faq: 4px;
   
   /* Transitions */
-  --transition-duration: 0.2s;
-  --transition-timing: ease;
+  --transition: background-color 0.2s ease, transform 0.2s ease;
 }

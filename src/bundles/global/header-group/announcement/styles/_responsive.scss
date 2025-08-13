@@ -1,80 +1,85 @@
 /* Announcement Bar Responsive Styles - Mobile First */
 
-/* Small mobile devices (max-width: 479px) */
-@media screen and (max-width: 479px) {
-  .announcement__text {
-    padding: 5px 25px;
-    font-size: var(--announcement-font-size-mobile);
+/* Mobile devices - prioritize content and hide non-essentials */
+@media screen and (max-width: 767px) {
+  .announcement__container {
+    padding: 0 calc(var(--announcement-padding-x) * 0.5);
+    justify-content: center; /* Center the layout */
+  }
+
+  .announcement__section {
+    gap: calc(var(--icon-gap) * 0.6);
   }
 
   .announcement__section--center {
-    height: auto;
+    padding: 0 0.75rem;
+    flex: none; /* Don't expand, just take needed space */
   }
 
-  .announcement__section {
-    gap: var(--element-gap-mobile);
+  .announcement__text {
+    font-size: calc(var(--announcement-font-size) * 0.9);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 60vw; /* Prevent text from taking all space */
+  }
+
+  /* Hide social links on mobile - too much clutter */
+  .announcement__social-link {
+    display: none;
   }
 
   .announcement__faq-link {
-    font-size: var(--faq-font-size-mobile);
-    padding: 2px 6px;
+    padding: 2px 4px;
+    font-size: 0.7rem;
+    min-width: 0; /* Allow shrinking */
   }
 
-  .announcement__content-wrapper {
-    flex-direction: column;
-    gap: 0.5rem;
+  /* Reduce left icons on mobile if needed */
+  .announcement__section--left {
+    flex-shrink: 2; /* Shrink more aggressively than right */
   }
 
-  .announcement__section--left,
   .announcement__section--right {
-    width: 100%;
+    flex-shrink: 1; /* Keep FAQ visible but allow shrinking */
+  }
+}
+
+/* Very small mobile devices - minimal layout, hide more */
+@media screen and (max-width: 479px) {
+  .announcement__container {
+    padding: 0.25rem calc(var(--announcement-padding-x) * 0.3);
     justify-content: center;
   }
-}
-
-/* Mobile devices (max-width: 767px) */
-@media screen and (max-width: 767px) {
-  .announcement__text {
-    font-size: var(--announcement-font-size-mobile);
-    line-height: 1.4;
-  }
 
   .announcement__section {
-    gap: var(--element-gap-mobile);
+    gap: calc(var(--icon-gap) * 0.4);
   }
 
-  .announcement__container {
-    grid-template-columns: 1fr 1fr 1fr;
+  .announcement__section--center {
+    padding: 0 0.5rem;
+  }
+
+  .announcement__text {
+    font-size: calc(var(--announcement-font-size) * 0.85);
+    max-width: 50vw; /* Even more restricted */
   }
 
   .announcement__faq-link {
-    font-size: var(--faq-font-size-mobile);
-    padding: 2px 6px;
+    font-size: 0.6rem;
+    padding: 1px 2px;
+  }
+
+  /* On very small screens, hide some left icons if present */
+  .announcement__icon:nth-child(n+2) {
+    display: none; /* Hide all but first icon */
   }
 }
 
-/* Tablet devices (max-width: 991px) */
-@media screen and (max-width: 991px) {
-  .announcement__text {
-    font-size: var(--announcement-font-size-tablet);
-  }
-
-  .announcement__section {
-    gap: var(--element-gap);
-  }
-}
-
-/* Medium screens and up (min-width: 768px) */
-@media screen and (min-width: 768px) {
-  .announcement__text {
-    font-size: var(--announcement-font-size-desktop);
-  }
-}
-
-/* Large screens */
+/* Large screens - increase spacing */
 @media screen and (min-width: 1200px) {
   .announcement__section {
-    gap: calc(var(--element-gap) * 1.2);
+    gap: calc(var(--icon-gap) * 1.2);
   }
 }
 

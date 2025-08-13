@@ -4,11 +4,9 @@ Renders info icons (left and right) with fallbacks and accessibility
 {%- endcomment -%}
 
 {%- liquid
-  # Assign parameters with defaults
+  # Set parameters with defaults
   assign show_left = show_left | default: true
   assign show_right = show_right | default: true
-  assign left_image = left_image | default: null
-  assign right_image = right_image | default: null
   assign left_fallback_icon = left_fallback_icon | default: 'icon-dhl'
   assign right_fallback_icon = right_fallback_icon | default: 'icon-flag-german'
 -%}
@@ -21,7 +19,6 @@ Renders info icons (left and right) with fallbacks and accessibility
       {%- if left_image -%}
         <img
           src="{{ left_image | image_url: width: 20 }}"
-          loading="lazy"
           width="20"
           height="20"
           alt="{{ left_image.alt | escape }}"
@@ -40,7 +37,6 @@ Renders info icons (left and right) with fallbacks and accessibility
       {%- if right_image -%}
         <img
           src="{{ right_image | image_url: width: 20 }}"
-          loading="lazy"
           width="20"
           height="20"
           alt="{{ right_image.alt | escape }}"

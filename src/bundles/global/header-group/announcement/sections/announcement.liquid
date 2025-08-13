@@ -8,41 +8,33 @@ Displays promotional message with info icons and social links
   assign announcement_text = 'global.header-group.announcement.free_shipping_text' | t: free_shipping_value: free_shipping_value
 -%}
 
-<div class="announcement__content-overlay">
-  <div class="announcement__content-wrapper">
-    {%- comment -%} Left Section: Info Icons {%- endcomment -%}
-    <div class="announcement__section announcement__section--left">
-      {%- render 'snippet-section-announcement-icons',
-          show_left: section.settings.infoicon_left_visibility,
-          show_right: section.settings.infoicon_right_visibility,
-          left_image: section.settings.icon_info_image_left,
-          right_image: section.settings.icon_info_image_right,
-          left_fallback_icon: 'icon-dhl',
-          right_fallback_icon: 'icon-flag-german'
-      -%}
-    </div>
-
-    {%- comment -%} Right Section: Social Links {%- endcomment -%}
-    <div class="announcement__section announcement__section--right">
-      {%- render 'snippet-section-announcement-links',
-          show_faq: section.settings.show_faq_link,
-          faq_url: section.settings.faq_link
-      -%}
-    </div>
-  </div>
-</div>
-
-{%- comment -%} Background Grid Layout {%- endcomment -%}
 <div class="announcement__container">
-  <div class="announcement__section--left-bg"></div>
-  
+  {%- comment -%} Left Section: Info Icons {%- endcomment -%}
+  <div class="announcement__section announcement__section--left">
+    {%- render 'snippet-section-announcement-icons',
+        show_left: section.settings.infoicon_left_visibility,
+        show_right: section.settings.infoicon_right_visibility,
+        left_image: section.settings.icon_info_image_left,
+        right_image: section.settings.icon_info_image_right,
+        left_fallback_icon: 'icon-dhl',
+        right_fallback_icon: 'icon-flag-german'
+    -%}
+  </div>
+
+  {%- comment -%} Center Section: Announcement Text {%- endcomment -%}
   <div class="announcement__section announcement__section--center">
     <div class="announcement__text" role="banner" aria-label="Kostenloser Versand Information">
       {{ announcement_text }}
     </div>
   </div>
   
-  <div class="announcement__section--right"></div>
+  {%- comment -%} Right Section: Social Links {%- endcomment -%}
+  <div class="announcement__section announcement__section--right">
+    {%- render 'snippet-section-announcement-links',
+        show_faq: section.settings.show_faq_link,
+        faq_url: section.settings.faq_link
+    -%}
+  </div>
 </div>
 
 {% schema %}
