@@ -1,7 +1,7 @@
 {
   "global": {
     "header-group": {
-      "announcement-bar": {
+      "announcement": {
         "Heading_1": "Kostenloser Versand ab %{free_shipping_value}"
       }
     }
