@@ -1,0 +1,37 @@
+/* Announcement Bar Variables – Design Tokens & Custom Properties */
+
+.announcement-section {
+  /* Layout & Dimensions */
+  --announcement-height: 25px;
+  --content-max-width: var(--page-max-width);
+  
+  /* Spacing */
+  --announcement-padding-x: var(--page-side-distance);
+  --icon-gap: 10px;
+  
+  /* Icon Sizing */
+  --icon-size: 15px;
+  --icon-border-width: 2px;
+  
+  /* Colors */
+  --announcement-bg-color: var(--main-foreground);
+  --announcement-text-color: var(--main-background);
+  --icon-border-color: var(--main-foreground);
+  
+  /* Typography */
+  --announcement-font-weight: var(--main-font-weight);
+  --announcement-font-size-mobile: 0.8rem;
+  --announcement-font-size-tablet: 0.9rem;
+  --announcement-font-size-desktop: 1rem;
+  --faq-font-size-mobile: 0.8rem;
+  --faq-font-size-desktop: 0.7rem;
+  
+  /* Border Radius */
+  --border-radius-container: 12px;
+  --border-radius-icon: 50%;
+  --border-radius-faq: 4px;
+  
+  /* Transitions */
+  --transition-duration: 0.2s;
+  --transition-timing: ease;
+}

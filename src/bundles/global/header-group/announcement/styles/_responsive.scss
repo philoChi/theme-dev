@@ -1,0 +1,96 @@
+/* Announcement Bar Responsive Styles - Mobile First */
+
+/* Small mobile devices (max-width: 479px) */
+@media screen and (max-width: 479px) {
+  .announcement__text {
+    padding: 5px 25px;
+    font-size: var(--announcement-font-size-mobile);
+  }
+
+  .announcement__section--center {
+    height: auto;
+  }
+
+  .announcement__section {
+    gap: var(--element-gap-mobile);
+  }
+
+  .announcement__faq-link {
+    font-size: var(--faq-font-size-mobile);
+    padding: 2px 6px;
+  }
+
+  .announcement__content-wrapper {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .announcement__section--left,
+  .announcement__section--right {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Mobile devices (max-width: 767px) */
+@media screen and (max-width: 767px) {
+  .announcement__text {
+    font-size: var(--announcement-font-size-mobile);
+    line-height: 1.4;
+  }
+
+  .announcement__section {
+    gap: var(--element-gap-mobile);
+  }
+
+  .announcement__container {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .announcement__faq-link {
+    font-size: var(--faq-font-size-mobile);
+    padding: 2px 6px;
+  }
+}
+
+/* Tablet devices (max-width: 991px) */
+@media screen and (max-width: 991px) {
+  .announcement__text {
+    font-size: var(--announcement-font-size-tablet);
+  }
+
+  .announcement__section {
+    gap: var(--element-gap);
+  }
+}
+
+/* Medium screens and up (min-width: 768px) */
+@media screen and (min-width: 768px) {
+  .announcement__text {
+    font-size: var(--announcement-font-size-desktop);
+  }
+}
+
+/* Large screens */
+@media screen and (min-width: 1200px) {
+  .announcement__section {
+    gap: calc(var(--element-gap) * 1.2);
+  }
+}
+
+/* High DPI displays */
+@media screen and (-webkit-min-device-pixel-ratio: 2), 
+       screen and (min-resolution: 192dpi) {
+  .announcement__icon-image {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .announcement__social-link,
+  .announcement__faq-link {
+    transition: none;
+  }
+}

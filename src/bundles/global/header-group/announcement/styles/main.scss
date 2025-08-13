@@ -1,0 +1,16 @@
+/**
+ * Announcement Bar Main Styles
+ * Main entry point importing all announcement bar style partials
+ */
+
+// Import design tokens and variables
+@import 'variables';
+
+// Import layout styles
+@import 'layout';
+
+// Import responsive breakpoints
+@import 'responsive';
+
+// Import interactive states
+@import 'states';

@@ -1,0 +1,54 @@
+{%- comment -%}
+Announcement Bar Icons Component
+Renders info icons (left and right) with fallbacks and accessibility
+{%- endcomment -%}
+
+{%- liquid
+  # Assign parameters with defaults
+  assign show_left = show_left | default: true
+  assign show_right = show_right | default: true
+  assign left_image = left_image | default: null
+  assign right_image = right_image | default: null
+  assign left_fallback_icon = left_fallback_icon | default: 'icon-dhl'
+  assign right_fallback_icon = right_fallback_icon | default: 'icon-flag-german'
+-%}
+
+<div class="announcement__icon-group" role="group" aria-label="Informations-Icons">
+  {%- if show_left -%}
+    <div class="announcement__icon" 
+         role="img" 
+         aria-label="{% if left_image %}{{ left_image.alt | escape | default: 'Info Icon Links' }}{% else %}DHL Versand{% endif %}">
+      {%- if left_image -%}
+        <img
+          src="{{ left_image | image_url: width: 20 }}"
+          loading="lazy"
+          width="20"
+          height="20"
+          alt="{{ left_image.alt | escape }}"
+          class="announcement__icon-image"
+        >
+      {%- else -%}
+        <span class="icon {{ left_fallback_icon }}" aria-hidden="true"></span>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {%- if show_right -%}
+    <div class="announcement__icon" 
+         role="img" 
+         aria-label="{% if right_image %}{{ right_image.alt | escape | default: 'Info Icon Rechts' }}{% else %}Deutsche Flagge{% endif %}">
+      {%- if right_image -%}
+        <img
+          src="{{ right_image | image_url: width: 20 }}"
+          loading="lazy"
+          width="20"
+          height="20"
+          alt="{{ right_image.alt | escape }}"
+          class="announcement__icon-image"
+        >
+      {%- else -%}
+        <span class="icon {{ right_fallback_icon }}" aria-hidden="true"></span>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+</div>

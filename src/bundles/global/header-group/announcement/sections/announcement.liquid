@@ -1,114 +1,124 @@
-<div class="announcement-link-content">
-  <div class="sector-margin sector-max-width-small announcement-flex-link">
-    <div class="separator-container">
-      <div class="info-icon-container">
-        {%- if section.settings.infoicon_left_visibility -%}
-          <div class="info-icon">
-            {%- if section.settings.icon_info_image_left == null -%}
-              <span class="icon icon-dhl"></span>
-            {%- else -%}
-              <img
-                src="{{ section.settings.icon_info_image_left.src | image_url: 'master' }}"
-                loading="lazy"
-                width="20"
-                height="20"
-                alt="{{ section.settings.icon_info_image_left.alt | escape }}"
-                class="info-icon-image"
-              >
-            {%- endif -%}
-          </div>
-        {%- endif -%}
-        {%- if section.settings.infoicon_right_visibility -%}
-          <div class="info-icon">
-            {%- if section.settings.icon_info_image_right == null -%}
-              <span class="icon icon-flag-german"></span>
-            {%- else -%}
-              <img
-                src="{{ section.settings.icon_info_image_right.src | image_url: 'master' }}"
-                loading="lazy"
-                width="20"
-                height="20"
-                alt="{{ section.settings.icon_info_image_right.alt | escape }}"
-                class="info-icon-image"
-              >
-            {%- endif -%}
-          </div>
-        {%- endif -%}
-      </div>
+{%- comment -%}
+Announcement Bar Section
+Displays promotional message with info icons and social links
+{%- endcomment -%}
+
+{%- liquid
+  assign free_shipping_value = settings.free_shipping_germany | times: 100 | money_without_trailing_zeros
+  assign announcement_text = 'global.header-group.announcement.free_shipping_text' | t: free_shipping_value: free_shipping_value
+-%}
+
+<div class="announcement__content-overlay">
+  <div class="announcement__content-wrapper">
+    {%- comment -%} Left Section: Info Icons {%- endcomment -%}
+    <div class="announcement__section announcement__section--left">
+      {%- render 'snippet-section-announcement-icons',
+          show_left: section.settings.infoicon_left_visibility,
+          show_right: section.settings.infoicon_right_visibility,
+          left_image: section.settings.icon_info_image_left,
+          right_image: section.settings.icon_info_image_right,
+          left_fallback_icon: 'icon-dhl',
+          right_fallback_icon: 'icon-flag-german'
+      -%}
     </div>
-    <div class="separator-container">
-      {%- if shop.brand.metafields.social_links.instagram.value -%}
-        <a href="{{ shop.brand.metafields.social_links.instagram.value }}" class="icon-container less-padding">
-          <span class="icon icon-social-instagram"></span>
-        </a>
-      {%- endif -%}
-      {%- if shop.brand.metafields.social_links.facebook.value -%}
-        <a href="{{ shop.brand.metafields.social_links.facebook.value }}" class="icon-container less-padding">
-          {%- comment -%}{% render 'icon-social-facebook' %}{%- endcomment -%}
-          <span class="icon icon-social-instagram"></span>{%- comment -%}Fallback: Facebook icon not available{%- endcomment -%}
-        </a>
-      {%- endif -%}
-      <a href="{{ pages["contact"].url }}" class="info-icon">
-        <span class="icon icon-social-mailbox"></span>
-      </a>
-      {%- if section.settings.show_faq_link -%}
-        <a href="{{ pages.faq.url | default: '/pages/faq' }}" class="faq-text-link" title="FAQ">
-          FAQ
-        </a>
-      {%- endif -%}
+
+    {%- comment -%} Right Section: Social Links {%- endcomment -%}
+    <div class="announcement__section announcement__section--right">
+      {%- render 'snippet-section-announcement-links',
+          show_faq: section.settings.show_faq_link,
+          faq_url: section.settings.faq_link
+      -%}
     </div>
   </div>
 </div>
-<div class="announcement-container">
-  <div class="separator-container left"></div>
-  <div class="separator-container announcement">
-    {%- assign free_shipping_value = settings.free_shipping_germany | times: 100 | money_without_trailing_zeros -%}
-    <div class="announcement-text">
-      {{ 'global.header-group.announcement.Heading_1' | t: free_shipping_value: free_shipping_value }}
+
+{%- comment -%} Background Grid Layout {%- endcomment -%}
+<div class="announcement__container">
+  <div class="announcement__section--left-bg"></div>
+  
+  <div class="announcement__section announcement__section--center">
+    <div class="announcement__text" role="banner" aria-label="Kostenloser Versand Information">
+      {{ announcement_text }}
     </div>
   </div>
-  <div class="separator-container right"></div>
+  
+  <div class="announcement__section--right"></div>
 </div>
 
 {% schema %}
 {
-  "name": "Announcement",
+  "name": "Announcement Bar",
   "tag": "section",
   "class": "announcement-section",
   "settings": [
     {
-      "type": "checkbox",
-      "id": "infoicon_right_visibility",
-      "label": "InfoIcon Right - Visibility",
-      "default": true
+      "type": "header",
+      "content": "Info Icons (Left Side)"
     },
     {
       "type": "checkbox",
       "id": "infoicon_left_visibility",
-      "label": "InfoIcon Left - Visibility",
+      "label": "Show Left Icon",
+      "info": "Display an icon on the left side (DHL shipping by default)",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_info_image_left",
+      "label": "Custom Left Icon",
+      "info": "Upload a custom icon (20x20px recommended). If empty, default DHL icon will be used."
+    },
+    {
+      "type": "checkbox",
+      "id": "infoicon_right_visibility",
+      "label": "Show Right Icon",
+      "info": "Display an icon on the right side (German flag by default)",
       "default": true
     },
     {
       "type": "image_picker",
       "id": "icon_info_image_right",
-      "label": "Icon Info Image Right"
+      "label": "Custom Right Icon",
+      "info": "Upload a custom icon (20x20px recommended). If empty, default German flag will be used."
     },
     {
-      "type": "image_picker",
-      "id": "icon_info_image_left",
-      "label": "Icon Info Image Left"
+      "type": "header",
+      "content": "Links & Navigation"
     },
     {
       "type": "checkbox",
       "id": "show_faq_link",
       "label": "Show FAQ Link",
+      "info": "Display a link to the FAQ page in the announcement bar",
       "default": true
     },
     {
       "type": "url",
       "id": "faq_link",
-      "label": "FAQ Page Link"
+      "label": "Custom FAQ Link",
+      "info": "Override the default FAQ page link. Leave empty to use /pages/faq"
+    },
+    {
+      "type": "header",
+      "content": "Social Media Links"
+    },
+    {
+      "type": "paragraph",
+      "content": "Social media links (Instagram, Facebook) are automatically pulled from your store's brand settings under Settings → Brand. The contact link uses your Contact page."
     }
-  ]
+  ],
+  "presets": [
+    {
+      "name": "Announcement Bar",
+      "settings": {
+        "infoicon_left_visibility": true,
+        "infoicon_right_visibility": true,
+        "show_faq_link": true
+      }
+    }
+  ],
+  "enabled_on": {
+    "groups": ["header"]
+  }
 }
 {% endschema %}

@@ -1,0 +1,63 @@
+{%- comment -%}
+Announcement Bar Social Links Component
+Renders social media links and FAQ link with proper accessibility
+{%- endcomment -%}
+
+{%- liquid
+  # Assign parameters with defaults
+  assign show_faq = show_faq | default: true
+  assign faq_url = faq_url | default: pages.faq.url
+  assign faq_fallback_url = faq_fallback_url | default: '/pages/faq'
+  
+  # Get social links from shop metafields
+  assign instagram_url = shop.brand.metafields.social_links.instagram.value
+  assign facebook_url = shop.brand.metafields.social_links.facebook.value
+  assign contact_url = pages.contact.url | default: '/pages/contact'
+-%}
+
+<nav class="announcement__social-links" role="navigation" aria-label="Social Media und Service Links">
+  {%- comment -%} Instagram Link {%- endcomment -%}
+  {%- if instagram_url != blank -%}
+    <a href="{{ instagram_url }}" 
+       class="announcement__social-link"
+       aria-label="Instagram besuchen"
+       target="_blank"
+       rel="noopener noreferrer">
+      <span class="icon icon-social-instagram" aria-hidden="true"></span>
+    </a>
+  {%- endif -%}
+
+  {%- comment -%} Facebook Link {%- endcomment -%}
+  {%- if facebook_url != blank -%}
+    <a href="{{ facebook_url }}" 
+       class="announcement__social-link"
+       aria-label="Facebook besuchen"
+       target="_blank"
+       rel="noopener noreferrer">
+      {%- comment -%} Note: Using Instagram icon as fallback until Facebook icon is available {%- endcomment -%}
+      <span class="icon icon-social-instagram" aria-hidden="true"></span>
+    </a>
+  {%- endif -%}
+
+  {%- comment -%} Contact Link {%- endcomment -%}
+  {%- if contact_url != blank -%}
+    <a href="{{ contact_url }}" 
+       class="announcement__social-link"
+       aria-label="Kontakt aufnehmen">
+      <span class="icon icon-social-mailbox" aria-hidden="true"></span>
+    </a>
+  {%- endif -%}
+
+  {%- comment -%} FAQ Link {%- endcomment -%}
+  {%- if show_faq -%}
+    {%- liquid
+      assign final_faq_url = faq_url | default: faq_fallback_url
+    -%}
+    <a href="{{ final_faq_url }}" 
+       class="announcement__faq-link" 
+       aria-label="Häufig gestellte Fragen"
+       title="Häufig gestellte Fragen">
+      FAQ
+    </a>
+  {%- endif -%}
+</nav>

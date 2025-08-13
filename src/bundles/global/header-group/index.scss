@@ -3,8 +3,8 @@
  * Main entry point for header styles
  */
 
-// Import announcement styles
-@import './announcement/styles/announcement.scss';
+// Import announcement styles (now using modular main.scss)
+@import './announcement/styles/main.scss';
 
 // Import header styles
 @import './header/styles/header.scss';

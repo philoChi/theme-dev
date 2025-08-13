@@ -1,0 +1,72 @@
+/* Announcement Bar Interactive States */
+
+/* Hover states */
+.announcement__social-link:hover,
+.announcement__social-link:focus-visible {
+  background-color: rgba(255, 255, 255, 0.1);
+  outline: none;
+}
+
+.announcement__faq-link:hover,
+.announcement__faq-link:focus-visible {
+  background-color: rgba(255, 255, 255, 0.1);
+  outline: none;
+}
+
+/* Focus states for keyboard navigation */
+.announcement__social-link:focus,
+.announcement__faq-link:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
+}
+
+/* Active states */
+.announcement__social-link:active {
+  background-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(1px);
+}
+
+.announcement__faq-link:active {
+  background-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(1px);
+}
+
+/* Icon hover effects */
+.announcement__icon:hover {
+  transform: scale(1.05);
+  transition: transform var(--transition-duration) var(--transition-timing);
+}
+
+/* Loading state for icons */
+.announcement__icon[data-loading="true"] {
+  opacity: 0.6;
+}
+
+/* Disabled state */
+.announcement__social-link[aria-disabled="true"],
+.announcement__faq-link[aria-disabled="true"] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .announcement__icon {
+    border-width: calc(var(--icon-border-width) * 1.5);
+  }
+
+  .announcement__social-link:focus,
+  .announcement__faq-link:focus {
+    outline-width: 3px;
+  }
+}
+
+/* Dark mode considerations (if implemented) */
+@media (prefers-color-scheme: dark) {
+  .announcement__social-link:hover,
+  .announcement__social-link:focus-visible,
+  .announcement__faq-link:hover,
+  .announcement__faq-link:focus-visible {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
