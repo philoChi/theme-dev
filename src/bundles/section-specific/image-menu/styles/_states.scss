@@ -18,6 +18,16 @@
       transform: scale3d(var(--image-menu-image-hover-scale), var(--image-menu-image-hover-scale), 1);
       transform-origin: center center;
     }
+    
+    .image-menu__item-label {
+      &::after {
+        width: 100%; /* Expand underline to full width on hover */
+      }
+    }
+    
+    .image-menu__item-arrow {
+      transform: rotate(90deg); /* Point down on hover */
+    }
   }
   
   /* Focus state for keyboard navigation */
@@ -63,6 +73,10 @@
   transition: opacity var(--image-menu-transition-duration) var(--image-menu-transition-easing);
 }
 
+.image-menu__item-arrow {
+  transition: transform var(--image-menu-transition-duration) var(--image-menu-transition-easing);
+}
+
 /* High contrast mode support */
 @media (prefers-contrast: high) {
   .image-menu__item:focus {
@@ -76,12 +90,17 @@
   .image-menu__item,
   .image-menu__item-image-container,
   .image-menu__item-label,
+  .image-menu__item-arrow,
   .image-menu__item-image {
     transition: none;
   }
   
   .image-menu__item:hover {
     .image-menu__item-image {
+      transform: none;
+    }
+    
+    .image-menu__item-arrow {
       transform: none;
     }
   }

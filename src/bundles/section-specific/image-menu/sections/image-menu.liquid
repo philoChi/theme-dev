@@ -52,11 +52,15 @@
             {%- comment -%} Placeholder for missing images {%- endcomment -%}
             <div class="image-menu__item-image image-menu__item-image--placeholder" aria-hidden="true"></div>
           {% endif %}
+          
+          {%- comment -%} Label and arrow overlay {%- endcomment -%}
+          <div class="image-menu__item-overlay">
+            <span class="image-menu__item-label">
+              {{ item_label }}
+            </span>
+            <span class="image-menu__item-arrow icon icon-arrow-next-arrow" aria-hidden="true"></span>
+          </div>
         </div>
-        
-        <span class="image-menu__item-label">
-          {{ item_label }}
-        </span>
       </a>
     {% endfor %}
   </div>

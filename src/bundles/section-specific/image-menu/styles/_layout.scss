@@ -72,8 +72,50 @@
   backface-visibility: hidden;
 }
 
+/* Overlay container for label and arrow */
+.image-menu__item-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: var(--image-menu-overlay-padding);
+  pointer-events: none;
+}
+
 .image-menu__item-label {
-  display: none;
+  color: var(--image-menu-overlay-color);
+  font-size: var(--image-menu-font-size);
+  font-weight: var(--image-menu-font-weight);
+  text-shadow: var(--image-menu-overlay-text-shadow);
+  line-height: 1.2;
+  margin: 0;
+  position: relative;
+  
+  /* Create animated underline with pseudo-element */
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: currentColor;
+    transition: width var(--image-menu-transition-duration) var(--image-menu-transition-easing);
+  }
+}
+
+.image-menu__item-arrow {
+  width: var(--image-menu-arrow-size);
+  height: var(--image-menu-arrow-size);
+  color: var(--image-menu-arrow-color);
+  background-color: var(--image-menu-arrow-color);
+  filter: drop-shadow(var(--image-menu-overlay-text-shadow));
+  transition: transform var(--image-menu-transition-duration) var(--image-menu-transition-easing);
+  transform-origin: center center;
+  transform: rotate(0deg); /* Initially pointing right */
 }
 
 /* Placeholder styling for missing images */
