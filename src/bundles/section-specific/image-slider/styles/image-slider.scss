@@ -50,7 +50,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 60%;
+  width: 100%;
+  max-width: min(60%, var(--page-max-width, 1400px));
   aspect-ratio: 16/9;
   margin: 0 auto;
   will-change: transform;
@@ -383,7 +384,7 @@
   }
 
   .slider-container {
-    max-width: 60%;
+    max-width: min(60%, var(--page-max-width, 1400px));
   }
 
   .slide-content {
@@ -403,15 +404,15 @@
 
 @media (max-width: 767px) {
   .slider-container {
-    width: 90%;
-    max-width: none;
+    width: 100%;
+    max-width: min(90%, var(--page-max-width, 1400px));
   }
 }
 
 @media (max-width: 480px) {
   .slider-container {
     width: 100%;
-    max-width: none;
+    max-width: min(100%, var(--page-max-width, 1400px));
   }
 }
 
