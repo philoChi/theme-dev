@@ -23,8 +23,7 @@
   --image-menu-border-top-width: var(--main-border-width);
   --image-menu-border-bottom-width: 0px;
   --image-menu-item-border-width: var(--main-border-width);
-  --image-menu-item-border-radius: 40px;
-
+  --image-menu-item-border-radius: calc(var(--main-border-radius) * 2);
   /* Typography Variables */
   --image-menu-font-size: 1.2rem;
   --image-menu-font-size-small: 0.9rem;
