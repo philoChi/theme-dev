@@ -5,9 +5,13 @@
 
 /* Collection Header */
 .collection-page__header {
-  text-align: center;
+  text-align: left;
   margin-top: var(--collection-header-margin-top);
   margin-bottom: var(--collection-header-margin-bottom);
+}
+
+.collection-page__header-content {
+  display: block;
 }
 
 .collection-page__title {
@@ -24,14 +28,39 @@
 }
 
 .collection-page__description {
-  max-width: 800px;
-  margin: 0 auto;
-  line-height: 1.6;
+  display: none;
+  max-width: 40%;
+  margin: 0;
+  margin-top: 10px;
+  line-height: 1.2;
+  font-style: italic;
+  font-family: Georgia, 'Times New Roman', serif;
 }
 
 /* Search-specific header styling */
 .search-results__header {
   /* Inherits from .collection-page__header */
+}
+
+/* Tablet and Desktop Layout */
+@media screen and (min-width: 48rem) {
+  .collection-page__header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 2rem;
+  }
+
+  .collection-page__title {
+    margin-bottom: 0;
+    flex: 0 1 auto;
+  }
+
+  .collection-page__description {
+    display: block;
+    flex: 0 1 auto;
+    font-size: 1rem;
+  }
 }
 
 /* Mobile Responsive Header */

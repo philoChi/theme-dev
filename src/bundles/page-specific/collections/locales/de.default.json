@@ -28,7 +28,14 @@
       "network_error": "Netzwerkfehler. Bitte prüfe deine Verbindung und versuche es erneut.",
       "timeout_error": "Zeitüberschreitung. Bitte versuche es erneut.",
       "load_error": "Fehler beim Laden. Bitte aktualisiere die Seite.",
-      "filter_error": "Filter sind vorübergehend nicht verfügbar. Du kannst trotzdem Produkte durchstöbern."
+      "filter_error": "Filter sind vorübergehend nicht verfügbar. Du kannst trotzdem Produkte durchstöbern.",
+      "search_title": "Suche",
+      "search_results_with_count": "{{ count }} Ergebnisse für \"{{ terms }}\"",
+      "search_no_results": "Keine Ergebnisse für \"{{ terms }}\"",
+      "search_results": "Suchergebnisse",
+      "search_no_results_title": "Keine Ergebnisse gefunden",
+      "search_no_results_text": "Leider wurden keine Ergebnisse für \"{{ terms }}\" gefunden.",
+      "search_sort_by_relevance": "Relevanz"
     }
   }
 }

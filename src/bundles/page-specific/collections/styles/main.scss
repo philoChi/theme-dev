@@ -8,8 +8,8 @@
 .section-collection-page {
   --collection-container-max-width: 1400px;
   --collection-grid-gap: 1.5rem;
-  --collection-header-margin-top: var(--section-distance);
-  --collection-header-margin-bottom: var(--section-distance);
+  --collection-header-margin-top: calc(var(--section-distance) * 1.5);
+  --collection-header-margin-bottom: calc(var(--section-distance) * 1.5);
   --collection-toolbar-margin-bottom: 1rem;
   --collection-filter-tag-bg: var(--color-background-secondary, #f5f5f5);
   --collection-filter-tag-color: var(--color-text, #333);

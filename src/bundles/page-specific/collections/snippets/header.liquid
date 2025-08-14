@@ -27,22 +27,22 @@
     {%- if search_performed -%}
       <h1 class="collection-page__title search-results__title">
         {%- if search.results_count > 0 -%}
-          {{ 'templates.search.results_with_count' | t: terms: search.terms, count: search.results_count }}
+          {{ 'page-specific.collections.search_results_with_count' | t: terms: search.terms, count: search.results_count }}
         {%- else -%}
-          {{ 'templates.search.no_results' | t: terms: search.terms }}
+          {{ 'page-specific.collections.search_no_results' | t: terms: search.terms }}
         {%- endif -%}
       </h1>
     {%- else -%}
-      <h1 class="collection-page__title search-results__title">{{ 'templates.search.title' | t }}</h1>
+      <h1 class="collection-page__title search-results__title">{{ 'page-specific.collections.search_title' | t }}</h1>
     {%- endif -%}
   {%- else -%}
-    <h1 class="collection-page__title">{{ collection.title }}</h1>
-
-
-    {%- if collection.description != blank -%}
-      <div class="collection-page__description">
-        {{ collection.description }}
-      </div>
-    {%- endif -%}
+    <div class="collection-page__header-content">
+      <h1 class="collection-page__title">{{ collection.title }}</h1>
+      {%- if collection.description != blank -%}
+        <div class="collection-page__description">
+          {{ collection.description }}
+        </div>
+      {%- endif -%}
+    </div>
   {%- endif -%}
 </header>
