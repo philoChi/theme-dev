@@ -24,11 +24,17 @@
     {%- for idx in (1..3) -%}
       {%- assign cat_name_key = 'cat' | append: idx | append: '_name' -%}
       {%- assign cat_menu_key = 'cat' | append: idx | append: '_menu' -%}
-      {%- assign cat_name = block.settings[cat_name_key] | default: 'global.header-group.header.navigation.mega_menu_empty_heading' -%}
+      {%- assign cat_name = block.settings[cat_name_key] -%}
       {%- assign cat_menu = block.settings[cat_menu_key] -%}
-      {%- if cat_name or linklists[cat_menu] -%}
+      
+      {%- comment -%} Only show category if it has actual menu links with items {%- endcomment -%}
+      {%- if linklists[cat_menu] and linklists[cat_menu].links.size > 0 -%}
         <div class="mega-menu-lists" role="group" aria-labelledby="heading-{{ block.id }}-{{ idx }}">
-          <h2 class="mega-menu-list-heading" id="heading-{{ block.id }}-{{ idx }}">{{ cat_name }}</h2>
+          {%- if cat_name != blank -%}
+            <h2 class="mega-menu-list-heading" id="heading-{{ block.id }}-{{ idx }}">
+              {{ cat_name }}
+            </h2>
+          {%- endif -%}
           {%- if linklists[cat_menu] -%}
             <ul role="list" class="mega-menu-list" aria-labelledby="heading-{{ block.id }}-{{ idx }}">
               {%- for link in linklists[cat_menu].links -%}
@@ -50,13 +56,19 @@
 
   {%- comment -%} ───────── Promo images ───────── {%- endcomment -%}
   {%- assign has_categories = false -%}
+  {%- assign has_category_content = false -%}
   {%- for idx in (1..3) -%}
-    {%- assign cat_menu_key = 'cat_' | append: idx | append: '_menu' -%}
-    {%- if linklists[block.settings[cat_menu_key]] -%}
+    {%- assign cat_menu_key = 'cat' | append: idx | append: '_menu' -%}
+    {%- assign cat_menu = block.settings[cat_menu_key] -%}
+    
+    {%- comment -%} Check if category has actual menu links with items {%- endcomment -%}
+    {%- if linklists[cat_menu] and linklists[cat_menu].links.size > 0 -%}
+      {%- assign has_category_content = true -%}
       {%- assign has_categories = true -%}
     {%- endif -%}
   {%- endfor -%}
-  <div class="mega-menu-product-images{% unless has_categories %} mega-menu-image-only{% endunless %}" 
+  
+  <div class="mega-menu-product-images{% unless has_category_content %} mega-menu-image-only{% endunless %}" 
        role="group" 
        aria-label="{{ 'global.header-group.header.main.featured_promotions' | t }}">
     {%- for idx in (1..4) -%}

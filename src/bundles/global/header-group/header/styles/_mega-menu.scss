@@ -125,11 +125,38 @@
   margin-left: auto;
 }
 
+/* When no categories are present, center the images horizontally */
 .mega-menu-product-images.mega-menu-image-only {
   width: 100%;
   max-width: 800px;
-  justify-content: space-around;
-  margin-left: 0;
+  justify-content: center;
+  margin: 0 auto;
+  padding-left: var(--content-mega-menu-padding-side);
+  padding-right: var(--content-mega-menu-padding-side);
+  
+  /* Handle different numbers of images gracefully */
+  &:has(.image-link:nth-child(1):last-child) {
+    /* Single image - center it */
+    justify-content: center;
+  }
+  
+  &:has(.image-link:nth-child(2):last-child) {
+    /* Two images - distribute evenly */
+    justify-content: center;
+    gap: 60px;
+  }
+  
+  &:has(.image-link:nth-child(3):last-child) {
+    /* Three images - distribute evenly */
+    justify-content: center;
+    gap: 45px;
+  }
+  
+  &:has(.image-link:nth-child(4)) {
+    /* Four images - distribute evenly */
+    justify-content: center;
+    gap: 30px;
+  }
 }
 
 
