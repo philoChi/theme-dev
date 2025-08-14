@@ -22,11 +22,3 @@
   height: 100%;
   flex-wrap: wrap;
 }
-
-/* Minimal overrides for shared image-link styles within image-menu context */
-/* Most styling is now handled by the shared component with better defaults */
-.image-menu {
-  .image-link {
-    /* Currently no overrides needed - shared component defaults work well for menu context */
-  }
-}
