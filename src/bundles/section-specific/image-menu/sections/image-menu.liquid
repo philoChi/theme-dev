@@ -9,8 +9,8 @@
 {%- liquid
   assign section_id = 'image-menu-' | append: section.id
   assign border_position = section.settings.border_position | default: 'top'
-  assign background_enabled = section.settings.background_enabled | default: true
-  assign use_default_background = section.settings.use_default_background | default: true
+  assign background_enabled = section.settings.background_enabled
+  assign use_default_background = section.settings.use_default_background
   assign custom_background_color = section.settings.background_color
   
   # Build CSS classes for border position

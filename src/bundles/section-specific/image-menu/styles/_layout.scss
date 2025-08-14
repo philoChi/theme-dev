@@ -2,7 +2,7 @@
 /* Core layout and positioning styles following BEM methodology */
 
 .image-menu {
-  background-color: var(--image-menu-background);
+  /* Background color handled by inline style */
   border: none; /* Reset all borders, will be added by modifiers */
   position: relative;
   z-index: var(--image-menu-z-index);

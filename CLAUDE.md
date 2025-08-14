@@ -432,6 +432,7 @@ npm run git:info                               # Show owner, repo, branch, activ
 - **The `theme-hyspex/` folder is your complete Shopify theme** - use it with all Shopify CLI commands
 - Load the `features-shared-all` bundle once in `theme.liquid` since features are shared
 - Never include bundle tags directly in reusable liquid files 
+- When a checkbox value is false in Shopify, the Liquid `| default: true` filter treats false as a "falsy" value and replaces it with true Therefore be careful with e.g. `assign use_default_background = section.settings.use_default_background | default: true`
 
 ## Liquid Patterns
 
