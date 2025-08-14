@@ -82,7 +82,14 @@
         "price_to": "Bis",
         "clear_all_help": "Alle Filter zurücksetzen",
         "filter_actions": "Filter-Aktionen",
-        "no_filters_configured": "Keine Filter konfiguriert. Bitte konfigurieren Sie Filter in der Search & Filter App."
+        "no_filters_configured": "Keine Filter konfiguriert. Bitte konfigurieren Sie Filter in der Search & Filter App.",
+        "filtering": {
+          "apply_filters": "Filter anwenden",
+          "filter_products": "Produkte filtern",
+          "price_from": "Von",
+          "price_to": "Bis",
+          "no_filters_configured": "Keine Filter konfiguriert. Bitte konfigurieren Sie Filter in der Search & Filter App."
+        }
       }
     }
   }

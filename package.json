@@ -9,6 +9,7 @@
   "scripts": {
     "theme:start": "./scripts/manager-theme-dev.sh start",
     "theme:stop": "npm run build:clean && ./scripts/manager-theme-dev.sh stop && npm run build:dev",
+    "restart": "npm run theme:restart",
     "theme:restart": "npm run build:clean && ./scripts/manager-theme-dev.sh restart",
     "theme:list": "./scripts/manager-theme-dev.sh list",
     "theme:status": "./scripts/manager-theme-dev.sh status",
@@ -16,7 +17,7 @@
     "theme:cleanup": "./scripts/manager-theme-dev.sh cleanup",
     "theme:help": "./scripts/manager-theme-dev.sh help",
     "theme:pull": "./scripts/deploy.sh pull",
-    "build": "webpack",
+    "build": "build:dev",
     "build:dev": "NODE_ENV=development webpack && sleep 2 && touch theme-hyspex/assets/global.css",
     "build:clean": "rm -rf theme-hyspex/",
     "watch": "webpack --watch",
