@@ -21,11 +21,13 @@
   unless background_enabled
     assign background_style = 'background-color: transparent;'
   else
-    unless use_default_background
+    if use_default_background
+      assign background_style = 'background-color: var(--main-foreground);'
+    else
       if custom_background_color != blank
         assign background_style = 'background-color: ' | append: custom_background_color | append: ';'
       endif
-    endunless
+    endif
   endunless
 -%}
 
