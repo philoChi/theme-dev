@@ -17,7 +17,7 @@
   border-radius: 0 0 var(--border-radius) var(--border-radius);
   background: var(--mega-menu-background);
   z-index: 900;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--mega-menu-shadow);
 }
 
 /* Use ARIA attribute selector for state management */
@@ -37,7 +37,7 @@
   gap: 0;
   opacity: 0;
   visibility: hidden;
-  padding: 30px 0 25px;
+  padding: var(--mega-menu-content-padding);
   max-width: var(--content-width);
   transition: opacity var(--transition-fast) ease-out, visibility 0s linear var(--transition-medium);
   
@@ -52,7 +52,7 @@
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
-    transition: opacity 0.4s ease-out .3s;
+    transition: opacity var(--mega-menu-content-transition-duration) ease-out var(--mega-menu-content-delay);
   }
 }
 
@@ -70,10 +70,8 @@
 /* Category links with enhanced accessibility */
 .categorie-links {
   display: block;
-  padding: 5px 0;
-  padding-left: 3px;
-  padding-right: 3px;
-  border-radius: 4px;
+  padding: var(--mega-menu-list-item-padding);
+  border-radius: var(--mega-menu-image-border-radius);
   transition: opacity var(--transition-fast) ease-in;
   color: var(--glassmorphism-items-font-color-inactive);
   text-decoration: none;
@@ -84,7 +82,7 @@
   
   /* Hover state */
   &:hover {
-    opacity: .5;
+    opacity: var(--mega-menu-link-hover-opacity);
   }
   
   &[aria-current="page"] {
@@ -97,14 +95,15 @@
 /* Category columns layout */
 .mega-menu-categories {
   display: flex;
-  gap: 55px;
+  gap: var(--mega-menu-section-gap);
   padding-left: var(--content-mega-menu-padding-side);
 }
 
 /* Category list headings */
 .mega-menu-list-heading {
-  margin: 0 0 10px;
-  font-size: 1.2rem;
+  margin: 0 0 var(--mega-menu-heading-space);
+  font-size: var(--mega-menu-heading-font-size);
+  font-family: var(--mega-menu-heading-font-family);
   color: var(--main-font-color);
   text-transform: none;
 }
@@ -113,14 +112,15 @@
 .mega-menu-lists {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  font-size: .85rem;
+  gap: var(--mega-menu-element-gap);
+  font-size: var(--mega-menu-link-font-size);
+  font-family: var(--mega-menu-link-font-family);
 }
 
 /* Promo images section */
 .mega-menu-product-images {
   display: flex;
-  gap: 30px;
+  gap: var(--mega-menu-promo-images-gap);
   padding-right: var(--content-mega-menu-padding-side);
   margin-left: auto;
 }
@@ -143,19 +143,19 @@
   &:has(.image-link:nth-child(2):last-child) {
     /* Two images - distribute evenly */
     justify-content: center;
-    gap: 60px;
+    gap: var(--mega-menu-promo-images-gap-large);
   }
   
   &:has(.image-link:nth-child(3):last-child) {
     /* Three images - distribute evenly */
     justify-content: center;
-    gap: 45px;
+    gap: var(--mega-menu-promo-images-gap-medium);
   }
   
   &:has(.image-link:nth-child(4)) {
     /* Four images - distribute evenly */
     justify-content: center;
-    gap: 30px;
+    gap: var(--mega-menu-promo-images-gap);
   }
 }
 
@@ -164,7 +164,7 @@
 .mega-menu-bottom {
   flex-basis: 100%;
   width: 100%;
-  margin-top: 25px;
+  margin-top: var(--mega-menu-bottom-space);
   padding-right: var(--content-mega-menu-padding-side);
   padding-left: var(--content-mega-menu-padding-side);
 }
@@ -173,8 +173,8 @@
 .mega-menu-separator {
   width: 100%;
   height: 1px;
-  background: var(--border-color);
-  margin-bottom: 14px;
+  background: var(--mega-menu-separator-color);
+  margin-bottom: var(--mega-menu-separator-space);
 }
 
 /* CTA links */
@@ -183,19 +183,20 @@
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  font-weight: 600;
-  padding: 6px 5px;
+  font-weight: var(--mega-menu-cta-font-weight);
+  font-size: var(--mega-menu-cta-font-size);
+  padding: var(--mega-menu-cta-padding);
   text-decoration: none;
   color: var(--glassmorphism-items-font-color-inactive);
   transition: opacity var(--transition-fast) ease-in;
-  border-radius: 4px;
+  border-radius: var(--mega-menu-image-border-radius);
   
   &:focus {
     outline: none;
   }
   
   &:hover {
-    opacity: .5;
+    opacity: var(--mega-menu-link-hover-opacity);
   }
 }
 

@@ -8,7 +8,7 @@
   /* Layout & Dimensions */
   --content-width: var(--page-medium-width);
   --content-mega-menu-width: var(--page-medium-width);
-  --content-mega-menu-padding-side: 25px;
+  --content-mega-menu-padding-side: 0px;
   --header-height: 80px;
   --mobile-header-height: 50px;
 
@@ -25,10 +25,53 @@
   --site-navigation-header-color: white;
   --mega-menu-background: #f9f9f9;
 
-  /* Typography */
-  --mega-menu-heading: var(--main-font);
-  --link-items-font: var(--main-font);
-  --link-items-font-size: var(--main-font-weight);
+  /* Typography - Mega Menu Specific */
+  --mega-menu-heading-font-family: var(--main-font);
+  --mega-menu-heading-font-size: 1.2rem;
+  --mega-menu-link-font-size: 1rem;
+  --mega-menu-link-font-family: var(--main-font);
+  --mega-menu-cta-font-weight: 600;
+  --mega-menu-cta-font-size: 1.2rem;
+  
+  /* Spacing & Layout - Systematic Scale */
+  /* Base spacing scale for consistent design */
+  --mega-menu-spacing-xxs: 3px;      /* Tightest paddings*/
+  --mega-menu-spacing-xs: 5px;      /* Tight paddings (list items) */
+  --mega-menu-spacing-sm: 10px;     /* Small gaps (lists, headings) */
+  --mega-menu-spacing-md: 15px;     /* Medium spacing (separators) */
+  --mega-menu-spacing-lg: 25px;     /* Large spacing (sections, bottom margins) */
+  --mega-menu-spacing-xl: 30px;     /* Extra large (content padding, promo gaps) */
+  --mega-menu-spacing-2xl: 45px;    /* Major sections */
+  --mega-menu-spacing-3xl: 55px;    /* Categories gap */
+  
+  /* Semantic spacing aliases for specific use cases */
+  --mega-menu-content-padding: var(--mega-menu-spacing-3xl) 0 var(--mega-menu-spacing-lg);
+  --mega-menu-section-gap: var(--mega-menu-spacing-3xl);         /* categories gap */
+  --mega-menu-element-gap: var(--mega-menu-spacing-sm);          /* lists gap */
+  --mega-menu-heading-space: var(--mega-menu-spacing-sm);        /* heading margin bottom */
+  --mega-menu-list-item-padding: var(--mega-menu-spacing-xxs) var(--mega-menu-spacing-xxs); /* list item padding */
+  --mega-menu-bottom-space: var(--mega-menu-spacing-3xl);         /* bottom margin top */
+  --mega-menu-separator-space: var(--mega-menu-spacing-md);      /* separator margin bottom */
+  --mega-menu-cta-padding: 6px var(--mega-menu-spacing-xs);
+  
+  /* Image Settings (width only, height auto) */
+  --mega-menu-promo-image-width: 250px;
+  --mega-menu-promo-image-width-mobile: 150px;
+  --image-link-item-width-header: var(--mega-menu-promo-image-width);
+  --image-link-item-width-header-mobile: var(--mega-menu-promo-image-width-mobile);
+  --mega-menu-promo-images-gap: var(--mega-menu-spacing-xl);       /* Default promo gap (30px) */
+  --mega-menu-promo-images-gap-large: calc(var(--mega-menu-spacing-xl) * 2); /* Large gap (60px) */
+  --mega-menu-promo-images-gap-medium: var(--mega-menu-spacing-2xl);     /* Medium gap (45px) */
+  --mega-menu-image-border-radius: 4px;
+  
+  /* Colors & Effects */
+  --mega-menu-link-hover-opacity: 0.5;
+  --mega-menu-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  --mega-menu-separator-color: var(--border-color);
+  
+  /* Animation & Timing */
+  --mega-menu-content-delay: 0.3s;
+  --mega-menu-content-transition-duration: 0.4s;
 
   /* Transitions & Animations - Optimized */
   --transition-fast: .3s;
@@ -40,5 +83,4 @@
   --border-radius: var(--main-border-radius);
   --border-color: var(--main-border-color);
   --border-width: var(--main-border-width);
-
 }
