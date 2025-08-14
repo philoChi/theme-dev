@@ -1,0 +1,124 @@
+/* Image Link Component Layout */
+/* Core layout and positioning styles following BEM methodology */
+
+.image-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  position: relative;
+  transition: 
+    transform var(--image-link-transition-duration) var(--image-link-transition-easing),
+    opacity var(--image-link-transition-duration) var(--image-link-transition-easing);
+}
+
+.image-link__image-container {
+  width: var(--image-link-item-width);
+  height: auto;
+  background-color: var(--image-link-background);
+  border-radius: var(--image-link-item-border-radius);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  
+  /* Use box-shadow instead of border to prevent color bleeding */
+  box-shadow: 
+    0 0 0 var(--image-link-item-border-width) var(--image-link-item-border-color),
+    0 2px 8px rgba(0, 0, 0, 0.1);
+  
+  /* GPU acceleration for smoother rendering */
+  transform: translateZ(0);
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  
+  /* Smoother border-radius rendering */
+  isolation: isolate;
+  
+  /* Transition for interactive states */
+  transition: 
+    transform var(--image-link-transition-duration) var(--image-link-transition-easing),
+    box-shadow var(--image-link-transition-duration) var(--image-link-transition-easing);
+  
+  /* Optimize for smooth transforms */
+  transform-style: preserve-3d;
+}
+
+.image-link__image {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform var(--image-link-transition-duration) var(--image-link-transition-easing);
+  
+  /* Smooth image scaling */
+  image-rendering: auto;
+  
+  /* Prevent subpixel rendering issues */
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Overlay container for label and arrow */
+.image-link__overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: var(--image-link-overlay-padding);
+  pointer-events: none;
+}
+
+.image-link__label {
+  color: var(--image-link-overlay-color);
+  font-size: var(--image-link-font-size);
+  font-weight: var(--image-link-font-weight);
+  text-shadow: var(--image-link-overlay-text-shadow);
+  line-height: 1.2;
+  margin: 0;
+  position: relative;
+  transition: opacity var(--image-link-transition-duration) var(--image-link-transition-easing);
+  
+  /* Create animated underline with pseudo-element */
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: currentColor;
+    transition: width var(--image-link-transition-duration) var(--image-link-transition-easing);
+  }
+}
+
+.image-link__arrow {
+  width: var(--image-link-arrow-size);
+  height: var(--image-link-arrow-size);
+  color: var(--image-link-arrow-color);
+  background-color: var(--image-link-arrow-color);
+  filter: drop-shadow(var(--image-link-overlay-text-shadow));
+  transition: transform var(--image-link-transition-duration) var(--image-link-transition-easing);
+  transform-origin: center center;
+  transform: rotate(0deg); /* Initially pointing right */
+}
+
+/* Placeholder styling for missing images */
+.image-link__image--placeholder {
+  background-color: var(--image-link-background);
+  background-image: linear-gradient(45deg, 
+    rgba(0, 0, 0, 0.1) 25%, 
+    transparent 25%, 
+    transparent 75%, 
+    rgba(0, 0, 0, 0.1) 75%
+  );
+  background-size: 10px 10px;
+  border-radius: var(--image-link-item-border-radius);
+  width: 100%;
+  aspect-ratio: 1;
+}

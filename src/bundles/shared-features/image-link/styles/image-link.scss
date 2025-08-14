@@ -1,11 +1,10 @@
-/* Image Menu Section - Main Styles */
+/* Image Link Component - Main Styles */
 /* Component entry point that imports all partials */
 
 /* Import partials in dependency order */
 @import 'variables';    /* CSS custom properties and SCSS variables first */
 @import 'layout';       /* Core layout and positioning styles */
+@import 'states';       /* Interactive states (hover, focus, active) */
 @import 'responsive';   /* Media queries and responsive behavior */
-
-/* Note: states are handled by the shared image-link component */
 
 /* Component-specific overrides and additional styles can be added here if needed */

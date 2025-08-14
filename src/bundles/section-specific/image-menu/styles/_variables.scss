@@ -1,51 +1,20 @@
 /* Image Menu Section Variables */
-/* CSS Custom Properties and SCSS Variables */
+/* CSS Custom Properties for section-level layout only */
+/* Individual image-link styling is handled by the shared component */
 
 :root {
-  /* Color Variables */
-  --image-menu-iconbackground: var(--main-background);
+  /* Section-level Color Variables */
   --image-menu-background: var(--main-foreground);
-  --image-menu-font-color: var(--main-background);
   --image-menu-border-color: var(--main-border-color);
-  --image-menu-item-border-color: var(--main-font-color);
 
-  /* Size Variables */
-  --image-menu-item-width: 280px;
-  --image-menu-item-width-tablet: 200px;
-  --image-menu-item-width-mobile: 150px;
-
-  /* Spacing Variables */
+  /* Section-level Layout Variables */
   --image-menu-padding: 10px 0;
-  --image-menu-item-margin: 0 10px;
-  --image-menu-label-margin-top: 10px;
-
-  /* Border Variables */
-  --image-menu-border-top-width: var(--main-border-width);
-  --image-menu-border-bottom-width: 0px;
-  --image-menu-item-border-width: var(--main-border-width);
-  --image-menu-item-border-radius: calc(var(--main-border-radius) * 2);
-  /* Typography Variables */
-  --image-menu-font-size: 1.2rem;
-  --image-menu-font-size-small: 0.9rem;
-  --image-menu-font-weight: 600;
-
-  /* Layout Variables */
   --image-menu-container-max-width: var(--page-medium-width);
   --image-menu-z-index: 50;
 
-  /* Transition Variables */
-  --image-menu-transition-duration: 0.4s;
-  --image-menu-transition-easing: cubic-bezier(0.4, 0, 0.2, 1);
-
-  /* Interaction Variables */
-  --image-menu-image-hover-scale: 1.05;
-
-  /* Overlay Variables */
-  --image-menu-overlay-color: var(--main-background);
-  --image-menu-overlay-text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
-  --image-menu-arrow-size: 1.3em;
-  --image-menu-arrow-color: var(--main-background);
-  --image-menu-overlay-padding: 25px 25px;
+  /* Section-level Border Variables */
+  --image-menu-border-top-width: var(--main-border-width);
+  --image-menu-border-bottom-width: 0px;
 }
 
 /* SCSS Breakpoint Variables */

@@ -1,0 +1,83 @@
+{% comment %}
+  Image Link Component - Reusable circular image link with label and arrow overlay
+  
+  Usage:
+    {% render 'snippet-feature-image-link', 
+       image: block.settings.image,
+       label: 'Category Name',
+       link: '/collections/category',
+       width: '240px',
+       class_modifier: 'header',
+       loading: 'lazy',
+       shopify_attributes: block.shopify_attributes
+    %}
+  
+  Parameters:
+    - image: Image object (required) - The image to display
+    - label: String (required) - Display text for the link
+    - link: String (required) - Target URL for the link
+    - width: String (optional) - Custom width override, defaults to CSS variable
+    - class_modifier: String (optional) - BEM modifier for context-specific styling
+    - loading: String (optional) - Image loading strategy ('lazy' or 'eager'), defaults to 'lazy'
+    - shopify_attributes: String (optional) - Shopify block attributes for admin editing
+    - aria_label: String (optional) - Custom aria-label, defaults to label
+{% endcomment %}
+
+{%- liquid
+  assign component_image = image
+  assign component_label = label
+  assign component_link = link | default: '#'
+  assign component_width = width
+  assign component_class_modifier = class_modifier
+  assign component_loading = loading | default: 'lazy'
+  assign component_shopify_attributes = shopify_attributes
+  assign component_aria_label = aria_label | default: component_label
+
+  assign has_image = false
+  if component_image != blank
+    assign has_image = true
+  endif
+
+  assign base_class = 'image-link'
+  if component_class_modifier != blank
+    assign modifier_class = base_class | append: '--' | append: component_class_modifier
+  else
+    assign modifier_class = ''
+  endif
+-%}
+
+<a 
+  href="{{ component_link }}" 
+  class="{{ base_class }}{% if modifier_class != blank %} {{ modifier_class }}{% endif %}"
+  aria-label="{{ component_aria_label | escape }}"
+  {% if component_width != blank %}style="--image-link-item-width: {{ component_width }};"{% endif %}
+  {{ component_shopify_attributes }}
+>
+  <div class="{{ base_class }}__image-container">
+    {% if has_image %}
+      <img
+        src="{{ component_image | image_url: width: 480 }}"
+        srcset="{{ component_image | image_url: width: 100 }} 100w,
+                {{ component_image | image_url: width: 200 }} 200w,
+                {{ component_image | image_url: width: 300 }} 300w,
+                {{ component_image | image_url: width: 480 }} 480w"
+        sizes="(max-width: 479px) 100px, (max-width: 767px) 130px, (max-width: 991px) 130px, 240px"
+        width="240"
+        alt="{{ component_aria_label | escape }}"
+        loading="{{ component_loading }}"
+        class="{{ base_class }}__image"
+      >
+    {% else %}
+      {%- comment -%} Placeholder for missing images {%- endcomment -%}
+      <div class="{{ base_class }}__image {{ base_class }}__image--placeholder" aria-hidden="true"></div>
+    {% endif %}
+    
+    {%- comment -%} Label and arrow overlay {%- endcomment -%}
+    <div class="{{ base_class }}__overlay">
+      <span class="{{ base_class }}__label">
+        {{ component_label }}
+      </span>
+      <span class="{{ base_class }}__arrow icon icon-arrow-next-arrow" aria-hidden="true"></span>
+    </div>
+  </div>
+</a>

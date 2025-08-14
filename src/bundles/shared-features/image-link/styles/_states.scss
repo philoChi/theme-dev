@@ -1,0 +1,136 @@
+/* Image Link Component Interactive States */
+/* Hover, focus, active, and other interaction states */
+
+.image-link {
+  /* Hover state */
+  &:hover {
+    .image-link__image-container {
+      box-shadow: 
+        0 0 0 var(--image-link-item-border-width) var(--image-link-item-border-color),
+        0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .image-link__image {
+      transform: scale3d(var(--image-link-image-hover-scale), var(--image-link-image-hover-scale), 1);
+      transform-origin: center center;
+    }
+    
+    .image-link__label {
+      &::after {
+        width: 100%; /* Expand underline to full width on hover */
+      }
+    }
+    
+    .image-link__arrow {
+      transform: rotate(90deg); /* Point down on hover */
+    }
+  }
+  
+  /* Focus state for keyboard navigation */
+  &:focus {
+    outline: 2px solid var(--image-link-item-border-color);
+    outline-offset: 2px;
+    border-radius: 4px;
+    
+    .image-link__image-container {
+      box-shadow: 0 0 0 2px var(--image-link-background),
+                  0 0 0 4px var(--image-link-item-border-color);
+    }
+  }
+  
+  /* Active state */
+  &:active {
+    transform: translateY(0);
+    opacity: 0.9;
+  }
+  
+  /* Focus-visible for modern browsers */
+  &:focus-visible {
+    outline: 2px solid var(--image-link-item-border-color);
+    outline-offset: 2px;
+  }
+  
+  /* Remove outline for mouse users */
+  &:focus:not(:focus-visible) {
+    outline: none;
+  }
+}
+
+/* Context-specific modifiers */
+.image-link--menu {
+  /* Menu-specific styling - maintains compatibility with image-menu section */
+}
+
+.image-link--menu:hover {
+  /* Maintain existing image-menu hover behavior */
+}
+.image-link--header {
+  .image-link__image-container {
+    width: var(--image-link-item-width-tablet);
+  }
+  
+  .image-link__label {
+    font-size: var(--image-link-font-size-small);
+  }
+  
+  .image-link__overlay {
+    padding: calc(var(--image-link-overlay-padding) * 0.7);
+  }
+}
+
+.image-link--footer {
+  .image-link__image-container {
+    width: var(--image-link-item-width-mobile);
+  }
+  
+  .image-link__label {
+    font-size: var(--image-link-font-size-small);
+  }
+}
+
+.image-link--small {
+  .image-link__image-container {
+    width: var(--image-link-item-width-mobile);
+  }
+  
+  .image-link__label {
+    font-size: var(--image-link-font-size-small);
+  }
+  
+  .image-link__overlay {
+    padding: calc(var(--image-link-overlay-padding) * 0.6);
+  }
+  
+  .image-link__arrow {
+    --image-link-arrow-size: 1.1em;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .image-link:focus {
+    outline: 3px solid;
+    outline-offset: 2px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .image-link,
+  .image-link__image-container,
+  .image-link__label,
+  .image-link__arrow,
+  .image-link__image {
+    transition: none;
+  }
+  
+  .image-link:hover {
+    .image-link__image {
+      transform: none;
+    }
+    
+    .image-link__arrow {
+      transform: none;
+    }
+  }
+}

@@ -1,106 +1,31 @@
 /* Image Menu Section Responsive Styles */
 /* Mobile-first responsive design with progressive enhancement */
+/* Note: Most responsive behavior is now handled by the shared image-link component */
+/* This file only contains menu-specific responsive logic (hiding items on smaller screens) */
 
-/* Tablet styles - reduce item count and adjust sizes */
+/* Tablet screens - hide items beyond the 5th */
 @media screen and (max-width: #{$breakpoint-md}) {
-  .image-menu__item-image-container {
-    width: var(--image-menu-item-width-tablet);
-  }
-  
-  .image-menu__item-overlay {
-    padding: 10px 14px;
-  }
-  
-  .image-menu__item-label {
-    font-size: var(--image-menu-font-size-small);
-    max-width: calc(var(--image-menu-item-width-tablet) - 40px);
-  }
-  
-  .image-menu__item-arrow {
-    font-size: 1.1em;
-  }
-  
-  /* Hide items beyond the 5th on tablet */
-  .image-menu__item:nth-child(n + #{$items-tablet + 1}) {
+  .image-menu .image-link:nth-child(n + #{$items-tablet + 1}) {
     display: none;
   }
 }
 
-/* Mobile styles - further reduction and size adjustments */
+/* Mobile screens - further reduce items and adjust container */
 @media screen and (max-width: #{$breakpoint-sm}) {
   .image-menu__container {
     justify-content: space-around;
   }
   
-  .image-menu__item-image-container {
-    width: var(--image-menu-item-width-mobile);
-  }
-  
-  .image-menu__item-overlay {
-    padding: 8px 12px;
-  }
-  
-  .image-menu__item-label {
-    font-size: var(--image-menu-font-size-small);
-    max-width: calc(var(--image-menu-item-width-mobile) - 30px);
-  }
-  
-  .image-menu__item-arrow {
-    font-size: 1em;
-  }
-  
   /* Hide items beyond the 4th on mobile */
-  .image-menu__item:nth-child(n + #{$items-mobile + 1}) {
+  .image-menu .image-link:nth-child(n + #{$items-mobile + 1}) {
     display: none;
   }
 }
 
-/* Extra small screens - minimal items and compact layout */
+/* Extra small screens - hide items beyond the 3rd */
 @media screen and (max-width: #{$breakpoint-xs}) {
-  .image-menu__item-overlay {
-    padding: 6px 10px;
-  }
-  
-  .image-menu__item-label {
-    font-size: var(--image-menu-font-size-small);
-    max-width: calc(var(--image-menu-item-width-mobile) - 25px);
-  }
-  
-  .image-menu__item-arrow {
-    font-size: 0.9em;
-  }
-  
-  /* Hide items beyond the 3rd on extra small screens */
-  .image-menu__item:nth-child(n + #{$items-xs + 1}) {
+  .image-menu .image-link:nth-child(n + #{$items-xs + 1}) {
     display: none;
-  }
-}
-
-/* Touch-friendly improvements for mobile devices */
-@media (hover: none) and (pointer: coarse) {
-  .image-menu__item {
-    /* Increase touch target size */
-    min-width: 44px;
-    min-height: 44px;
-    padding: 8px;
-    
-    /* Remove hover effects on touch devices */
-    &:hover {
-      transform: none;
-      
-      .image-menu__item-image-container {
-        transform: none;
-        box-shadow: none;
-      }
-      
-      .image-menu__item-label {
-        text-decoration: none;
-      }
-      
-      .image-menu__item-arrow {
-        transform: none;
-      }
-    }
   }
 }
 
@@ -108,21 +33,5 @@
 @media screen and (max-width: #{$breakpoint-sm}) and (orientation: landscape) {
   .image-menu {
     padding: calc(var(--image-menu-padding) / 2);
-  }
-  
-  .image-menu__item-image-container {
-    width: calc(var(--image-menu-item-width-mobile) - 5px);
-  }
-  
-  .image-menu__item-overlay {
-    padding: 6px 12px;
-  }
-  
-  .image-menu__item-label {
-    font-size: var(--image-menu-font-size-small);
-  }
-  
-  .image-menu__item-arrow {
-    font-size: 0.95em;
   }
 }

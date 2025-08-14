@@ -1,0 +1,108 @@
+/* Image Link Component Responsive Design */
+/* Media queries and responsive behavior */
+
+/* Tablet and smaller screens */
+@media screen and (max-width: $image-link-breakpoint-md) {
+  .image-link {
+    .image-link__image-container {
+      width: var(--image-link-item-width-tablet);
+    }
+    
+    .image-link__label {
+      font-size: var(--image-link-font-size-small);
+    }
+    
+    .image-link__overlay {
+      padding: calc(var(--image-link-overlay-padding) * 0.8);
+    }
+  }
+  
+  /* Adjust header modifier for tablet */
+  .image-link--header {
+    .image-link__image-container {
+      width: var(--image-link-item-width-mobile);
+    }
+    
+    .image-link__overlay {
+      padding: calc(var(--image-link-overlay-padding) * 0.6);
+    }
+  }
+}
+
+/* Mobile screens */
+@media screen and (max-width: $image-link-breakpoint-sm) {
+  .image-link {
+    .image-link__image-container {
+      width: var(--image-link-item-width-mobile);
+    }
+    
+    .image-link__label {
+      font-size: var(--image-link-font-size-small);
+    }
+    
+    .image-link__overlay {
+      padding: calc(var(--image-link-overlay-padding) * 0.7);
+    }
+    
+    .image-link__arrow {
+      --image-link-arrow-size: 1.1em;
+    }
+  }
+  
+  /* Further adjust header modifier for mobile */
+  .image-link--header {
+    .image-link__overlay {
+      padding: calc(var(--image-link-overlay-padding) * 0.5);
+    }
+  }
+}
+
+/* Extra small screens */
+@media screen and (max-width: $image-link-breakpoint-xs) {
+  .image-link {
+    .image-link__image-container {
+      width: calc(var(--image-link-item-width-mobile) * 0.9);
+    }
+    
+    .image-link__overlay {
+      padding: calc(var(--image-link-overlay-padding) * 0.6);
+    }
+  }
+  
+  /* Minimal padding for header on very small screens */
+  .image-link--header {
+    .image-link__overlay {
+      padding: calc(var(--image-link-overlay-padding) * 0.4);
+    }
+  }
+}
+
+/* Touch-friendly hover states for mobile */
+@media (hover: none) and (pointer: coarse) {
+  .image-link:hover {
+    .image-link__image {
+      transform: none;
+    }
+    
+    .image-link__arrow {
+      transform: none;
+    }
+    
+    .image-link__label::after {
+      width: 0;
+    }
+  }
+  
+  /* Add active state for touch devices */
+  .image-link:active {
+    .image-link__image {
+      transform: scale3d(0.98, 0.98, 1);
+    }
+    
+    .image-link__image-container {
+      box-shadow: 
+        0 0 0 var(--image-link-item-border-width) var(--image-link-item-border-color),
+        0 1px 4px rgba(0, 0, 0, 0.2);
+    }
+  }
+}

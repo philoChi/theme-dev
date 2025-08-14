@@ -1,0 +1,13 @@
+{
+  "shared-features": {
+    "image-link": {
+      "accessibility": {
+        "default_aria_label": "Link zu",
+        "image_missing": "Bild nicht verfügbar"
+      },
+      "navigation": {
+        "link_to": "Weiter zu"
+      }
+    }
+  }
+}

@@ -22,46 +22,16 @@
       {%- liquid
         assign item_label = block.settings.label | default: 'section-specific.image-menu.sections.default_label'
         assign item_link = block.settings.link
-        assign has_image = false
-        if block.settings.image != blank
-          assign has_image = true
-        endif
       -%}
       
-      <a 
-        href="{{ item_link }}" 
-        class="image-menu__item"
-        aria-label="{{ item_label | escape }}"
-        {{ block.shopify_attributes }}
-      >
-        <div class="image-menu__item-image-container">
-          {% if has_image %}
-            <img
-              src="{{ block.settings.image | image_url: width: 480 }}"
-              srcset="{{ block.settings.image | image_url: width: 100 }} 100w,
-                      {{ block.settings.image | image_url: width: 200 }} 200w,
-                      {{ block.settings.image | image_url: width: 300 }} 300w,
-                      {{ block.settings.image | image_url: width: 480 }} 480w"
-              sizes="(max-width: 479px) 100px, (max-width: 767px) 130px, (max-width: 991px) 130px, 240px"
-              width="240"
-              alt="{{ item_label | escape }}"
-              loading="lazy"
-              class="image-menu__item-image"
-            >
-          {% else %}
-            {%- comment -%} Placeholder for missing images {%- endcomment -%}
-            <div class="image-menu__item-image image-menu__item-image--placeholder" aria-hidden="true"></div>
-          {% endif %}
-          
-          {%- comment -%} Label and arrow overlay {%- endcomment -%}
-          <div class="image-menu__item-overlay">
-            <span class="image-menu__item-label">
-              {{ item_label }}
-            </span>
-            <span class="image-menu__item-arrow icon icon-arrow-next-arrow" aria-hidden="true"></span>
-          </div>
-        </div>
-      </a>
+      {% render 'snippet-feature-image-link', 
+         image: block.settings.image,
+         label: item_label,
+         link: item_link,
+         class_modifier: 'menu',
+         loading: 'lazy',
+         shopify_attributes: block.shopify_attributes
+      %}
     {% endfor %}
   </div>
 </section>
