@@ -68,11 +68,7 @@
           "menu_item_RcTTXW",
           "menu_item_it84fq"
         ],
-        "settings": {
-          "border_position": "none",
-          "background_enabled": false,
-          "use_default_background": false
-        }
+        "settings": {}
       },
       "section-big-heading": {
         "type": "section-big-heading",

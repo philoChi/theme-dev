@@ -55,7 +55,8 @@
       "settings": {
         "border_position": "none",
         "background_enabled": false,
-        "use_default_background": false
+        "use_default_background": false,
+        "background_color": "#bdc2bc"
       }
     },
     "collection-page": {
