@@ -13,7 +13,7 @@
     }
     
     .image-link__overlay {
-      padding: calc(var(--image-link-overlay-padding) * 0.8);
+      padding: 20px;
     }
   }
   
@@ -24,7 +24,7 @@
     }
     
     .image-link__overlay {
-      padding: calc(var(--image-link-overlay-padding) * 0.6);
+      padding: 15px;
     }
   }
 }
@@ -41,7 +41,7 @@
     }
     
     .image-link__overlay {
-      padding: calc(var(--image-link-overlay-padding) * 0.7);
+      padding: 18px;
     }
     
     .image-link__arrow {
@@ -52,7 +52,7 @@
   /* Further adjust header modifier for mobile */
   .image-link--header {
     .image-link__overlay {
-      padding: calc(var(--image-link-overlay-padding) * 0.5);
+      padding: 12px;
     }
   }
 }
@@ -65,14 +65,14 @@
     }
     
     .image-link__overlay {
-      padding: calc(var(--image-link-overlay-padding) * 0.6);
+      padding: 15px;
     }
   }
   
   /* Minimal padding for header on very small screens */
   .image-link--header {
     .image-link__overlay {
-      padding: calc(var(--image-link-overlay-padding) * 0.4);
+      padding: 10px;
     }
   }
 }

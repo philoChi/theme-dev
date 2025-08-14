@@ -67,27 +67,14 @@
         {%- assign url_key = 'promo' | append: idx | append: '_url' -%}
         {%- assign caption = block.settings[caption_key] -%}
         {%- assign url = block.settings[url_key] | default: '#' -%}
-        <a class="mega-menu-product-image__link" 
-           href="{{ url }}" 
-           role="menuitem"
-           tabindex="-1"
-           aria-label="{{ 'global.header-group.header.main.promo_link' | t: promo_name: caption }}"
-           data-promo="promo{{ idx }}">
-          <div class="hide-overflow">
-            <img
-              src="{{ img | img_url: '400x' }}"
-              alt="{{ caption | escape }}"
-              loading="lazy"
-              width="auto"
-              height="100%"
-            >
-          </div>
-          {%- if caption != blank -%}
-            <div class="mega_heading_container">
-              <h3>{{ caption }}</h3>
-            </div>
-          {%- endif -%}
-        </a>
+        {%- render 'snippet-feature-image-link',
+          image: img,
+          label: caption,
+          link: url,
+          class_modifier: 'header',
+          loading: 'lazy',
+          aria_label: caption
+        -%}
       {%- endif -%}
     {%- endfor -%}
   </div>

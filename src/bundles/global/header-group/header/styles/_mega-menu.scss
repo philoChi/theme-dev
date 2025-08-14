@@ -132,45 +132,6 @@
   margin-left: 0;
 }
 
-/* Individual promo image links */
-.mega-menu-product-image__link {
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  text-align: center;
-  gap: 15px;
-  text-decoration: none;
-  border-radius: 4px;
-  
-  &:focus {
-    outline: none;
-  }
-}
-
-.mega_heading_container {
-  transition: opacity var(--transition-fast) ease-in;
-}
-
-/* Promo image styling */
-.mega-menu-product-image__link .hide-overflow {
-  border-radius: var(--border-radius);
-  border-width: var(--border-width);
-  border-color: var(--border-color);
-  border-style: solid;
-  overflow: hidden;
-}
-
-.mega-menu-product-image__link img {
-  transition: transform var(--promo-image-grow-time) ease;
-}
-
-.mega-menu-product-image__link:hover img {
-  transform: scale(var(--promo-image-grow-scale));
-}
-
-.mega-menu-product-image__link:hover .mega_heading_container {
-  opacity: 0.5;
-}
 
 /* Bottom CTA section */
 .mega-menu-bottom {

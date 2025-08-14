@@ -72,10 +72,6 @@
   .image-link__label {
     font-size: var(--image-link-font-size-small);
   }
-  
-  .image-link__overlay {
-    padding: calc(var(--image-link-overlay-padding) * 0.7);
-  }
 }
 
 .image-link--footer {
@@ -98,7 +94,7 @@
   }
   
   .image-link__overlay {
-    padding: calc(var(--image-link-overlay-padding) * 0.6);
+    padding: 15px;
   }
   
   .image-link__arrow {
