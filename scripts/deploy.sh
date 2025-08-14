@@ -536,6 +536,8 @@ sync_to_source() {
     local target_config="$PROJECT_ROOT/src/theme-hyspex/config/settings_data.json"
     local source_templates="$TARGET_REPO_DIR/templates"
     local target_templates="$PROJECT_ROOT/src/theme-hyspex/templates"
+    local source_sections="$TARGET_REPO_DIR/sections"
+    local target_groups="$PROJECT_ROOT/src/theme-hyspex/groups"
     
     local synced_count=0
     
@@ -577,6 +579,23 @@ sync_to_source() {
         fi
     else
         log_warn "Templates directory not found in deploy repository"
+    fi
+    
+    # Sync group files (stored in sections directory as *-group.json)
+    if [[ -d "$source_sections" ]]; then
+        mkdir -p "$target_groups"
+        
+        # Sync group JSON files (pattern: *-group.json)
+        for group_file in "$source_sections"/*-group.json; do
+            if [[ -f "$group_file" ]]; then
+                local filename=$(basename "$group_file")
+                cp "$group_file" "$target_groups/$filename"
+                log_info "✅ Synced group: $filename"
+                ((synced_count++))
+            fi
+        done
+    else
+        log_warn "Sections directory not found in deploy repository"
     fi
     
     if [[ $synced_count -gt 0 ]]; then
