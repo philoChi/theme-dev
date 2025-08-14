@@ -16,7 +16,6 @@
           "mega_menu_region": "Mega-Menü Bereich",
           "menu_categories": "Menü-Kategorien",
           "featured_promotions": "Beworbene Aktionen",
-          "promo_link": "Aktions-Link für {{ promo_name }}",
           "menu_actions": "Menü-Aktionen",
           "view_all_in_category": "Alle in {{ category }} anzeigen",
           "open_submenu": "Untermenü für {{ menu_name }} öffnen",
