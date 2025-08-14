@@ -12,11 +12,12 @@
 
   {%- comment -%}1 • Hero banner (optional) ----------------------------------{%- endcomment -%}
   {% if hero_block %}
-  {% render 'snippet-section-multi-category-hero-banner',
-    image:        hero_block.settings.image,
-    link:         hero_block.settings.link,
-    overlay_text: hero_block.settings.overlay_text,
-    ratio:        hero_block.settings.ratio %}
+  {% render 'snippet-feature-image-link',
+    image: hero_block.settings.image,
+    label: hero_block.settings.overlay_text,
+    link: hero_block.settings.link,
+    class_modifier: 'drawer',
+    loading: 'lazy' %}
   {% endif %}
 
   {%- comment -%}2 • Tab / pill bar -----------------------------------------{%- endcomment -%}

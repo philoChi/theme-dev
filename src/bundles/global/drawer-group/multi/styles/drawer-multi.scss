@@ -129,47 +129,81 @@
 }
 
 
-/* 1. Hero banner - MODIFIED */
-.drawer-hero {
-  position: relative;
-  margin: 0;
-  /* Remove default margins if any from original */
-  max-width: 100%;
-  /* Ensure it fills the container width */
-  border-radius: var(--drawer-nav-hero-border-radius);
-  /* Apply border radius to the main hero container */
-  overflow: hidden;
-  /* Ensure child elements adhere to border radius */
-}
-
-.drawer-hero__media {
-  position: relative;
+/* 1. Hero banner using shared image-link component */
+.image-link--drawer {
   width: 100%;
-  padding-top: calc(100% / (var(--drawer-hero-ratio, 16/9)));
-  /* Keep aspect ratio logic */
-  overflow: hidden;
-  /* Removed border-radius from here, applied to .drawer-hero */
-}
+  align-items: stretch; /* Override default center alignment */
+  --image-link-item-width: 100% !important; /* Force full width, override responsive */
+  --image-link-item-border-radius: var(--drawer-nav-hero-border-radius);
+  margin-bottom: var(--drawer-nav-spacing-3, 1rem);
+  
+  .image-link__image-container {
+    width: 100% !important; /* Ensure full width at all breakpoints */
+    aspect-ratio: 16/9; /* Default aspect ratio for drawer */
+  }
 
-.drawer-hero__media img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+  .image-link__image {
+    /* Ensure proper image display without stretching */
+    object-fit: cover; /* Cover the container while maintaining aspect ratio */
+    width: 100%;
+    height: 100%;
+  }
 
-.drawer-hero__overlay {
-  position: absolute;
-  left: var(--drawer-nav-spacing-3, 1rem);
-  bottom: var(--drawer-nav-spacing-3, 1rem);
-  color: var(--drawer-nav-hero-overlay-text-color);
-  font-family: var(--drawer-nav-hero-overlay-font-family);
-  font-size: var(--drawer-nav-hero-overlay-font-size);
-  font-weight: bold;
-  text-shadow: var(--drawer-nav-hero-overlay-text-shadow);
-  pointer-events: none;
-  line-height: 1.2;
+  .image-link__overlay {
+    /* Override default overlay positioning for drawer context */
+    position: absolute;
+    left: var(--drawer-nav-spacing-3, 1rem);
+    bottom: var(--drawer-nav-spacing-3, 1rem);
+    color: var(--drawer-nav-hero-overlay-text-color);
+    font-family: var(--drawer-nav-hero-overlay-font-family);
+    font-size: var(--drawer-nav-hero-overlay-font-size);
+    font-weight: bold;
+    text-shadow: var(--drawer-nav-hero-overlay-text-shadow);
+  }
+
+  .image-link__label {
+    /* Force consistent font size across all breakpoints */
+    font-size: var(--drawer-nav-hero-overlay-font-size) !important;
+  }
+
+  .image-link__arrow {
+    /* Align arrow size with text size */
+    --image-link-arrow-size: var(--drawer-nav-hero-overlay-font-size);
+  }
+  
+  /* Override responsive styles that might reduce width */
+  @media screen and (max-width: 991px) {
+    .image-link__image-container {
+      width: 100% !important;
+    }
+    
+    /* Prevent font-size reduction on tablet */
+    .image-link__label {
+      font-size: var(--drawer-nav-hero-overlay-font-size) !important;
+    }
+  }
+  
+  @media screen and (max-width: 767px) {
+    .image-link__image-container {
+      width: 100% !important;
+    }
+    
+    /* Prevent font-size reduction on mobile */
+    .image-link__label {
+      font-size: var(--drawer-nav-hero-overlay-font-size) !important;
+    }
+  }
+  
+  @media screen and (max-width: 479px) {
+    .image-link__image-container {
+      width: 100% !important;
+    }
+    
+    /* Prevent font-size reduction on small mobile */
+    .image-link__label {
+      font-size: var(--drawer-nav-hero-overlay-font-size) !important;
+    }
+  }
 }
 
 /* 2. Pill / tab bar - MODIFIED */
