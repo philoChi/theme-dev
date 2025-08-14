@@ -69,7 +69,9 @@
           "menu_item_it84fq"
         ],
         "settings": {
-          "max_items": 6
+          "border_position": "none",
+          "background_enabled": false,
+          "use_default_background": false
         }
       },
       "section-big-heading": {

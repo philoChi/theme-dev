@@ -7,18 +7,37 @@
 {%- comment -%} Assets loaded conditionally via theme.liquid {%- endcomment -%}
 
 {%- liquid
-  assign max_items = section.settings.max_items | default: 6
   assign section_id = 'image-menu-' | append: section.id
+  assign border_position = section.settings.border_position | default: 'top'
+  assign background_enabled = section.settings.background_enabled | default: true
+  assign use_default_background = section.settings.use_default_background | default: true
+  assign custom_background_color = section.settings.background_color
+  
+  # Build CSS classes for border position
+  assign border_class = 'image-menu--border-' | append: border_position
+  
+  # Build background style
+  assign background_style = ''
+  unless background_enabled
+    assign background_style = 'background-color: transparent;'
+  else
+    unless use_default_background
+      if custom_background_color != blank
+        assign background_style = 'background-color: ' | append: custom_background_color | append: ';'
+      endif
+    endunless
+  endunless
 -%}
 
 <section 
-  class="image-menu" 
+  class="image-menu {{ border_class }}" 
   id="{{ section_id }}"
   role="navigation"
   aria-label="{{ 'section-specific.image-menu.sections.navigation_label' | t }}"
+  {% if background_style != blank %}style="{{ background_style }}"{% endif %}
 >
   <div class="image-menu__container">
-    {% for block in section.blocks limit: max_items %}
+    {% for block in section.blocks %}
       {%- liquid
         assign item_label = block.settings.label | default: 'section-specific.image-menu.sections.default_label'
         assign item_link = block.settings.link
@@ -48,25 +67,97 @@
     {
       "type": "header",
       "content": {
-        "en": "Display Settings",
-        "de": "Anzeigeeinstellungen"
+        "en": "Border Settings",
+        "de": "Rahmeneinstellungen"
       }
     },
     {
-      "type": "range",
-      "id": "max_items",
+      "type": "select",
+      "id": "border_position",
       "label": {
-        "en": "Maximum items to display",
-        "de": "Maximale Anzahl der anzuzeigenden Elemente"
+        "en": "Border Position",
+        "de": "Rahmenposition"
       },
       "info": {
-        "en": "Items automatically hide on smaller screens for better mobile experience",
-        "de": "Elemente werden auf kleineren Bildschirmen automatisch ausgeblendet für bessere mobile Erfahrung"
+        "en": "Choose where to display the border around the image menu",
+        "de": "Wählen Sie, wo der Rahmen um das Bildmenü angezeigt werden soll"
       },
-      "min": 1,
-      "max": 6,
-      "step": 1,
-      "default": 6
+      "options": [
+        {
+          "value": "none",
+          "label": {
+            "en": "No Border",
+            "de": "Kein Rahmen"
+          }
+        },
+        {
+          "value": "top",
+          "label": {
+            "en": "Top Border",
+            "de": "Oberer Rahmen"
+          }
+        },
+        {
+          "value": "bottom",
+          "label": {
+            "en": "Bottom Border",
+            "de": "Unterer Rahmen"
+          }
+        },
+        {
+          "value": "both",
+          "label": {
+            "en": "Top and Bottom Border",
+            "de": "Oberer und unterer Rahmen"
+          }
+        }
+      ],
+      "default": "top"
+    },
+    {
+      "type": "header",
+      "content": {
+        "en": "Background Settings",
+        "de": "Hintergrundeinstellungen"
+      }
+    },
+    {
+      "type": "checkbox",
+      "id": "background_enabled",
+      "label": {
+        "en": "Enable Background",
+        "de": "Hintergrund aktivieren"
+      },
+      "info": {
+        "en": "When disabled, the background will be transparent",
+        "de": "Bei Deaktivierung ist der Hintergrund transparent"
+      },
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "use_default_background",
+      "label": {
+        "en": "Use Default Background Color",
+        "de": "Standard-Hintergrundfarbe verwenden"
+      },
+      "info": {
+        "en": "Use the theme's main background color, or choose a custom color below",
+        "de": "Verwenden Sie die Haupt-Hintergrundfarbe des Themes oder wählen Sie unten eine benutzerdefinierte Farbe"
+      },
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": {
+        "en": "Custom Background Color",
+        "de": "Benutzerdefinierte Hintergrundfarbe"
+      },
+      "info": {
+        "en": "Only used when 'Use Default Background Color' is disabled",
+        "de": "Wird nur verwendet, wenn 'Standard-Hintergrundfarbe verwenden' deaktiviert ist"
+      }
     }
   ],
   "blocks": [

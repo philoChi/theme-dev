@@ -3,14 +3,29 @@
 
 .image-menu {
   background-color: var(--image-menu-background);
-  border-top: var(--image-menu-border-top-width) solid var(--image-menu-border-color);
-  border-bottom: var(--image-menu-border-bottom-width) solid var(--image-menu-border-color);
+  border: none; /* Reset all borders, will be added by modifiers */
   position: relative;
   z-index: var(--image-menu-z-index);
   display: flex;
   justify-content: center;
   align-items: center;
   padding: var(--image-menu-padding);
+
+  /* Border position modifiers */
+  &--border-top {
+    border-top: var(--image-menu-border-width) solid var(--image-menu-border-color);
+  }
+
+  &--border-bottom {
+    border-bottom: var(--image-menu-border-width) solid var(--image-menu-border-color);
+  }
+
+  &--border-both {
+    border-top: var(--image-menu-border-width) solid var(--image-menu-border-color);
+    border-bottom: var(--image-menu-border-width) solid var(--image-menu-border-color);
+  }
+
+  /* Note: border-none requires no additional styles as default has no borders */
 }
 
 .image-menu__container {

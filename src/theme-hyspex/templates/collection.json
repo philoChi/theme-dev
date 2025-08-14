@@ -9,6 +9,55 @@
  */
 {
   "sections": {
+    "section_image_menu_gbPAyJ": {
+      "type": "section-image-menu",
+      "blocks": {
+        "menu_item_Yh8cyD": {
+          "type": "menu_item",
+          "settings": {
+            "image": "shopify://shop_images/phiolo_Create_an_ultra-realistic_amateur_photo_shoot_with_sof_50153868-69f2-4880-a855-5d1de87d3f51_2.png",
+            "label": "Herren",
+            "link": "shopify://collections/men-clothing"
+          }
+        },
+        "menu_item_WX6Nw8": {
+          "type": "menu_item",
+          "settings": {
+            "image": "shopify://shop_images/phiolo_Create_an_ultra-realistic_amateur_photo_shoot_with_sof_a9221460-c312-443e-b251-6176145b9d9f_0.png",
+            "label": "Damen",
+            "link": "shopify://collections/women-clothing"
+          }
+        },
+        "menu_item_xzGtzj": {
+          "type": "menu_item",
+          "settings": {
+            "image": "shopify://shop_images/phiolo_Create_an_ultra-realistic_amateur_photo_shoot_with_sof_310ca70b-1771-4a2c-b772-a7e6129922fa_0.png",
+            "label": "Hoodies",
+            "link": "shopify://collections/kapuzenpullover"
+          }
+        },
+        "menu_item_JNkJLq": {
+          "type": "menu_item",
+          "settings": {
+            "image": "shopify://shop_images/phiolo_Create_an_ultra-realistic_amateur_photo_shoot_with_sof_06f82228-99b4-4c4e-a221-6b36e12c48c0_1.png",
+            "label": "T-Shirts",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "menu_item_Yh8cyD",
+        "menu_item_WX6Nw8",
+        "menu_item_xzGtzj",
+        "menu_item_JNkJLq"
+      ],
+      "name": "Bild-Menü",
+      "settings": {
+        "border_position": "none",
+        "background_enabled": false,
+        "use_default_background": false
+      }
+    },
     "collection-page": {
       "type": "section-page-collections-main",
       "settings": {
@@ -16,14 +65,19 @@
         "tablet_columns": 2,
         "mobile_columns": "1",
         "products_per_page": 24,
+        "show_product_count": true,
         "enable_filtering": true,
         "enable_sorting": true,
-        "show_product_count": true,
-        "show_filters_on_mobile": true
+        "show_filters_on_mobile": true,
+        "custom_filter_label": "Filter",
+        "custom_empty_message": "Keine Produkte gefunden",
+        "show_filter_counts": true,
+        "default_sort_order": "manual"
       }
     }
   },
   "order": [
+    "section_image_menu_gbPAyJ",
     "collection-page"
   ]
 }

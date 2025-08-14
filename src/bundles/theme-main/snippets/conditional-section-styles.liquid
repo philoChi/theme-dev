@@ -36,8 +36,10 @@
   {%- comment -%} Collection & Search Pages: Load page-specific collection assets {%- endcomment -%}
   {% if shop.domain contains 'myshopify.com' or request.host contains '127.0.0.1' or request.host contains 'localhost' %}
     {{ 'section-page-collections.css' | asset_url | append: '?v=' | append: cache_buster | stylesheet_tag }}
+    {{ 'section-image-menu.css' | asset_url | append: '?v=' | append: cache_buster | stylesheet_tag }}
   {% else %}
     {{ 'section-page-collections.css' | asset_url | stylesheet_tag }}
+    {{ 'section-image-menu.css' | asset_url | stylesheet_tag }}
   {% endif %}
 
 {% elsif template contains 'page' %}

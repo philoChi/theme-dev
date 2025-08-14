@@ -3,12 +3,33 @@
     "image_menu": {
       "name": "Bild-Menü",
       "settings": {
-        "display_settings": {
-          "content": "Anzeigeeinstellungen"
+        "border_settings": {
+          "content": "Rahmeneinstellungen"
         },
-        "max_items": {
-          "label": "Maximale Anzahl der anzuzeigenden Elemente",
-          "info": "Elemente werden auf kleineren Bildschirmen automatisch ausgeblendet für bessere mobile Erfahrung"
+        "border_position": {
+          "label": "Rahmenposition",
+          "info": "Wählen Sie, wo der Rahmen um das Bildmenü angezeigt werden soll",
+          "options": {
+            "none": "Kein Rahmen",
+            "top": "Oberer Rahmen", 
+            "bottom": "Unterer Rahmen",
+            "both": "Oberer und unterer Rahmen"
+          }
+        },
+        "background_settings": {
+          "content": "Hintergrundeinstellungen"
+        },
+        "background_enabled": {
+          "label": "Hintergrund aktivieren",
+          "info": "Bei Deaktivierung ist der Hintergrund transparent"
+        },
+        "use_default_background": {
+          "label": "Standard-Hintergrundfarbe verwenden",
+          "info": "Verwenden Sie die Haupt-Hintergrundfarbe des Themes oder wählen Sie unten eine benutzerdefinierte Farbe"
+        },
+        "background_color": {
+          "label": "Benutzerdefinierte Hintergrundfarbe",
+          "info": "Wird nur verwendet, wenn 'Standard-Hintergrundfarbe verwenden' deaktiviert ist"
         }
       },
       "blocks": {
