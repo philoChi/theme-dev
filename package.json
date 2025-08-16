@@ -17,7 +17,7 @@
     "theme:cleanup": "./scripts/manager-theme-dev.sh cleanup",
     "theme:help": "./scripts/manager-theme-dev.sh help",
     "theme:pull": "./scripts/deploy.sh pull",
-    "build": "build:dev",
+    "build": "npm run build:dev",
     "build:dev": "NODE_ENV=development webpack && sleep 2 && touch theme-hyspex/assets/global.css",
     "build:clean": "rm -rf theme-hyspex/",
     "watch": "webpack --watch",
