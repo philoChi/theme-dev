@@ -7,13 +7,14 @@
   --slider-section-padding: 32px;
   --slider-slide-spacing: 16px;
   --slider-container-aspect-ratio: 16/9;
+  --slider-container-aspect-ratio-mobile: 4/3;
   --slider-max-width: var(--page-medium-width);
 
   /* Slide Appearance */
   --slider-slide-opacity: 0.6;
   --slider-slide-scale: 0.8;
   --slider-slide-blur: 4px;
-  --slider-slide-border-radius: var(--main-border-radius);
+  --slider-slide-border-radius: calc(var(--main-border-radius) * 1.5);
   --slider-slide-border-width: var(--main-border-width);
   --slider-slide-border-color: var(--main-border-color);
 

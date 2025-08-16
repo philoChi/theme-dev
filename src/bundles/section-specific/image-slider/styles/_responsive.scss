@@ -37,6 +37,17 @@
   }
 }
 
+/* Mobile aspect ratio override */
+@media (max-width: 767px) {
+  .image-slider__container {
+    aspect-ratio: var(--slider-container-aspect-ratio-mobile);
+  }
+  
+  .image-slider__image {
+    border-radius: 0;
+  }
+}
+
 /* Consolidated mobile optimizations */
 @container (max-width: 767px) {
   .image-slider__container {
