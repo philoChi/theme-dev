@@ -7,7 +7,7 @@
     --blur-amount: 2px;
   }
 
-  .image-slider__image--loading {
+  .image-slider__image[data-loading="true"] {
     animation: none;
   }
 }

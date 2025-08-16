@@ -113,47 +113,47 @@
   }
 }
 
-/********************  Animation helper classes  ********************/
-.image-slider__slide--transition-left-to-center {
+/********************  Animation states using data attributes  ********************/
+.image-slider__slide[data-animating="left-to-center"] {
   animation: moveLeftToCenter var(--transition-duration) cubic-bezier(0.4, 0, 0.2, 1) forwards;
   z-index: 2;
 }
 
-.image-slider__slide--transition-center-to-left {
+.image-slider__slide[data-animating="center-to-left"] {
   animation: moveCenterToLeft var(--transition-duration) cubic-bezier(0.4, 0, 0.2, 1) forwards;
   z-index: 1;
 }
 
-.image-slider__slide--transition-right-to-center {
+.image-slider__slide[data-animating="right-to-center"] {
   animation: moveRightToCenter var(--transition-duration) cubic-bezier(0.4, 0, 0.2, 1) forwards;
   z-index: 2;
 }
 
-.image-slider__slide--transition-center-to-right {
+.image-slider__slide[data-animating="center-to-right"] {
   animation: moveCenterToRight var(--transition-duration) cubic-bezier(0.4, 0, 0.2, 1) forwards;
   z-index: 1;
 }
 
-.image-slider__slide--transition-left-to-offscreen {
+.image-slider__slide[data-animating="left-to-offscreen"] {
   animation: moveLeftToOffscreen var(--transition-duration) cubic-bezier(0.4, 0, 0.2, 1) forwards;
   z-index: 1;
 }
 
-.image-slider__slide--transition-right-to-offscreen {
+.image-slider__slide[data-animating="right-to-offscreen"] {
   animation: moveRightToOffscreen var(--transition-duration) cubic-bezier(0.4, 0, 0.2, 1) forwards;
   z-index: 1;
 }
 
-.image-slider__slide--transition-offscreen-to-left {
+.image-slider__slide[data-animating="offscreen-to-left"] {
   animation: moveOffscreenToLeft var(--transition-duration) cubic-bezier(0.4, 0, 0.2, 1) forwards;
   z-index: 1;
 }
 
-.image-slider__slide--transition-offscreen-to-right {
+.image-slider__slide[data-animating="offscreen-to-right"] {
   animation: moveOffscreenToRight var(--transition-duration) cubic-bezier(0.4, 0, 0.2, 1) forwards;
   z-index: 1;
 }
 
-.image-slider__slide--switch-sides {
+.image-slider__slide[data-switch-sides="true"] {
   transition: none !important;
 }

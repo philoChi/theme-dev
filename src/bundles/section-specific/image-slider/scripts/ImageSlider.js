@@ -24,8 +24,8 @@ class SimpleImageSlider {
 
     this._logger(`[Slider: ${this.sliderId}] Initializing with ${this.slides.length} slides`)
 
-    // Find the index with class "active" (if present)
-    const activeIndex = this.slides.findIndex(s => s.classList.contains('active'))
+    // Find the index with aria-current="true" (if present)
+    const activeIndex = this.slides.findIndex(s => s.getAttribute('aria-current') === 'true')
 
     // Desired logical index (real content slide at DOM position 1)
     this.currentIndex = 1
@@ -146,11 +146,12 @@ class SimpleImageSlider {
 
       ;[lastReal, firstReal].forEach(clone => {
         clone.dataset.copySlide = 'true'
-        clone.classList.remove('image-slider__slide--right', 'image-slider__slide--left', 'image-slider__slide--offscreen-right', 'image-slider__slide--offscreen-left')
+        clone.removeAttribute('data-slide-position')
+        clone.removeAttribute('aria-current')
       })
 
-    lastReal.classList.add('image-slider__slide--offscreen-left')
-    firstReal.classList.add('image-slider__slide--offscreen-right')
+    lastReal.dataset.slidePosition = 'offscreen-left'
+    firstReal.dataset.slidePosition = 'offscreen-right'
 
     this.container.prepend(lastReal)
     this.container.append(firstReal)
@@ -159,16 +160,13 @@ class SimpleImageSlider {
   }
 
   /**
-   * Central, left & right slide classes
+   * Central, left & right slide positions using ARIA and data attributes
    */
   updateCentralSlidePositions() {
     this.slides.forEach(slide => {
-      slide.classList.remove(
-        'image-slider__slide--center', 'image-slider__slide--left', 'image-slider__slide--right',
-        'image-slider__slide--transition-center-to-left', 'image-slider__slide--transition-center-to-right',
-        'image-slider__slide--transition-left-to-center', 'image-slider__slide--transition-right-to-center',
-        'active'
-      )
+      slide.removeAttribute('data-slide-position')
+      slide.removeAttribute('data-animating')
+      slide.removeAttribute('aria-current')
       slide.ariaHidden = 'true'
     })
 
@@ -176,34 +174,39 @@ class SimpleImageSlider {
     const prevSlide = this.slides[this.currentIndex - 1]
     const nextSlide = this.slides[this.currentIndex + 1]
 
-    current.classList.add('image-slider__slide--center', 'active')
+    current.dataset.slidePosition = 'center'
+    current.setAttribute('aria-current', 'true')
     current.ariaHidden = 'false'
 
-    if (prevSlide) prevSlide.classList.add('image-slider__slide--left')
-    if (nextSlide) nextSlide.classList.add('image-slider__slide--right')
+    if (prevSlide) prevSlide.dataset.slidePosition = 'left'
+    if (nextSlide) nextSlide.dataset.slidePosition = 'right'
 
     this._logger(`[Slider: ${this.sliderId}] Position updated – Center: ${this.currentIndex}`)
   }
 
   /**
-   * Off‑screen classes
+   * Off‑screen slide positions using data attributes
    */
   updateOffsetSlidePositions() {
+    // Remove any existing offscreen animation states
     this.slides.forEach(slide => {
-      slide.classList.remove(
-        'image-slider__slide--offscreen-left', 'image-slider__slide--offscreen-right',
-        'image-slider__slide--transition-offscreen-to-right', 'image-slider__slide--transition-offscreen-to-left',
-        'image-slider__slide--transition-left-to-offscreen', 'image-slider__slide--transition-right-to-offscreen'
-      )
+      const currentAnimating = slide.dataset.animating
+      if (currentAnimating && currentAnimating.includes('offscreen')) {
+        slide.removeAttribute('data-animating')
+      }
     })
 
     for (let i = 0; i < this.currentIndex - 1; i++) {
-      this.slides[i].classList.add('image-slider__slide--offscreen-left')
+      if (!this.slides[i].dataset.slidePosition || !this.slides[i].dataset.slidePosition.includes('offscreen')) {
+        this.slides[i].dataset.slidePosition = 'offscreen-left'
+      }
       this.slides[i].ariaHidden = 'true'
     }
 
     for (let i = this.currentIndex + 2; i < this.slides.length; i++) {
-      this.slides[i].classList.add('image-slider__slide--offscreen-right')
+      if (!this.slides[i].dataset.slidePosition || !this.slides[i].dataset.slidePosition.includes('offscreen')) {
+        this.slides[i].dataset.slidePosition = 'offscreen-right'
+      }
       this.slides[i].ariaHidden = 'true'
     }
   }
@@ -270,18 +273,18 @@ class SimpleImageSlider {
 
     this.isTransitioning = true
 
-    // Assign animation classes
+    // Assign animation states using data attributes
     if (rightward) {
-      centerSlide.classList.add('image-slider__slide--transition-center-to-left')
-      targetSlide.classList.add('image-slider__slide--transition-right-to-center')
-      offScreenSlide.classList.add('image-slider__slide--transition-left-to-offscreen')
-      onScreenSlide.classList.add('image-slider__slide--transition-offscreen-to-right')
+      centerSlide.dataset.animating = 'center-to-left'
+      targetSlide.dataset.animating = 'right-to-center'
+      offScreenSlide.dataset.animating = 'left-to-offscreen'
+      onScreenSlide.dataset.animating = 'offscreen-to-right'
       this.currentIndex += 1
     } else {
-      centerSlide.classList.add('image-slider__slide--transition-center-to-right')
-      targetSlide.classList.add('image-slider__slide--transition-left-to-center')
-      offScreenSlide.classList.add('image-slider__slide--transition-right-to-offscreen')
-      onScreenSlide.classList.add('image-slider__slide--transition-offscreen-to-left')
+      centerSlide.dataset.animating = 'center-to-right'
+      targetSlide.dataset.animating = 'left-to-center'
+      offScreenSlide.dataset.animating = 'right-to-offscreen'
+      onScreenSlide.dataset.animating = 'offscreen-to-left'
       this.currentIndex -= 1
     }
 
@@ -299,7 +302,7 @@ class SimpleImageSlider {
         this.updateOffsetSlidePositions()
         this.deleteDuplication(direction)
         this.resetCopySlides()
-        this.currentIndex = this.slides.findIndex(child => child.classList.contains('active'))
+        this.currentIndex = this.slides.findIndex(child => child.getAttribute('aria-current') === 'true')
       }
 
       this.updateNextSlidePositions()

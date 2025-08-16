@@ -15,7 +15,8 @@
 
 <section
   class="image-slider"
-  aria-label="Image slider"
+  aria-label="Image slider with {{ section.blocks.size }} slides"
+  aria-roledescription="carousel"
   data-section-type="image-slider"
   data-autoplay="{{ section.settings.enable_autoplay }}"
   data-interval="{{ section.settings.autoplay_interval | times: 1000 }}"
@@ -50,8 +51,14 @@
 
   <div class="image-slider__container" style="opacity: 0; transition: opacity 0.3s ease;">
     {% for block in section.blocks %}
-      {% comment %} Render each slide {% endcomment %}
-      <div class="image-slider__slide{% if forloop.first %} active{% endif %}" {{ block.shopify_attributes }}>
+      {% comment %} Render each slide with proper ARIA attributes {% endcomment %}
+      <div 
+        class="image-slider__slide" 
+        {{ block.shopify_attributes }}
+        {% if forloop.first %}aria-current="true"{% endif %}
+        aria-hidden="{% unless forloop.first %}true{% else %}false{% endunless %}"
+        aria-label="Slide {{ forloop.index }} of {{ forloop.length }}"
+      >
         {% if block.settings.image %}
           {{
             block.settings.image

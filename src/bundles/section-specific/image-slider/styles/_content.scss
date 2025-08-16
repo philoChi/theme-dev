@@ -14,7 +14,7 @@
   pointer-events: none;
 }
 
-.image-slider__slide--center .image-slider__content {
+.image-slider__slide[data-slide-position="center"] .image-slider__content {
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
