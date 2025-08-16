@@ -10,18 +10,21 @@
   z-index: 3;
   opacity: 0;
   transform: translateY(20px);
-  transition: all var(--transition-duration) cubic-bezier(0.4, 0, 0.2, 1);
+  transition: 
+    opacity var(--transition-duration) var(--transition-timing),
+    transform var(--transition-duration) var(--transition-timing);
   pointer-events: none;
 }
 
-.image-slider__slide[data-slide-position="center"] .image-slider__content {
+/* Content becomes visible on active slide using ARIA current */
+.image-slider__slide[aria-current="true"] .image-slider__content {
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
 }
 
 .image-slider__title {
-  color: var(--font-color)
+  color: var(--font-color);
 }
 
 /********************  CTA grid & buttons  ********************/

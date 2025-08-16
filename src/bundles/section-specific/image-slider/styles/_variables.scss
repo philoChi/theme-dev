@@ -3,10 +3,12 @@
 /********************  CSS Custom Properties  ********************/
 /* Root variables for slider configuration - accessible to theme editor */
 .image-slider {
+  /* Background configuration */
   --slider-bg: none;
   --slider-bg-opa: 0;
   --slider-bg-size: 150px;
 
+  /* Slide behavior and appearance */
   --slide-scale: 0.8;
   --slide-opa: 0.6;
   --slide-gap: 16px;
@@ -14,10 +16,21 @@
   --transition-duration: 600ms;
   --blur-amount: 4px;
 
+  /* Positioning calculations */
   --position-left: calc(-100% - var(--slide-gap));
   --position-right: calc(100% + var(--slide-gap));
   --position-offscreen-left: calc(-200% - var(--slide-gap));
   --position-offscreen-right: calc(200% + var(--slide-gap));
 
+  /* Content styling */
   --font-color: var(--main-background);
+
+  /* Responsive breakpoints */
+  --breakpoint-mobile: 480px;
+  --breakpoint-tablet: 768px;
+  --breakpoint-desktop: 1280px;
+
+  /* Performance optimizations */
+  --transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+  --transform-origin: center center;
 }

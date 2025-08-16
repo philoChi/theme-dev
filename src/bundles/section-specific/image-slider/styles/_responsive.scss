@@ -1,15 +1,19 @@
 /* Image Slider Responsive Styles */
 
-/********************  Responsive tweaks  ********************/
+/********************  Touch device optimization  ********************/
 @media (hover: none) {
   .image-slider__arrows {
     display: none;
   }
 }
 
+/********************  Mobile-first responsive design  ********************/
+/* Base mobile styles (included in base components) */
+
+/* Tablet and up */
 @media (min-width: 768px) {
   .image-slider {
-    --blur-amount: 6px;
+    --blur-amount: clamp(4px, 1.5vw, 6px);
   }
 
   .image-slider__container {
@@ -18,30 +22,31 @@
   }
 
   .image-slider__content {
-    max-width: 60ch;
+    max-width: min(60ch, 50%);
   }
 
   .image-slider__cta-button {
-    font-size: 1rem;
+    font-size: clamp(0.875rem, 2vw, 1rem);
   }
 }
 
+/* Desktop and up */
 @media (min-width: 1280px) {
   .image-slider__arrows {
-    width: 90%;
+    width: clamp(85%, 5vw, 95%);
   }
 }
 
-@media (max-width: 767px) {
+/* Consolidated mobile optimizations */
+@container (max-width: 767px) {
   .image-slider__container {
     width: 100%;
-    max-width: min(90%, var(--page-max-width, 1450px));
+    max-width: clamp(90%, 5vw, 100%);
   }
-}
-
-@media (max-width: 480px) {
-  .image-slider__container {
-    width: 100%;
-    max-width: min(100%, var(--page-max-width, 1450px));
+  
+  .image-slider__content {
+    bottom: clamp(5%, 2vh, 10%);
+    left: clamp(3%, 2vw, 5%);
+    max-width: min(50ch, 85%);
   }
 }

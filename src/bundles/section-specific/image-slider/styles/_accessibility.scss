@@ -1,6 +1,6 @@
 /* Image Slider Accessibility Features */
 
-/********************  Accessibility  ********************/
+/********************  Reduced motion support  ********************/
 @media (prefers-reduced-motion: reduce) {
   .image-slider {
     --transition-duration: 0ms;
@@ -10,4 +10,58 @@
   .image-slider__image[data-loading="true"] {
     animation: none;
   }
+
+  /* Disable complex animations but keep basic transitions */
+  .image-slider__slide[data-animating] {
+    animation: none !important;
+  }
+}
+
+/********************  Focus and keyboard navigation  ********************/
+/* Enhanced focus indicators using modern CSS */
+.image-slider__arrows [data-arrow]:focus-visible {
+  outline: 2px solid var(--focus-color, #005fcc);
+  outline-offset: 2px;
+}
+
+/* Ensure content is accessible when slide has focus */
+.image-slider__slide:focus-within .image-slider__content {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .image-slider__slide {
+    --blur-amount: 0px;
+  }
+  
+  .image-slider__image {
+    border-width: 2px;
+    border-color: currentColor;
+  }
+}
+
+/********************  Screen reader optimizations  ********************/
+/* Ensure proper announcement of slide changes */
+.image-slider__slide[aria-current="true"] {
+  /* Automatically handled by ARIA attributes */
+}
+
+/* Skip link for keyboard users */
+.image-slider__skip-link {
+  position: absolute;
+  left: -9999px;
+  z-index: 999;
+  padding: 0.5rem 1rem;
+  background-color: var(--bg-color, #000);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 0.25rem;
+}
+
+.image-slider__skip-link:focus {
+  left: 1rem;
+  top: 1rem;
 }
