@@ -5,14 +5,14 @@
   position: absolute;
   bottom: 10%;
   left: 5%;
-  color: var(--font-color);
+  color: var(--slider-text-color);
   max-width: min(60ch, 60%);
   z-index: 3;
   opacity: 0;
   transform: translateY(20px);
   transition: 
-    opacity var(--transition-duration) var(--transition-timing),
-    transform var(--transition-duration) var(--transition-timing);
+    opacity var(--slider-transition-duration) var(--slider-transition-timing),
+    transform var(--slider-transition-duration) var(--slider-transition-timing);
   pointer-events: none;
 }
 
@@ -24,7 +24,7 @@
 }
 
 .image-slider__title {
-  color: var(--font-color);
+  color: var(--slider-text-color);
 }
 
 /********************  CTA grid & buttons  ********************/

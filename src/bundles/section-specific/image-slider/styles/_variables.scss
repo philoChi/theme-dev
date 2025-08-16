@@ -3,34 +3,35 @@
 /********************  CSS Custom Properties  ********************/
 /* Root variables for slider configuration - accessible to theme editor */
 .image-slider {
-  /* Background configuration */
-  --slider-bg: none;
-  --slider-bg-opa: 0;
-  --slider-bg-size: 150px;
+  /* Layout & Spacing */
+  --slider-section-padding: 32px;
+  --slider-slide-spacing: 16px;
+  --slider-container-aspect-ratio: 16/9;
 
-  /* Slide behavior and appearance */
-  --slide-scale: 0.8;
-  --slide-opa: 0.6;
-  --slide-gap: 16px;
-  --section-padding: 32px;
-  --transition-duration: 600ms;
-  --blur-amount: 4px;
+  /* Slide Appearance */
+  --slider-slide-opacity: 0.6;
+  --slider-slide-scale: 0.8;
+  --slider-slide-blur: 4px;
+  --slider-slide-border-radius: var(--main-border-radius);
+  --slider-slide-border-width: var(--main-border-width);
+  --slider-slide-border-color: var(--main-border-color);
 
-  /* Positioning calculations */
-  --position-left: calc(-100% - var(--slide-gap));
-  --position-right: calc(100% + var(--slide-gap));
-  --position-offscreen-left: calc(-200% - var(--slide-gap));
-  --position-offscreen-right: calc(200% + var(--slide-gap));
+  /* Animation */
+  --slider-transition-duration: 600ms;
+  --slider-transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+  --slider-transform-origin: center center;
 
-  /* Content styling */
-  --font-color: var(--main-background);
+  /* Background Pattern (Optional) */
+  --slider-background-image: none;
+  --slider-background-opacity: 0;
+  --slider-background-tile-size: 150px;
 
-  /* Responsive breakpoints */
-  --breakpoint-mobile: 480px;
-  --breakpoint-tablet: 768px;
-  --breakpoint-desktop: 1280px;
+  /* Content Styling */
+  --slider-text-color: var(--main-background);
 
-  /* Performance optimizations */
-  --transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
-  --transform-origin: center center;
+  /* Calculated Positions (Internal - do not override) */
+  --position-left: calc(-100% - var(--slider-slide-spacing));
+  --position-right: calc(100% + var(--slider-slide-spacing));
+  --position-offscreen-left: calc(-200% - var(--slider-slide-spacing));
+  --position-offscreen-right: calc(200% + var(--slider-slide-spacing));
 }

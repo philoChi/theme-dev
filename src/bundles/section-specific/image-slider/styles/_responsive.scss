@@ -13,7 +13,7 @@
 /* Tablet and up */
 @media (min-width: 768px) {
   .image-slider {
-    --blur-amount: clamp(4px, 1.5vw, 6px);
+    --slider-slide-blur: clamp(4px, 1.5vw, 6px);
   }
 
   .image-slider__container {

@@ -3,8 +3,8 @@
 /********************  Reduced motion support  ********************/
 @media (prefers-reduced-motion: reduce) {
   .image-slider {
-    --transition-duration: 0ms;
-    --blur-amount: 2px;
+    --slider-transition-duration: 0ms;
+    --slider-slide-blur: 2px;
   }
 
   .image-slider__image[data-loading="true"] {
@@ -34,7 +34,7 @@
 /* High contrast mode support */
 @media (prefers-contrast: high) {
   .image-slider__slide {
-    --blur-amount: 0px;
+    --slider-slide-blur: 0px;
   }
   
   .image-slider__image {

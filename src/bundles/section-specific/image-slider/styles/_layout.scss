@@ -4,7 +4,7 @@
 .image-slider {
   position: relative;
   width: 100%;
-  padding: var(--section-padding) 0;
+  padding: var(--slider-section-padding) 0;
   overflow: hidden;
   touch-action: pan-y pinch-zoom;
   will-change: transform;
@@ -17,11 +17,11 @@
   content: "";
   position: absolute;
   inset: 0;
-  background-image: var(--slider-bg);
+  background-image: var(--slider-background-image);
   background-repeat: repeat;
-  background-size: var(--slider-bg-size) var(--slider-bg-size);
+  background-size: var(--slider-background-tile-size) var(--slider-background-tile-size);
   /* tile pattern */
-  opacity: var(--slider-bg-opa);
+  opacity: var(--slider-background-opacity);
   pointer-events: none;
   z-index: -1;
 }

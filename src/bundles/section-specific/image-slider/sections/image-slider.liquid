@@ -21,16 +21,16 @@
   data-autoplay="{{ section.settings.enable_autoplay }}"
   data-interval="{{ section.settings.autoplay_interval | times: 1000 }}"
   style="
-    --transition-duration: {{ section.settings.transition_duration }}ms;
-    --slide-gap: {{ slide_gap }}px;
-    --section-padding: {{ section_padding }}px;
-    --blur-amount: {{ blur_amount }}px;
-    --slide-opa: {{ side_opacity }};
-    --slide-scale: {{ side_scale }};
+    --slider-transition-duration: {{ section.settings.transition_duration }}ms;
+    --slider-slide-spacing: {{ slide_gap }}px;
+    --slider-section-padding: {{ section_padding }}px;
+    --slider-slide-blur: {{ blur_amount }}px;
+    --slider-slide-opacity: {{ side_opacity }};
+    --slider-slide-scale: {{ side_scale }};
     {%- if bg_img != blank -%}
-      --slider-bg: url({{ bg_img | image_url: width: 200 }});
-      --slider-bg-opa: {{ bg_opacity }};
-      --slider-bg-size: {{ bg_size }}px;
+      --slider-background-image: url({{ bg_img | image_url: width: 200 }});
+      --slider-background-opacity: {{ bg_opacity }};
+      --slider-background-tile-size: {{ bg_size }}px;
     {%- endif -%}
   "
 >
