@@ -7,9 +7,11 @@
   padding: var(--slider-section-padding) 0;
   overflow: hidden;
   touch-action: pan-y pinch-zoom;
-  will-change: transform;
+  will-change: auto;
   backface-visibility: hidden;
   z-index: 0;
+  contain: layout style;
+  perspective: var(--slider-perspective);
 }
 
 /********************  Optional tiled background  ********************/
@@ -37,6 +39,8 @@
   min-width: min(var(--page-medium-width, 1250px), 90vw);
   aspect-ratio: var(--slider-container-aspect-ratio);
   margin: 0 auto;
-  will-change: transform;
+  will-change: auto;
   transform: translateZ(0);
+  contain: layout style;
+  transform-style: preserve-3d;
 }

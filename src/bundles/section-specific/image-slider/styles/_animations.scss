@@ -31,6 +31,7 @@
 .image-slider__slide[data-animating="right-to-center"] {
   animation: moveToCenter var(--slider-transition-duration) var(--slider-transition-timing) forwards;
   z-index: 2;
+  will-change: transform, opacity, filter, box-shadow;
 }
 
 /* Moving from center to left */
@@ -45,6 +46,7 @@
   --anim-to-blur: var(--slider-slide-blur);
   animation: slide-transition var(--slider-transition-duration) var(--slider-transition-timing) forwards;
   z-index: 1;
+  will-change: transform, opacity, filter, box-shadow;
 }
 
 /* Moving from center to right */
@@ -59,6 +61,7 @@
   --anim-to-blur: var(--slider-slide-blur);
   animation: slide-transition var(--slider-transition-duration) var(--slider-transition-timing) forwards;
   z-index: 1;
+  will-change: transform, opacity, filter, box-shadow;
 }
 
 /* Side slide movements using universal transition */
@@ -117,4 +120,18 @@
 /* Disable transitions for instant positioning */
 .image-slider__slide[data-switch-sides="true"] {
   transition: none !important;
+}
+
+/* Clean up will-change when not animating */
+.image-slider__slide:not([data-animating]) {
+  will-change: auto;
+}
+
+/* Performance optimization: Add will-change hint before complex animations */
+.image-slider__slide[data-animating*="to-center"] {
+  will-change: transform, opacity, filter, box-shadow;
+}
+
+.image-slider__slide[data-animating*="center-to"] {
+  will-change: transform, opacity, filter, box-shadow;
 }

@@ -3,8 +3,10 @@
 /********************  Reduced motion support  ********************/
 @media (prefers-reduced-motion: reduce) {
   .image-slider {
-    --slider-transition-duration: 0ms;
-    --slider-slide-blur: 2px;
+    --slider-transition-duration: 200ms;
+    --slider-slide-blur: 0px;
+    --slider-slide-opacity: 0.85;
+    --slider-slide-scale: 0.95;
   }
 
   .image-slider__image[data-loading="true"] {
@@ -14,6 +16,15 @@
   /* Disable complex animations but keep basic transitions */
   .image-slider__slide[data-animating] {
     animation: none !important;
+    transition: opacity var(--slider-transition-duration) ease,
+                transform var(--slider-transition-duration) ease !important;
+  }
+  
+  /* Remove performance hints that might trigger animations */
+  .image-slider__slide,
+  .image-slider__container,
+  .image-slider {
+    will-change: auto !important;
   }
 }
 
@@ -33,13 +44,20 @@
 
 /* High contrast mode support */
 @media (prefers-contrast: high) {
-  .image-slider__slide {
+  .image-slider {
     --slider-slide-blur: 0px;
+    --slider-slide-opacity: 0.9;
+    --slider-shadow-opacity: 0.3;
   }
   
   .image-slider__image {
     border-width: 2px;
     border-color: currentColor;
+    filter: contrast(1.2);
+  }
+  
+  .image-slider__slide[aria-current="true"] .image-slider__image {
+    filter: contrast(1);
   }
 }
 

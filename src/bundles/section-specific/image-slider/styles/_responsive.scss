@@ -13,7 +13,8 @@
 /* Tablet and up */
 @media (min-width: 768px) {
   .image-slider {
-    --slider-slide-blur: clamp(4px, 1.5vw, 6px);
+    --slider-slide-blur: clamp(2px, 1.5vw, 4px);
+    --slider-slide-opacity: 0.8;
   }
 
   .image-slider__container {
@@ -28,6 +29,11 @@
   .image-slider__cta-button {
     font-size: clamp(0.875rem, 2vw, 1rem);
   }
+  
+  /* Better image quality on larger screens */
+  .image-slider__image {
+    image-rendering: auto;
+  }
 }
 
 /* Desktop and up */
@@ -39,12 +45,21 @@
 
 /* Mobile aspect ratio override */
 @media (max-width: 767px) {
+  .image-slider {
+    --slider-slide-blur: 1.5px;
+    --slider-slide-opacity: 0.7;
+    --slider-slide-scale: 0.9;
+  }
+  
   .image-slider__container {
     aspect-ratio: var(--slider-container-aspect-ratio-mobile);
   }
   
   .image-slider__image {
     border-radius: 0;
+    /* Better mobile image rendering */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: auto;
   }
 }
 

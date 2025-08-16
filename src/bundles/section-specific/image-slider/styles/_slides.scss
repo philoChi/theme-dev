@@ -11,9 +11,12 @@
   transition: 
     transform var(--slider-transition-duration) var(--slider-transition-timing),
     opacity var(--slider-transition-duration) var(--slider-transition-timing),
-    filter var(--slider-transition-duration) var(--slider-transition-timing);
+    filter var(--slider-transition-duration) var(--slider-transition-timing),
+    box-shadow var(--slider-transition-duration) var(--slider-transition-timing);
   transform-origin: var(--slider-transform-origin);
   backface-visibility: hidden;
+  transform-style: preserve-3d;
+  contain: layout style;
 }
 
 /* --- Active slide using ARIA current --- */
@@ -23,6 +26,7 @@
   filter: blur(0);
   pointer-events: all;
   z-index: 2;
+  box-shadow: 0 var(--slider-shadow-blur) calc(var(--slider-shadow-blur) * 2) var(--slider-shadow-spread) rgba(0, 0, 0, var(--slider-shadow-opacity));
 }
 
 /* --- Side slides (maintaining data attributes for JavaScript positioning) --- */
@@ -31,6 +35,7 @@
   transform: translateX(var(--position-left)) scale(var(--slider-slide-scale));
   filter: blur(var(--slider-slide-blur));
   z-index: 1;
+  box-shadow: 0 calc(var(--slider-shadow-blur) * 0.6) calc(var(--slider-shadow-blur) * 1.2) calc(var(--slider-shadow-spread) * 0.8) rgba(0, 0, 0, calc(var(--slider-shadow-opacity) * 0.7));
 }
 
 .image-slider__slide[data-slide-position="right"] {
@@ -38,6 +43,7 @@
   transform: translateX(var(--position-right)) scale(var(--slider-slide-scale));
   filter: blur(var(--slider-slide-blur));
   z-index: 1;
+  box-shadow: 0 calc(var(--slider-shadow-blur) * 0.6) calc(var(--slider-shadow-blur) * 1.2) calc(var(--slider-shadow-spread) * 0.8) rgba(0, 0, 0, calc(var(--slider-shadow-opacity) * 0.7));
 }
 
 /* --- Off-screen slides (for infinite loop) --- */
@@ -61,10 +67,34 @@
   height: 100%;
   border-radius: var(--slider-slide-border-radius);
   object-fit: cover;
+  object-position: center;
   background-color: #f4f4f4;
   transform: translateZ(0);
   transition: opacity var(--slider-transition-duration) ease;
   border: var(--slider-slide-border-width) solid var(--slider-slide-border-color);
+  
+  /* Image quality optimizations */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  image-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  will-change: contents;
+  contain: layout paint;
+}
+
+/* Progressive enhancement for modern browsers */
+@supports (image-rendering: pixelated) {
+  .image-slider__image {
+    image-rendering: auto;
+  }
+}
+
+@supports (content-visibility: auto) {
+  .image-slider__slide[data-slide-position*="offscreen"] .image-slider__image {
+    content-visibility: auto;
+    contain-intrinsic-size: 100% 100%;
+  }
 }
 
 .image-slider__image[data-loading="true"] {
