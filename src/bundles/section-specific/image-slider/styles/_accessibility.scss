@@ -1,0 +1,13 @@
+/* Image Slider Accessibility Features */
+
+/********************  Accessibility  ********************/
+@media (prefers-reduced-motion: reduce) {
+  .slider-section {
+    --transition-duration: 0ms;
+    --blur-amount: 2px;
+  }
+
+  .slide-image.loading {
+    animation: none;
+  }
+}

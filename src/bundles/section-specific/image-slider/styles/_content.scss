@@ -1,0 +1,55 @@
+/* Image Slider Content Overlay, CTAs and Titles */
+
+/********************  Content overlay  ********************/
+.slide-content {
+  position: absolute;
+  bottom: 10%;
+  left: 5%;
+  color: var(--font-color);
+  max-width: min(60ch, 60%);
+  z-index: 3;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all var(--transition-duration) cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.slide-position-center .slide-content {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.slide-title {
+  color: var(--font-color)
+}
+
+/********************  CTA grid & buttons  ********************/
+.slide-ctas {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(var(--cta-count, 1), 1fr);
+  margin-top: 1.5rem;
+}
+
+.cta-button {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--bg-color, #000);
+  color: #fff;
+  border-radius: 0.25rem;
+  text-align: center;
+  font-size: 0.875rem;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 200ms ease;
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+}
+
+.cta-button:active {
+  transform: translateY(0);
+}

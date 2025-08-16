@@ -1,0 +1,30 @@
+/**
+ * Image Slider Section Styles - Main Entry Point
+ * 
+ * This file imports all the modular styles for the image slider component.
+ * Order matters for cascading and variable dependencies.
+ */
+
+/* Variables must come first - defines CSS custom properties */
+@import './variables';
+
+/* Layout provides the structure and containers */
+@import './layout';
+
+/* Slides define the slide positioning and states */
+@import './slides';
+
+/* Animations define all keyframes and transition classes */
+@import './animations';
+
+/* Content defines overlay, CTAs and titles */
+@import './content';
+
+/* Navigation defines arrow positioning */
+@import './navigation';
+
+/* Responsive styles for different breakpoints */
+@import './responsive';
+
+/* Accessibility features and reduced motion support */
+@import './accessibility';

@@ -1,0 +1,86 @@
+/* Image Slider Slides and Positioning */
+
+/********************  Slide basics  ********************/
+.slider-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: transform var(--transition-duration) cubic-bezier(0.4, 0, 0.2, 1),
+    opacity var(--transition-duration) cubic-bezier(0.4, 0, 0.2, 1),
+    filter var(--transition-duration) cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity, filter;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+/* --- Slide positions --- */
+.slide-position-center {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  filter: blur(0);
+  pointer-events: all;
+  z-index: 2;
+}
+
+.slide-position-left {
+  opacity: var(--slide-opa);
+  transform: translateX(var(--position-left)) scale(var(--slide-scale));
+  filter: blur(var(--blur-amount));
+  z-index: 1;
+}
+
+.slide-position-right {
+  opacity: var(--slide-opa);
+  transform: translateX(var(--position-right)) scale(var(--slide-scale));
+  filter: blur(var(--blur-amount));
+  z-index: 1;
+}
+
+/* Off‑screen (for infinite loop) */
+.slide-position-offscreen-left {
+  opacity: var(--slide-opa);
+  transform: translateX(var(--position-offscreen-left)) scale(var(--slide-scale));
+  z-index: 1;
+  transition: none;
+}
+
+.slide-position-offscreen-right {
+  opacity: var(--slide-opa);
+  transform: translateX(var(--position-offscreen-right)) scale(var(--slide-scale));
+  z-index: 1;
+  transition: none;
+}
+
+/********************  Images & loading pulse  ********************/
+.slide-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5rem;
+  object-fit: cover;
+  background-color: #f4f4f4;
+  transform: translateZ(0);
+  transition: opacity var(--transition-duration) ease;
+  border: 1.2px solid #818181;
+}
+
+.slide-image.loading {
+  opacity: 0.6;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+
+  100% {
+    opacity: 0.6;
+  }
+}

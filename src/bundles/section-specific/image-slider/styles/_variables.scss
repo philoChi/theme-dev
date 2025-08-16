@@ -1,0 +1,23 @@
+/* Image Slider Variables */
+
+/********************  CSS Custom Properties  ********************/
+/* Root variables for slider configuration - accessible to theme editor */
+.slider-section {
+  --slider-bg: none;
+  --slider-bg-opa: 0;
+  --slider-bg-size: 150px;
+
+  --slide-scale: 0.8;
+  --slide-opa: 0.6;
+  --slide-gap: 16px;
+  --section-padding: 32px;
+  --transition-duration: 600ms;
+  --blur-amount: 4px;
+
+  --position-left: calc(-100% - var(--slide-gap));
+  --position-right: calc(100% + var(--slide-gap));
+  --position-offscreen-left: calc(-200% - var(--slide-gap));
+  --position-offscreen-right: calc(200% + var(--slide-gap));
+
+  --font-color: var(--main-background);
+}

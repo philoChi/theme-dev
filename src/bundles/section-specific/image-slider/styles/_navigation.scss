@@ -1,0 +1,16 @@
+/* Image Slider Navigation Arrows */
+
+/********************  Navigation arrows  ********************/
+.slider-arrows {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  /* extend beyond container edges */
+  display: flex;
+  justify-content: space-between;
+  /* allow clicks only on buttons */
+  padding: 0;
+  z-index: 4;
+}
