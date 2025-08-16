@@ -2,12 +2,12 @@
 
 /********************  Accessibility  ********************/
 @media (prefers-reduced-motion: reduce) {
-  .slider-section {
+  .image-slider {
     --transition-duration: 0ms;
     --blur-amount: 2px;
   }
 
-  .slide-image.loading {
+  .image-slider__image--loading {
     animation: none;
   }
 }

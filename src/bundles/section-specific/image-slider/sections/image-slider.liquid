@@ -14,9 +14,9 @@
 -%}
 
 <section
-  class="slider-section"
+  class="image-slider"
   aria-label="Image slider"
-  data-section-type="slider-section"
+  data-section-type="image-slider"
   data-autoplay="{{ section.settings.enable_autoplay }}"
   data-interval="{{ section.settings.autoplay_interval | times: 1000 }}"
   style="
@@ -33,7 +33,7 @@
     {%- endif -%}
   "
 >
-  <div class="slider-arrows">
+  <div class="image-slider__arrows">
     {%- render 'snippet-feature-arrow-navigation',
       data_attributes: 'data-arrow="prev"',
       direction: 'prev',
@@ -48,15 +48,15 @@
     -%}
   </div>
 
-  <div class="slider-container" style="opacity: 0; transition: opacity 0.3s ease;">
+  <div class="image-slider__container" style="opacity: 0; transition: opacity 0.3s ease;">
     {% for block in section.blocks %}
       {% comment %} Render each slide {% endcomment %}
-      <div class="slider-slide{% if forloop.first %} active{% endif %}" {{ block.shopify_attributes }}>
+      <div class="image-slider__slide{% if forloop.first %} active{% endif %}" {{ block.shopify_attributes }}>
         {% if block.settings.image %}
           {{
             block.settings.image
             | image_url: width: 1500
-            | image_tag: loading: 'lazy', widths: '300, 600, 900, 1200, 1500', class: 'slide-image'
+            | image_tag: loading: 'lazy', widths: '300, 600, 900, 1200, 1500', class: 'image-slider__image'
           }}
         {% else %}
           <div class="placeholder-slide">

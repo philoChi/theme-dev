@@ -1,7 +1,7 @@
 /* Image Slider Layout and Positioning */
 
-/********************  Slider Section Root  ********************/
-.slider-section {
+/********************  Image Slider Root  ********************/
+.image-slider {
   position: relative;
   width: 100%;
   padding: var(--section-padding) 0;
@@ -13,7 +13,7 @@
 }
 
 /********************  Optional tiled background  ********************/
-.slider-section::before {
+.image-slider::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -27,7 +27,7 @@
 }
 
 /********************  Container  ********************/
-.slider-container {
+.image-slider__container {
   position: relative;
   display: flex;
   align-items: center;

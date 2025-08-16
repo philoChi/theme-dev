@@ -1,7 +1,7 @@
 /* Image Slider Content Overlay, CTAs and Titles */
 
 /********************  Content overlay  ********************/
-.slide-content {
+.image-slider__content {
   position: absolute;
   bottom: 10%;
   left: 5%;
@@ -14,25 +14,25 @@
   pointer-events: none;
 }
 
-.slide-position-center .slide-content {
+.image-slider__slide--center .image-slider__content {
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
 }
 
-.slide-title {
+.image-slider__title {
   color: var(--font-color)
 }
 
 /********************  CTA grid & buttons  ********************/
-.slide-ctas {
+.image-slider__ctas {
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(var(--cta-count, 1), 1fr);
   margin-top: 1.5rem;
 }
 
-.cta-button {
+.image-slider__cta-button {
   padding: 0.75rem 1.5rem;
   background-color: var(--bg-color, #000);
   color: #fff;
@@ -46,10 +46,10 @@
   transition: transform 200ms ease;
 }
 
-.cta-button:hover {
+.image-slider__cta-button:hover {
   transform: translateY(-2px);
 }
 
-.cta-button:active {
+.image-slider__cta-button:active {
   transform: translateY(0);
 }

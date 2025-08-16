@@ -114,46 +114,46 @@
 }
 
 /********************  Animation helper classes  ********************/
-.slide-transition-left-to-center {
+.image-slider__slide--transition-left-to-center {
   animation: moveLeftToCenter var(--transition-duration) cubic-bezier(0.4, 0, 0.2, 1) forwards;
   z-index: 2;
 }
 
-.slide-transition-center-to-left {
+.image-slider__slide--transition-center-to-left {
   animation: moveCenterToLeft var(--transition-duration) cubic-bezier(0.4, 0, 0.2, 1) forwards;
   z-index: 1;
 }
 
-.slide-transition-right-to-center {
+.image-slider__slide--transition-right-to-center {
   animation: moveRightToCenter var(--transition-duration) cubic-bezier(0.4, 0, 0.2, 1) forwards;
   z-index: 2;
 }
 
-.slide-transition-center-to-right {
+.image-slider__slide--transition-center-to-right {
   animation: moveCenterToRight var(--transition-duration) cubic-bezier(0.4, 0, 0.2, 1) forwards;
   z-index: 1;
 }
 
-.slide-transition-left-to-offscreen {
+.image-slider__slide--transition-left-to-offscreen {
   animation: moveLeftToOffscreen var(--transition-duration) cubic-bezier(0.4, 0, 0.2, 1) forwards;
   z-index: 1;
 }
 
-.slide-transition-right-to-offscreen {
+.image-slider__slide--transition-right-to-offscreen {
   animation: moveRightToOffscreen var(--transition-duration) cubic-bezier(0.4, 0, 0.2, 1) forwards;
   z-index: 1;
 }
 
-.slide-transition-offscreen-to-left {
+.image-slider__slide--transition-offscreen-to-left {
   animation: moveOffscreenToLeft var(--transition-duration) cubic-bezier(0.4, 0, 0.2, 1) forwards;
   z-index: 1;
 }
 
-.slide-transition-offscreen-to-right {
+.image-slider__slide--transition-offscreen-to-right {
   animation: moveOffscreenToRight var(--transition-duration) cubic-bezier(0.4, 0, 0.2, 1) forwards;
   z-index: 1;
 }
 
-.slide-switch-sides {
+.image-slider__slide--switch-sides {
   transition: none !important;
 }

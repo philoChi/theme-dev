@@ -11,8 +11,8 @@ class SimpleImageSlider {
      */
     this.slider = sliderElement
     this.sliderId = sliderElement.id || 'slider-' + Math.floor(Math.random() * 1000)
-    this.container = sliderElement.querySelector('.slider-container')
-    this.slides = Array.from(this.container.querySelectorAll('.slider-slide'))
+    this.container = sliderElement.querySelector('.image-slider__container')
+    this.slides = Array.from(this.container.querySelectorAll('.image-slider__slide'))
 
     /**
      * Debug helper (keeps existing ImageSliderLogger calls intact)
@@ -35,7 +35,7 @@ class SimpleImageSlider {
       const activeSlide = this.slides[activeIndex]
       activeSlide.remove()
       this.container.insertBefore(activeSlide, this.container.children[1] || null)
-      this.slides = Array.from(this.container.querySelectorAll('.slider-slide'))
+      this.slides = Array.from(this.container.querySelectorAll('.image-slider__slide'))
     }
 
     // Cache arrow buttons
@@ -140,22 +140,22 @@ class SimpleImageSlider {
     const copys = this.container.querySelectorAll('[data-copy-slide]')
     copys.forEach(el => el.remove())
 
-    this.slides = Array.from(this.container.querySelectorAll('.slider-slide'))
+    this.slides = Array.from(this.container.querySelectorAll('.image-slider__slide'))
     const lastReal = this.slides[this.slides.length - 1].cloneNode(true)
     const firstReal = this.slides[0].cloneNode(true)
 
       ;[lastReal, firstReal].forEach(clone => {
         clone.dataset.copySlide = 'true'
-        clone.classList.remove('slide-position-right', 'slide-position-left', 'slide-position-offscreen-right', 'slide-position-offscreen-left')
+        clone.classList.remove('image-slider__slide--right', 'image-slider__slide--left', 'image-slider__slide--offscreen-right', 'image-slider__slide--offscreen-left')
       })
 
-    lastReal.classList.add('slide-position-offscreen-left')
-    firstReal.classList.add('slide-position-offscreen-right')
+    lastReal.classList.add('image-slider__slide--offscreen-left')
+    firstReal.classList.add('image-slider__slide--offscreen-right')
 
     this.container.prepend(lastReal)
     this.container.append(firstReal)
 
-    this.slides = Array.from(this.container.querySelectorAll('.slider-slide'))
+    this.slides = Array.from(this.container.querySelectorAll('.image-slider__slide'))
   }
 
   /**
@@ -164,9 +164,9 @@ class SimpleImageSlider {
   updateCentralSlidePositions() {
     this.slides.forEach(slide => {
       slide.classList.remove(
-        'slide-position-center', 'slide-position-left', 'slide-position-right',
-        'slide-transition-center-to-left', 'slide-transition-center-to-right',
-        'slide-transition-left-to-center', 'slide-transition-right-to-center',
+        'image-slider__slide--center', 'image-slider__slide--left', 'image-slider__slide--right',
+        'image-slider__slide--transition-center-to-left', 'image-slider__slide--transition-center-to-right',
+        'image-slider__slide--transition-left-to-center', 'image-slider__slide--transition-right-to-center',
         'active'
       )
       slide.ariaHidden = 'true'
@@ -176,11 +176,11 @@ class SimpleImageSlider {
     const prevSlide = this.slides[this.currentIndex - 1]
     const nextSlide = this.slides[this.currentIndex + 1]
 
-    current.classList.add('slide-position-center', 'active')
+    current.classList.add('image-slider__slide--center', 'active')
     current.ariaHidden = 'false'
 
-    if (prevSlide) prevSlide.classList.add('slide-position-left')
-    if (nextSlide) nextSlide.classList.add('slide-position-right')
+    if (prevSlide) prevSlide.classList.add('image-slider__slide--left')
+    if (nextSlide) nextSlide.classList.add('image-slider__slide--right')
 
     this._logger(`[Slider: ${this.sliderId}] Position updated – Center: ${this.currentIndex}`)
   }
@@ -191,19 +191,19 @@ class SimpleImageSlider {
   updateOffsetSlidePositions() {
     this.slides.forEach(slide => {
       slide.classList.remove(
-        'slide-position-offscreen-left', 'slide-position-offscreen-right',
-        'slide-transition-offscreen-to-right', 'slide-transition-offscreen-to-left',
-        'slide-transition-left-to-offscreen', 'slide-transition-right-to-offscreen'
+        'image-slider__slide--offscreen-left', 'image-slider__slide--offscreen-right',
+        'image-slider__slide--transition-offscreen-to-right', 'image-slider__slide--transition-offscreen-to-left',
+        'image-slider__slide--transition-left-to-offscreen', 'image-slider__slide--transition-right-to-offscreen'
       )
     })
 
     for (let i = 0; i < this.currentIndex - 1; i++) {
-      this.slides[i].classList.add('slide-position-offscreen-left')
+      this.slides[i].classList.add('image-slider__slide--offscreen-left')
       this.slides[i].ariaHidden = 'true'
     }
 
     for (let i = this.currentIndex + 2; i < this.slides.length; i++) {
-      this.slides[i].classList.add('slide-position-offscreen-right')
+      this.slides[i].classList.add('image-slider__slide--offscreen-right')
       this.slides[i].ariaHidden = 'true'
     }
   }
@@ -272,16 +272,16 @@ class SimpleImageSlider {
 
     // Assign animation classes
     if (rightward) {
-      centerSlide.classList.add('slide-transition-center-to-left')
-      targetSlide.classList.add('slide-transition-right-to-center')
-      offScreenSlide.classList.add('slide-transition-left-to-offscreen')
-      onScreenSlide.classList.add('slide-transition-offscreen-to-right')
+      centerSlide.classList.add('image-slider__slide--transition-center-to-left')
+      targetSlide.classList.add('image-slider__slide--transition-right-to-center')
+      offScreenSlide.classList.add('image-slider__slide--transition-left-to-offscreen')
+      onScreenSlide.classList.add('image-slider__slide--transition-offscreen-to-right')
       this.currentIndex += 1
     } else {
-      centerSlide.classList.add('slide-transition-center-to-right')
-      targetSlide.classList.add('slide-transition-left-to-center')
-      offScreenSlide.classList.add('slide-transition-right-to-offscreen')
-      onScreenSlide.classList.add('slide-transition-offscreen-to-left')
+      centerSlide.classList.add('image-slider__slide--transition-center-to-right')
+      targetSlide.classList.add('image-slider__slide--transition-left-to-center')
+      offScreenSlide.classList.add('image-slider__slide--transition-right-to-offscreen')
+      onScreenSlide.classList.add('image-slider__slide--transition-offscreen-to-left')
       this.currentIndex -= 1
     }
 
@@ -342,7 +342,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   logger.init('DOM Content Loaded – Starting slider initialization')
 
-  const sliders = document.querySelectorAll('[data-section-type="slider-section"]')
+  const sliders = document.querySelectorAll('[data-section-type="image-slider"]')
   logger.init(`[Slider] Found ${sliders.length} slider(s) on the page`)
 
   sliders.forEach((slider, i) => {

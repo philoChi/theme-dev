@@ -2,45 +2,45 @@
 
 /********************  Responsive tweaks  ********************/
 @media (hover: none) {
-  .slider-arrows {
+  .image-slider__arrows {
     display: none;
   }
 }
 
 @media (min-width: 768px) {
-  .slider-section {
+  .image-slider {
     --blur-amount: 6px;
   }
 
-  .slider-container {
+  .image-slider__container {
     max-width: var(--page-max-width, 1450px);
     min-width: min(var(--page-medium-width, 1250px), 90vw);
   }
 
-  .slide-content {
+  .image-slider__content {
     max-width: 60ch;
   }
 
-  .cta-button {
+  .image-slider__cta-button {
     font-size: 1rem;
   }
 }
 
 @media (min-width: 1280px) {
-  .slider-arrows {
+  .image-slider__arrows {
     width: 90%;
   }
 }
 
 @media (max-width: 767px) {
-  .slider-container {
+  .image-slider__container {
     width: 100%;
     max-width: min(90%, var(--page-max-width, 1450px));
   }
 }
 
 @media (max-width: 480px) {
-  .slider-container {
+  .image-slider__container {
     width: 100%;
     max-width: min(100%, var(--page-max-width, 1450px));
   }

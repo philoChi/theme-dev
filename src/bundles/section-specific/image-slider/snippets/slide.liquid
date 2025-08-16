@@ -9,17 +9,17 @@
   endfor
 -%}
 
-<div class="slide-content">
+<div class="image-slider__content">
   {%- if block.settings.title != blank -%}
-    <h2 class="slide-title">{{ block.settings.title }}</h2>
+    <h2 class="image-slider__title">{{ block.settings.title }}</h2>
   {%- endif -%}
 
   {%- if block.settings.description != blank -%}
-    <p class="slide-description">{{ block.settings.description }}</p>
+    <p class="image-slider__description">{{ block.settings.description }}</p>
   {%- endif -%}
 
   {%- if cta_count > 0 -%}
-    <div class="slide-ctas" style="--cta-count: {{ cta_count }}">
+    <div class="image-slider__ctas" style="--cta-count: {{ cta_count }}">
       {%- for i in (1..3) -%}
         {%- liquid
           assign cta_text_key = 'cta_text_' | append: i

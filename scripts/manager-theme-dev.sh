@@ -317,7 +317,7 @@ start_theme_dev() {
             log_info "🌐 URL: $url"
             log_info "📋 Logs: tail -f $log_file"
             log_info "🆔 PID: $pid"
-            log_info "🛑 Stop: $0 stop $port"
+            log_info "🛑 Stop with: $0 stop $port"
             return 0
         fi
         
