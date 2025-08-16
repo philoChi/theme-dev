@@ -11,6 +11,17 @@
   assign bg_img = section.settings.background_image
   assign bg_opacity = section.settings.background_opacity | default: 0
   assign bg_size = section.settings.background_tile_size | default: 150
+  
+  comment
+    Performance optimization: Preload the first slide image for faster LCP
+  endcomment
+  assign first_slide = section.blocks.first
+  if first_slide.settings.image != blank
+    assign preload_url_desktop = first_slide.settings.image | image_url: width: 1920
+    assign preload_url_mobile = first_slide.settings.image | image_url: width: 768
+    echo '<link rel="preload" as="image" href="' | append: preload_url_desktop | append: '" media="(min-width: 768px)">'
+    echo '<link rel="preload" as="image" href="' | append: preload_url_mobile | append: '" media="(max-width: 767px)">'
+  endif
 -%}
 
 <section
@@ -28,7 +39,8 @@
     --slider-slide-opacity: {{ side_opacity }};
     --slider-slide-scale: {{ side_scale }};
     {%- if bg_img != blank -%}
-      --slider-background-image: url({{ bg_img | image_url: width: 200 }});
+      {%- comment -%} Background pattern optimized for tiling - higher resolution for crisp patterns {%- endcomment -%}
+      --slider-background-image: url({{ bg_img | image_url: width: 800 }});
       --slider-background-opacity: {{ bg_opacity }};
       --slider-background-tile-size: {{ bg_size }}px;
     {%- endif -%}
@@ -60,11 +72,55 @@
         aria-label="Slide {{ forloop.index }} of {{ forloop.length }}"
       >
         {% if block.settings.image %}
-          {{
-            block.settings.image
-            | image_url: width: 1500
-            | image_tag: loading: 'lazy', widths: '300, 600, 900, 1200, 1500', class: 'image-slider__image'
-          }}
+          {%- comment -%} Optimized responsive images with modern format support and comprehensive widths {%- endcomment -%}
+          {%- liquid
+            assign is_first_slide = forloop.first
+            assign loading_strategy = 'lazy'
+            if is_first_slide
+              assign loading_strategy = 'eager'
+            endif
+          -%}
+          <picture class="image-slider__picture">
+            {%- comment -%} WebP format for modern browsers {%- endcomment -%}
+            <source
+              type="image/webp"
+              srcset="
+                {{ block.settings.image | image_url: width: 320, format: 'webp' }} 320w,
+                {{ block.settings.image | image_url: width: 480, format: 'webp' }} 480w,
+                {{ block.settings.image | image_url: width: 640, format: 'webp' }} 640w,
+                {{ block.settings.image | image_url: width: 768, format: 'webp' }} 768w,
+                {{ block.settings.image | image_url: width: 1024, format: 'webp' }} 1024w,
+                {{ block.settings.image | image_url: width: 1280, format: 'webp' }} 1280w,
+                {{ block.settings.image | image_url: width: 1536, format: 'webp' }} 1536w,
+                {{ block.settings.image | image_url: width: 1920, format: 'webp' }} 1920w,
+                {{ block.settings.image | image_url: width: 2400, format: 'webp' }} 2400w,
+                {{ block.settings.image | image_url: width: 2900, format: 'webp' }} 2900w"
+              sizes="(max-width: 767px) 100vw, (max-width: 1279px) 90vw, 1450px">
+            {%- comment -%} Fallback JPEG/PNG for older browsers {%- endcomment -%}
+            {%- if is_first_slide -%}
+              {{
+                block.settings.image
+                | image_url: width: 2900
+                | image_tag: 
+                  loading: loading_strategy,
+                  widths: '320, 480, 640, 768, 1024, 1280, 1536, 1920, 2400, 2900',
+                  sizes: '(max-width: 767px) 100vw, (max-width: 1279px) 90vw, 1450px',
+                  class: 'image-slider__image',
+                  fetchpriority: 'high'
+              }}
+            {%- else -%}
+              {{
+                block.settings.image
+                | image_url: width: 2900
+                | image_tag: 
+                  loading: loading_strategy,
+                  widths: '320, 480, 640, 768, 1024, 1280, 1536, 1920, 2400, 2900',
+                  sizes: '(max-width: 767px) 100vw, (max-width: 1279px) 90vw, 1450px',
+                  class: 'image-slider__image',
+                  fetchpriority: 'auto'
+              }}
+            {%- endif -%}
+          </picture>
         {% else %}
           <div class="placeholder-slide">
             {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}

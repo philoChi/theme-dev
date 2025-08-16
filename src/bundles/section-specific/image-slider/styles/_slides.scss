@@ -62,6 +62,13 @@
 }
 
 /********************  Images & loading pulse  ********************/
+/* Picture element wrapper for modern format support */
+.image-slider__picture {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
 .image-slider__image {
   width: 100%;
   height: 100%;
