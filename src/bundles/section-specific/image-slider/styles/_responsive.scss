@@ -17,7 +17,7 @@
   }
 
   .image-slider__container {
-    max-width: var(--page-max-width, 1450px);
+    max-width: var(--slider-max-width, 1450px);
     min-width: min(var(--page-medium-width, 1250px), 90vw);
   }
 
