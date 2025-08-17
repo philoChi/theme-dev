@@ -115,15 +115,30 @@ class ImageSlider {
   }
 
   /**
-   * Setup performance optimizations
+   * Setup performance optimizations with initial load handling
    */
   setupPerformanceOptimizations() {
-    // Use transform3d for GPU acceleration
+    // Use transform3d for GPU acceleration on container only
     this.container.style.transform = 'translate3d(0, 0, 0)';
     
-    // Pre-warm GPU for smooth animations
+    // Don't set inline transforms on slides - let CSS handle positioning
+    // This allows data-slide-position attributes to work properly
+    this.slides.forEach(slide => {
+      // Only add will-change for optimization, not transform
+      slide.style.willChange = 'transform, opacity';
+    });
+    
+    // Clean up will-change after initial positioning
     requestAnimationFrame(() => {
       this.container.style.willChange = 'auto';
+      
+      setTimeout(() => {
+        this.slides.forEach(slide => {
+          if (slide.style.willChange && !slide.dataset.animating) {
+            slide.style.willChange = 'auto';
+          }
+        });
+      }, ImageSliderConfig.CONSTANTS.ANIMATION_DELAY + 100);
     });
   }
 
@@ -170,6 +185,14 @@ class ImageSlider {
       this.container.style.transform = '';
     }
     
+    // Clear any inline styles on slides
+    if (this.slides) {
+      this.slides.forEach(slide => {
+        slide.style.transform = '';
+        slide.style.willChange = 'auto';
+      });
+    }
+    
     this._logger(`[Slider: ${this.sliderId}] Cleanup completed`);
   }
 
@@ -183,14 +206,16 @@ class ImageSlider {
       this.slideManager.positionActiveSlide();
       this.slides = this.slideManager.getCurrentState().slides;
       
-      // Setup slide positions and infinite scroll
-      this.slideManager.updateCentralSlidePositions();
+      // Setup infinite scroll first
       this.slideManager.resetCopySlides();
       
-      // Update current index and slide positions
+      // Update current index to account for copy slide inserted at index 0
       const { slides, currentIndex } = this.slideManager.getCurrentState();
       this.slides = slides;
-      this.slideManager.updateIndex(currentIndex + 1); // Account for copy slide inserted at index 0
+      this.slideManager.updateIndex(currentIndex + 1);
+      
+      // Setup all slide positions in correct order
+      this.slideManager.updateCentralSlidePositions();
       this.slideManager.updateOffsetSlidePositions();
       this.slideManager.updateNextSlidePositions();
 
@@ -223,14 +248,29 @@ class ImageSlider {
 
   /**
    * Reveal the slider with smooth timing after positioning is complete
+   * Uses document.fonts.ready and double RAF for Chrome optimization
    */
   revealSlider() {
-    requestAnimationFrame(() => {
-      setTimeout(() => {
-        this.container.style.opacity = '1';
-        this._logger(`[Slider: ${this.sliderId}] Slides revealed after positioning`);
-      }, ImageSliderConfig.CONSTANTS.ANIMATION_DELAY);
-    });
+    // Wait for fonts to load for consistent rendering
+    const revealWithOptimization = () => {
+      // Double RAF ensures all layout calculations are complete
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            this.container.style.opacity = '1';
+            this._logger(`[Slider: ${this.sliderId}] Slides revealed after optimization`);
+          }, ImageSliderConfig.CONSTANTS.ANIMATION_DELAY);
+        });
+      });
+    };
+
+    // Use fonts.ready for better initial load timing
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(revealWithOptimization);
+    } else {
+      // Fallback for browsers without fonts API
+      revealWithOptimization();
+    }
   }
 
 

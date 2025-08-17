@@ -23,10 +23,29 @@
 }
 
 /********************  Animation states using data attributes  ********************/
-/* Moving to center animations */
-.image-slider__slide[data-animating="left-to-center"],
+/* Moving to center animations - use universal transition instead of moveToCenter */
+.image-slider__slide[data-animating="left-to-center"] {
+  --anim-from-opacity: var(--slider-slide-opacity);
+  --anim-from-x: var(--position-left);
+  --anim-from-scale: var(--slider-slide-scale);
+  --anim-to-opacity: 1;
+  --anim-to-x: 0;
+  --anim-to-scale: 1;
+  animation: slide-transition var(--slider-transition-duration) var(--slider-transition-timing) forwards;
+  animation-fill-mode: forwards;
+  z-index: 2;
+  will-change: transform, opacity, box-shadow;
+}
+
 .image-slider__slide[data-animating="right-to-center"] {
-  animation: moveToCenter var(--slider-transition-duration) var(--slider-transition-timing) forwards;
+  --anim-from-opacity: var(--slider-slide-opacity);
+  --anim-from-x: var(--position-right);
+  --anim-from-scale: var(--slider-slide-scale);
+  --anim-to-opacity: 1;
+  --anim-to-x: 0;
+  --anim-to-scale: 1;
+  animation: slide-transition var(--slider-transition-duration) var(--slider-transition-timing) forwards;
+  animation-fill-mode: forwards;
   z-index: 2;
   will-change: transform, opacity, box-shadow;
 }
@@ -40,6 +59,7 @@
   --anim-to-x: var(--position-left);
   --anim-to-scale: var(--slider-slide-scale);
   animation: slide-transition var(--slider-transition-duration) var(--slider-transition-timing) forwards;
+  animation-fill-mode: forwards;
   z-index: 1;
   will-change: transform, opacity, box-shadow;
 }
@@ -53,6 +73,7 @@
   --anim-to-x: var(--position-right);
   --anim-to-scale: var(--slider-slide-scale);
   animation: slide-transition var(--slider-transition-duration) var(--slider-transition-timing) forwards;
+  animation-fill-mode: forwards;
   z-index: 1;
   will-change: transform, opacity, box-shadow;
 }
@@ -66,6 +87,7 @@
   --anim-to-x: var(--position-offscreen-left);
   --anim-to-scale: var(--slider-slide-scale);
   animation: slide-transition var(--slider-transition-duration) var(--slider-transition-timing) forwards;
+  animation-fill-mode: forwards;
   z-index: 1;
 }
 
@@ -77,6 +99,7 @@
   --anim-to-x: var(--position-offscreen-right);
   --anim-to-scale: var(--slider-slide-scale);
   animation: slide-transition var(--slider-transition-duration) var(--slider-transition-timing) forwards;
+  animation-fill-mode: forwards;
   z-index: 1;
 }
 
@@ -88,6 +111,7 @@
   --anim-to-x: var(--position-left);
   --anim-to-scale: var(--slider-slide-scale);
   animation: slide-transition var(--slider-transition-duration) var(--slider-transition-timing) forwards;
+  animation-fill-mode: forwards;
   z-index: 1;
 }
 
@@ -99,6 +123,7 @@
   --anim-to-x: var(--position-right);
   --anim-to-scale: var(--slider-slide-scale);
   animation: slide-transition var(--slider-transition-duration) var(--slider-transition-timing) forwards;
+  animation-fill-mode: forwards;
   z-index: 1;
 }
 

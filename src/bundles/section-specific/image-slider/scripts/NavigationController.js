@@ -106,7 +106,7 @@ class NavigationController {
   }
 
   /**
-   * Start the transition animation with RAF batching
+   * Start the transition animation with synchronized timing
    * @param {Object} navigationData - Prepared navigation data
    * @param {Function} onComplete - Callback when transition completes
    */
@@ -114,13 +114,16 @@ class NavigationController {
     this.isTransitioning = true;
     const { currentIndex } = this.slideManager.getCurrentState();
 
-    // Batch DOM updates in a single RAF
+    // Create animation start timestamp for perfect synchronization
+    const animationStartTime = performance.now();
+    
+    // Batch DOM updates in a single RAF for atomic operation
     requestAnimationFrame(() => {
-      // Pre-optimize slides for GPU acceleration
+      // Pre-optimize all slides for GPU acceleration
       this.preOptimizeSlides([slides.center, slides.target, slides.offScreen, slides.onScreen]);
       
-      // Apply animation states to slides
-      this.applyAnimationStates(rightward, slides.center, slides.target, slides.offScreen, slides.onScreen);
+      // Apply animation states atomically with synchronized timing
+      this.applyAnimationStatesSync(rightward, slides, animationStartTime);
       this.slideManager.updateIndex(currentIndex + step);
       
       this._logger(`Transition started, new index will be: ${currentIndex + step}`);
@@ -140,13 +143,48 @@ class NavigationController {
   preOptimizeSlides(slidesToOptimize) {
     slidesToOptimize.forEach(slide => {
       if (slide) {
+        // Remove any inline transform that might interfere with CSS
+        slide.style.transform = '';
         slide.style.willChange = 'transform, opacity';
       }
     });
   }
 
+
   /**
-   * Apply animation states to slides for smooth transitions
+   * Apply animation states to slides with synchronized timing
+   * @param {boolean} rightward - Direction of navigation
+   * @param {Object} slides - Object containing slide elements
+   * @param {number} startTime - Animation start timestamp
+   */
+  applyAnimationStatesSync(rightward, { center, target, offScreen, onScreen }, startTime) {
+    // Store start time for potential synchronization checks
+    const animationData = `${startTime}`;
+    
+    // Apply all animation states atomically
+    if (rightward) {
+      center.dataset.animating = 'center-to-left';
+      center.dataset.animationStart = animationData;
+      target.dataset.animating = 'right-to-center';
+      target.dataset.animationStart = animationData;
+      offScreen.dataset.animating = 'left-to-offscreen';
+      offScreen.dataset.animationStart = animationData;
+      onScreen.dataset.animating = 'offscreen-to-right';
+      onScreen.dataset.animationStart = animationData;
+    } else {
+      center.dataset.animating = 'center-to-right';
+      center.dataset.animationStart = animationData;
+      target.dataset.animating = 'left-to-center';
+      target.dataset.animationStart = animationData;
+      offScreen.dataset.animating = 'right-to-offscreen';
+      offScreen.dataset.animationStart = animationData;
+      onScreen.dataset.animating = 'offscreen-to-left';
+      onScreen.dataset.animationStart = animationData;
+    }
+  }
+
+  /**
+   * Apply animation states to slides for smooth transitions (legacy method)
    * @param {boolean} rightward - Direction of navigation
    * @param {HTMLElement} centerSlide - Current center slide
    * @param {HTMLElement} targetSlide - Target slide becoming center
@@ -176,22 +214,26 @@ class NavigationController {
     try {
       const { slides, currentIndex } = this.slideManager.getCurrentState();
       
-      // Clean up will-change for performance
+      // Clean up animation attributes and optimize performance
       slides.forEach(slide => {
         if (slide.style.willChange) {
           slide.style.willChange = 'auto';
         }
+        // Clean up animation synchronization attributes
+        slide.removeAttribute('data-animation-start');
+        slide.removeAttribute('data-animating');
       });
       
+      // Update positions in correct order to maintain visibility
       this.slideManager.updateCentralSlidePositions();
+      this.slideManager.updateOffsetSlidePositions();
+      
       const curLeft = slides[currentIndex - 1];
       const curRight = slides[currentIndex + 1];
-      this.slideManager.updateOffsetSlidePositions();
 
       if (this.slideManager.isCopySlide(curLeft) || this.slideManager.isCopySlide(curRight)) {
         curLeft && curLeft.removeAttribute('data-copy-slide');
         curRight && curRight.removeAttribute('data-copy-slide');
-        this.slideManager.updateOffsetSlidePositions();
         this.slideManager.deleteDuplication(direction);
         this.slideManager.resetCopySlides();
         
@@ -199,6 +241,10 @@ class NavigationController {
         const newSlides = this.slideManager.getCurrentState().slides;
         const newIndex = newSlides.findIndex(child => child.getAttribute('aria-current') === 'true');
         this.slideManager.updateIndex(newIndex);
+        
+        // Re-apply positions after copy slide reset
+        this.slideManager.updateCentralSlidePositions();
+        this.slideManager.updateOffsetSlidePositions();
       }
 
       this.slideManager.updateNextSlidePositions();

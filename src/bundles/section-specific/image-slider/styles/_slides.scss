@@ -9,13 +9,14 @@
   height: calc(100% - 2 * var(--slider-slide-border-width, 0));
   opacity: 0;
   pointer-events: none;
+  /* Only apply transitions when not animating for synchronization */
   transition: 
     transform var(--slider-transition-duration) var(--slider-transition-timing),
     opacity var(--slider-transition-duration) var(--slider-transition-timing),
     box-shadow var(--slider-transition-duration) var(--slider-transition-timing);
   transform-origin: var(--slider-transform-origin);
   backface-visibility: hidden;
-  transform: translate3d(0, 0, 0); /* GPU acceleration */
+  /* Don't set default transform - let positioning classes handle it */
   contain: layout style paint;
   
   /* Ensure border-radius is inherited and borders aren't clipped */
@@ -30,12 +31,20 @@
   box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
 }
 
+/* Disable transitions only during CSS animations to prevent conflicts */
+.image-slider__slide[data-animating] {
+  transition: none !important;
+  /* Ensure any current transitions are stopped immediately */
+  animation-fill-mode: forwards;
+}
+
 /* --- Active slide using ARIA current --- */
 .image-slider__slide[aria-current="true"] {
   opacity: 1;
   transform: translate3d(0, 0, 0) scale(1);
   pointer-events: all;
   z-index: 2;
+  backface-visibility: hidden;
   box-shadow: 
     0 var(--slider-shadow-blur) calc(var(--slider-shadow-blur) * 1.5) var(--slider-shadow-spread) rgba(0, 0, 0, var(--slider-shadow-opacity)),
     0 calc(var(--slider-shadow-blur) * 0.5) var(--slider-shadow-blur) var(--slider-shadow-spread) rgba(0, 0, 0, calc(var(--slider-shadow-opacity) * 0.3));
@@ -46,6 +55,7 @@
   opacity: var(--slider-slide-opacity);
   transform: translate3d(var(--position-left), 0, 0) scale(var(--slider-slide-scale));
   z-index: 1;
+  backface-visibility: hidden;
   box-shadow: 
     0 calc(var(--slider-shadow-blur) * 0.75) calc(var(--slider-shadow-blur) * 1.0) var(--slider-shadow-spread) rgba(0, 0, 0, calc(var(--slider-shadow-opacity) * 0.7)),
     0 calc(var(--slider-shadow-blur) * 0.25) calc(var(--slider-shadow-blur) * 0.5) var(--slider-shadow-spread) rgba(0, 0, 0, calc(var(--slider-shadow-opacity) * 0.2));
@@ -55,6 +65,7 @@
   opacity: var(--slider-slide-opacity);
   transform: translate3d(var(--position-right), 0, 0) scale(var(--slider-slide-scale));
   z-index: 1;
+  backface-visibility: hidden;
   box-shadow: 
     0 calc(var(--slider-shadow-blur) * 0.75) calc(var(--slider-shadow-blur) * 1.0) var(--slider-shadow-spread) rgba(0, 0, 0, calc(var(--slider-shadow-opacity) * 0.7)),
     0 calc(var(--slider-shadow-blur) * 0.25) calc(var(--slider-shadow-blur) * 0.5) var(--slider-shadow-spread) rgba(0, 0, 0, calc(var(--slider-shadow-opacity) * 0.2));
@@ -65,6 +76,7 @@
   opacity: var(--slider-slide-opacity);
   transform: translate3d(var(--position-offscreen-left), 0, 0) scale(var(--slider-slide-scale));
   z-index: 1;
+  backface-visibility: hidden;
   /* Enable transitions for smooth box-shadow changes */
   transition: box-shadow var(--slider-transition-duration) var(--slider-transition-timing);
   /* Minimal shadow for smooth transitions */
@@ -77,6 +89,7 @@
   opacity: var(--slider-slide-opacity);
   transform: translate3d(var(--position-offscreen-right), 0, 0) scale(var(--slider-slide-scale));
   z-index: 1;
+  backface-visibility: hidden;
   /* Enable transitions for smooth box-shadow changes */
   transition: box-shadow var(--slider-transition-duration) var(--slider-transition-timing);
   /* Minimal shadow for smooth transitions */

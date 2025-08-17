@@ -126,13 +126,20 @@ class SlideManager {
 
   /**
    * Reset all slides to default hidden state
+   * Only removes animation attributes, preserves positioning for offscreen slides
    */
   resetAllSlideStates() {
     this.slides.forEach(slide => {
-      slide.removeAttribute('data-slide-position');
+      // Only remove animation attributes, don't remove positioning
       slide.removeAttribute('data-animating');
       slide.removeAttribute('aria-current');
-      slide.ariaHidden = 'true';
+      
+      // Only hide slides that aren't positioned as offscreen (which should remain positioned)
+      const currentPosition = slide.dataset.slidePosition;
+      if (!currentPosition || (!currentPosition.includes('offscreen') && currentPosition !== 'left' && currentPosition !== 'right')) {
+        slide.removeAttribute('data-slide-position');
+        slide.ariaHidden = 'true';
+      }
     });
   }
 
@@ -154,17 +161,20 @@ class SlideManager {
    */
   applyCentralPositions({ current, previous, next }) {
     if (current) {
-      current.dataset.slidePosition = 'center';
       current.setAttribute('aria-current', 'true');
       current.ariaHidden = 'false';
+      // Ensure center slide has no position attribute (it's positioned by aria-current)
+      current.removeAttribute('data-slide-position');
     }
     
     if (previous) {
       previous.dataset.slidePosition = 'left';
+      previous.ariaHidden = 'false';
     }
     
     if (next) {
       next.dataset.slidePosition = 'right';
+      next.ariaHidden = 'false';
     }
   }
 

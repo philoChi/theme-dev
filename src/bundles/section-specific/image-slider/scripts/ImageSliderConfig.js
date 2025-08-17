@@ -9,10 +9,11 @@ class ImageSliderConfig {
   static get CONSTANTS() {
     return {
       SWIPE_THRESHOLD: 40,
-      ANIMATION_DELAY: 400,
+      ANIMATION_DELAY: 600, // Matches CSS --slider-transition-duration for synchronization
       DEFAULT_AUTOPLAY_INTERVAL: 5000,
-      DEFAULT_TRANSITION_DURATION: 1000,
+      DEFAULT_TRANSITION_DURATION: 600, // Aligned with CSS transition duration
       CENTER_POSITION: 1, // Default position for active slide in DOM
+      SYNC_BUFFER: 50, // Additional buffer for animation synchronization
     };
   }
 
