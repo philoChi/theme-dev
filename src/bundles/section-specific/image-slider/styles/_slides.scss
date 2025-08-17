@@ -11,7 +11,8 @@
   pointer-events: none;
   transition: 
     transform var(--slider-transition-duration) var(--slider-transition-timing),
-    opacity var(--slider-transition-duration) var(--slider-transition-timing);
+    opacity var(--slider-transition-duration) var(--slider-transition-timing),
+    box-shadow var(--slider-transition-duration) var(--slider-transition-timing);
   transform-origin: var(--slider-transform-origin);
   backface-visibility: hidden;
   transform: translate3d(0, 0, 0); /* GPU acceleration */
@@ -24,6 +25,9 @@
   
   /* Box-sizing to include border in dimensions */
   box-sizing: border-box;
+  
+  /* Default minimal shadow for smooth transitions */
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
 }
 
 /* --- Active slide using ARIA current --- */
@@ -32,7 +36,9 @@
   transform: translate3d(0, 0, 0) scale(1);
   pointer-events: all;
   z-index: 2;
-  box-shadow: 0 var(--slider-shadow-blur) var(--slider-shadow-blur) 0 rgba(0, 0, 0, var(--slider-shadow-opacity));
+  box-shadow: 
+    0 var(--slider-shadow-blur) calc(var(--slider-shadow-blur) * 1.5) var(--slider-shadow-spread) rgba(0, 0, 0, var(--slider-shadow-opacity)),
+    0 calc(var(--slider-shadow-blur) * 0.5) var(--slider-shadow-blur) var(--slider-shadow-spread) rgba(0, 0, 0, calc(var(--slider-shadow-opacity) * 0.3));
 }
 
 /* --- Side slides (maintaining data attributes for JavaScript positioning) --- */
@@ -40,14 +46,18 @@
   opacity: var(--slider-slide-opacity);
   transform: translate3d(var(--position-left), 0, 0) scale(var(--slider-slide-scale));
   z-index: 1;
-  box-shadow: 0 calc(var(--slider-shadow-blur) * 0.6) calc(var(--slider-shadow-blur) * 0.6) 0 rgba(0, 0, 0, calc(var(--slider-shadow-opacity) * 0.7));
+  box-shadow: 
+    0 calc(var(--slider-shadow-blur) * 0.75) calc(var(--slider-shadow-blur) * 1.0) var(--slider-shadow-spread) rgba(0, 0, 0, calc(var(--slider-shadow-opacity) * 0.7)),
+    0 calc(var(--slider-shadow-blur) * 0.25) calc(var(--slider-shadow-blur) * 0.5) var(--slider-shadow-spread) rgba(0, 0, 0, calc(var(--slider-shadow-opacity) * 0.2));
 }
 
 .image-slider__slide[data-slide-position="right"] {
   opacity: var(--slider-slide-opacity);
   transform: translate3d(var(--position-right), 0, 0) scale(var(--slider-slide-scale));
   z-index: 1;
-  box-shadow: 0 calc(var(--slider-shadow-blur) * 0.6) calc(var(--slider-shadow-blur) * 0.6) 0 rgba(0, 0, 0, calc(var(--slider-shadow-opacity) * 0.7));
+  box-shadow: 
+    0 calc(var(--slider-shadow-blur) * 0.75) calc(var(--slider-shadow-blur) * 1.0) var(--slider-shadow-spread) rgba(0, 0, 0, calc(var(--slider-shadow-opacity) * 0.7)),
+    0 calc(var(--slider-shadow-blur) * 0.25) calc(var(--slider-shadow-blur) * 0.5) var(--slider-shadow-spread) rgba(0, 0, 0, calc(var(--slider-shadow-opacity) * 0.2));
 }
 
 /* --- Off-screen slides (for infinite loop) --- */
@@ -55,14 +65,24 @@
   opacity: var(--slider-slide-opacity);
   transform: translate3d(var(--position-offscreen-left), 0, 0) scale(var(--slider-slide-scale));
   z-index: 1;
-  transition: none;
+  /* Enable transitions for smooth box-shadow changes */
+  transition: box-shadow var(--slider-transition-duration) var(--slider-transition-timing);
+  /* Minimal shadow for smooth transitions */
+  box-shadow: 
+    0 calc(var(--slider-shadow-blur) * 0.5) calc(var(--slider-shadow-blur) * 0.6) var(--slider-shadow-spread) rgba(0, 0, 0, calc(var(--slider-shadow-opacity) * 0.4)),
+    0 calc(var(--slider-shadow-blur) * 0.1) calc(var(--slider-shadow-blur) * 0.3) var(--slider-shadow-spread) rgba(0, 0, 0, calc(var(--slider-shadow-opacity) * 0.1));
 }
 
 .image-slider__slide[data-slide-position="offscreen-right"] {
   opacity: var(--slider-slide-opacity);
   transform: translate3d(var(--position-offscreen-right), 0, 0) scale(var(--slider-slide-scale));
   z-index: 1;
-  transition: none;
+  /* Enable transitions for smooth box-shadow changes */
+  transition: box-shadow var(--slider-transition-duration) var(--slider-transition-timing);
+  /* Minimal shadow for smooth transitions */
+  box-shadow: 
+    0 calc(var(--slider-shadow-blur) * 0.5) calc(var(--slider-shadow-blur) * 0.6) var(--slider-shadow-spread) rgba(0, 0, 0, calc(var(--slider-shadow-opacity) * 0.4)),
+    0 calc(var(--slider-shadow-blur) * 0.1) calc(var(--slider-shadow-blur) * 0.3) var(--slider-shadow-spread) rgba(0, 0, 0, calc(var(--slider-shadow-opacity) * 0.1));
 }
 
 /********************  Images & loading pulse  ********************/
