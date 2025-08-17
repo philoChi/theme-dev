@@ -43,4 +43,7 @@
   transform: translateZ(0);
   contain: layout style;
   transform-style: preserve-3d;
+  
+  /* Ensure borders have space to render properly */
+  overflow: visible;
 }

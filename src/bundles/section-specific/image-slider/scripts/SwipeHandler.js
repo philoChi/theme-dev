@@ -16,6 +16,12 @@ class SwipeHandler {
     
     this.startX = null;
     this.startY = null;
+    this.lastSwipeTime = 0;
+    this.swipeDebounceDelay = 150; // Prevent rapid swipe triggers
+    
+    // Pre-bind event handlers for better performance
+    this.handlePointerStart = this.handlePointerStart.bind(this);
+    this.handlePointerEnd = this.handlePointerEnd.bind(this);
   }
 
   /**
@@ -24,9 +30,9 @@ class SwipeHandler {
    */
   setupSwipeEvents() {
     // Use passive listeners to maintain scrolling performance
-    this.slider.addEventListener('pointerdown', this.handlePointerStart.bind(this), { passive: true });
-    this.slider.addEventListener('pointerup', this.handlePointerEnd.bind(this), { passive: true });
-    this.slider.addEventListener('pointercancel', this.handlePointerEnd.bind(this), { passive: true });
+    this.slider.addEventListener('pointerdown', this.handlePointerStart, { passive: true });
+    this.slider.addEventListener('pointerup', this.handlePointerEnd, { passive: true });
+    this.slider.addEventListener('pointercancel', this.handlePointerEnd, { passive: true });
   }
 
   /**
@@ -41,11 +47,19 @@ class SwipeHandler {
   }
 
   /**
-   * Handle pointer end event and process swipe gesture
+   * Handle pointer end event and process swipe gesture with debouncing
    * @param {PointerEvent} e - Pointer event
    */
   handlePointerEnd(e) {
     if (this.startX === null) return;
+    
+    const currentTime = Date.now();
+    
+    // Debounce rapid swipes for better performance
+    if (currentTime - this.lastSwipeTime < this.swipeDebounceDelay) {
+      this.startX = this.startY = null;
+      return;
+    }
     
     const deltaX = e.clientX - this.startX;
     const deltaY = e.clientY - this.startY;
@@ -58,7 +72,19 @@ class SwipeHandler {
     const exceedsThreshold = Math.abs(deltaX) > this.swipeThreshold;
     
     if (isHorizontalGesture && exceedsThreshold) {
+      this.lastSwipeTime = currentTime;
       this.navigationController.navigate(deltaX < 0 ? 'right' : 'left');
+    }
+  }
+
+  /**
+   * Cleanup method for memory management
+   */
+  cleanup() {
+    if (this.slider) {
+      this.slider.removeEventListener('pointerdown', this.handlePointerStart);
+      this.slider.removeEventListener('pointerup', this.handlePointerEnd);
+      this.slider.removeEventListener('pointercancel', this.handlePointerEnd);
     }
   }
 }

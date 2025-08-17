@@ -40,7 +40,7 @@ class ImageSlider {
   }
 
   /**
-   * Initialize and validate DOM elements
+   * Initialize and validate DOM elements with performance caching
    */
   initializeElements() {
     this.container = this.slider.querySelector('.image-slider__container');
@@ -58,6 +58,12 @@ class ImageSlider {
     if (!this.prevButton || !this.nextButton) {
       throw new Error('Navigation buttons not found');
     }
+
+    // Cache slide references for performance
+    this.slideCache = new WeakMap();
+    this.slides.forEach((slide, index) => {
+      this.slideCache.set(slide, { index, element: slide });
+    });
   }
 
   /**
@@ -112,8 +118,13 @@ class ImageSlider {
    * Setup performance optimizations
    */
   setupPerformanceOptimizations() {
-    // Add will-change CSS hint when needed
-    this.container.style.willChange = 'transform';
+    // Use transform3d for GPU acceleration
+    this.container.style.transform = 'translate3d(0, 0, 0)';
+    
+    // Pre-warm GPU for smooth animations
+    requestAnimationFrame(() => {
+      this.container.style.willChange = 'auto';
+    });
   }
 
 
@@ -143,9 +154,20 @@ class ImageSlider {
       this.autoplayManager.cleanup();
     }
     
-    // Remove will-change CSS hint
+    // Cleanup swipe handler
+    if (this.swipeHandler) {
+      this.swipeHandler.cleanup();
+    }
+    
+    // Clear slide cache
+    if (this.slideCache) {
+      this.slideCache = null;
+    }
+    
+    // Reset container styles
     if (this.container) {
       this.container.style.willChange = 'auto';
+      this.container.style.transform = '';
     }
     
     this._logger(`[Slider: ${this.sliderId}] Cleanup completed`);

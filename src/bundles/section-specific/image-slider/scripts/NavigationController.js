@@ -14,6 +14,10 @@ class NavigationController {
     this._logger = logger;
     this.sliderId = sliderId;
     this.isTransitioning = false;
+    
+    // Performance optimization: Use bound methods to avoid repeated binding
+    this.handlePrevClick = this.handleNavigation.bind(this, 'left');
+    this.handleNextClick = this.handleNavigation.bind(this, 'right');
   }
 
   /**
@@ -22,8 +26,18 @@ class NavigationController {
    * @param {HTMLElement} nextButton - Next navigation button
    */
   setupNavigationListeners(prevButton, nextButton) {
-    prevButton.addEventListener('click', () => this.navigate('left'), { passive: true });
-    nextButton.addEventListener('click', () => this.navigate('right'), { passive: true });
+    prevButton.addEventListener('click', this.handlePrevClick, { passive: true });
+    nextButton.addEventListener('click', this.handleNextClick, { passive: true });
+  }
+
+  /**
+   * Handle navigation clicks with performance optimization
+   * @param {string} direction - Navigation direction
+   * @param {Event} event - Click event
+   */
+  handleNavigation(direction, event) {
+    event.preventDefault();
+    this.navigate(direction);
   }
 
   /**
@@ -92,7 +106,7 @@ class NavigationController {
   }
 
   /**
-   * Start the transition animation
+   * Start the transition animation with RAF batching
    * @param {Object} navigationData - Prepared navigation data
    * @param {Function} onComplete - Callback when transition completes
    */
@@ -100,17 +114,34 @@ class NavigationController {
     this.isTransitioning = true;
     const { currentIndex } = this.slideManager.getCurrentState();
 
+    // Batch DOM updates in a single RAF
     requestAnimationFrame(() => {
+      // Pre-optimize slides for GPU acceleration
+      this.preOptimizeSlides([slides.center, slides.target, slides.offScreen, slides.onScreen]);
+      
       // Apply animation states to slides
       this.applyAnimationStates(rightward, slides.center, slides.target, slides.offScreen, slides.onScreen);
       this.slideManager.updateIndex(currentIndex + step);
       
       this._logger(`Transition started, new index will be: ${currentIndex + step}`);
 
-      // Listen for animation completion
-      slides.target.addEventListener('animationend', () => {
+      // Listen for animation completion with better performance
+      const animationEndHandler = () => {
         this.handleAnimationEnd(direction, onComplete);
-      }, { once: true });
+      };
+      slides.target.addEventListener('animationend', animationEndHandler, { once: true, passive: true });
+    });
+  }
+
+  /**
+   * Pre-optimize slides for smooth animations
+   * @param {Array} slides - Array of slide elements to optimize
+   */
+  preOptimizeSlides(slidesToOptimize) {
+    slidesToOptimize.forEach(slide => {
+      if (slide) {
+        slide.style.willChange = 'transform, opacity';
+      }
     });
   }
 
@@ -137,13 +168,20 @@ class NavigationController {
   }
 
   /**
-   * Handle animation end cleanup and state updates
+   * Handle animation end cleanup and state updates with performance optimizations
    * @param {string} direction - Direction of the completed navigation
    * @param {Function} onComplete - Callback when animation completes
    */
   handleAnimationEnd(direction, onComplete) {
     try {
       const { slides, currentIndex } = this.slideManager.getCurrentState();
+      
+      // Clean up will-change for performance
+      slides.forEach(slide => {
+        if (slide.style.willChange) {
+          slide.style.willChange = 'auto';
+        }
+      });
       
       this.slideManager.updateCentralSlidePositions();
       const curLeft = slides[currentIndex - 1];

@@ -1,18 +1,16 @@
 /* Image Slider Animations and Transitions */
 
 /********************  Consolidated Keyframes  ********************/
-/* Universal slide transition - uses CSS custom properties for flexibility */
+/* Universal slide transition - optimized for performance without blur */
 @keyframes slide-transition {
   from {
     opacity: var(--anim-from-opacity);
-    transform: translateX(var(--anim-from-x)) scale(var(--anim-from-scale));
-    filter: blur(var(--anim-from-blur));
+    transform: translate3d(var(--anim-from-x), 0, 0) scale(var(--anim-from-scale));
   }
 
   to {
     opacity: var(--anim-to-opacity);
-    transform: translateX(var(--anim-to-x)) scale(var(--anim-to-scale));
-    filter: blur(var(--anim-to-blur));
+    transform: translate3d(var(--anim-to-x), 0, 0) scale(var(--anim-to-scale));
   }
 }
 
@@ -20,8 +18,7 @@
 @keyframes moveToCenter {
   to {
     opacity: 1;
-    transform: translateX(0) scale(1);
-    filter: blur(0);
+    transform: translate3d(0, 0, 0) scale(1);
   }
 }
 
@@ -31,7 +28,7 @@
 .image-slider__slide[data-animating="right-to-center"] {
   animation: moveToCenter var(--slider-transition-duration) var(--slider-transition-timing) forwards;
   z-index: 2;
-  will-change: transform, opacity, filter, box-shadow;
+  will-change: transform, opacity;
 }
 
 /* Moving from center to left */
@@ -39,14 +36,12 @@
   --anim-from-opacity: 1;
   --anim-from-x: 0;
   --anim-from-scale: 1;
-  --anim-from-blur: 0;
   --anim-to-opacity: var(--slider-slide-opacity);
   --anim-to-x: var(--position-left);
   --anim-to-scale: var(--slider-slide-scale);
-  --anim-to-blur: var(--slider-slide-blur);
   animation: slide-transition var(--slider-transition-duration) var(--slider-transition-timing) forwards;
   z-index: 1;
-  will-change: transform, opacity, filter, box-shadow;
+  will-change: transform, opacity;
 }
 
 /* Moving from center to right */
@@ -54,14 +49,12 @@
   --anim-from-opacity: 1;
   --anim-from-x: 0;
   --anim-from-scale: 1;
-  --anim-from-blur: 0;
   --anim-to-opacity: var(--slider-slide-opacity);
   --anim-to-x: var(--position-right);
   --anim-to-scale: var(--slider-slide-scale);
-  --anim-to-blur: var(--slider-slide-blur);
   animation: slide-transition var(--slider-transition-duration) var(--slider-transition-timing) forwards;
   z-index: 1;
-  will-change: transform, opacity, filter, box-shadow;
+  will-change: transform, opacity;
 }
 
 /* Side slide movements using universal transition */
@@ -69,11 +62,9 @@
   --anim-from-opacity: var(--slider-slide-opacity);
   --anim-from-x: var(--position-left);
   --anim-from-scale: var(--slider-slide-scale);
-  --anim-from-blur: var(--slider-slide-blur);
   --anim-to-opacity: var(--slider-slide-opacity);
   --anim-to-x: var(--position-offscreen-left);
   --anim-to-scale: var(--slider-slide-scale);
-  --anim-to-blur: var(--slider-slide-blur);
   animation: slide-transition var(--slider-transition-duration) var(--slider-transition-timing) forwards;
   z-index: 1;
 }
@@ -82,11 +73,9 @@
   --anim-from-opacity: var(--slider-slide-opacity);
   --anim-from-x: var(--position-right);
   --anim-from-scale: var(--slider-slide-scale);
-  --anim-from-blur: var(--slider-slide-blur);
   --anim-to-opacity: var(--slider-slide-opacity);
   --anim-to-x: var(--position-offscreen-right);
   --anim-to-scale: var(--slider-slide-scale);
-  --anim-to-blur: var(--slider-slide-blur);
   animation: slide-transition var(--slider-transition-duration) var(--slider-transition-timing) forwards;
   z-index: 1;
 }
@@ -95,11 +84,9 @@
   --anim-from-opacity: var(--slider-slide-opacity);
   --anim-from-x: var(--position-offscreen-left);
   --anim-from-scale: var(--slider-slide-scale);
-  --anim-from-blur: var(--slider-slide-blur);
   --anim-to-opacity: var(--slider-slide-opacity);
   --anim-to-x: var(--position-left);
   --anim-to-scale: var(--slider-slide-scale);
-  --anim-to-blur: var(--slider-slide-blur);
   animation: slide-transition var(--slider-transition-duration) var(--slider-transition-timing) forwards;
   z-index: 1;
 }
@@ -108,11 +95,9 @@
   --anim-from-opacity: var(--slider-slide-opacity);
   --anim-from-x: var(--position-offscreen-right);
   --anim-from-scale: var(--slider-slide-scale);
-  --anim-from-blur: var(--slider-slide-blur);
   --anim-to-opacity: var(--slider-slide-opacity);
   --anim-to-x: var(--position-right);
   --anim-to-scale: var(--slider-slide-scale);
-  --anim-to-blur: var(--slider-slide-blur);
   animation: slide-transition var(--slider-transition-duration) var(--slider-transition-timing) forwards;
   z-index: 1;
 }
@@ -129,9 +114,9 @@
 
 /* Performance optimization: Add will-change hint before complex animations */
 .image-slider__slide[data-animating*="to-center"] {
-  will-change: transform, opacity, filter, box-shadow;
+  will-change: transform, opacity;
 }
 
 .image-slider__slide[data-animating*="center-to"] {
-  will-change: transform, opacity, filter, box-shadow;
+  will-change: transform, opacity;
 }

@@ -15,6 +15,14 @@ class SlideManager {
     this.slides = slides;
     this.currentIndex = currentIndex;
     this._logger = logger;
+    
+    // Cache frequently used selectors
+    this.slideSelector = '.image-slider__slide';
+    this.copySlideSelector = '[data-copy-slide]';
+    
+    // Batch DOM updates
+    this.pendingUpdates = [];
+    this.updateScheduled = false;
   }
 
   /**
@@ -43,22 +51,25 @@ class SlideManager {
     // Remove existing copy slides
     this.removeCopySlides();
     
-    // Update slides array and create new clones
-    this.slides = Array.from(this.container.querySelectorAll('.image-slider__slide'));
+    // Update slides array more efficiently
+    this.slides = Array.from(this.container.querySelectorAll(this.slideSelector));
     const { lastClone, firstClone } = this.createCopySlides();
     
-    // Position and append copy slides
-    this.positionCopySlides(lastClone, firstClone);
+    // Batch DOM operations for better performance
+    const fragment = document.createDocumentFragment();
+    fragment.appendChild(firstClone);
+    this.container.prepend(lastClone);
+    this.container.appendChild(fragment);
     
     // Update slides array with new copy slides
-    this.slides = Array.from(this.container.querySelectorAll('.image-slider__slide'));
+    this.slides = Array.from(this.container.querySelectorAll(this.slideSelector));
   }
 
   /**
    * Remove all existing copy slides
    */
   removeCopySlides() {
-    const copySlides = this.container.querySelectorAll('[data-copy-slide]');
+    const copySlides = this.container.querySelectorAll(this.copySlideSelector);
     copySlides.forEach(slide => slide.remove());
   }
 
@@ -162,27 +173,33 @@ class SlideManager {
    * Positions slides that are not in the center/left/right visible area
    */
   updateOffsetSlidePositions() {
-    // Remove any existing offscreen animation states
-    this.slides.forEach(slide => {
-      const currentAnimating = slide.dataset.animating
-      if (currentAnimating && currentAnimating.includes('offscreen')) {
-        slide.removeAttribute('data-animating')
-      }
-    })
+    this.batchUpdate(() => {
+      // Remove any existing offscreen animation states
+      this.slides.forEach(slide => {
+        const currentAnimating = slide.dataset.animating;
+        if (currentAnimating && currentAnimating.includes('offscreen')) {
+          slide.removeAttribute('data-animating');
+        }
+      });
 
-    for (let i = 0; i < this.currentIndex - 1; i++) {
-      if (!this.slides[i].dataset.slidePosition || !this.slides[i].dataset.slidePosition.includes('offscreen')) {
-        this.slides[i].dataset.slidePosition = 'offscreen-left'
+      // Update left offscreen slides
+      for (let i = 0; i < this.currentIndex - 1; i++) {
+        const slide = this.slides[i];
+        if (!slide.dataset.slidePosition || !slide.dataset.slidePosition.includes('offscreen')) {
+          slide.dataset.slidePosition = 'offscreen-left';
+        }
+        slide.ariaHidden = 'true';
       }
-      this.slides[i].ariaHidden = 'true'
-    }
 
-    for (let i = this.currentIndex + 2; i < this.slides.length; i++) {
-      if (!this.slides[i].dataset.slidePosition || !this.slides[i].dataset.slidePosition.includes('offscreen')) {
-        this.slides[i].dataset.slidePosition = 'offscreen-right'
+      // Update right offscreen slides
+      for (let i = this.currentIndex + 2; i < this.slides.length; i++) {
+        const slide = this.slides[i];
+        if (!slide.dataset.slidePosition || !slide.dataset.slidePosition.includes('offscreen')) {
+          slide.dataset.slidePosition = 'offscreen-right';
+        }
+        slide.ariaHidden = 'true';
       }
-      this.slides[i].ariaHidden = 'true'
-    }
+    });
   }
 
   /**
@@ -228,6 +245,22 @@ class SlideManager {
    */
   updateIndex(newIndex) {
     this.currentIndex = newIndex;
+  }
+
+  /**
+   * Batch DOM updates for better performance
+   * @param {Function} updateFn - Function containing DOM updates
+   */
+  batchUpdate(updateFn) {
+    if (!this.updateScheduled) {
+      this.updateScheduled = true;
+      requestAnimationFrame(() => {
+        updateFn();
+        this.updateScheduled = false;
+      });
+    } else {
+      this.pendingUpdates.push(updateFn);
+    }
   }
 
   /**

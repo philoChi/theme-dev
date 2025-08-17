@@ -47,18 +47,22 @@ class AutoplayManager {
   }
 
   /**
-   * Setup user interaction handlers for pause/resume
+   * Setup user interaction handlers for pause/resume with optimized event handling
    */
   setupUserInteractionHandlers() {
+    // Pre-bind methods for better performance
+    this.handleInteractionStart = () => this.stopAutoplay();
+    this.handleInteractionEnd = () => this.startAutoplay();
+    
     // Pause on user interaction; resume afterwards
     const interactionEvents = ['mouseenter', 'focusin', 'touchstart'];
     const resumeEvents = ['mouseleave', 'focusout', 'touchend'];
     
     interactionEvents.forEach(event => 
-      this.slider.addEventListener(event, () => this.stopAutoplay(), { passive: true })
+      this.slider.addEventListener(event, this.handleInteractionStart, { passive: true })
     );
     resumeEvents.forEach(event => 
-      this.slider.addEventListener(event, () => this.startAutoplay(), { passive: true })
+      this.slider.addEventListener(event, this.handleInteractionEnd, { passive: true })
     );
   }
 
@@ -134,6 +138,19 @@ class AutoplayManager {
   cleanup() {
     // Clear autoplay timer
     this.stopAutoplay();
+    
+    // Remove event listeners to prevent memory leaks
+    if (this.handleInteractionStart && this.handleInteractionEnd) {
+      const interactionEvents = ['mouseenter', 'focusin', 'touchstart'];
+      const resumeEvents = ['mouseleave', 'focusout', 'touchend'];
+      
+      interactionEvents.forEach(event => 
+        this.slider.removeEventListener(event, this.handleInteractionStart)
+      );
+      resumeEvents.forEach(event => 
+        this.slider.removeEventListener(event, this.handleInteractionEnd)
+      );
+    }
     
     // Disconnect intersection observer
     if (this.intersectionObserver) {

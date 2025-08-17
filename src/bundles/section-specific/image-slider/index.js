@@ -32,7 +32,7 @@ document.addEventListener('shopify:section:load', event => {
 });
 
 /**
- * Initialize image slider sections by creating ImageSlider instances
+ * Initialize image slider sections by creating ImageSlider instances with performance optimization
  * @param {Element} container - Optional container to search within, defaults to document
  */
 function initializeImageSliders(container = document) {
@@ -40,20 +40,37 @@ function initializeImageSliders(container = document) {
         // Get sections to initialize
         const sections = getSectionsToInitialize(container);
 
-        // Initialize each section
-        let initializedCount = 0;
-        sections.forEach(section => {
-            if (!section.hasAttribute('data-slider-initialized')) {
-                new ImageSlider(section);
-                section.setAttribute('data-slider-initialized', 'true');
-                initializedCount++;
+        // Batch initialization for better performance
+        if (sections.length === 0) return;
+
+        // Use requestAnimationFrame for non-blocking initialization
+        requestAnimationFrame(() => {
+            const sliderInstances = [];
+            let initializedCount = 0;
+
+            sections.forEach(section => {
+                if (!section.hasAttribute('data-slider-initialized')) {
+                    try {
+                        const slider = new ImageSlider(section);
+                        sliderInstances.push(slider);
+                        section.setAttribute('data-slider-initialized', 'true');
+                        initializedCount++;
+                    } catch (sectionError) {
+                        console.error('Failed to initialize individual slider:', sectionError);
+                    }
+                }
+            });
+
+            // Store instances for potential cleanup
+            if (sliderInstances.length > 0) {
+                window.imageSliderInstances = (window.imageSliderInstances || []).concat(sliderInstances);
+            }
+
+            // Log successful initialization
+            if (window.logger && initializedCount > 0) {
+                window.logger.log(`Image slider: initialized ${initializedCount} section(s)`);
             }
         });
-
-        // Log successful initialization
-        if (window.logger && initializedCount > 0) {
-            window.logger.log(`Image slider: initialized ${initializedCount} section(s)`);
-        }
     } catch (error) {
         console.error('Failed to initialize image slider sections:', error);
         showUserFriendlyError();
@@ -84,3 +101,20 @@ function showUserFriendlyError() {
         );
     }
 }
+
+/**
+ * Cleanup function for memory management
+ */
+function cleanupImageSliders() {
+    if (window.imageSliderInstances) {
+        window.imageSliderInstances.forEach(slider => {
+            if (slider && typeof slider.cleanup === 'function') {
+                slider.cleanup();
+            }
+        });
+        window.imageSliderInstances = [];
+    }
+}
+
+// Export cleanup function for external use
+window.cleanupImageSliders = cleanupImageSliders;

@@ -3,60 +3,64 @@
 /********************  Slide basics  ********************/
 .image-slider__slide {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  /* Inset by border width to prevent clipping */
+  inset: var(--slider-slide-border-width, 0);
+  width: calc(100% - 2 * var(--slider-slide-border-width, 0));
+  height: calc(100% - 2 * var(--slider-slide-border-width, 0));
   opacity: 0;
   pointer-events: none;
   transition: 
     transform var(--slider-transition-duration) var(--slider-transition-timing),
-    opacity var(--slider-transition-duration) var(--slider-transition-timing),
-    filter var(--slider-transition-duration) var(--slider-transition-timing),
-    box-shadow var(--slider-transition-duration) var(--slider-transition-timing);
+    opacity var(--slider-transition-duration) var(--slider-transition-timing);
   transform-origin: var(--slider-transform-origin);
   backface-visibility: hidden;
-  transform-style: preserve-3d;
-  contain: layout style;
+  transform: translate3d(0, 0, 0); /* GPU acceleration */
+  contain: layout style paint;
+  
+  /* Ensure border-radius is inherited and borders aren't clipped */
+  border-radius: var(--slider-slide-border-radius);
+  overflow: hidden;
+  border: var(--slider-slide-border-width) solid var(--slider-slide-border-color);
+  
+  /* Box-sizing to include border in dimensions */
+  box-sizing: border-box;
 }
 
 /* --- Active slide using ARIA current --- */
 .image-slider__slide[aria-current="true"] {
   opacity: 1;
-  transform: translateX(0) scale(1);
-  filter: blur(0);
+  transform: translate3d(0, 0, 0) scale(1);
   pointer-events: all;
   z-index: 2;
-  box-shadow: 0 var(--slider-shadow-blur) calc(var(--slider-shadow-blur) * 2) var(--slider-shadow-spread) rgba(0, 0, 0, var(--slider-shadow-opacity));
+  box-shadow: 0 var(--slider-shadow-blur) var(--slider-shadow-blur) 0 rgba(0, 0, 0, var(--slider-shadow-opacity));
 }
 
 /* --- Side slides (maintaining data attributes for JavaScript positioning) --- */
 .image-slider__slide[data-slide-position="left"] {
   opacity: var(--slider-slide-opacity);
-  transform: translateX(var(--position-left)) scale(var(--slider-slide-scale));
-  filter: blur(var(--slider-slide-blur));
+  transform: translate3d(var(--position-left), 0, 0) scale(var(--slider-slide-scale));
   z-index: 1;
-  box-shadow: 0 calc(var(--slider-shadow-blur) * 0.6) calc(var(--slider-shadow-blur) * 1.2) calc(var(--slider-shadow-spread) * 0.8) rgba(0, 0, 0, calc(var(--slider-shadow-opacity) * 0.7));
+  box-shadow: 0 calc(var(--slider-shadow-blur) * 0.6) calc(var(--slider-shadow-blur) * 0.6) 0 rgba(0, 0, 0, calc(var(--slider-shadow-opacity) * 0.7));
 }
 
 .image-slider__slide[data-slide-position="right"] {
   opacity: var(--slider-slide-opacity);
-  transform: translateX(var(--position-right)) scale(var(--slider-slide-scale));
-  filter: blur(var(--slider-slide-blur));
+  transform: translate3d(var(--position-right), 0, 0) scale(var(--slider-slide-scale));
   z-index: 1;
-  box-shadow: 0 calc(var(--slider-shadow-blur) * 0.6) calc(var(--slider-shadow-blur) * 1.2) calc(var(--slider-shadow-spread) * 0.8) rgba(0, 0, 0, calc(var(--slider-shadow-opacity) * 0.7));
+  box-shadow: 0 calc(var(--slider-shadow-blur) * 0.6) calc(var(--slider-shadow-blur) * 0.6) 0 rgba(0, 0, 0, calc(var(--slider-shadow-opacity) * 0.7));
 }
 
 /* --- Off-screen slides (for infinite loop) --- */
 .image-slider__slide[data-slide-position="offscreen-left"] {
   opacity: var(--slider-slide-opacity);
-  transform: translateX(var(--position-offscreen-left)) scale(var(--slider-slide-scale));
+  transform: translate3d(var(--position-offscreen-left), 0, 0) scale(var(--slider-slide-scale));
   z-index: 1;
   transition: none;
 }
 
 .image-slider__slide[data-slide-position="offscreen-right"] {
   opacity: var(--slider-slide-opacity);
-  transform: translateX(var(--position-offscreen-right)) scale(var(--slider-slide-scale));
+  transform: translate3d(var(--position-offscreen-right), 0, 0) scale(var(--slider-slide-scale));
   z-index: 1;
   transition: none;
 }
@@ -68,6 +72,8 @@
   height: 100%;
   margin: 0;
   display: block;
+  border-radius: var(--slider-slide-border-radius);
+  overflow: hidden;
 }
 
 /* Picture element wrapper for modern format support */
@@ -75,28 +81,30 @@
   width: 100%;
   height: 100%;
   display: block;
+  border-radius: var(--slider-slide-border-radius);
+  overflow: hidden;
 }
 
 .image-slider__image {
   display: block;
   width: 100%;
   height: 100%;
-  border-radius: var(--slider-slide-border-radius);
   object-fit: cover;
   object-position: center;
   background-color: #f4f4f4;
   transform: translateZ(0);
   transition: opacity var(--slider-transition-duration) ease;
-  border: var(--slider-slide-border-width) solid var(--slider-slide-border-color);
   
   /* Image quality optimizations */
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
   image-rendering: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  will-change: contents;
   contain: layout paint;
+  
+  /* Performance optimization for off-screen images */
+  &[loading="lazy"] {
+    content-visibility: auto;
+  }
 }
 
 /* Progressive enhancement for modern browsers */
