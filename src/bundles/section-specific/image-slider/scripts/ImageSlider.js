@@ -1,10 +1,13 @@
-// section-image-slider-optimized.js
-// Minimal‑change optimisation of the original simplified slider.
-// Goal: identical functionality with marginally better runtime perf and lower logical
-// complexity. All public behaviour (copy‑slides, off‑screen teleport, debug output)
-// is preserved.
-
-class SimpleImageSlider {
+/**
+ * Image Slider Component
+ * High-performance image slider with infinite scrolling and accessibility features
+ * Works with any HTML element containing the required slider structure
+ */
+class ImageSlider {
+  /**
+   * Initialize the image slider component
+   * @param {HTMLElement} sliderElement - The container element for the slider
+   */
   constructor(sliderElement) {
     /**
      * Basic element references
@@ -53,26 +56,28 @@ class SimpleImageSlider {
 
     this.isTransitioning = false
 
-    // Kick‑off
+    // Initialize the slider
     this.init()
 
-    /* ----------------------  Autoplay wiring  ---------------------- */
+    // Setup autoplay if enabled and user prefers motion
     if (this.autoplayEnabled && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       this.startAutoplay()
 
-      /* Pause on user interaction; resume afterwards */
+      // Pause on user interaction; resume afterwards
       const pause = () => this.stopAutoplay()
       const resume = () => this.startAutoplay()
-        ;['mouseenter', 'focusin', 'touchstart'].forEach(e => sliderElement.addEventListener(e, pause, { passive: true }))
-        ;['mouseleave', 'focusout', 'touchend'].forEach(e => sliderElement.addEventListener(e, resume, { passive: true }))
+      ;['mouseenter', 'focusin', 'touchstart'].forEach(e => sliderElement.addEventListener(e, pause, { passive: true }))
+      ;['mouseleave', 'focusout', 'touchend'].forEach(e => sliderElement.addEventListener(e, resume, { passive: true }))
     }
 
-    /* ⇢ SWIPE SUPPORT – pointer‑based horizontal swipe */
+    // Setup swipe support for touch devices
     this._setupSwipeEvents()
   }
 
-  /* ----------------------  Swipe helpers  ---------------------- */
-  // ⇢ SWIPE SUPPORT: adds lightweight horizontal‑swipe handling
+  /**
+   * Sets up swipe gesture support for touch devices
+   * Adds lightweight horizontal swipe handling with pointer events
+   */
   _setupSwipeEvents() {
     // Only run on touch/pen pointers to avoid redundant mouse handling
     const THRESHOLD = 40  // px – minimum horizontal movement
@@ -104,7 +109,8 @@ class SimpleImageSlider {
   }
 
   /**
-   * One‑off initialisation tasks
+   * Initialize the slider component
+   * Sets up positioning, event listeners, and initial state
    */
   init() {
     this.updateCentralSlidePositions()
@@ -131,10 +137,15 @@ class SimpleImageSlider {
    * Returns true for backwards compatibility – boundary checks no longer needed
    */
   getPreviousIndexValid() { return true }
+  
+  /**
+   * Returns true for backwards compatibility – boundary checks no longer needed
+   */
   getNextIndexValid() { return true }
 
   /**
-   * Removes old copy slides + inserts fresh clones at both ends
+   * Removes old copy slides and inserts fresh clones at both ends
+   * This enables infinite scrolling by duplicating first/last slides
    */
   resetCopySlides() {
     const copys = this.container.querySelectorAll('[data-copy-slide]')
@@ -160,7 +171,8 @@ class SimpleImageSlider {
   }
 
   /**
-   * Central, left & right slide positions using ARIA and data attributes
+   * Updates the central, left, and right slide positions using ARIA and data attributes
+   * Sets the current slide as center and adjacent slides as left/right
    */
   updateCentralSlidePositions() {
     this.slides.forEach(slide => {
@@ -185,7 +197,8 @@ class SimpleImageSlider {
   }
 
   /**
-   * Off‑screen slide positions using data attributes
+   * Updates off-screen slide positions using data attributes
+   * Positions slides that are not in the center/left/right visible area
    */
   updateOffsetSlidePositions() {
     // Remove any existing offscreen animation states
@@ -212,7 +225,8 @@ class SimpleImageSlider {
   }
 
   /**
-   * Pre‑marks the next slide which will roll into view (data-next)
+   * Pre-marks the next slides which will roll into view (data-next)
+   * Helps with animation preparation and performance optimization
    */
   updateNextSlidePositions() {
     this.slides.forEach(slide => delete slide.dataset.next)
@@ -224,12 +238,13 @@ class SimpleImageSlider {
   }
 
   /**
-   * Identifies a copy slide
+   * Identifies if a slide is a copy slide (used for infinite scrolling)
    */
   isCopySlide(slide) { return slide && slide.dataset.copySlide === 'true' }
 
   /**
-   * Deletes duplication slide that became a real slide after navigation
+   * Deletes duplicate slide that became a real slide after navigation
+   * Maintains the infinite scroll illusion by removing excess copies
    */
   deleteDuplication(direction) {
     this._logger(direction === 'left' ? 'Most left reached' : 'Most right reached')
@@ -245,7 +260,8 @@ class SimpleImageSlider {
   }
 
   /**
-   * Core navigation handler
+   * Core navigation handler for slide transitions
+   * Handles both left and right navigation with smooth animations
    */
   navigate(direction) {
     if (this.isTransitioning) {
@@ -315,13 +331,20 @@ class SimpleImageSlider {
     this.restartAutoplay()
   }
 
-  /* ------------------  Autoplay helpers  ------------------ */
+  /**
+   * Starts the autoplay timer for automatic slide progression
+   * Only starts if autoplay is enabled and not already running
+   */
   startAutoplay() {
     if (!this.autoplayEnabled || this.autoplayTimer) return
     this.autoplayTimer = setInterval(() => this.navigate('right'), this.autoplayInterval)
     this._logger(`[Slider: ${this.sliderId}] Autoplay started (interval: ${this.autoplayInterval} ms)`)
   }
 
+  /**
+   * Stops the autoplay timer
+   * Clears the interval and resets the timer reference
+   */
   stopAutoplay() {
     if (!this.autoplayTimer) return
     clearInterval(this.autoplayTimer)
@@ -329,6 +352,10 @@ class SimpleImageSlider {
     this._logger(`[Slider: ${this.sliderId}] Autoplay paused`)
   }
 
+  /**
+   * Restarts the autoplay timer
+   * Stops current timer and starts a new one (used after manual navigation)
+   */
   restartAutoplay() {
     if (!this.autoplayEnabled) return
     this.stopAutoplay()
@@ -336,29 +363,5 @@ class SimpleImageSlider {
   }
 }
 
-// DOM‑ready bootstrap (unchanged except for logger wrapper)
-
-document.addEventListener('DOMContentLoaded', () => {
-  const logger = (typeof StartUpLogger !== 'undefined' && StartUpLogger.init)
-    ? StartUpLogger
-    : { init: (msg) => { if (window.logger) window.logger.log(msg); } }
-
-  logger.init('DOM Content Loaded – Starting slider initialization')
-
-  const sliders = document.querySelectorAll('[data-section-type="image-slider"]')
-  logger.init(`[Slider] Found ${sliders.length} slider(s) on the page`)
-
-  sliders.forEach((slider, i) => {
-    if (!slider.id) slider.id = `slider-${i + 1}`
-    logger.init(`[Slider] Initializing slider #${i + 1} with ID: ${slider.id}`)
-
-    try {
-      new SimpleImageSlider(slider)
-      logger.init(`[Slider] Slider #${i + 1} (${slider.id}) initialized successfully`)
-    } catch (err) {
-      logger.init(`[Slider] Failed to initialize slider #${i + 1} (${slider.id}):`, err)
-    }
-  })
-
-  logger.init('[Slider] Initialization process complete')
-})
+// Export the class for use in other modules
+export default ImageSlider;

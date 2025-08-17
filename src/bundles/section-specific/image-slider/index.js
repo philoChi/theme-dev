@@ -1,83 +1,71 @@
 /**
- * Image Slider Section
- * Handles image slider functionality
+ * Image Slider Section Bundle
+ * Entry point for image slider functionality and styles
  */
 
 // Import all styles
 import './index.scss';
 
-// Import components
+// Import the ImageSlider class
 import ImageSlider from './scripts/ImageSlider.js';
 
-// Define custom element
-customElements.define('image-slider', ImageSlider);
-
-// Export to global scope for external access
+/**
+ * Export to global scope for external access and debugging
+ */
 window.ImageSlider = ImageSlider;
 
-// Initialize image slider sections on DOM ready
+/**
+ * Initialize image slider sections on DOM ready
+ * Creates ImageSlider instances for each section
+ */
 document.addEventListener('DOMContentLoaded', () => {
+    initializeImageSliders();
+});
+
+/**
+ * Re-initialize on Shopify theme editor section load
+ */
+document.addEventListener('shopify:section:load', event => {
+    if (event.target.getAttribute('data-section-type') === 'image-slider') {
+        initializeImageSliders(event.target);
+    }
+});
+
+/**
+ * Initialize image slider sections by creating ImageSlider instances
+ * @param {Element} container - Optional container to search within, defaults to document
+ */
+function initializeImageSliders(container = document) {
     try {
-        // Auto-initialize image slider sections
-        const sliderSections = document.querySelectorAll('[data-section-type="image-slider"]');
-        sliderSections.forEach(section => {
-            if (!section.hasAttribute('data-slider-initialized')) {
-                const slider = section.querySelector('image-slider') || section;
-                if (slider.tagName.toLowerCase() !== 'image-slider') {
-                    // Convert to custom element if needed
-                    const imageSlider = document.createElement('image-slider');
-                    imageSlider.innerHTML = slider.innerHTML;
-                    Array.from(slider.attributes).forEach(attr => {
-                        imageSlider.setAttribute(attr.name, attr.value);
-                    });
-                    slider.parentNode.replaceChild(imageSlider, slider);
-                }
-                section.setAttribute('data-slider-initialized', 'true');
+        const sections = container.querySelectorAll 
+            ? container.querySelectorAll('[data-section-type="image-slider"]')
+            : container.getAttribute('data-section-type') === 'image-slider' 
+                ? [container] 
+                : [];
+
+        sections.forEach(section => {
+            // Skip if already initialized
+            if (section.hasAttribute('data-slider-initialized')) {
+                return;
             }
+
+            // Create ImageSlider instance
+            new ImageSlider(section);
+            
+            // Mark as initialized
+            section.setAttribute('data-slider-initialized', 'true');
         });
 
         // Log successful initialization
         if (window.logger) {
-            window.logger.log('Image slider section initialized successfully');
+            window.logger.log(`Image slider: initialized ${sections.length} section(s)`);
         }
     } catch (error) {
-        console.error('Failed to initialize image slider section:', error);
+        console.error('Failed to initialize image slider sections:', error);
 
         // Show user-friendly error if notification system is available
         if (window.showNotification) {
             window.showNotification('There was an issue loading image slider features. Please refresh the page.', 'error');
         }
     }
-});
-
-// Re-initialize on Shopify section load
-document.addEventListener('shopify:section:load', event => {
-    const section = event.target;
-    const sectionType = section.getAttribute('data-section-type');
-
-    if (sectionType === 'image-slider') {
-        if (!section.hasAttribute('data-slider-initialized')) {
-            const slider = section.querySelector('image-slider') || section;
-            if (slider.tagName.toLowerCase() !== 'image-slider') {
-                // Convert to custom element if needed
-                const imageSlider = document.createElement('image-slider');
-                imageSlider.innerHTML = slider.innerHTML;
-                Array.from(slider.attributes).forEach(attr => {
-                    imageSlider.setAttribute(attr.name, attr.value);
-                });
-                slider.parentNode.replaceChild(imageSlider, slider);
-            }
-            section.setAttribute('data-slider-initialized', 'true');
-        }
-    }
-});
-
-// Handle Shopify section unload
-document.addEventListener('shopify:section:unload', event => {
-    const section = event.target;
-    const sectionType = section.getAttribute('data-section-type');
-
-    if (sectionType === 'image-slider') {
-        section.removeAttribute('data-slider-initialized');
-    }
-});
+}
