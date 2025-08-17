@@ -170,7 +170,7 @@ find_shopify_processes() {
 
 wait_for_port_release() {
     local port=$1
-    local timeout=${2:-10}
+    local timeout=${2:-15}  # Increased default timeout
     local count=0
     
     log_debug "Waiting for port $port to be released (timeout: ${timeout}s)"
@@ -180,6 +180,28 @@ wait_for_port_release() {
             log_debug "Port $port released after ${count}s"
             return 0
         fi
+        
+        # Force kill any remaining processes on this port every 3 seconds
+        if [[ $((count % 3)) -eq 0 ]] && [[ $count -gt 0 ]]; then
+            log_debug "Force cleaning processes on port $port (attempt $((count / 3)))"
+            
+            # Kill any process still using the port
+            for ppid in $(ss -tlnp 2>/dev/null | grep ":${port}[[:space:]]" | grep -oE 'pid=[0-9]+' | cut -d= -f2); do
+                if [[ -n "$ppid" ]] && kill -0 "$ppid" 2>/dev/null; then
+                    log_debug "Force killing process $ppid on port $port"
+                    kill -KILL "$ppid" 2>/dev/null || true
+                fi
+            done
+            
+            # Also check for shopify processes
+            for spid in $(ps aux | grep -E "shopify theme.*$port|shopify theme dev.*$port" | grep -v grep | awk '{print $2}' 2>/dev/null || true); do
+                if [[ -n "$spid" ]] && kill -0 "$spid" 2>/dev/null; then
+                    log_debug "Force killing shopify process $spid"
+                    kill -KILL "$spid" 2>/dev/null || true
+                fi
+            done
+        fi
+        
         log_debug "Port $port still in use, waiting... ($count/$timeout)"
         sleep 1
         ((count++))
@@ -378,9 +400,13 @@ stop_theme_dev() {
                 if [[ -n "$pid" ]] && is_process_running "$pid"; then
                     log_info "Stopping server on port $port (PID: $pid)..."
                     
-                    # Kill the process (in subshell to avoid script termination)
+                    # Kill the process and all children (in subshell to avoid script termination)
+                    log_debug "Killing process $pid and children with TERM signal"
                     ( kill -TERM "$pid" 2>/dev/null || true ) >/dev/null 2>&1
                     ( timeout 2 kill -TERM -"$pid" 2>/dev/null || true ) >/dev/null 2>&1
+                    
+                    # Also kill any children processes
+                    ( timeout 2 pkill -TERM -P "$pid" 2>/dev/null || true ) >/dev/null 2>&1
                     
                     # Wait for graceful shutdown
                     local wait_count=0
@@ -392,8 +418,10 @@ stop_theme_dev() {
                     # Force kill if still running
                     if is_process_running "$pid"; then
                         log_warn "Process still running after 5s, force killing..."
+                        log_debug "Force killing process $pid and children with KILL signal"
                         ( kill -KILL "$pid" 2>/dev/null || true ) >/dev/null 2>&1
                         ( timeout 2 kill -KILL -"$pid" 2>/dev/null || true ) >/dev/null 2>&1
+                        ( timeout 2 pkill -KILL -P "$pid" 2>/dev/null || true ) >/dev/null 2>&1
                         sleep 1
                     fi
                     
@@ -407,7 +435,7 @@ stop_theme_dev() {
                     " 2>/dev/null || true
                     
                     # Wait for port release
-                    if wait_for_port_release "$port" 5; then
+                    if wait_for_port_release "$port" 10; then
                         ((stopped_count++))
                         log_info "✅ Stopped server on port $port"
                     else
@@ -448,13 +476,16 @@ stop_theme_dev() {
                 log_info "Stopping server on port $target (PID: $pid)..."
                 
                 # Kill the process and any child processes
-                log_debug "Attempting to kill process $pid"
+                log_debug "Attempting to kill process $pid and children"
                 
                 # Kill individual process first (more reliable) - in subshell to avoid script termination
                 ( kill -TERM "$pid" 2>/dev/null || true ) >/dev/null 2>&1
                 
                 # Also try to kill process group if it exists (best effort, with timeout)
                 ( timeout 2 kill -TERM -"$pid" 2>/dev/null || true ) >/dev/null 2>&1
+                
+                # Kill any children processes
+                ( timeout 2 pkill -TERM -P "$pid" 2>/dev/null || true ) >/dev/null 2>&1
                 
                 # Wait for graceful shutdown
                 local wait_count=0
@@ -466,13 +497,16 @@ stop_theme_dev() {
                 # Force kill if still running
                 if is_process_running "$pid"; then
                     log_warn "Process still running after 5s, force killing..."
-                    log_debug "Attempting force kill on process $pid"
+                    log_debug "Attempting force kill on process $pid and children"
                     
                     # Kill individual process first (more reliable)
                     kill -KILL "$pid" 2>/dev/null || true
                     
                     # Also try to kill process group if it exists (best effort, with timeout)
                     timeout 2 kill -KILL -"$pid" 2>/dev/null || true
+                    
+                    # Kill any children processes
+                    timeout 2 pkill -KILL -P "$pid" 2>/dev/null || true
                     
                     sleep 1
                 fi
@@ -499,7 +533,7 @@ stop_theme_dev() {
                 " 2>/dev/null || true
                 
                 # Wait for port to be released
-                if wait_for_port_release "$target" 5; then
+                if wait_for_port_release "$target" 10; then
                     stopped_count=1
                     log_info "✅ Stopped server on port $target"
                 else
@@ -524,13 +558,16 @@ stop_theme_dev() {
                 log_info "Stopping process $target (port: ${port:-unknown})..."
                 
                 # Kill the process and any child processes
-                log_debug "Attempting to kill process $target"
+                log_debug "Attempting to kill process $target and children"
                 
                 # Kill individual process first (more reliable)
                 kill -TERM "$target" 2>/dev/null || true
                 
                 # Also try to kill process group if it exists (best effort, with timeout)
                 timeout 2 kill -TERM -"$target" 2>/dev/null || true
+                
+                # Kill any children processes
+                timeout 2 pkill -TERM -P "$target" 2>/dev/null || true
                 
                 # Wait for graceful shutdown
                 local wait_count=0
@@ -542,13 +579,16 @@ stop_theme_dev() {
                 # Force kill if still running
                 if is_process_running "$target"; then
                     log_warn "Process still running after 5s, force killing..."
-                    log_debug "Attempting force kill on process $target"
+                    log_debug "Attempting force kill on process $target and children"
                     
                     # Kill individual process first (more reliable)
                     kill -KILL "$target" 2>/dev/null || true
                     
                     # Also try to kill process group if it exists (best effort, with timeout)
                     timeout 2 kill -KILL -"$target" 2>/dev/null || true
+                    
+                    # Kill any children processes
+                    timeout 2 pkill -KILL -P "$target" 2>/dev/null || true
                     
                     sleep 1
                 fi
@@ -577,7 +617,7 @@ stop_theme_dev() {
                     " 2>/dev/null || true
                     
                     # Wait for port to be released
-                    if wait_for_port_release "$port" 5; then
+                    if wait_for_port_release "$port" 10; then
                         stopped_count=1
                         log_info "✅ Stopped process $target"
                         rm -f "$PID_DIR/theme-dev-${port}.pid"

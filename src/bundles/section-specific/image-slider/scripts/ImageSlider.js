@@ -1,173 +1,368 @@
 /**
  * Image Slider Component
  * High-performance image slider with infinite scrolling and accessibility features
- * Works with any HTML element containing the required slider structure
+ * Enhanced class-based implementation following CLAUDE.md guidelines
  */
 class ImageSlider {
+  /**
+   * Configuration constants for the slider behavior
+   */
+  static get CONSTANTS() {
+    return {
+      SWIPE_THRESHOLD: 40,
+      ANIMATION_DELAY: 400,
+      DEFAULT_AUTOPLAY_INTERVAL: 5000,
+      DEFAULT_TRANSITION_DURATION: 1000,
+      CENTER_POSITION: 1, // Default position for active slide in DOM
+    };
+  }
+
   /**
    * Initialize the image slider component
    * @param {HTMLElement} sliderElement - The container element for the slider
    */
   constructor(sliderElement) {
-    /**
-     * Basic element references
-     */
-    this.slider = sliderElement
-    this.sliderId = sliderElement.id || 'slider-' + Math.floor(Math.random() * 1000)
-    this.container = sliderElement.querySelector('.image-slider__container')
-    this.slides = Array.from(this.container.querySelectorAll('.image-slider__slide'))
+    this.slider = sliderElement;
+    this.sliderId = this.generateSliderId(sliderElement);
+    
+    // Validate and cache DOM elements
+    this.initializeElements();
+    this.initializeState();
+    this.initializeLogger();
+    
+    this._logger(`[Slider: ${this.sliderId}] Initializing with ${this.slides.length} slides`);
 
-    /**
-     * Debug helper (keeps existing ImageSliderLogger calls intact)
-     * – If the logger doesn't exist we noop instead of branching every time.
-     */
+    // Setup all slider components
+    this.positionActiveSlide();
+    this.parseConfiguration();
+    this.init();
+    this.setupEnhancements();
+  }
+
+  /**
+   * Generate unique slider ID
+   * @param {HTMLElement} element - Slider element
+   * @returns {string} Unique slider ID
+   */
+  generateSliderId(element) {
+    return element.id || 'slider-' + Math.floor(Math.random() * 1000);
+  }
+
+  /**
+   * Initialize and validate DOM elements
+   */
+  initializeElements() {
+    this.container = this.slider.querySelector('.image-slider__container');
+    if (!this.container) {
+      throw new Error('Slider container not found');
+    }
+    
+    this.slides = Array.from(this.container.querySelectorAll('.image-slider__slide'));
+    if (this.slides.length === 0) {
+      throw new Error('No slides found in container');
+    }
+
+    this.prevButton = this.slider.querySelector('[data-arrow="prev"]');
+    this.nextButton = this.slider.querySelector('[data-arrow="next"]');
+    if (!this.prevButton || !this.nextButton) {
+      throw new Error('Navigation buttons not found');
+    }
+  }
+
+  /**
+   * Initialize state variables
+   */
+  initializeState() {
+    this.currentIndex = ImageSlider.CONSTANTS.CENTER_POSITION;
+    this.isTransitioning = false;
+    this.autoplayTimer = null;
+    this.intersectionObserver = null;
+  }
+
+  /**
+   * Initialize logger for debugging
+   */
+  initializeLogger() {
     this._logger = (typeof ImageSliderLogger !== 'undefined' && ImageSliderLogger.state)
       ? ImageSliderLogger.state.bind(ImageSliderLogger)
-      : () => { }
+      : () => {};
+  }
 
-    this._logger(`[Slider: ${this.sliderId}] Initializing with ${this.slides.length} slides`)
+  /**
+   * Setup all enhancements (performance, autoplay, swipe)
+   */
+  setupEnhancements() {
+    this.setupPerformanceOptimizations();
+    this.setupAutoplay();
+    this.setupSwipeEvents();
+  }
 
-    // Find the index with aria-current="true" (if present)
-    const activeIndex = this.slides.findIndex(s => s.getAttribute('aria-current') === 'true')
+  /**
+   * Find and position the active slide in DOM position 1 for proper initialization
+   * This ensures the slide marked as active in liquid is positioned correctly for the slider logic
+   */
+  positionActiveSlide() {
+    const activeIndex = this.slides.findIndex(slide => 
+      slide.getAttribute('aria-current') === 'true'
+    );
+    
+    // Move active slide to center position if it's not already there
+    if (activeIndex !== -1 && activeIndex !== ImageSlider.CONSTANTS.CENTER_POSITION) {
+      const activeSlide = this.slides[activeIndex];
+      activeSlide.remove();
+      this.container.insertBefore(activeSlide, this.container.children[ImageSlider.CONSTANTS.CENTER_POSITION] || null);
+      this.slides = Array.from(this.container.querySelectorAll('.image-slider__slide'));
+    }
+  }
 
-    // Desired logical index (real content slide at DOM position 1)
-    this.currentIndex = 1
+  /**
+   * Parse configuration from data attributes on the slider element
+   * Extracts autoplay settings from HTML data attributes set by Liquid template
+   */
+  parseConfiguration() {
+    this.autoplayEnabled = this.slider.dataset.autoplay === 'true';
+    this.autoplayInterval = parseInt(
+      this.slider.dataset.interval || ImageSlider.CONSTANTS.DEFAULT_AUTOPLAY_INTERVAL.toString(), 
+      10
+    );
+  }
 
-    // Move current active slide into DOM position 1 if required (unchanged logic)
-    if (activeIndex !== -1 && activeIndex !== 1) {
-      const activeSlide = this.slides[activeIndex]
-      activeSlide.remove()
-      this.container.insertBefore(activeSlide, this.container.children[1] || null)
-      this.slides = Array.from(this.container.querySelectorAll('.image-slider__slide'))
+  /**
+   * Setup performance optimizations including IntersectionObserver
+   */
+  setupPerformanceOptimizations() {
+    // Setup intersection observer for autoplay pause when off-screen
+    if ('IntersectionObserver' in window) {
+      this.intersectionObserver = new IntersectionObserver(
+        this.handleVisibilityChange.bind(this),
+        { threshold: 0.1 }
+      );
+      this.intersectionObserver.observe(this.slider);
     }
 
-    // Cache arrow buttons
-    this.prevButton = sliderElement.querySelector('[data-arrow="prev"]')
-    this.nextButton = sliderElement.querySelector('[data-arrow="next"]')
+    // Add will-change CSS hint when needed
+    this.container.style.willChange = 'transform';
+  }
 
-    /**
-     * Autoplay / transition‑speed config (Theme‑Editor controlled)
-     *  – data‑autoplay:       "true" | "false"
-     *  – data‑interval:       milliseconds (e.g. 5000)
-     */
-    this.autoplayEnabled = sliderElement.dataset.autoplay === 'true'
-    this.autoplayInterval = parseInt(sliderElement.dataset.interval || '5000', 10)
-    this.autoplayTimer = null
-
-    this.isTransitioning = false
-
-    // Initialize the slider
-    this.init()
-
-    // Setup autoplay if enabled and user prefers motion
+  /**
+   * Setup autoplay with user preference checking
+   */
+  setupAutoplay() {
     if (this.autoplayEnabled && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      this.startAutoplay()
+      this.startAutoplay();
 
       // Pause on user interaction; resume afterwards
-      const pause = () => this.stopAutoplay()
-      const resume = () => this.startAutoplay()
-      ;['mouseenter', 'focusin', 'touchstart'].forEach(e => sliderElement.addEventListener(e, pause, { passive: true }))
-      ;['mouseleave', 'focusout', 'touchend'].forEach(e => sliderElement.addEventListener(e, resume, { passive: true }))
+      const interactionEvents = ['mouseenter', 'focusin', 'touchstart'];
+      const resumeEvents = ['mouseleave', 'focusout', 'touchend'];
+      
+      interactionEvents.forEach(event => 
+        this.slider.addEventListener(event, () => this.stopAutoplay(), { passive: true })
+      );
+      resumeEvents.forEach(event => 
+        this.slider.addEventListener(event, () => this.startAutoplay(), { passive: true })
+      );
     }
-
-    // Setup swipe support for touch devices
-    this._setupSwipeEvents()
   }
 
   /**
    * Sets up swipe gesture support for touch devices
-   * Adds lightweight horizontal swipe handling with pointer events
+   * Uses pointer events for better touch/pen support with passive listeners for performance
    */
-  _setupSwipeEvents() {
-    // Only run on touch/pen pointers to avoid redundant mouse handling
-    const THRESHOLD = 40  // px – minimum horizontal movement
-    let startX = null
-    let startY = null
+  setupSwipeEvents() {
+    let startX = null;
+    let startY = null;
 
-    const onPointerDown = (e) => {
-      if (e.pointerType !== 'touch' && e.pointerType !== 'pen') return
-      startX = e.clientX
-      startY = e.clientY
-    }
+    const handlePointerStart = (e) => {
+      // Only handle touch and pen inputs
+      if (e.pointerType !== 'touch' && e.pointerType !== 'pen') return;
+      startX = e.clientX;
+      startY = e.clientY;
+    };
 
-    const onPointerUp = (e) => {
-      if (startX === null) return
-      const dx = e.clientX - startX
-      const dy = e.clientY - startY
-      startX = startY = null
+    const handlePointerEnd = (e) => {
+      if (startX === null) return;
+      
+      const deltaX = e.clientX - startX;
+      const deltaY = e.clientY - startY;
+      
+      // Reset tracking variables
+      startX = startY = null;
 
-      // Trigger only if the gesture is mostly horizontal & beyond threshold
-      if (Math.abs(dx) > THRESHOLD && Math.abs(dx) > Math.abs(dy)) {
-        this.navigate(dx < 0 ? 'right' : 'left')  // same transition as arrow
+      // Only trigger navigation if gesture is primarily horizontal and meets threshold
+      const isHorizontalGesture = Math.abs(deltaX) > Math.abs(deltaY);
+      const exceedsThreshold = Math.abs(deltaX) > ImageSlider.CONSTANTS.SWIPE_THRESHOLD;
+      
+      if (isHorizontalGesture && exceedsThreshold) {
+        this.navigate(deltaX < 0 ? 'right' : 'left');
       }
-    }
+    };
 
-    // Passive listeners keep scrolling fluid (touch‑action already set to pan‑y)
-    this.slider.addEventListener('pointerdown', onPointerDown, { passive: true })
-    this.slider.addEventListener('pointerup', onPointerUp, { passive: true })
-    this.slider.addEventListener('pointercancel', onPointerUp, { passive: true })
+    // Use passive listeners to maintain scrolling performance
+    this.slider.addEventListener('pointerdown', handlePointerStart, { passive: true });
+    this.slider.addEventListener('pointerup', handlePointerEnd, { passive: true });
+    this.slider.addEventListener('pointercancel', handlePointerEnd, { passive: true });
+  }
+
+  /**
+   * Handle intersection observer visibility changes
+   * Pauses autoplay when slider is off-screen for performance optimization
+   * @param {IntersectionObserverEntry[]} entries - Intersection observer entries
+   */
+  handleVisibilityChange(entries) {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        this.startAutoplay();
+      } else {
+        this.stopAutoplay();
+      }
+    });
+  }
+
+
+  /**
+   * Error handling with notification system integration
+   * @param {string} message - Error message
+   * @param {Error} error - Original error object
+   */
+  handleError(message, error) {
+    console.error(`[ImageSlider: ${this.sliderId}] ${message}:`, error);
+    
+    // Show user-friendly error if notification system is available
+    if (window.showNotification) {
+      window.showNotification(
+        'There was an issue with the image slider. Please refresh the page.', 
+        'error'
+      );
+    }
+  }
+
+  /**
+   * Cleanup method for memory management
+   */
+  cleanup() {
+    // Clear autoplay timer
+    this.stopAutoplay();
+    
+    // Disconnect intersection observer
+    if (this.intersectionObserver) {
+      this.intersectionObserver.disconnect();
+      this.intersectionObserver = null;
+    }
+    
+    // Remove will-change CSS hint
+    if (this.container) {
+      this.container.style.willChange = 'auto';
+    }
+    
+    this._logger(`[Slider: ${this.sliderId}] Cleanup completed`);
   }
 
   /**
    * Initialize the slider component
-   * Sets up positioning, event listeners, and initial state
+   * Sets up slide positioning, event listeners, and reveals the slider
    */
   init() {
-    this.updateCentralSlidePositions()
-    this.resetCopySlides()
-    this.currentIndex += 1 // account for copy slide inserted at index 0
-    this.updateOffsetSlidePositions()
-    this.updateNextSlidePositions()
+    try {
+      // Setup slide positions and infinite scroll
+      this.updateCentralSlidePositions();
+      this.resetCopySlides();
+      this.currentIndex += 1; // Account for copy slide inserted at index 0
+      this.updateOffsetSlidePositions();
+      this.updateNextSlidePositions();
 
-    // Arrow listeners – use passive option, no scrolling prevented
-    this.prevButton.addEventListener('click', () => this.navigate('left'), { passive: true })
-    this.nextButton.addEventListener('click', () => this.navigate('right'), { passive: true })
+      // Setup navigation event listeners
+      this.setupNavigationListeners();
 
-    // Wait for everything to be properly positioned before showing
-    setTimeout(() => {
-      this.container.style.opacity = '1'
-      this._logger(`[Slider: ${this.sliderId}] Slides revealed after positioning`)
-    }, 400) // Give enough time for all DOM manipulations to complete
+      // Reveal slider with smooth timing
+      this.revealSlider();
 
-    this._logger(`[Slider: ${this.sliderId}] Initialization complete`)
+      this._logger(`[Slider: ${this.sliderId}] Initialization complete`);
+    } catch (error) {
+      this.handleError('Failed to initialize slider components', error);
+    }
+  }
+
+  /**
+   * Setup navigation button event listeners
+   */
+  setupNavigationListeners() {
+    this.prevButton.addEventListener('click', () => this.navigate('left'), { passive: true });
+    this.nextButton.addEventListener('click', () => this.navigate('right'), { passive: true });
+  }
+
+  /**
+   * Reveal the slider with smooth timing after positioning is complete
+   */
+  revealSlider() {
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        this.container.style.opacity = '1';
+        this._logger(`[Slider: ${this.sliderId}] Slides revealed after positioning`);
+      }, ImageSlider.CONSTANTS.ANIMATION_DELAY);
+    });
   }
 
 
-  /**
-   * Returns true for backwards compatibility – boundary checks no longer needed
-   */
-  getPreviousIndexValid() { return true }
-  
-  /**
-   * Returns true for backwards compatibility – boundary checks no longer needed
-   */
-  getNextIndexValid() { return true }
 
   /**
    * Removes old copy slides and inserts fresh clones at both ends
    * This enables infinite scrolling by duplicating first/last slides
    */
   resetCopySlides() {
-    const copys = this.container.querySelectorAll('[data-copy-slide]')
-    copys.forEach(el => el.remove())
+    // Remove existing copy slides
+    this.removeCopySlides();
+    
+    // Update slides array and create new clones
+    this.slides = Array.from(this.container.querySelectorAll('.image-slider__slide'));
+    const { lastClone, firstClone } = this.createCopySlides();
+    
+    // Position and append copy slides
+    this.positionCopySlides(lastClone, firstClone);
+    
+    // Update slides array with new copy slides
+    this.slides = Array.from(this.container.querySelectorAll('.image-slider__slide'));
+  }
 
-    this.slides = Array.from(this.container.querySelectorAll('.image-slider__slide'))
-    const lastReal = this.slides[this.slides.length - 1].cloneNode(true)
-    const firstReal = this.slides[0].cloneNode(true)
+  /**
+   * Remove all existing copy slides
+   */
+  removeCopySlides() {
+    const copySlides = this.container.querySelectorAll('[data-copy-slide]');
+    copySlides.forEach(slide => slide.remove());
+  }
 
-      ;[lastReal, firstReal].forEach(clone => {
-        clone.dataset.copySlide = 'true'
-        clone.removeAttribute('data-slide-position')
-        clone.removeAttribute('aria-current')
-      })
+  /**
+   * Create copy slides for infinite scrolling
+   * @returns {Object} Object containing lastClone and firstClone elements
+   */
+  createCopySlides() {
+    const lastReal = this.slides[this.slides.length - 1];
+    const firstReal = this.slides[0];
+    
+    const lastClone = lastReal.cloneNode(true);
+    const firstClone = firstReal.cloneNode(true);
+    
+    // Configure clone attributes
+    [lastClone, firstClone].forEach(clone => {
+      clone.dataset.copySlide = 'true';
+      clone.removeAttribute('data-slide-position');
+      clone.removeAttribute('aria-current');
+    });
+    
+    return { lastClone, firstClone };
+  }
 
-    lastReal.dataset.slidePosition = 'offscreen-left'
-    firstReal.dataset.slidePosition = 'offscreen-right'
-
-    this.container.prepend(lastReal)
-    this.container.append(firstReal)
-
-    this.slides = Array.from(this.container.querySelectorAll('.image-slider__slide'))
+  /**
+   * Position and append copy slides to container
+   * @param {HTMLElement} lastClone - Clone of last slide
+   * @param {HTMLElement} firstClone - Clone of first slide
+   */
+  positionCopySlides(lastClone, firstClone) {
+    lastClone.dataset.slidePosition = 'offscreen-left';
+    firstClone.dataset.slidePosition = 'offscreen-right';
+    
+    this.container.prepend(lastClone);
+    this.container.append(firstClone);
   }
 
   /**
@@ -175,25 +370,60 @@ class ImageSlider {
    * Sets the current slide as center and adjacent slides as left/right
    */
   updateCentralSlidePositions() {
+    // Reset all slides to default state
+    this.resetAllSlideStates();
+    
+    // Get current and adjacent slides
+    const slidePositions = this.getCurrentSlidePositions();
+    
+    // Apply new positions
+    this.applyCentralPositions(slidePositions);
+    
+    this._logger(`[Slider: ${this.sliderId}] Position updated – Center: ${this.currentIndex}`);
+  }
+
+  /**
+   * Reset all slides to default hidden state
+   */
+  resetAllSlideStates() {
     this.slides.forEach(slide => {
-      slide.removeAttribute('data-slide-position')
-      slide.removeAttribute('data-animating')
-      slide.removeAttribute('aria-current')
-      slide.ariaHidden = 'true'
-    })
+      slide.removeAttribute('data-slide-position');
+      slide.removeAttribute('data-animating');
+      slide.removeAttribute('aria-current');
+      slide.ariaHidden = 'true';
+    });
+  }
 
-    const current = this.slides[this.currentIndex]
-    const prevSlide = this.slides[this.currentIndex - 1]
-    const nextSlide = this.slides[this.currentIndex + 1]
+  /**
+   * Get current slide and adjacent slides
+   * @returns {Object} Object containing current, previous, and next slide elements
+   */
+  getCurrentSlidePositions() {
+    return {
+      current: this.slides[this.currentIndex],
+      previous: this.slides[this.currentIndex - 1],
+      next: this.slides[this.currentIndex + 1]
+    };
+  }
 
-    current.dataset.slidePosition = 'center'
-    current.setAttribute('aria-current', 'true')
-    current.ariaHidden = 'false'
-
-    if (prevSlide) prevSlide.dataset.slidePosition = 'left'
-    if (nextSlide) nextSlide.dataset.slidePosition = 'right'
-
-    this._logger(`[Slider: ${this.sliderId}] Position updated – Center: ${this.currentIndex}`)
+  /**
+   * Apply central positioning to current and adjacent slides
+   * @param {Object} slidePositions - Object containing slide elements
+   */
+  applyCentralPositions({ current, previous, next }) {
+    if (current) {
+      current.dataset.slidePosition = 'center';
+      current.setAttribute('aria-current', 'true');
+      current.ariaHidden = 'false';
+    }
+    
+    if (previous) {
+      previous.dataset.slidePosition = 'left';
+    }
+    
+    if (next) {
+      next.dataset.slidePosition = 'right';
+    }
   }
 
   /**
@@ -264,71 +494,131 @@ class ImageSlider {
    * Handles both left and right navigation with smooth animations
    */
   navigate(direction) {
+    if (!this.canNavigate()) {
+      return;
+    }
+
+    try {
+      const navigationData = this.prepareNavigation(direction);
+      this.startTransition(navigationData);
+      this.restartAutoplay();
+    } catch (error) {
+      this.handleError('Navigation failed', error);
+      this.isTransitioning = false;
+    }
+  }
+
+  /**
+   * Check if navigation is currently possible
+   * @returns {boolean} True if navigation can proceed
+   */
+  canNavigate() {
     if (this.isTransitioning) {
-      this._logger(`[Slider: ${this.sliderId}] Navigation blocked – transition in progress`)
-      return
+      this._logger(`[Slider: ${this.sliderId}] Navigation blocked – transition in progress`);
+      return false;
     }
+    
     if (this.slides.length <= 1) {
-      this._logger(`[Slider: ${this.sliderId}] Navigation skipped – not enough slides`)
-      return
+      this._logger(`[Slider: ${this.sliderId}] Navigation skipped – not enough slides`);
+      return false;
+    }
+    
+    return true;
+  }
+
+  /**
+   * Prepare navigation data and validate required slides
+   * @param {string} direction - Navigation direction ('left' or 'right')
+   * @returns {Object} Navigation data object
+   */
+  prepareNavigation(direction) {
+    const rightward = direction === 'right';
+    const step = rightward ? 1 : -1;
+
+    const slides = {
+      center: this.slides[this.currentIndex],
+      target: this.slides[this.currentIndex + step],
+      offScreen: this.slides[this.currentIndex - step],
+      onScreen: this.slides[this.currentIndex + 2 * step]
+    };
+
+    // Validate all required slides exist
+    if (!slides.center || !slides.target || !slides.offScreen || !slides.onScreen) {
+      throw new Error('Could not find required slides for animation');
     }
 
-    const rightward = direction === 'right'
-    const step = rightward ? 1 : -1
+    return { direction, rightward, step, slides };
+  }
 
-    // Resolve slide elements via array indices (cheaper than multiple querySelector calls)
-    const centerSlide = this.slides[this.currentIndex]
-    const targetSlide = this.slides[this.currentIndex + step]
-    const offScreenSlide = this.slides[this.currentIndex - step]
-    const onScreenSlide = this.slides[this.currentIndex + 2 * step]
+  /**
+   * Start the transition animation
+   * @param {Object} navigationData - Prepared navigation data
+   */
+  startTransition({ direction, rightward, step, slides }) {
+    this.isTransitioning = true;
 
-    if (!centerSlide || !targetSlide || !offScreenSlide || !onScreenSlide) {
-      this._logger(`[Slider: ${this.sliderId}] Error: Could not find slides for animation`)
-      return
-    }
+    requestAnimationFrame(() => {
+      // Apply animation states to slides
+      this.applyAnimationStates(rightward, slides.center, slides.target, slides.offScreen, slides.onScreen);
+      this.currentIndex += step;
+      
+      this._logger(`[Slider: ${this.sliderId}] Transition started, new index will be: ${this.currentIndex}`);
 
-    this.isTransitioning = true
+      // Listen for animation completion
+      slides.target.addEventListener('animationend', () => {
+        this.handleAnimationEnd(direction);
+      }, { once: true });
+    });
+  }
 
-    // Assign animation states using data attributes
+  /**
+   * Apply animation states to slides for smooth transitions
+   * @param {boolean} rightward - Direction of navigation
+   * @param {HTMLElement} centerSlide - Current center slide
+   * @param {HTMLElement} targetSlide - Target slide becoming center
+   * @param {HTMLElement} offScreenSlide - Slide moving off screen
+   * @param {HTMLElement} onScreenSlide - Slide coming on screen
+   */
+  applyAnimationStates(rightward, centerSlide, targetSlide, offScreenSlide, onScreenSlide) {
     if (rightward) {
-      centerSlide.dataset.animating = 'center-to-left'
-      targetSlide.dataset.animating = 'right-to-center'
-      offScreenSlide.dataset.animating = 'left-to-offscreen'
-      onScreenSlide.dataset.animating = 'offscreen-to-right'
-      this.currentIndex += 1
+      centerSlide.dataset.animating = 'center-to-left';
+      targetSlide.dataset.animating = 'right-to-center';
+      offScreenSlide.dataset.animating = 'left-to-offscreen';
+      onScreenSlide.dataset.animating = 'offscreen-to-right';
     } else {
-      centerSlide.dataset.animating = 'center-to-right'
-      targetSlide.dataset.animating = 'left-to-center'
-      offScreenSlide.dataset.animating = 'right-to-offscreen'
-      onScreenSlide.dataset.animating = 'offscreen-to-left'
-      this.currentIndex -= 1
+      centerSlide.dataset.animating = 'center-to-right';
+      targetSlide.dataset.animating = 'left-to-center';
+      offScreenSlide.dataset.animating = 'right-to-offscreen';
+      onScreenSlide.dataset.animating = 'offscreen-to-left';
     }
+  }
 
-    this._logger(`[Slider: ${this.sliderId}] Transition started, new index will be: ${this.currentIndex}`)
-
-    const onAnimEnd = () => {
-      this.updateCentralSlidePositions()
-      const curLeft = this.slides[this.currentIndex - 1]
-      const curRight = this.slides[this.currentIndex + 1]
-      this.updateOffsetSlidePositions()
+  /**
+   * Handle animation end cleanup and state updates
+   * @param {string} direction - Direction of the completed navigation
+   */
+  handleAnimationEnd(direction) {
+    try {
+      this.updateCentralSlidePositions();
+      const curLeft = this.slides[this.currentIndex - 1];
+      const curRight = this.slides[this.currentIndex + 1];
+      this.updateOffsetSlidePositions();
 
       if (this.isCopySlide(curLeft) || this.isCopySlide(curRight)) {
-        curLeft && curLeft.removeAttribute('data-copy-slide')
-        curRight && curRight.removeAttribute('data-copy-slide')
-        this.updateOffsetSlidePositions()
-        this.deleteDuplication(direction)
-        this.resetCopySlides()
-        this.currentIndex = this.slides.findIndex(child => child.getAttribute('aria-current') === 'true')
+        curLeft && curLeft.removeAttribute('data-copy-slide');
+        curRight && curRight.removeAttribute('data-copy-slide');
+        this.updateOffsetSlidePositions();
+        this.deleteDuplication(direction);
+        this.resetCopySlides();
+        this.currentIndex = this.slides.findIndex(child => child.getAttribute('aria-current') === 'true');
       }
 
-      this.updateNextSlidePositions()
-      this.isTransitioning = false
+      this.updateNextSlidePositions();
+      this.isTransitioning = false;
+    } catch (error) {
+      this.handleError('Animation end handling failed', error);
+      this.isTransitioning = false;
     }
-
-    targetSlide.addEventListener('animationend', onAnimEnd, { once: true })
-
-    /* Reset timer on any manual navigation */
-    this.restartAutoplay()
   }
 
   /**
@@ -336,9 +626,20 @@ class ImageSlider {
    * Only starts if autoplay is enabled and not already running
    */
   startAutoplay() {
-    if (!this.autoplayEnabled || this.autoplayTimer) return
-    this.autoplayTimer = setInterval(() => this.navigate('right'), this.autoplayInterval)
-    this._logger(`[Slider: ${this.sliderId}] Autoplay started (interval: ${this.autoplayInterval} ms)`)
+    if (!this.shouldStartAutoplay()) {
+      return;
+    }
+    
+    this.autoplayTimer = setInterval(() => this.navigate('right'), this.autoplayInterval);
+    this._logger(`[Slider: ${this.sliderId}] Autoplay started (interval: ${this.autoplayInterval} ms)`);
+  }
+
+  /**
+   * Check if autoplay should start
+   * @returns {boolean} True if autoplay should start
+   */
+  shouldStartAutoplay() {
+    return this.autoplayEnabled && !this.autoplayTimer;
   }
 
   /**
@@ -346,10 +647,13 @@ class ImageSlider {
    * Clears the interval and resets the timer reference
    */
   stopAutoplay() {
-    if (!this.autoplayTimer) return
-    clearInterval(this.autoplayTimer)
-    this.autoplayTimer = null
-    this._logger(`[Slider: ${this.sliderId}] Autoplay paused`)
+    if (!this.autoplayTimer) {
+      return;
+    }
+    
+    clearInterval(this.autoplayTimer);
+    this.autoplayTimer = null;
+    this._logger(`[Slider: ${this.sliderId}] Autoplay paused`);
   }
 
   /**
@@ -357,9 +661,12 @@ class ImageSlider {
    * Stops current timer and starts a new one (used after manual navigation)
    */
   restartAutoplay() {
-    if (!this.autoplayEnabled) return
-    this.stopAutoplay()
-    this.startAutoplay()
+    if (!this.autoplayEnabled) {
+      return;
+    }
+    
+    this.stopAutoplay();
+    this.startAutoplay();
   }
 }
 

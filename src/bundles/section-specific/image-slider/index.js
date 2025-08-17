@@ -37,35 +37,50 @@ document.addEventListener('shopify:section:load', event => {
  */
 function initializeImageSliders(container = document) {
     try {
-        const sections = container.querySelectorAll 
-            ? container.querySelectorAll('[data-section-type="image-slider"]')
-            : container.getAttribute('data-section-type') === 'image-slider' 
-                ? [container] 
-                : [];
+        // Get sections to initialize
+        const sections = getSectionsToInitialize(container);
 
+        // Initialize each section
+        let initializedCount = 0;
         sections.forEach(section => {
-            // Skip if already initialized
-            if (section.hasAttribute('data-slider-initialized')) {
-                return;
+            if (!section.hasAttribute('data-slider-initialized')) {
+                new ImageSlider(section);
+                section.setAttribute('data-slider-initialized', 'true');
+                initializedCount++;
             }
-
-            // Create ImageSlider instance
-            new ImageSlider(section);
-            
-            // Mark as initialized
-            section.setAttribute('data-slider-initialized', 'true');
         });
 
         // Log successful initialization
-        if (window.logger) {
-            window.logger.log(`Image slider: initialized ${sections.length} section(s)`);
+        if (window.logger && initializedCount > 0) {
+            window.logger.log(`Image slider: initialized ${initializedCount} section(s)`);
         }
     } catch (error) {
         console.error('Failed to initialize image slider sections:', error);
+        showUserFriendlyError();
+    }
+}
 
-        // Show user-friendly error if notification system is available
-        if (window.showNotification) {
-            window.showNotification('There was an issue loading image slider features. Please refresh the page.', 'error');
-        }
+/**
+ * Get sections that need initialization
+ * @param {Element} container - Container to search within
+ * @returns {NodeList|Array} Array of sections to initialize
+ */
+function getSectionsToInitialize(container) {
+    if (container.querySelectorAll) {
+        return container.querySelectorAll('[data-section-type="image-slider"]');
+    }
+    
+    return container.getAttribute('data-section-type') === 'image-slider' ? [container] : [];
+}
+
+/**
+ * Show user-friendly error notification
+ */
+function showUserFriendlyError() {
+    if (window.showNotification) {
+        window.showNotification(
+            'There was an issue loading image slider features. Please refresh the page.', 
+            'error'
+        );
     }
 }
