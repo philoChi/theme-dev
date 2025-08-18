@@ -3,7 +3,7 @@
 /********************  Content overlay  ********************/
 .image-slider__content {
   position: absolute;
-  bottom: var(--slider-content-gap-bottom);
+  bottom: var(--slider-gap-bottom-content);
   left: var(--slider-content-gap-horizontal);
   right: var(--slider-content-gap-horizontal);
   color: var(--slider-text-color);

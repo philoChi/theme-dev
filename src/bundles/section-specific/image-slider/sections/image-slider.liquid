@@ -73,11 +73,6 @@
     Use left and right arrow keys to navigate between slides. Touch devices can swipe left or right.
   </div>
 
-  {%- comment -%} Navigation controls rendered via dedicated snippet {%- endcomment -%}
-  {%- render 'snippet-section-image-slider-navigation', 
-    slider_id: slider_id, 
-    blocks_count: slider_blocks_count 
-  -%}
 
   {%- comment -%} Main slides container with optimized initial state {%- endcomment -%}
   <div class="image-slider__container" 
@@ -172,6 +167,12 @@
         {%- render 'snippet-section-image-slider-slide-content-overlay', block: block -%}
       </div>
     {%- endfor -%}
+    
+    {%- comment -%} Navigation controls rendered below content with separator {%- endcomment -%}
+    {%- render 'snippet-section-image-slider-navigation', 
+      slider_id: slider_id, 
+      blocks_count: slider_blocks_count 
+    -%}
   </div>
 </section>
 

@@ -1,16 +1,39 @@
-/* Image Slider Navigation Arrows */
+/* Image Slider Navigation Arrows and Separator */
+
+/********************  Navigation overlay container  ********************/
+.image-slider__navigation-overlay {
+  position: absolute;
+  bottom: var(--slider-gap-bottom-navigation);
+  left: var(--slider-content-gap-horizontal);
+  right: var(--slider-content-gap-horizontal);
+  z-index: 4;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--slider-gap-bottom-separator);
+}
+
+/********************  Separator line  ********************/
+.image-slider__separator {
+  width: 100%;
+  height: var(--slider-separator-height);
+  background-color: var(--slider-separator-color);
+  border-radius: calc(var(--slider-separator-height) / 2);
+  opacity: 1;
+  /* Static - no fade animation */
+}
+
+/********************  Navigation wrapper  ********************/
+.image-slider__navigation {
+  pointer-events: auto;
+}
 
 /********************  Navigation arrows  ********************/
 .image-slider__arrows {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 90%;
-  /* extend beyond container edges */
   display: flex;
   justify-content: space-between;
-  /* allow clicks only on buttons */
+  align-items: center;
+  width: 100%;
   padding: 0;
-  z-index: 4;
+  gap: 2rem;
 }

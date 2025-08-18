@@ -1,8 +1,9 @@
 {%- comment -%}
-  Image Slider Navigation Controls
+  Image Slider Navigation Controls with Separator
   
   Encapsulated navigation controls for the image slider component.
-  Handles both prev/next arrows with glassmorphism styling and overlay positioning.
+  Handles both prev/next arrows with glassmorphism styling and bottom overlay positioning.
+  Includes separator line between content and navigation sections.
   
   @param {String} slider_id - Unique identifier for the slider (required)
   @param {Number} blocks_count - Number of slides for accessibility (optional, defaults to 1)
@@ -16,20 +17,26 @@
   assign blocks_count = blocks_count | default: 1
 -%}
 
-{%- comment -%} Navigation controls with semantic structure {%- endcomment -%}
-<nav class="image-slider__navigation" aria-label="Slider navigation">
-  <div class="image-slider__arrows">
-    {%- render 'snippet-feature-arrow-navigation',
-      data_attributes: 'data-arrow="prev"',
-      direction: 'prev',
-      style_wrapper: 'glassmorphism',
-      position: 'overlay'
-    -%}
-    {%- render 'snippet-feature-arrow-navigation',
-      data_attributes: 'data-arrow="next"',
-      direction: 'next',
-      style_wrapper: 'glassmorphism',
-      position: 'overlay'
-    -%}
-  </div>
-</nav>
+{%- comment -%} Navigation overlay container with separator {%- endcomment -%}
+<div class="image-slider__navigation-overlay">
+  {%- comment -%} Subtle separator line between content and navigation {%- endcomment -%}
+  <div class="image-slider__separator" aria-hidden="true"></div>
+  
+  {%- comment -%} Navigation controls with semantic structure {%- endcomment -%}
+  <nav class="image-slider__navigation" aria-label="Slider navigation">
+    <div class="image-slider__arrows">
+      {%- render 'snippet-feature-arrow-navigation',
+        data_attributes: 'data-arrow="prev"',
+        direction: 'prev',
+        style_wrapper: 'glassmorphism',
+        position: 'overlay'
+      -%}
+      {%- render 'snippet-feature-arrow-navigation',
+        data_attributes: 'data-arrow="next"',
+        direction: 'next',
+        style_wrapper: 'glassmorphism',
+        position: 'overlay'
+      -%}
+    </div>
+  </nav>
+</div>

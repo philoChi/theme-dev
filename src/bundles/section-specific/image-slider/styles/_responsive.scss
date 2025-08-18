@@ -33,13 +33,6 @@
   }
 }
 
-/* Desktop and up */
-@media (min-width: 1280px) {
-  .image-slider__arrows {
-    width: clamp(85%, 5vw, 95%);
-  }
-}
-
 /* Mobile aspect ratio override */
 @media (max-width: 767px) {
   .image-slider {
@@ -68,7 +61,7 @@
   }
   
   .image-slider__content {
-    bottom: clamp(5%, 2vh, 10%);
+    bottom: clamp(25%, 2vh, 35%);
     left: clamp(3%, 2vw, 5%);
     right: clamp(3%, 2vw, 5%);
   }
