@@ -39,15 +39,13 @@
   
   /* Horizontal gaps (shared by content, separator, and navigation) */
   --slider-content-gap-horizontal: 10%;
-  
+  /* Content: relative to individual slide height */
+  --slider-gap-bottom-content: 19%;           /* Bottom edge to content overlay (relative to slide) */
   /* Vertical gaps - NOTE: Different reference points for different elements */
   /* Navigation: relative to image-slider container bottom */
   --slider-gap-bottom-navigation: 15%;        /* Bottom edge to navigation arrows (relative to container) */
   /* Gap between separator and navigation-arrows*/  
   --slider-gap-bottom-separator: 1rem; 
-
-  /* Content: relative to individual slide height */
-  --slider-gap-bottom-content: 19%;           /* Bottom edge to content overlay (relative to slide) */
   
   /* Navigation & Separator */
   --slider-separator-color: rgba(255, 255, 255, 0.2);

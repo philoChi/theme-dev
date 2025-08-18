@@ -33,7 +33,19 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  padding: 0;
-  gap: 2rem;
+  position: relative;
+}
+
+/* Override generic overlay positioning for image slider specific alignment */
+.image-slider__arrows .arrow-navigation--overlay {
+  position: absolute;
+  top: 50%;
+}
+
+.image-slider__arrows .arrow-navigation--overlay.arrow-navigation--prev {
+  left: 0;
+}
+
+.image-slider__arrows .arrow-navigation--overlay.arrow-navigation--next {
+  right: 0;
 }
