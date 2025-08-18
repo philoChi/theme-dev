@@ -22,9 +22,6 @@
     min-width: min(var(--page-medium-width, 1250px), 90vw);
   }
 
-  .image-slider__content {
-    max-width: min(60ch, 50%);
-  }
 
   .image-slider__cta-button {
     font-size: clamp(0.875rem, 2vw, 1rem);
@@ -73,6 +70,6 @@
   .image-slider__content {
     bottom: clamp(5%, 2vh, 10%);
     left: clamp(3%, 2vw, 5%);
-    max-width: min(50ch, 85%);
+    right: clamp(3%, 2vw, 5%);
   }
 }

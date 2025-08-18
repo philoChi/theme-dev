@@ -3,36 +3,70 @@
 /********************  Content overlay  ********************/
 .image-slider__content {
   position: absolute;
-  bottom: 10%;
-  left: 5%;
+  bottom: var(--slider-content-gap-bottom);
+  left: var(--slider-content-gap-horizontal);
+  right: var(--slider-content-gap-horizontal);
   color: var(--slider-text-color);
-  max-width: min(60ch, 60%);
   z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  pointer-events: none;
+}
+
+/* Content becomes interactive on active slide */
+.image-slider__slide[aria-current="true"] .image-slider__content {
+  pointer-events: auto;
+}
+
+/* Individual fade effects for heading and description */
+.image-slider__title {
+  color: var(--slider-text-color);
   opacity: 0;
   transform: translateY(20px);
   transition: 
     opacity var(--slider-transition-duration) var(--slider-transition-timing),
     transform var(--slider-transition-duration) var(--slider-transition-timing);
-  pointer-events: none;
 }
 
-/* Content becomes visible on active slide using ARIA current */
-.image-slider__slide[aria-current="true"] .image-slider__content {
+.image-slider__description {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: 
+    opacity var(--slider-transition-duration) var(--slider-transition-timing),
+    transform var(--slider-transition-duration) var(--slider-transition-timing);
+  transition-delay: 0.1s; /* Slight delay for staggered effect */
+}
+
+/* Fade in title and description on active slide */
+.image-slider__slide[aria-current="true"] .image-slider__title {
   opacity: 1;
   transform: translateY(0);
-  pointer-events: auto;
 }
 
-.image-slider__title {
-  color: var(--slider-text-color);
+.image-slider__slide[aria-current="true"] .image-slider__description {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /********************  CTA grid & buttons  ********************/
 .image-slider__ctas {
-  display: grid;
+  display: flex;
   gap: 1rem;
-  grid-template-columns: repeat(var(--cta-count, 1), 1fr);
-  margin-top: 1.5rem;
+  flex-wrap: wrap;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: 
+    opacity var(--slider-transition-duration) var(--slider-transition-timing),
+    transform var(--slider-transition-duration) var(--slider-transition-timing);
+  transition-delay: 0.2s; /* Staggered after description */
+}
+
+/* Fade in CTAs on active slide */
+.image-slider__slide[aria-current="true"] .image-slider__ctas {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .image-slider__cta-button {

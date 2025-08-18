@@ -73,23 +73,11 @@
     Use left and right arrow keys to navigate between slides. Touch devices can swipe left or right.
   </div>
 
-  {%- comment -%} Navigation controls with semantic structure {%- endcomment -%}
-  <nav class="image-slider__navigation" aria-label="Slider navigation">
-    <div class="image-slider__arrows">
-      {%- render 'snippet-feature-arrow-navigation',
-        data_attributes: 'data-arrow="prev"',
-        direction: 'prev',
-        style_wrapper: 'glassmorphism',
-        position: 'overlay'
-      -%}
-      {%- render 'snippet-feature-arrow-navigation',
-        data_attributes: 'data-arrow="next"',
-        direction: 'next',
-        style_wrapper: 'glassmorphism',
-        position: 'overlay'
-      -%}
-    </div>
-  </nav>
+  {%- comment -%} Navigation controls rendered via dedicated snippet {%- endcomment -%}
+  {%- render 'snippet-section-image-slider-navigation', 
+    slider_id: slider_id, 
+    blocks_count: slider_blocks_count 
+  -%}
 
   {%- comment -%} Main slides container with optimized initial state {%- endcomment -%}
   <div class="image-slider__container" 
@@ -181,7 +169,7 @@
         {%- endif -%}
         
         {%- comment -%} Render slide content using improved snippet {%- endcomment -%}
-        {%- render 'snippet-section-image-slider-slide', block: block -%}
+        {%- render 'snippet-section-image-slider-slide-content-overlay', block: block -%}
       </div>
     {%- endfor -%}
   </div>

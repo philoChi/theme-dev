@@ -1,0 +1,35 @@
+{%- comment -%}
+  Image Slider Navigation Controls
+  
+  Encapsulated navigation controls for the image slider component.
+  Handles both prev/next arrows with glassmorphism styling and overlay positioning.
+  
+  @param {String} slider_id - Unique identifier for the slider (required)
+  @param {Number} blocks_count - Number of slides for accessibility (optional, defaults to 1)
+  
+  Usage:
+  {% render 'snippet-section-image-slider-navigation', slider_id: slider_id, blocks_count: slider_blocks_count %}
+{%- endcomment -%}
+
+{%- liquid
+  assign slider_id = slider_id | default: 'image-slider-default'
+  assign blocks_count = blocks_count | default: 1
+-%}
+
+{%- comment -%} Navigation controls with semantic structure {%- endcomment -%}
+<nav class="image-slider__navigation" aria-label="Slider navigation">
+  <div class="image-slider__arrows">
+    {%- render 'snippet-feature-arrow-navigation',
+      data_attributes: 'data-arrow="prev"',
+      direction: 'prev',
+      style_wrapper: 'glassmorphism',
+      position: 'overlay'
+    -%}
+    {%- render 'snippet-feature-arrow-navigation',
+      data_attributes: 'data-arrow="next"',
+      direction: 'next',
+      style_wrapper: 'glassmorphism',
+      position: 'overlay'
+    -%}
+  </div>
+</nav>

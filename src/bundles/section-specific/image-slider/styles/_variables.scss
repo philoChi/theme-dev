@@ -36,6 +36,8 @@
 
   /* Content Styling */
   --slider-text-color: var(--main-background);
+  --slider-content-gap-horizontal: 10%;
+  --slider-content-gap-bottom: 10%;
 
   /* Calculated Positions (Internal - do not override) */
   --position-left: calc(-100% - var(--slider-slide-spacing));
