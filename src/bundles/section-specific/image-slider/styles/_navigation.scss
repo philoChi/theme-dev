@@ -49,3 +49,61 @@
 .image-slider__arrows .arrow-navigation--overlay.arrow-navigation--next {
   right: 0;
 }
+
+/********************  Slide indicator dots  ********************/
+.image-slider__dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+  z-index: 1;
+}
+
+.image-slider__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+  /* Ensure touch-friendly tap area */
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: -9px;
+    left: -9px;
+    right: -9px;
+    bottom: -9px;
+    border-radius: 50%;
+    /* Invisible tap area for better touch interaction */
+  }
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.7);
+    transform: scale(1.2);
+  }
+
+  &:focus {
+    outline: 2px solid rgba(255, 255, 255, 0.8);
+    outline-offset: 2px;
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+
+  &--active {
+    background-color: rgba(255, 255, 255, 0.9);
+    transform: scale(1.3);
+    
+    &:hover {
+      background-color: rgba(255, 255, 255, 1);
+    }
+  }
+}

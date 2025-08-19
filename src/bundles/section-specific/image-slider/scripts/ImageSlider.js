@@ -59,6 +59,8 @@ class ImageSlider {
       throw new Error('Navigation buttons not found');
     }
 
+    this.dots = this.slider.querySelectorAll('.image-slider__dot');
+
     // Cache slide references for performance
     this.slideCache = new WeakMap();
     this.slides.forEach((slide, index) => {
@@ -238,6 +240,11 @@ class ImageSlider {
   setupAllComponents() {
     // Setup navigation event listeners
     this.navigationController.setupNavigationListeners(this.prevButton, this.nextButton);
+    
+    // Setup dot navigation if dots exist
+    if (this.dots && this.dots.length > 0) {
+      this.navigationController.setupDotNavigation(this.dots);
+    }
     
     // Setup autoplay functionality
     this.autoplayManager.setupAutoplay();

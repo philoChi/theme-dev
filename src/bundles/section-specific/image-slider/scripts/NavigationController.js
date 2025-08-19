@@ -14,10 +14,12 @@ class NavigationController {
     this._logger = logger;
     this.sliderId = sliderId;
     this.isTransitioning = false;
+    this.dots = null;
     
     // Performance optimization: Use bound methods to avoid repeated binding
     this.handlePrevClick = this.handleNavigation.bind(this, 'left');
     this.handleNextClick = this.handleNavigation.bind(this, 'right');
+    this.handleDotClick = this.handleDotNavigation.bind(this);
   }
 
   /**
@@ -31,6 +33,20 @@ class NavigationController {
   }
 
   /**
+   * Setup dot navigation event listeners
+   * @param {NodeList} dots - Dot navigation elements
+   */
+  setupDotNavigation(dots) {
+    this.dots = Array.from(dots);
+    this.dots.forEach(dot => {
+      dot.addEventListener('click', this.handleDotClick, { passive: true });
+    });
+    
+    // Update initial active dot
+    this.updateActiveDot();
+  }
+
+  /**
    * Handle navigation clicks with performance optimization
    * @param {string} direction - Navigation direction
    * @param {Event} event - Click event
@@ -38,6 +54,27 @@ class NavigationController {
   handleNavigation(direction, event) {
     event.preventDefault();
     this.navigate(direction);
+  }
+
+  /**
+   * Handle dot navigation clicks
+   * @param {Event} event - Click event
+   */
+  handleDotNavigation(event) {
+    event.preventDefault();
+    
+    if (this.isTransitioning) {
+      return;
+    }
+
+    const targetIndex = parseInt(event.currentTarget.dataset.slideIndex, 10);
+    const currentRealIndex = this.slideManager.getRealSlideIndex();
+    
+    if (targetIndex === currentRealIndex) {
+      return; // Already on target slide
+    }
+
+    this.navigateToSlide(targetIndex);
   }
 
   /**
@@ -250,6 +287,9 @@ class NavigationController {
       this.slideManager.updateNextSlidePositions();
       this.isTransitioning = false;
       
+      // Update active dot after navigation
+      this.updateActiveDot();
+      
       // Call completion callback if provided
       if (onComplete) {
         onComplete();
@@ -258,6 +298,64 @@ class NavigationController {
       console.error(`[NavigationController: ${this.sliderId}] Animation end handling failed:`, error);
       this.isTransitioning = false;
     }
+  }
+
+  /**
+   * Navigate to a specific slide by index
+   * @param {number} targetRealIndex - Target slide index (0-based, excluding copy slides)
+   * @param {Function} onComplete - Callback when navigation completes
+   */
+  navigateToSlide(targetRealIndex, onComplete = null) {
+    const currentRealIndex = this.slideManager.getRealSlideIndex();
+    const realSlideCount = this.slideManager.getRealSlideCount();
+    
+    if (targetRealIndex < 0 || targetRealIndex >= realSlideCount) {
+      return;
+    }
+
+    // Calculate the shortest path to target slide
+    let steps = targetRealIndex - currentRealIndex;
+    
+    // Handle wrap-around for infinite scroll
+    if (Math.abs(steps) > realSlideCount / 2) {
+      steps = steps > 0 ? steps - realSlideCount : steps + realSlideCount;
+    }
+    
+    // Navigate step by step to target
+    const navigateStep = () => {
+      if (steps === 0) {
+        if (onComplete) onComplete();
+        return;
+      }
+      
+      const direction = steps > 0 ? 'right' : 'left';
+      steps += steps > 0 ? -1 : 1;
+      
+      this.navigate(direction, () => {
+        // Continue navigation after current step completes
+        setTimeout(navigateStep, 50);
+      });
+    };
+    
+    navigateStep();
+  }
+
+  /**
+   * Update the active dot indicator
+   */
+  updateActiveDot() {
+    if (!this.dots || this.dots.length === 0) {
+      return;
+    }
+
+    const currentRealIndex = this.slideManager.getRealSlideIndex();
+    
+    this.dots.forEach((dot, index) => {
+      const isActive = index === currentRealIndex;
+      
+      dot.classList.toggle('image-slider__dot--active', isActive);
+      dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    });
   }
 
   /**

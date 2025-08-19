@@ -283,6 +283,48 @@ class SlideManager {
       currentIndex: this.currentIndex
     };
   }
+
+  /**
+   * Get the real slide index excluding copy slides
+   * This is needed for dot indicators to show correct position
+   * @returns {number} Real slide index (0-based)
+   */
+  getRealSlideIndex() {
+    const currentSlide = this.slides[this.currentIndex];
+    
+    // If it's a copy slide, find the corresponding real slide index
+    if (this.isCopySlide(currentSlide)) {
+      // For copy slides, we need to find which real slide it represents
+      const realSlides = this.slides.filter(slide => !this.isCopySlide(slide));
+      
+      // If it's the first copy (at the end), it represents the first slide
+      if (this.currentIndex === this.slides.length - 1) {
+        return 0;
+      }
+      // If it's the last copy (at the start), it represents the last slide
+      if (this.currentIndex === 0) {
+        return realSlides.length - 1;
+      }
+    }
+    
+    // For real slides, count how many real slides come before this one
+    let realIndex = 0;
+    for (let i = 0; i < this.currentIndex; i++) {
+      if (!this.isCopySlide(this.slides[i])) {
+        realIndex++;
+      }
+    }
+    
+    return realIndex;
+  }
+
+  /**
+   * Get the total count of real slides (excluding copy slides)
+   * @returns {number} Number of real slides
+   */
+  getRealSlideCount() {
+    return this.slides.filter(slide => !this.isCopySlide(slide)).length;
+  }
 }
 
 export default SlideManager;
