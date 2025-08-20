@@ -4,8 +4,8 @@
 .image-slider__navigation-overlay {
   position: absolute;
   bottom: var(--slider-gap-bottom-navigation);
-  left: var(--slider-content-gap-horizontal);
-  right: var(--slider-content-gap-horizontal);
+  left: var(--slider-navigation-left-distance);
+  right: var(--slider-navigation-right-distance);
   z-index: 4;
   pointer-events: none;
   display: flex;
@@ -31,15 +31,17 @@
 /********************  Navigation arrows  ********************/
 .image-slider__arrows {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   position: relative;
+  width: 100%;
 }
 
-/* Override generic overlay positioning for image slider specific alignment */
+/* Position arrows at the edges of the navigation container */
 .image-slider__arrows .arrow-navigation--overlay {
   position: absolute;
   top: 50%;
+  transform: translateY(-50%);
 }
 
 .image-slider__arrows .arrow-navigation--overlay.arrow-navigation--prev {
@@ -56,12 +58,9 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
   pointer-events: auto;
   z-index: 1;
+  /* Centered in the navigation container by default flex behavior */
 }
 
 .image-slider__dot {

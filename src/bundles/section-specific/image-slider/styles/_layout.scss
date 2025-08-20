@@ -1,17 +1,12 @@
-/* Image Slider Layout and Positioning */
+/* Image Slider Layout - Static CSS Version */
 
 /********************  Image Slider Root  ********************/
 .image-slider {
   position: relative;
   width: 100%;
   padding: var(--slider-section-padding) 0;
-  overflow: hidden;
-  touch-action: pan-y pinch-zoom;
-  will-change: auto;
-  backface-visibility: hidden;
-  z-index: 0;
-  contain: layout style;
-  perspective: var(--slider-perspective);
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 /********************  Optional tiled background  ********************/
@@ -22,28 +17,30 @@
   background-image: var(--slider-background-image);
   background-repeat: repeat;
   background-size: var(--slider-background-tile-size) var(--slider-background-tile-size);
-  /* tile pattern */
   opacity: var(--slider-background-opacity);
   pointer-events: none;
   z-index: -1;
 }
 
-/********************  Container  ********************/
+/********************  Container - Flexbox Layout  ********************/
 .image-slider__container {
-  position: relative;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: stretch;
+  justify-content: flex-start;
   width: 100%;
-  max-width: var(--slider-max-width, 1450px);
-  min-width: min(var(--page-medium-width, 1250px), 90vw);
-  aspect-ratio: var(--slider-container-aspect-ratio);
-  margin: 0 auto;
-  will-change: auto;
-  transform: translateZ(0);
-  contain: layout style;
-  transform-style: preserve-3d;
-  
-  /* Ensure borders have space to render properly */
-  overflow: visible;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  gap: var(--slider-slide-spacing, 1rem);
+}
+
+/********************  Slide positioning  ********************/
+.image-slider__slide {
+  scroll-snap-align: center;
+  flex-shrink: 0;
+}
+
+/* Add spacer before first slide to center the second slide by default */
+.image-slider__slide:first-child {
+  margin-left: calc(50vw - 50%);
 }

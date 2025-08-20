@@ -21,6 +21,8 @@
   assign slider_interval = section.settings.autoplay_interval | default: 10
   assign slider_transition = section.settings.transition_duration | default: 1000
   assign slider_blocks_count = section.blocks.size | default: 0
+  assign slider_nav_left_distance = section.settings.navigation_left_distance | default: 10
+  assign slider_nav_right_distance = section.settings.navigation_right_distance | default: 10
   
   comment
     Performance optimization: Preload first slide image for faster LCP
@@ -60,6 +62,8 @@
     --slider-slide-scale: {{ slider_side_scale }};
     --slider-will-change: transform;
     --slider-content-visibility: auto;
+    --slider-navigation-left-distance: {{ slider_nav_left_distance }}%;
+    --slider-navigation-right-distance: {{ slider_nav_right_distance }}%;
     {%- if slider_bg_image != blank -%}
       {%- comment -%} Background pattern optimized for tiling with high resolution {%- endcomment -%}
       --slider-background-image: url({{ slider_bg_image | image_url: width: 800 }});
@@ -76,7 +80,7 @@
 
   {%- comment -%} Main slides container with optimized initial state {%- endcomment -%}
   <div class="image-slider__container" 
-       style="opacity: 0; transition: opacity 0.3s ease; will-change: transform;">
+       style="will-change: transform;">
     {%- for block in section.blocks -%}
       {%- liquid
         comment
@@ -97,8 +101,8 @@
         {{ block.shopify_attributes }}
         role="group"
         aria-roledescription="slide"
-        {% if forloop.first %}aria-current="true"{% endif %}
-        aria-hidden="{% unless forloop.first %}true{% else %}false{% endunless %}"
+        {% if forloop.index == 2 %}aria-current="true"{% endif %}
+        aria-hidden="{% unless forloop.index == 2 %}true{% else %}false{% endunless %}"
         aria-label="Slide {{ forloop.index }} of {{ forloop.length }}{% if block.settings.title != blank %}: {{ block.settings.title | escape }}{% endif %}"
         style="{% unless is_priority_slide %}content-visibility: auto;{% endunless %}"
       >
@@ -291,6 +295,29 @@
       "max": 500,
       "step": 10,
       "default": 150
+    },
+    /* ---------- Navigation ---------- */
+    {
+      "type": "header",
+      "content": "Navigation Positioning"
+    },
+    {
+      "type": "range",
+      "id": "navigation_left_distance",
+      "label": "Left distance (%)",
+      "min": 0,
+      "max": 25,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "navigation_right_distance", 
+      "label": "Right distance (%)",
+      "min": 0,
+      "max": 25,
+      "step": 1,
+      "default": 10
     }
   ],
   "blocks": [

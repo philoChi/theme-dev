@@ -1,102 +1,25 @@
-/* Image Slider Slides and Positioning */
+/* Image Slider Slides - Static CSS Version */
 
 /********************  Slide basics  ********************/
 .image-slider__slide {
-  position: absolute;
-  /* Inset by border width to prevent clipping */
-  inset: var(--slider-slide-border-width, 0);
-  width: calc(100% - 2 * var(--slider-slide-border-width, 0));
-  height: calc(100% - 2 * var(--slider-slide-border-width, 0));
-  opacity: 0;
-  pointer-events: none;
-  /* Only apply transitions when not animating for synchronization */
-  transition: 
-    transform var(--slider-transition-duration) var(--slider-transition-timing),
-    opacity var(--slider-transition-duration) var(--slider-transition-timing),
-    box-shadow var(--slider-transition-duration) var(--slider-transition-timing);
-  transform-origin: var(--slider-transform-origin);
-  backface-visibility: hidden;
-  /* Don't set default transform - let positioning classes handle it */
-  contain: layout style paint;
-  
-  /* Ensure border-radius is inherited and borders aren't clipped */
-  border-radius: var(--slider-slide-border-radius);
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: var(--page-medium-width);
+  min-width: 300px; /* Minimum width to prevent too small slides */
+  flex-shrink: 0; /* Prevent slides from shrinking */
   overflow: hidden;
-  border: var(--slider-slide-border-width) solid var(--slider-slide-border-color);
-  
-  /* Box-sizing to include border in dimensions */
+  border-radius: var(--slider-slide-border-radius);
+  border: var(--slider-slide-border-width, 0) solid var(--slider-slide-border-color);
+  aspect-ratio: var(--slider-slide-aspect-ratio);
   box-sizing: border-box;
-  
-  /* Default minimal shadow for smooth transitions */
-  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
-}
-
-/* Disable transitions only during CSS animations to prevent conflicts */
-.image-slider__slide[data-animating] {
-  transition: none !important;
-  /* Ensure any current transitions are stopped immediately */
-  animation-fill-mode: forwards;
-}
-
-/* --- Active slide using ARIA current --- */
-.image-slider__slide[aria-current="true"] {
   opacity: 1;
-  transform: translate3d(0, 0, 0) scale(1);
   pointer-events: all;
-  z-index: 2;
-  backface-visibility: hidden;
   box-shadow: 
-    0 var(--slider-shadow-blur) calc(var(--slider-shadow-blur) * 1.5) var(--slider-shadow-spread) rgba(0, 0, 0, var(--slider-shadow-opacity)),
-    0 calc(var(--slider-shadow-blur) * 0.5) var(--slider-shadow-blur) var(--slider-shadow-spread) rgba(0, 0, 0, calc(var(--slider-shadow-opacity) * 0.3));
+    0 var(--slider-shadow-blur, 8px) calc(var(--slider-shadow-blur, 8px) * 1.5) var(--slider-shadow-spread, 2px) rgba(0, 0, 0, var(--slider-shadow-opacity, 0.15)),
+    0 calc(var(--slider-shadow-blur, 8px) * 0.5) var(--slider-shadow-blur, 8px) var(--slider-shadow-spread, 2px) rgba(0, 0, 0, calc(var(--slider-shadow-opacity, 0.15) * 0.3));
 }
 
-/* --- Side slides (maintaining data attributes for JavaScript positioning) --- */
-.image-slider__slide[data-slide-position="left"] {
-  opacity: var(--slider-slide-opacity);
-  transform: translate3d(var(--position-left), 0, 0) scale(var(--slider-slide-scale));
-  z-index: 1;
-  backface-visibility: hidden;
-  box-shadow: 
-    0 calc(var(--slider-shadow-blur) * 0.75) calc(var(--slider-shadow-blur) * 1.0) var(--slider-shadow-spread) rgba(0, 0, 0, calc(var(--slider-shadow-opacity) * 0.7)),
-    0 calc(var(--slider-shadow-blur) * 0.25) calc(var(--slider-shadow-blur) * 0.5) var(--slider-shadow-spread) rgba(0, 0, 0, calc(var(--slider-shadow-opacity) * 0.2));
-}
-
-.image-slider__slide[data-slide-position="right"] {
-  opacity: var(--slider-slide-opacity);
-  transform: translate3d(var(--position-right), 0, 0) scale(var(--slider-slide-scale));
-  z-index: 1;
-  backface-visibility: hidden;
-  box-shadow: 
-    0 calc(var(--slider-shadow-blur) * 0.75) calc(var(--slider-shadow-blur) * 1.0) var(--slider-shadow-spread) rgba(0, 0, 0, calc(var(--slider-shadow-opacity) * 0.7)),
-    0 calc(var(--slider-shadow-blur) * 0.25) calc(var(--slider-shadow-blur) * 0.5) var(--slider-shadow-spread) rgba(0, 0, 0, calc(var(--slider-shadow-opacity) * 0.2));
-}
-
-/* --- Off-screen slides (for infinite loop) --- */
-.image-slider__slide[data-slide-position="offscreen-left"] {
-  opacity: var(--slider-slide-opacity);
-  transform: translate3d(var(--position-offscreen-left), 0, 0) scale(var(--slider-slide-scale));
-  z-index: 1;
-  backface-visibility: hidden;
-  /* Enable transitions for smooth box-shadow changes */
-  transition: box-shadow var(--slider-transition-duration) var(--slider-transition-timing);
-  /* Minimal shadow for smooth transitions */
-  box-shadow: 
-    0 calc(var(--slider-shadow-blur) * 0.5) calc(var(--slider-shadow-blur) * 0.6) var(--slider-shadow-spread) rgba(0, 0, 0, calc(var(--slider-shadow-opacity) * 0.4)),
-    0 calc(var(--slider-shadow-blur) * 0.1) calc(var(--slider-shadow-blur) * 0.3) var(--slider-shadow-spread) rgba(0, 0, 0, calc(var(--slider-shadow-opacity) * 0.1));
-}
-
-.image-slider__slide[data-slide-position="offscreen-right"] {
-  opacity: var(--slider-slide-opacity);
-  transform: translate3d(var(--position-offscreen-right), 0, 0) scale(var(--slider-slide-scale));
-  z-index: 1;
-  backface-visibility: hidden;
-  /* Enable transitions for smooth box-shadow changes */
-  transition: box-shadow var(--slider-transition-duration) var(--slider-transition-timing);
-  /* Minimal shadow for smooth transitions */
-  box-shadow: 
-    0 calc(var(--slider-shadow-blur) * 0.5) calc(var(--slider-shadow-blur) * 0.6) var(--slider-shadow-spread) rgba(0, 0, 0, calc(var(--slider-shadow-opacity) * 0.4)),
-    0 calc(var(--slider-shadow-blur) * 0.1) calc(var(--slider-shadow-blur) * 0.3) var(--slider-shadow-spread) rgba(0, 0, 0, calc(var(--slider-shadow-opacity) * 0.1));
-}
 
 /********************  Images & loading pulse  ********************/
 /* Figure element wrapper for semantic structure */
@@ -125,32 +48,15 @@
   object-fit: cover;
   object-position: center;
   background-color: #f4f4f4;
-  transform: translateZ(0);
-  transition: opacity var(--slider-transition-duration) ease;
-  
-  /* Image quality optimizations */
   image-rendering: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  contain: layout paint;
-  
-  /* Performance optimization for off-screen images */
-  &[loading="lazy"] {
-    content-visibility: auto;
-  }
 }
 
 /* Progressive enhancement for modern browsers */
 @supports (image-rendering: pixelated) {
   .image-slider__image {
     image-rendering: auto;
-  }
-}
-
-@supports (content-visibility: auto) {
-  .image-slider__slide[data-slide-position*="offscreen"] .image-slider__image {
-    content-visibility: auto;
-    contain-intrinsic-size: 100% 100%;
   }
 }
 

@@ -4,6 +4,7 @@
   Encapsulated navigation controls for the image slider component.
   Handles both prev/next arrows with glassmorphism styling and bottom overlay positioning.
   Includes separator line between content and navigation sections.
+  Navigation is centered with configurable left and right distances via CSS variables.
   
   @param {String} slider_id - Unique identifier for the slider (required)
   @param {Number} blocks_count - Number of slides for accessibility (optional, defaults to 1)
@@ -37,10 +38,10 @@
         <div class="image-slider__dots" role="tablist" aria-label="Slide indicators">
           {%- for i in (1..blocks_count) -%}
             <button 
-              class="image-slider__dot{% if forloop.first %} image-slider__dot--active{% endif %}" 
+              class="image-slider__dot{% if forloop.index == 2 %} image-slider__dot--active{% endif %}" 
               role="tab"
               aria-label="Go to slide {{ forloop.index }}"
-              aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+              aria-selected="{% if forloop.index == 2 %}true{% else %}false{% endif %}"
               data-slide-index="{{ forloop.index0 }}"
               type="button"
             >

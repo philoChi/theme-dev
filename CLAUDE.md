@@ -349,6 +349,8 @@ The build system compiles source files from three directories into a complete Sh
    - `theme-hyspex/assets/section-testimonials.css`
    - `theme-hyspex/sections/section-testimonials.liquid`
 
+- do not use `npm run build:dev` and `npm run theme:start`. When using `npm run theme:start` a build:dev is redundand.
+
 ### Icon Implementation Guide
 1. **Add SVG**: Place in `src/bundles/bundle-global/icon-system/icons/`
 2. **Register CSS**: Add to `icon-manager.scss` with mask-image

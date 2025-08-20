@@ -17,10 +17,6 @@
     --slider-slide-opacity: 0.8;
   }
 
-  .image-slider__container {
-    max-width: var(--slider-max-width, 1450px);
-    min-width: min(var(--page-medium-width, 1250px), 90vw);
-  }
 
 
   .image-slider__cta-button {
@@ -42,7 +38,15 @@
   }
   
   .image-slider__container {
-    aspect-ratio: var(--slider-container-aspect-ratio-mobile);
+    /* On mobile, use full width with padding */
+    max-width: none;
+    width: calc(100% - 2rem);
+  }
+  
+  .image-slider__slide {
+    /* On mobile, slides use full container width */
+    aspect-ratio: var(--slider-slide-aspect-ratio-mobile);
+    max-width: none;
   }
   
   .image-slider__image {
@@ -55,10 +59,6 @@
 
 /* Consolidated mobile optimizations */
 @container (max-width: 767px) {
-  .image-slider__container {
-    width: 100%;
-    max-width: clamp(90%, 5vw, 100%);
-  }
   
   .image-slider__content {
     bottom: clamp(25%, 2vh, 35%);

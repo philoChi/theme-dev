@@ -6,9 +6,8 @@
   /* Layout & Spacing */
   --slider-section-padding: 32px;
   --slider-slide-spacing: 16px;
-  --slider-container-aspect-ratio: 16/9;
-  --slider-container-aspect-ratio-mobile: 4/3;
-  --slider-max-width: var(--page-medium-width);
+  --slider-slide-aspect-ratio: 16/8;
+  --slider-slide-aspect-ratio-mobile: 4/3;
 
   /* Slide Appearance - Optimized for better image quality */
   --slider-slide-opacity: 0.75;
@@ -45,7 +44,11 @@
   /* Navigation: relative to image-slider container bottom */
   --slider-gap-bottom-navigation: 15%;        /* Bottom edge to navigation arrows (relative to container) */
   /* Gap between separator and navigation-arrows*/  
-  --slider-gap-bottom-separator: 1rem; 
+  --slider-gap-bottom-separator: 1rem;
+  
+  /* Navigation positioning distances */
+  --slider-navigation-left-distance: 10%;     /* Distance from left edge to navigation start */
+  --slider-navigation-right-distance: 10%;    /* Distance from right edge to navigation end */ 
   
   /* Navigation & Separator */
   --slider-separator-color: rgba(255, 255, 255, 0.2);
