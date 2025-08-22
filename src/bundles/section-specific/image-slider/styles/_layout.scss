@@ -22,26 +22,33 @@
   z-index: -1;
 }
 
-/********************  Wrapper - Percentage-based clipping  ********************/
+/********************  Wrapper - Container Query Context  ********************/
 .image-slider__wrapper {
   position: relative;
   width: 100%;
   overflow: hidden;
 }
 
-/********************  Container - Flexbox Layout with Fixed Width  ********************/
+/* Progressive enhancement: Add container query support for modern browsers */
+@supports (container-type: inline-size) {
+  .image-slider__wrapper {
+    container-type: inline-size; /* Enable container queries for viewport-independent transforms */
+  }
+}
+
+/********************  Container - Fixed Width Layout  ********************/
 .image-slider__container {
   display: flex;
   align-items: stretch;
   justify-content: flex-start;
-  /* Width is now based on fixed slide width × count */
-  width: calc(var(--slider-slide-width, 1250px) * var(--slider-slide-count));
+  /* Fixed width based on slide max-width for viewport-independent transforms */
+  width: calc(var(--slider-slide-total-max-width) * var(--slider-slide-count));
   transition: transform var(--slider-transition-duration, 500ms) var(--slider-transition-timing, ease);
 }
 
 /********************  Slide positioning  ********************/
 .image-slider__slide {
   flex-shrink: 0;
-  /* Use fixed width instead of percentage */
-  width: var(--slider-slide-width, 1250px);
+  /* Fixed width matching the max-width constraint */
+  width: var(--slider-slide-total-max-width);
 }

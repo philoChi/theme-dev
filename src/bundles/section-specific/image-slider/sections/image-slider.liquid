@@ -76,12 +76,11 @@
   </div>
 
 
-  {%- comment -%} Wrapper for percentage-based positioning {%- endcomment -%}
+  {%- comment -%} Wrapper with container query context for viewport-independent positioning {%- endcomment -%}
   <div class="image-slider__wrapper">
-    {%- comment -%} Main slides container with percentage-based positioning {%- endcomment -%}
-    {%- comment -%} Works: will-change: transform; transform: translateX(calc(-13.35%*0)); {%- endcomment -%}
+    {%- comment -%} Main slides container with fixed-width layout {%- endcomment -%}
     <div class="image-slider__container" 
-         style="will-change: transform; transform: translateX(calc(var(--slider-slide-total-max-width)*var(--slider-current-position)*-1))">
+         style="will-change: transform; transform: translateX(calc(var(--slider-current-position) * -100% / var(--slider-slide-count)))">
     {%- for block in section.blocks -%}
       {%- liquid
         comment
