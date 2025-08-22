@@ -78,9 +78,19 @@
 
   {%- comment -%} Wrapper with container query context for viewport-independent positioning {%- endcomment -%}
   <div class="image-slider__wrapper">
-    {%- comment -%} Main slides container with fixed-width layout {%- endcomment -%}
+    {%- comment -%} Main slides container with centered slide positioning {%- endcomment -%}
+    {%- liquid
+      comment
+        Calculate transform to center the selected slide with fixed-width slides:
+        1. Move selected slide to viewport start (percentage of container)
+        2. Add 50vw to shift container to viewport center
+        3. Subtract half of slide width to center the specific slide
+        Using calc() to combine container percentage with viewport units
+      endcomment
+      assign slide_position_offset = current_slide_index | times: -100.0 | divided_by: slider_blocks_count
+    -%}
     <div class="image-slider__container" 
-         style="will-change: transform; transform: translateX(calc(var(--slider-current-position) * -100% / var(--slider-slide-count)))">
+         style="will-change: transform; transform: translateX(calc({{ slide_position_offset }}% + 50vw - (var(--slider-slide-total-max-width) / 2)))">
     {%- for block in section.blocks -%}
       {%- liquid
         comment
