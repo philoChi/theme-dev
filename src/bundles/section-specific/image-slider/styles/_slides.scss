@@ -4,8 +4,9 @@
 .image-slider__slide {
   position: relative;
   height: 100%;
-  max-width: var(--page-medium-width);
+  max-width: var(--slider-slide-total-max-width);
   min-width: 300px; /* Minimum width to prevent too small slides */
+  box-sizing: border-box;
   overflow: hidden;
   border-radius: var(--slider-slide-border-radius);
   border: var(--slider-slide-border-width, 0) solid var(--slider-slide-border-color);

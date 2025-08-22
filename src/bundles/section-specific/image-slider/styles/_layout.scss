@@ -29,18 +29,19 @@
   overflow: hidden;
 }
 
-/********************  Container - Flexbox Layout with Percentage-based Width  ********************/
+/********************  Container - Flexbox Layout with Fixed Width  ********************/
 .image-slider__container {
   display: flex;
   align-items: stretch;
   justify-content: flex-start;
-  width: calc(100% * var(--slider-slide-count));
-  gap: var(--slider-slide-spacing, 1rem);
+  /* Width is now based on fixed slide width × count */
+  width: calc(var(--slider-slide-width, 1250px) * var(--slider-slide-count));
   transition: transform var(--slider-transition-duration, 500ms) var(--slider-transition-timing, ease);
 }
 
 /********************  Slide positioning  ********************/
 .image-slider__slide {
   flex-shrink: 0;
-  width: calc(100% / var(--slider-slide-count));
+  /* Use fixed width instead of percentage */
+  width: var(--slider-slide-width, 1250px);
 }

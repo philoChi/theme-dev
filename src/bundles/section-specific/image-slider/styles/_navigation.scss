@@ -28,30 +28,6 @@
   pointer-events: auto;
 }
 
-/********************  Navigation arrows  ********************/
-.image-slider__arrows {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  width: 100%;
-}
-
-/* Position arrows at the edges of the navigation container */
-.image-slider__arrows .arrow-navigation--overlay {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.image-slider__arrows .arrow-navigation--overlay.arrow-navigation--prev {
-  left: 0;
-}
-
-.image-slider__arrows .arrow-navigation--overlay.arrow-navigation--next {
-  right: 0;
-}
-
 /********************  Slide indicator dots  ********************/
 .image-slider__dots {
   display: flex;

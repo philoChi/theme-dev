@@ -82,9 +82,6 @@ class ImageSlider {
       // Initialize basic configuration
       this.config = new ImageSliderConfig(this.slider);
       
-      // Add loaded class to container for CSS styling
-      this.container.classList.add('image-slider__container--loaded');
-      
       this._logger(`[Slider: ${this.sliderId}] Static initialization complete`);
     } catch (error) {
       this.handleError('Failed to initialize static slider', error);

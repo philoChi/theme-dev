@@ -23,6 +23,7 @@
   assign slider_blocks_count = section.blocks.size | default: 0
   assign slider_nav_left_distance = section.settings.navigation_left_distance | default: 10
   assign slider_nav_right_distance = section.settings.navigation_right_distance | default: 10
+  assign current_slide_index = section.settings.current_slide | default: 1
   
   comment
     Performance optimization: Preload first slide image for faster LCP
@@ -35,11 +36,6 @@
     echo preload_desktop | preload_tag: as: 'image', media: '(min-width: 768px)'
     echo preload_mobile | preload_tag: as: 'image', media: '(max-width: 767px)'
   endif
-  
-  comment
-    Unique section identifier for accessibility and JavaScript targeting
-  endcomment
-  assign slider_id = 'image-slider-' | append: section.id
 -%}
 
 <section
@@ -65,7 +61,7 @@
     --slider-navigation-left-distance: {{ slider_nav_left_distance }}%;
     --slider-navigation-right-distance: {{ slider_nav_right_distance }}%;
     --slider-slide-count: {{ slider_blocks_count }};
-    --slider-current-position: calc(-100% / {{ slider_blocks_count }});
+    --slider-current-position: {{ current_slide_index }};
     {%- if slider_bg_image != blank -%}
       {%- comment -%} Background pattern optimized for tiling with high resolution {%- endcomment -%}
       --slider-background-image: url({{ slider_bg_image | image_url: width: 800 }});
@@ -83,8 +79,9 @@
   {%- comment -%} Wrapper for percentage-based positioning {%- endcomment -%}
   <div class="image-slider__wrapper">
     {%- comment -%} Main slides container with percentage-based positioning {%- endcomment -%}
+    {%- comment -%} Works: will-change: transform; transform: translateX(calc(-13.35%*0)); {%- endcomment -%}
     <div class="image-slider__container" 
-         style="will-change: transform; transform: translateX(var(--slider-current-position))">
+         style="will-change: transform; transform: translateX(calc(var(--slider-slide-total-max-width)*var(--slider-current-position)*-1))">
     {%- for block in section.blocks -%}
       {%- liquid
         comment
@@ -175,13 +172,12 @@
         {%- render 'snippet-section-image-slider-slide-content-overlay', block: block -%}
       </div>
     {%- endfor -%}
-    
+    </div>
     {%- comment -%} Navigation controls rendered below content with separator {%- endcomment -%}
     {%- render 'snippet-section-image-slider-navigation', 
       slider_id: slider_id, 
       blocks_count: slider_blocks_count 
     -%}
-    </div>
   </div>
 </section>
 

@@ -8,6 +8,7 @@
   --slider-slide-spacing: 16px;
   --slider-slide-aspect-ratio: 16/8;
   --slider-slide-aspect-ratio-mobile: 4/3;
+  --slider-slide-total-max-width: var(--page-medium-width);
   
   /* Percentage-based positioning system */
   --slider-slide-count: 4; /* Default, overridden by Liquid */
