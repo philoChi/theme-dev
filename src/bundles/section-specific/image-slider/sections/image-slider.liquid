@@ -64,6 +64,8 @@
     --slider-content-visibility: auto;
     --slider-navigation-left-distance: {{ slider_nav_left_distance }}%;
     --slider-navigation-right-distance: {{ slider_nav_right_distance }}%;
+    --slider-slide-count: {{ slider_blocks_count }};
+    --slider-current-position: calc(-100% / {{ slider_blocks_count }});
     {%- if slider_bg_image != blank -%}
       {%- comment -%} Background pattern optimized for tiling with high resolution {%- endcomment -%}
       --slider-background-image: url({{ slider_bg_image | image_url: width: 800 }});
@@ -78,9 +80,11 @@
   </div>
 
 
-  {%- comment -%} Main slides container with optimized initial state {%- endcomment -%}
-  <div class="image-slider__container" 
-       style="will-change: transform;">
+  {%- comment -%} Wrapper for percentage-based positioning {%- endcomment -%}
+  <div class="image-slider__wrapper">
+    {%- comment -%} Main slides container with percentage-based positioning {%- endcomment -%}
+    <div class="image-slider__container" 
+         style="will-change: transform; transform: translateX(var(--slider-current-position))">
     {%- for block in section.blocks -%}
       {%- liquid
         comment
@@ -177,6 +181,7 @@
       slider_id: slider_id, 
       blocks_count: slider_blocks_count 
     -%}
+    </div>
   </div>
 </section>
 

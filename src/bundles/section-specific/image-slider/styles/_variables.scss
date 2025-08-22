@@ -8,6 +8,10 @@
   --slider-slide-spacing: 16px;
   --slider-slide-aspect-ratio: 16/8;
   --slider-slide-aspect-ratio-mobile: 4/3;
+  
+  /* Percentage-based positioning system */
+  --slider-slide-count: 4; /* Default, overridden by Liquid */
+  --slider-current-position: calc(-100% / var(--slider-slide-count)); /* Default to second slide */
 
   /* Slide Appearance - Optimized for better image quality */
   --slider-slide-opacity: 0.75;

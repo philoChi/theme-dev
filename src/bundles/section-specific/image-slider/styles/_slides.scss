@@ -3,11 +3,9 @@
 /********************  Slide basics  ********************/
 .image-slider__slide {
   position: relative;
-  width: 100%;
   height: 100%;
   max-width: var(--page-medium-width);
   min-width: 300px; /* Minimum width to prevent too small slides */
-  flex-shrink: 0; /* Prevent slides from shrinking */
   overflow: hidden;
   border-radius: var(--slider-slide-border-radius);
   border: var(--slider-slide-border-width, 0) solid var(--slider-slide-border-color);

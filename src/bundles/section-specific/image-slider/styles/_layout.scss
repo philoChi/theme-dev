@@ -22,25 +22,25 @@
   z-index: -1;
 }
 
-/********************  Container - Flexbox Layout  ********************/
+/********************  Wrapper - Percentage-based clipping  ********************/
+.image-slider__wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/********************  Container - Flexbox Layout with Percentage-based Width  ********************/
 .image-slider__container {
   display: flex;
   align-items: stretch;
   justify-content: flex-start;
-  width: 100%;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
+  width: calc(100% * var(--slider-slide-count));
   gap: var(--slider-slide-spacing, 1rem);
+  transition: transform var(--slider-transition-duration, 500ms) var(--slider-transition-timing, ease);
 }
 
 /********************  Slide positioning  ********************/
 .image-slider__slide {
-  scroll-snap-align: center;
   flex-shrink: 0;
-}
-
-/* Add spacer before first slide to center the second slide by default */
-.image-slider__slide:first-child {
-  margin-left: calc(50vw - 50%);
+  width: calc(100% / var(--slider-slide-count));
 }
