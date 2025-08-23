@@ -1,0 +1,40 @@
+{%- liquid
+  assign slider_id = slider_id | default: 'image-slider-default'
+  assign slide_index = slide_index | default: 1
+  assign slide_length = slide_length | default: 1
+  assign current_slide_index = current_slide_index | default: 1
+  assign slide_index_zero = slide_index | minus: 1
+-%}
+
+<div 
+  id="{{ slider_id }}-slide-{{ slide_index }}"
+  class="image-slider__slide" 
+  {{ block.shopify_attributes }}
+  role="group"
+  {% if slide_index_zero == current_slide_index %}aria-current="true"{% endif %}
+  aria-label="Slide {{ slide_index }} of {{ slide_length }}"
+>
+  {%- if block.settings.image != blank -%}
+    {%- liquid
+      assign fetch_priority = 'auto'
+      if slide_index == 1
+        assign fetch_priority = 'high'
+      endif
+    -%}
+    {{
+      block.settings.image
+      | image_url: width: 2900
+      | image_tag: 
+        loading: 'lazy',
+        fetchpriority: fetch_priority,
+        widths: '320, 480, 640, 768, 1024, 1280, 1536, 1920, 2400, 2900',
+        sizes: '(max-width: 767px) 100vw, (max-width: 1279px) 90vw, 1450px',
+        class: 'image-slider__image',
+        alt: block.settings.image.alt | default: 'Slide image'
+    }}
+  {%- else -%}
+    {{ 'image' | placeholder_svg_tag: 'image-slider__image placeholder-svg' }}
+  {%- endif -%}
+  
+  {%- render 'snippet-section-image-slider-slide-content-overlay', block: block -%}
+</div>

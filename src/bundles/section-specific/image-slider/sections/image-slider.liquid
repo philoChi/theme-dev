@@ -38,38 +38,13 @@
     <div class="image-slider__container" 
          style="transform: translateX(calc(50vw - var(--slider-slide-total-max-width) * ({{ current_slide_index }} + 0.5)))">
     {%- for block in section.blocks -%}
-      <div 
-        id="{{ slider_id }}-slide-{{ forloop.index }}"
-        class="image-slider__slide" 
-        {{ block.shopify_attributes }}
-        role="group"
-        {% if forloop.index0 == current_slide_index %}aria-current="true"{% endif %}
-        aria-label="Slide {{ forloop.index }} of {{ forloop.length }}"
-      >
-        {%- if block.settings.image != blank -%}
-          {%- liquid
-            assign fetch_priority = 'auto'
-            if forloop.first
-              assign fetch_priority = 'high'
-            endif
-          -%}
-          {{
-            block.settings.image
-            | image_url: width: 2900
-            | image_tag: 
-              loading: 'lazy',
-              fetchpriority: fetch_priority,
-              widths: '320, 480, 640, 768, 1024, 1280, 1536, 1920, 2400, 2900',
-              sizes: '(max-width: 767px) 100vw, (max-width: 1279px) 90vw, 1450px',
-              class: 'image-slider__image',
-              alt: block.settings.image.alt | default: 'Slide image'
-          }}
-        {%- else -%}
-          {{ 'image' | placeholder_svg_tag: 'image-slider__image placeholder-svg' }}
-        {%- endif -%}
-        
-        {%- render 'snippet-section-image-slider-slide-content-overlay', block: block -%}
-      </div>
+      {%- render 'snippet-section-image-slider-slide', 
+        block: block,
+        slider_id: slider_id,
+        slide_index: forloop.index,
+        slide_length: forloop.length,
+        current_slide_index: current_slide_index
+      -%}
     {%- endfor -%}
     </div>
     {%- render 'snippet-section-image-slider-navigation', 
