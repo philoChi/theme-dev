@@ -58,8 +58,6 @@
     --slider-slide-scale: {{ slider_side_scale }};
     --slider-will-change: transform;
     --slider-content-visibility: auto;
-    --slider-navigation-left-distance: {{ slider_nav_left_distance }}%;
-    --slider-navigation-right-distance: {{ slider_nav_right_distance }}%;
     --slider-slide-count: {{ slider_blocks_count }};
     --slider-current-position: {{ current_slide_index }};
     {%- if slider_bg_image != blank -%}
@@ -81,16 +79,15 @@
     {%- comment -%} Main slides container with centered slide positioning {%- endcomment -%}
     {%- liquid
       comment
-        Calculate transform to center the selected slide with fixed-width slides:
-        1. Move selected slide to viewport start (percentage of container)
-        2. Add 50vw to shift container to viewport center
-        3. Subtract half of slide width to center the specific slide
-        Using calc() to combine container percentage with viewport units
+        Centering calculation explained:
+        - Each slide has width: --slider-slide-total-max-width
+        - To center slide N: move container left by (N × slide_width), then adjust for centering
+        - Final formula: -(index × slide_width) + (viewport_center - half_slide_width)
+        - This simplifies to: calc(50vw - var(--slider-slide-total-max-width) * (index + 0.5))
       endcomment
-      assign slide_position_offset = current_slide_index | times: -100.0 | divided_by: slider_blocks_count
     -%}
     <div class="image-slider__container" 
-         style="will-change: transform; transform: translateX(calc({{ slide_position_offset }}% + 50vw - (var(--slider-slide-total-max-width) / 2)))">
+         style="will-change: transform; transform: translateX(calc(50vw - var(--slider-slide-total-max-width) * ({{ current_slide_index }} + 0.5)))">
     {%- for block in section.blocks -%}
       {%- liquid
         comment
