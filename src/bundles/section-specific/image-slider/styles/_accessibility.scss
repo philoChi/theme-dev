@@ -4,9 +4,6 @@
 @media (prefers-reduced-motion: reduce) {
   .image-slider {
     --slider-transition-duration: 200ms;
-    --slider-slide-blur: 0px;
-    --slider-slide-opacity: 0.85;
-    --slider-slide-scale: 0.95;
   }
 
   .image-slider__image[data-loading="true"] {
@@ -45,14 +42,11 @@
 /* High contrast mode support */
 @media (prefers-contrast: high) {
   .image-slider {
-    --slider-slide-blur: 0px;
-    --slider-slide-opacity: 0.9;
     --slider-shadow-opacity: 0.3;
   }
   
   .image-slider__image {
-    border-width: 2px;
-    border-color: currentColor;
+    border: 2px solid currentColor;
     filter: contrast(1.2);
   }
   

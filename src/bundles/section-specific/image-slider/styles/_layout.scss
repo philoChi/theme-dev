@@ -9,18 +9,6 @@
   overflow-y: hidden;
 }
 
-/********************  Optional tiled background  ********************/
-.image-slider::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: var(--slider-background-image);
-  background-repeat: repeat;
-  background-size: var(--slider-background-tile-size) var(--slider-background-tile-size);
-  opacity: var(--slider-background-opacity);
-  pointer-events: none;
-  z-index: -1;
-}
 
 /********************  Wrapper - Container Query Context  ********************/
 .image-slider__wrapper {

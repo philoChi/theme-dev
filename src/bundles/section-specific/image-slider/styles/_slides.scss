@@ -5,18 +5,15 @@
   position: relative;
   height: 100%;
   max-width: var(--slider-slide-total-max-width);
-  min-width: 300px; /* Minimum width to prevent too small slides */
+  min-width: 300px;
   box-sizing: border-box;
   overflow: hidden;
   border-radius: var(--slider-slide-border-radius);
   border: var(--slider-slide-border-width, 0) solid var(--slider-slide-border-color);
   aspect-ratio: var(--slider-slide-aspect-ratio);
-  box-sizing: border-box;
-  opacity: 1;
-  pointer-events: all;
   box-shadow: 
-    0 var(--slider-shadow-blur, 8px) calc(var(--slider-shadow-blur, 8px) * 1.5) var(--slider-shadow-spread, 2px) rgba(0, 0, 0, var(--slider-shadow-opacity, 0.15)),
-    0 calc(var(--slider-shadow-blur, 8px) * 0.5) var(--slider-shadow-blur, 8px) var(--slider-shadow-spread, 2px) rgba(0, 0, 0, calc(var(--slider-shadow-opacity, 0.15) * 0.3));
+    0 var(--slider-shadow-blur) calc(var(--slider-shadow-blur) * 1.5) rgba(0, 0, 0, var(--slider-shadow-opacity)),
+    0 calc(var(--slider-shadow-blur) * 0.5) var(--slider-shadow-blur) rgba(0, 0, 0, calc(var(--slider-shadow-opacity) * 0.3));
 }
 
 

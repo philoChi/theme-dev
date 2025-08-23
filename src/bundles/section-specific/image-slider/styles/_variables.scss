@@ -14,29 +14,20 @@
   --slider-slide-count: 4; /* Default, overridden by Liquid */
   --slider-current-position: 0; /* Current slide index, overridden by Liquid */
 
-  /* Slide Appearance - Optimized for better image quality */
-  --slider-slide-opacity: 0.75;
-  --slider-slide-scale: 0.85;
-  --slider-slide-blur: 2.5px;
+  /* Slide Appearance */
   --slider-slide-border-radius: calc(var(--main-border-radius) * 1.5);
   --slider-slide-border-width: var(--main-border-width);
   --slider-slide-border-color: var(--main-border-color);
   
-  /* Performance & Quality */
-  --slider-perspective: 1000px;
+  /* Shadow */
   --slider-shadow-opacity: 0.08;
   --slider-shadow-blur: 8px;
-  --slider-shadow-spread: 0px;
 
   /* Animation */
   --slider-transition-duration: 500ms;
   --slider-transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
   --slider-transform-origin: center center;
 
-  /* Background Pattern (Optional) */
-  --slider-background-image: none;
-  --slider-background-opacity: 0;
-  --slider-background-tile-size: 150px;
 
   /* Content Styling */
   --slider-text-color: var(--main-background);
@@ -58,9 +49,4 @@
   --slider-separator-color: rgba(255, 255, 255, 0.2);
   --slider-separator-height: 1px;
 
-  /* Calculated Positions (Internal - do not override) */
-  --position-left: calc(-100% - var(--slider-slide-spacing));
-  --position-right: calc(100% + var(--slider-slide-spacing));
-  --position-offscreen-left: calc(-200% - var(--slider-slide-spacing));
-  --position-offscreen-right: calc(200% + var(--slider-slide-spacing));
 }

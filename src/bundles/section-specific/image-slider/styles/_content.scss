@@ -20,53 +20,30 @@
   pointer-events: auto;
 }
 
-/* Individual fade effects for heading and description */
-.image-slider__title {
+/* Content visibility on active slide */
+.image-slider__title,
+.image-slider__description {
   color: var(--slider-text-color);
   opacity: 0;
-  transform: translateY(20px);
-  transition: 
-    opacity var(--slider-transition-duration) var(--slider-transition-timing),
-    transform var(--slider-transition-duration) var(--slider-transition-timing);
+  transition: opacity var(--slider-transition-duration) var(--slider-transition-timing);
 }
 
-.image-slider__description {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: 
-    opacity var(--slider-transition-duration) var(--slider-transition-timing),
-    transform var(--slider-transition-duration) var(--slider-transition-timing);
-  transition-delay: 0.1s; /* Slight delay for staggered effect */
-}
-
-/* Fade in title and description on active slide */
-.image-slider__slide[aria-current="true"] .image-slider__title {
-  opacity: 1;
-  transform: translateY(0);
-}
-
+.image-slider__slide[aria-current="true"] .image-slider__title,
 .image-slider__slide[aria-current="true"] .image-slider__description {
   opacity: 1;
-  transform: translateY(0);
 }
 
-/********************  CTA grid & buttons  ********************/
+/********************  CTA buttons  ********************/
 .image-slider__ctas {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
   opacity: 0;
-  transform: translateY(20px);
-  transition: 
-    opacity var(--slider-transition-duration) var(--slider-transition-timing),
-    transform var(--slider-transition-duration) var(--slider-transition-timing);
-  transition-delay: 0.2s; /* Staggered after description */
+  transition: opacity var(--slider-transition-duration) var(--slider-transition-timing);
 }
 
-/* Fade in CTAs on active slide */
 .image-slider__slide[aria-current="true"] .image-slider__ctas {
   opacity: 1;
-  transform: translateY(0);
 }
 
 .image-slider__cta-button {
@@ -74,7 +51,6 @@
   background-color: var(--bg-color, #000);
   color: #fff;
   border-radius: 0.25rem;
-  text-align: center;
   font-size: 0.875rem;
   min-height: 44px;
   display: flex;
@@ -85,8 +61,4 @@
 
 .image-slider__cta-button:hover {
   transform: translateY(-2px);
-}
-
-.image-slider__cta-button:active {
-  transform: translateY(0);
 }
