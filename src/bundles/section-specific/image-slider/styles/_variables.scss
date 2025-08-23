@@ -47,13 +47,12 @@
   --slider-gap-bottom-content: 19%;           /* Bottom edge to content overlay (relative to slide) */
   /* Vertical gaps - NOTE: Different reference points for different elements */
   /* Navigation: relative to image-slider container bottom */
-  --slider-gap-bottom-navigation: 15%;        /* Bottom edge to navigation arrows (relative to container) */
+  --slider-gap-bottom-navigation: 10%;        /* Bottom edge to navigation arrows (relative to container) */
   /* Gap between separator and navigation-arrows*/  
   --slider-gap-bottom-separator: 1rem;
   
-  /* Navigation positioning distances */
-  --slider-navigation-left-distance: 27%;     /* Distance from left edge to navigation start */
-  --slider-navigation-right-distance: 27%;    /* Distance from right edge to navigation end */ 
+  /* Navigation positioning - uses same gap as content for alignment */
+  /* Navigation will be centered and constrained to slide width, using content gap */ 
   
   /* Navigation & Separator */
   --slider-separator-color: rgba(255, 255, 255, 0.2);

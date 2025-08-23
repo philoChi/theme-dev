@@ -20,11 +20,12 @@
 
 {%- comment -%} Navigation overlay container with separator {%- endcomment -%}
 <div class="image-slider__navigation-overlay">
-  {%- comment -%} Subtle separator line between content and navigation {%- endcomment -%}
-  <div class="image-slider__separator" aria-hidden="true"></div>
-  
-  {%- comment -%} Navigation controls with semantic structure {%- endcomment -%}
-  <nav class="image-slider__navigation" aria-label="Slider navigation">
+  <div class="image-slider__navigation-inner">
+    {%- comment -%} Subtle separator line between content and navigation {%- endcomment -%}
+    <div class="image-slider__separator" aria-hidden="true"></div>
+    
+    {%- comment -%} Navigation controls with semantic structure {%- endcomment -%}
+    <nav class="image-slider__navigation" aria-label="Slider navigation">
     <div class="image-slider__arrows">
       {%- render 'snippet-feature-arrow-navigation',
         data_attributes: 'data-arrow="prev"',
@@ -59,4 +60,5 @@
       -%}
     </div>
   </nav>
+  </div>
 </div>

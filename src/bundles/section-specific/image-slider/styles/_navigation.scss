@@ -4,13 +4,26 @@
 .image-slider__navigation-overlay {
   position: absolute;
   bottom: var(--slider-gap-bottom-navigation);
-  left: var(--slider-navigation-left-distance);
-  right: var(--slider-navigation-right-distance);
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 4;
   pointer-events: none;
+  
+  /* Constrain to slide width for proper alignment */
+  max-width: var(--slider-slide-total-max-width);
+  width: 100%;
+}
+
+/********************  Navigation inner container  ********************/
+.image-slider__navigation-inner {
   display: flex;
   flex-direction: column;
   gap: var(--slider-gap-bottom-separator);
+  position: relative;
+  
+  /* Apply same horizontal gaps as content - percentage based */
+  padding-left: var(--slider-content-gap-horizontal);
+  padding-right: var(--slider-content-gap-horizontal);
 }
 
 /********************  Separator line  ********************/
@@ -26,6 +39,35 @@
 /********************  Navigation wrapper  ********************/
 .image-slider__navigation {
   pointer-events: auto;
+  width: 100%;
+}
+
+/********************  Arrow controls container  ********************/
+.image-slider__arrows {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  pointer-events: auto;
+  
+  /* Override arrow button positioning to align with separator edges */
+  .style-wrapper--glassmorphism:first-child {
+    margin-left: 0;
+  }
+  
+  .style-wrapper--glassmorphism:last-child {
+    margin-right: 0;
+  }
+  
+  /* Ensure arrows don't have extra positioning from their base styles */
+  .arrow-navigation--overlay {
+    position: static;
+    left: auto;
+    right: auto;
+    top: auto;
+    transform: none;
+  }
 }
 
 /********************  Slide indicator dots  ********************/
