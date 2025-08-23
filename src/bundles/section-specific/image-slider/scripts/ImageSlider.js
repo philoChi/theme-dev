@@ -18,7 +18,7 @@ class ImageSlider {
     this.initializeElements();
     this.initializeLogger();
     
-    this._logger(`[Slider: ${this.sliderId}] Initializing slider with ${this.slides.length} slides`);
+    this._logger(`[Slider: ${this.sliderId}] Initializing slider with ${this.slideCount} slides`);
 
     // Initialize slider components
     this.init();
@@ -42,8 +42,9 @@ class ImageSlider {
       throw new Error('Slider container not found');
     }
     
-    this.slides = Array.from(this.container.querySelectorAll('.image-slider__slide'));
-    if (this.slides.length === 0) {
+    // Just count slides, don't store the array
+    this.slideCount = this.container.querySelectorAll('.image-slider__slide').length;
+    if (this.slideCount === 0) {
       throw new Error('No slides found in container');
     }
   }
@@ -83,7 +84,7 @@ class ImageSlider {
       this.config = new ImageSliderConfig(this.slider);
       
       // Initialize navigation if we have multiple slides
-      if (this.slides.length > 1) {
+      if (this.slideCount > 1) {
         this.navigation = new ImageSliderNavigation(this.slider, this.config);
         this._logger(`[Slider: ${this.sliderId}] Navigation initialized`);
       }

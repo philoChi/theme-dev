@@ -107,8 +107,8 @@
         {{ block.shopify_attributes }}
         role="group"
         aria-roledescription="slide"
-        {% if forloop.index == current_slide_index %}aria-current="true"{% endif %}
-        aria-hidden="{% unless forloop.index == current_slide_index %}true{% else %}false{% endunless %}"
+        {% if forloop.index0 == current_slide_index %}aria-current="true"{% endif %}
+        aria-hidden="{% unless forloop.index0 == current_slide_index %}true{% else %}false{% endunless %}"
         aria-label="Slide {{ forloop.index }} of {{ forloop.length }}{% if block.settings.title != blank %}: {{ block.settings.title | escape }}{% endif %}"
         style="{% unless is_priority_slide %}content-visibility: auto;{% endunless %}"
       >
