@@ -16,6 +16,7 @@
 {%- liquid
   assign slider_id = slider_id | default: 'image-slider-default'
   assign blocks_count = blocks_count | default: 1
+  assign current_slide_index = current_slide_index | default: 1
 -%}
 
 {%- comment -%} Navigation overlay container with separator {%- endcomment -%}
@@ -39,10 +40,10 @@
         <div class="image-slider__dots" role="tablist" aria-label="Slide indicators">
           {%- for i in (1..blocks_count) -%}
             <button 
-              class="image-slider__dot{% if forloop.index == 2 %} image-slider__dot--active{% endif %}" 
+              class="image-slider__dot{% if forloop.index == current_slide_index %} image-slider__dot--active{% endif %}" 
               role="tab"
               aria-label="Go to slide {{ forloop.index }}"
-              aria-selected="{% if forloop.index == 2 %}true{% else %}false{% endif %}"
+              aria-selected="{% if forloop.index == current_slide_index %}true{% else %}false{% endif %}"
               data-slide-index="{{ forloop.index0 }}"
               type="button"
             >

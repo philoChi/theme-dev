@@ -162,6 +162,7 @@ github-repository: git@github.com:philoChi/theme-dev.git
   - **DOM analysis**: HTML structure and component verification using `mcp__playwright__playwright_get_visible_html`
   - **Navigation**: Page navigation and interaction testing using `mcp__playwright__playwright_navigate`
   - **Whenever needed**: Always analyze captured screenshots and logs to ensure implementation correctness
+  - **Liquid considerations**: When implementing new solutions or refactoring, always take into account liquid changes beside javascript or css to achieve your goals
   - **Precise verification**: Analyze the content of the page precisely. To achieve this, use class selectors in playwright, for example to analyze a specific part of the website that has been changed
   - **Invoke subagents**: Capture different screenshots (e.g. of selectors), logs and HTML of the same page in parallel by invoking subagents
   - **Working with Screenshots**: Screenshots taking by playwright are meant to be read and analyzed by YOU, **not** just captured for documentation

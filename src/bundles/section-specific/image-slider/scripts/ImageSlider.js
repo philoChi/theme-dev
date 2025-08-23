@@ -1,8 +1,9 @@
 import ImageSliderConfig from './ImageSliderConfig.js';
+import ImageSliderNavigation from './ImageSliderNavigation.js';
 
 /**
- * Image Slider Component - Static Version
- * Basic image slider with no functionality - only CSS-based layout
+ * Image Slider Component
+ * Complete image slider with navigation functionality
  */
 class ImageSlider {
   /**
@@ -17,9 +18,9 @@ class ImageSlider {
     this.initializeElements();
     this.initializeLogger();
     
-    this._logger(`[Slider: ${this.sliderId}] Initializing static slider with ${this.slides.length} slides`);
+    this._logger(`[Slider: ${this.sliderId}] Initializing slider with ${this.slides.length} slides`);
 
-    // Basic initialization only
+    // Initialize slider components
     this.init();
   }
 
@@ -74,17 +75,79 @@ class ImageSlider {
   }
 
   /**
-   * Initialize the slider component
-   * Basic initialization - just adds loaded class for CSS styling
+   * Initialize the slider component with full functionality
    */
   init() {
     try {
-      // Initialize basic configuration
+      // Initialize configuration
       this.config = new ImageSliderConfig(this.slider);
       
-      this._logger(`[Slider: ${this.sliderId}] Static initialization complete`);
+      // Initialize navigation if we have multiple slides
+      if (this.slides.length > 1) {
+        this.navigation = new ImageSliderNavigation(this.slider, this.config);
+        this._logger(`[Slider: ${this.sliderId}] Navigation initialized`);
+      }
+      
+      // Mark slider as initialized
+      this.slider.classList.add('image-slider--initialized');
+      
+      this._logger(`[Slider: ${this.sliderId}] Initialization complete`);
     } catch (error) {
-      this.handleError('Failed to initialize static slider', error);
+      this.handleError('Failed to initialize slider', error);
+    }
+  }
+
+  /**
+   * Get current slide index from navigation
+   * @returns {number} Current slide index
+   */
+  getCurrentIndex() {
+    return this.navigation ? this.navigation.getCurrentIndex() : 0;
+  }
+
+  /**
+   * Navigate to specific slide
+   * @param {number} index - Target slide index
+   */
+  goToSlide(index) {
+    if (this.navigation) {
+      this.navigation.goToSlide(index);
+    }
+  }
+
+  /**
+   * Navigate to previous slide
+   */
+  goToPreviousSlide() {
+    if (this.navigation) {
+      this.navigation.goToPreviousSlide();
+    }
+  }
+
+  /**
+   * Navigate to next slide
+   */
+  goToNextSlide() {
+    if (this.navigation) {
+      this.navigation.goToNextSlide();
+    }
+  }
+
+  /**
+   * Cleanup slider instance
+   */
+  cleanup() {
+    try {
+      if (this.navigation) {
+        this.navigation.cleanup();
+        this.navigation = null;
+      }
+      
+      this.slider.classList.remove('image-slider--initialized');
+      
+      this._logger(`[Slider: ${this.sliderId}] Cleanup completed`);
+    } catch (error) {
+      this.handleError('Failed to cleanup slider', error);
     }
   }
 }
