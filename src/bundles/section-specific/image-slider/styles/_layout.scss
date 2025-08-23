@@ -46,7 +46,7 @@
   position: relative;
   /* Fixed width based on slide max-width for viewport-independent transforms */
   width: calc(var(--slider-slide-total-max-width) * var(--slider-slide-count));
-  /* Height determined by absolutely positioned slides with aspect-ratio */
-  aspect-ratio: var(--slider-slide-aspect-ratio);
+  /* Height calculated to match exactly one slide's height */
+  height: calc(var(--slider-slide-total-max-width) / (var(--slider-slide-aspect-ratio)));
   transition: transform var(--slider-transition-duration, 500ms) var(--slider-transition-timing, ease);
 }
