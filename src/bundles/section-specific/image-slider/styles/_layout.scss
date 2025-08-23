@@ -41,19 +41,12 @@
   }
 }
 
-/********************  Container - Fixed Width Layout  ********************/
+/********************  Container - Relative Positioning Layout  ********************/
 .image-slider__container {
-  display: flex;
-  align-items: stretch;
-  justify-content: flex-start;
+  position: relative;
   /* Fixed width based on slide max-width for viewport-independent transforms */
   width: calc(var(--slider-slide-total-max-width) * var(--slider-slide-count));
+  /* Height determined by absolutely positioned slides with aspect-ratio */
+  aspect-ratio: var(--slider-slide-aspect-ratio);
   transition: transform var(--slider-transition-duration, 500ms) var(--slider-transition-timing, ease);
-}
-
-/********************  Slide positioning  ********************/
-.image-slider__slide {
-  flex-shrink: 0;
-  /* Fixed width matching the max-width constraint */
-  width: var(--slider-slide-total-max-width);
 }

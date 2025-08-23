@@ -4,6 +4,7 @@
   assign slide_length = slide_length | default: 1
   assign current_slide_index = current_slide_index | default: 1
   assign slide_index_zero = slide_index | minus: 1
+  assign slide_translateX_by = slide_index_zero | times: 100
 -%}
 
 <div 
@@ -13,6 +14,7 @@
   role="group"
   {% if slide_index_zero == current_slide_index %}aria-current="true"{% endif %}
   aria-label="Slide {{ slide_index }} of {{ slide_length }}"
+  style="transform: translateX({{ slide_translateX_by }}%);"
 >
   {%- if block.settings.image != blank -%}
     {%- liquid
