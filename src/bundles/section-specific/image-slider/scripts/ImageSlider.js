@@ -1,5 +1,4 @@
 import ImageSliderConfig from './ImageSliderConfig.js';
-import ImageSliderNavigation from './ImageSliderNavigation.js';
 
 /**
  * Image Slider Component
@@ -14,13 +13,10 @@ class ImageSlider {
     this.slider = sliderElement;
     this.sliderId = this.generateSliderId(sliderElement);
     
-    // Validate and cache DOM elements
+    // Initialize and cache all DOM elements
     this.initializeElements();
-    this.initializeLogger();
     
-    this._logger(`[Slider: ${this.sliderId}] Initializing slider with ${this.slideCount} slides`);
-
-    // Initialize slider components
+    // Initialize the slider
     this.init();
   }
 
@@ -34,28 +30,96 @@ class ImageSlider {
   }
 
   /**
-   * Initialize and validate DOM elements
+   * Initialize and validate DOM elements - cache everything once
    */
   initializeElements() {
+    // Main container
     this.container = this.slider.querySelector('.image-slider__container');
     if (!this.container) {
       throw new Error('Slider container not found');
     }
     
-    // Just count slides, don't store the array
-    this.slideCount = this.container.querySelectorAll('.image-slider__slide').length;
+    // Cache slides and count
+    this.slides = this.container.querySelectorAll('.image-slider__slide');
+    this.slideCount = this.slides.length;
     if (this.slideCount === 0) {
       throw new Error('No slides found in container');
+    }
+    
+    // Cache navigation elements
+    this.prevButton = this.slider.querySelector('[data-arrow="prev"]');
+    this.nextButton = this.slider.querySelector('[data-arrow="next"]');
+    this.dots = Array.from(this.slider.querySelectorAll('.image-slider__dot'));
+    this.liveRegion = this.slider.querySelector('[aria-live]');
+  }
+
+  /**
+   * Initialize state and find current slide from DOM
+   */
+  initializeState() {
+    // Find current slide based on aria-current attribute (0-based indexing)
+    const currentSlideElement = this.container.querySelector('.image-slider__slide[aria-current="true"]');
+    
+    if (currentSlideElement) {
+      this.currentIndex = Array.from(this.slides).indexOf(currentSlideElement);
+    } else {
+      this.currentIndex = 0; // Default to first slide
+    }
+    
+    // Ensure valid index
+    if (this.currentIndex < 0 || this.currentIndex >= this.slideCount) {
+      this.currentIndex = 0;
     }
   }
 
   /**
-   * Initialize logger for debugging
+   * Bind all event listeners for navigation
    */
-  initializeLogger() {
-    this._logger = (typeof ImageSliderLogger !== 'undefined' && ImageSliderLogger.state)
-      ? ImageSliderLogger.state.bind(ImageSliderLogger)
-      : () => {};
+  bindEvents() {
+    // Arrow button clicks
+    if (this.prevButton) {
+      this.prevButton.addEventListener('click', this.goToPreviousSlide.bind(this));
+    }
+    
+    if (this.nextButton) {
+      this.nextButton.addEventListener('click', this.goToNextSlide.bind(this));
+    }
+    
+    // Dot indicator clicks
+    this.dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        const slideIndex = parseInt(dot.dataset.slideIndex, 10);
+        this.goToSlide(slideIndex);
+      });
+    });
+    
+    // Keyboard navigation
+    this.slider.addEventListener('keydown', this.handleKeydown.bind(this));
+  }
+
+  /**
+   * Handle keyboard navigation
+   * @param {KeyboardEvent} event - Keyboard event
+   */
+  handleKeydown(event) {
+    switch (event.key) {
+      case 'ArrowLeft':
+        event.preventDefault();
+        this.goToPreviousSlide();
+        break;
+      case 'ArrowRight':
+        event.preventDefault();
+        this.goToNextSlide();
+        break;
+      case 'Home':
+        event.preventDefault();
+        this.goToSlide(0);
+        break;
+      case 'End':
+        event.preventDefault();
+        this.goToSlide(this.slideCount - 1);
+        break;
+    }
   }
 
   /**
@@ -83,36 +147,16 @@ class ImageSlider {
       // Initialize configuration
       this.config = new ImageSliderConfig(this.slider);
       
-      // Initialize navigation if we have multiple slides
+      // Initialize state and events if we have multiple slides
       if (this.slideCount > 1) {
-        this.navigation = new ImageSliderNavigation(this.slider, this.config);
-        this._logger(`[Slider: ${this.sliderId}] Navigation initialized`);
+        this.initializeState();
+        this.bindEvents();
       }
       
       // Mark slider as initialized
       this.slider.classList.add('image-slider--initialized');
-      
-      this._logger(`[Slider: ${this.sliderId}] Initialization complete`);
     } catch (error) {
       this.handleError('Failed to initialize slider', error);
-    }
-  }
-
-  /**
-   * Get current slide index from navigation
-   * @returns {number} Current slide index
-   */
-  getCurrentIndex() {
-    return this.navigation ? this.navigation.getCurrentIndex() : 0;
-  }
-
-  /**
-   * Navigate to specific slide
-   * @param {number} index - Target slide index
-   */
-  goToSlide(index) {
-    if (this.navigation) {
-      this.navigation.goToSlide(index);
     }
   }
 
@@ -120,18 +164,137 @@ class ImageSlider {
    * Navigate to previous slide
    */
   goToPreviousSlide() {
-    if (this.navigation) {
-      this.navigation.goToPreviousSlide();
-    }
+    const newIndex = this.currentIndex > 0 ? this.currentIndex - 1 : this.slideCount - 1;
+    this.goToSlide(newIndex);
   }
 
   /**
    * Navigate to next slide
    */
   goToNextSlide() {
-    if (this.navigation) {
-      this.navigation.goToNextSlide();
+    const newIndex = this.currentIndex < this.slideCount - 1 ? this.currentIndex + 1 : 0;
+    this.goToSlide(newIndex);
+  }
+
+  /**
+   * Navigate to specific slide
+   * @param {number} slideIndex - Target slide index (0-based)
+   */
+  goToSlide(slideIndex) {
+    if (slideIndex < 0 || slideIndex >= this.slideCount || slideIndex === this.currentIndex) {
+      return;
     }
+
+    const previousIndex = this.currentIndex;
+    this.currentIndex = slideIndex;
+
+    // Update slider position
+    this.updateSliderPosition();
+    
+    // Update slide states
+    this.updateSlideStates(previousIndex);
+    
+    // Update dot indicators
+    this.updateDotStates(previousIndex);
+    
+    // Announce change to screen readers
+    this.announceSlideChange();
+  }
+
+  /**
+   * Update slider container position to show current slide
+   */
+  updateSliderPosition() {
+    // Calculate new transform position - matches Liquid template exactly
+    // The Liquid template uses: calc(50vw - var(--slider-slide-total-max-width) * (index + 0.5))
+    this.container.style.transform = `translateX(calc(50vw - var(--slider-slide-total-max-width) * (${this.currentIndex} + 0.5)))`;
+  }
+
+  /**
+   * Update slide ARIA attributes for accessibility
+   * @param {number} previousIndex - Previous slide index
+   */
+  updateSlideStates(previousIndex) {
+    // Update previous slide
+    if (this.slides[previousIndex]) {
+      this.slides[previousIndex].setAttribute('aria-current', 'false');
+      this.slides[previousIndex].setAttribute('aria-hidden', 'true');
+    }
+    
+    // Update current slide
+    if (this.slides[this.currentIndex]) {
+      this.slides[this.currentIndex].setAttribute('aria-current', 'true');
+      this.slides[this.currentIndex].setAttribute('aria-hidden', 'false');
+    }
+  }
+
+  /**
+   * Update dot indicator states
+   * @param {number} previousIndex - Previous slide index
+   */
+  updateDotStates(previousIndex) {
+    if (this.dots.length === 0) return;
+    
+    // Update previous dot
+    if (this.dots[previousIndex]) {
+      this.dots[previousIndex].classList.remove('image-slider__dot--active');
+      this.dots[previousIndex].setAttribute('aria-selected', 'false');
+    }
+    
+    // Update current dot
+    if (this.dots[this.currentIndex]) {
+      this.dots[this.currentIndex].classList.add('image-slider__dot--active');
+      this.dots[this.currentIndex].setAttribute('aria-selected', 'true');
+    }
+  }
+
+  /**
+   * Announce slide change to screen readers
+   */
+  announceSlideChange() {
+    const currentSlideElement = this.slides[this.currentIndex];
+    const slideTitle = currentSlideElement?.getAttribute('aria-label') || `Slide ${this.currentIndex + 1}`;
+    
+    // Update the slider's aria-live region
+    if (this.liveRegion) {
+      // Temporarily clear and then set the content to trigger screen reader announcement
+      this.liveRegion.textContent = '';
+      setTimeout(() => {
+        this.liveRegion.textContent = `Now showing ${slideTitle}`;
+      }, 100);
+    }
+  }
+
+  /**
+   * Get current slide index
+   * @returns {number} Current slide index (0-based)
+   */
+  getCurrentIndex() {
+    return this.currentIndex || 0;
+  }
+
+  /**
+   * Get total number of slides
+   * @returns {number} Total slide count
+   */
+  getSlideCount() {
+    return this.slideCount;
+  }
+
+  /**
+   * Check if we're on the first slide
+   * @returns {boolean} True if on first slide
+   */
+  isFirstSlide() {
+    return this.currentIndex === 0;
+  }
+
+  /**
+   * Check if we're on the last slide
+   * @returns {boolean} True if on last slide
+   */
+  isLastSlide() {
+    return this.currentIndex === this.slideCount - 1;
   }
 
   /**
@@ -139,14 +302,22 @@ class ImageSlider {
    */
   cleanup() {
     try {
-      if (this.navigation) {
-        this.navigation.cleanup();
-        this.navigation = null;
+      // Remove event listeners
+      if (this.prevButton) {
+        this.prevButton.removeEventListener('click', this.goToPreviousSlide);
       }
       
-      this.slider.classList.remove('image-slider--initialized');
+      if (this.nextButton) {
+        this.nextButton.removeEventListener('click', this.goToNextSlide);
+      }
       
-      this._logger(`[Slider: ${this.sliderId}] Cleanup completed`);
+      this.dots.forEach(dot => {
+        dot.removeEventListener('click', this.goToSlide);
+      });
+      
+      this.slider.removeEventListener('keydown', this.handleKeydown);
+      
+      this.slider.classList.remove('image-slider--initialized');
     } catch (error) {
       this.handleError('Failed to cleanup slider', error);
     }

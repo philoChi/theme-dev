@@ -7,6 +7,23 @@
   padding: var(--slider-section-padding) 0;
   overflow-x: auto;
   overflow-y: hidden;
+  
+  /* Background tile pattern when configured - using pseudo-element to control opacity independently */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: var(--slider-background-image);
+    background-size: var(--slider-background-tile-size);
+    background-repeat: repeat;
+    background-position: center;
+    opacity: var(--slider-background-opacity, 1);
+    pointer-events: none;
+    z-index: -1;
+  }
 }
 
 

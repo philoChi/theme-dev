@@ -1,65 +1,44 @@
-{%- comment -%}
-  Image Slider Navigation Controls with Separator
-  
-  Encapsulated navigation controls for the image slider component.
-  Handles both prev/next arrows with glassmorphism styling and bottom overlay positioning.
-  Includes separator line between content and navigation sections.
-  Navigation is centered with configurable left and right distances via CSS variables.
-  
-  @param {String} slider_id - Unique identifier for the slider (required)
-  @param {Number} blocks_count - Number of slides for accessibility (optional, defaults to 1)
-  
-  Usage:
-  {% render 'snippet-section-image-slider-navigation', slider_id: slider_id, blocks_count: slider_blocks_count %}
-{%- endcomment -%}
-
 {%- liquid
   assign slider_id = slider_id | default: 'image-slider-default'
   assign blocks_count = blocks_count | default: 1
-  assign current_slide_index = current_slide_index | default: 1
 -%}
 
-{%- comment -%} Navigation overlay container with separator {%- endcomment -%}
 <div class="image-slider__navigation-overlay">
   <div class="image-slider__navigation-inner">
-    {%- comment -%} Subtle separator line between content and navigation {%- endcomment -%}
     <div class="image-slider__separator" aria-hidden="true"></div>
     
-    {%- comment -%} Navigation controls with semantic structure {%- endcomment -%}
     <nav class="image-slider__navigation" aria-label="Slider navigation">
-    <div class="image-slider__arrows">
-      {%- render 'snippet-feature-arrow-navigation',
-        data_attributes: 'data-arrow="prev"',
-        direction: 'prev',
-        style_wrapper: 'glassmorphism',
-        position: 'overlay'
-      -%}
-      
-      {%- comment -%} Slide indicator dots {%- endcomment -%}
-      {%- if blocks_count > 1 -%}
-        <div class="image-slider__dots" role="tablist" aria-label="Slide indicators">
-          {%- for i in (1..blocks_count) -%}
-            <button 
-              class="image-slider__dot{% if forloop.index0 == current_slide_index %} image-slider__dot--active{% endif %}" 
-              role="tab"
-              aria-label="Go to slide {{ forloop.index }}"
-              aria-selected="{% if forloop.index0 == current_slide_index %}true{% else %}false{% endif %}"
-              data-slide-index="{{ forloop.index0 }}"
-              type="button"
-            >
-              <span class="visually-hidden">Slide {{ forloop.index }}</span>
-            </button>
-          {%- endfor -%}
-        </div>
-      {%- endif -%}
-      
-      {%- render 'snippet-feature-arrow-navigation',
-        data_attributes: 'data-arrow="next"',
-        direction: 'next',
-        style_wrapper: 'glassmorphism',
-        position: 'overlay'
-      -%}
-    </div>
-  </nav>
+      <div class="image-slider__arrows">
+        {%- render 'snippet-feature-arrow-navigation',
+          data_attributes: 'data-arrow="prev"',
+          direction: 'prev',
+          style_wrapper: 'glassmorphism',
+          position: 'overlay'
+        -%}
+        
+        {%- if blocks_count > 1 -%}
+          <div class="image-slider__dots" role="tablist" aria-label="Slide indicators">
+            {%- for i in (1..blocks_count) -%}
+              <button 
+                class="image-slider__dot" 
+                role="tab"
+                aria-label="Go to slide {{ forloop.index }}"
+                data-slide-index="{{ forloop.index0 }}"
+                type="button"
+              >
+                <span class="visually-hidden">Slide {{ forloop.index }}</span>
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+        
+        {%- render 'snippet-feature-arrow-navigation',
+          data_attributes: 'data-arrow="next"',
+          direction: 'next',
+          style_wrapper: 'glassmorphism',
+          position: 'overlay'
+        -%}
+      </div>
+    </nav>
   </div>
 </div>

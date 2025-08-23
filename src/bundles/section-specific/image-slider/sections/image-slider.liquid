@@ -1,39 +1,12 @@
-{%- comment -%}
-  Image Slider Section
-  Optimized for performance, accessibility, and theme editor integration
-{%- endcomment -%}
-
-{%- comment -%} Assets loaded conditionally via theme.liquid {%- endcomment -%}
-
 {%- liquid
-  comment
-    Variable initialization with defensive defaults for theme editor
-  endcomment
   assign slider_id = section.id | default: 'image-slider-default'
-  assign slider_gap = section.settings.slide_gap | default: 16
-  assign slider_padding = section.settings.section_padding | default: 32
-  assign slider_blur = section.settings.blur_amount | default: 4
-  assign slider_side_opacity = section.settings.side_opacity | default: 0.6
-  assign slider_side_scale = section.settings.side_scale | default: 0.8
-  assign slider_bg_image = section.settings.background_image
-  assign slider_bg_opacity = section.settings.background_opacity | default: 0
-  assign slider_bg_size = section.settings.background_tile_size | default: 150
-  assign slider_autoplay = section.settings.enable_autoplay | default: false
-  assign slider_interval = section.settings.autoplay_interval | default: 10
-  assign slider_transition = section.settings.transition_duration | default: 1000
   assign slider_blocks_count = section.blocks.size | default: 0
   assign current_slide_index = section.settings.current_slide | default: 1
   
-  comment
-    Performance optimization: Preload first slide image for faster LCP
-    Using Shopify's native preload_tag for better integration
-  endcomment
   assign first_slide = section.blocks.first
   if first_slide and first_slide.settings.image != blank
-    assign preload_desktop = first_slide.settings.image | image_url: width: 1920
-    assign preload_mobile = first_slide.settings.image | image_url: width: 768
-    echo preload_desktop | preload_tag: as: 'image', media: '(min-width: 768px)'
-    echo preload_mobile | preload_tag: as: 'image', media: '(max-width: 767px)'
+    echo first_slide.settings.image | image_url: width: 1920 | preload_tag: as: 'image', media: '(min-width: 768px)'
+    echo first_slide.settings.image | image_url: width: 768 | preload_tag: as: 'image', media: '(max-width: 767px)'
   endif
 -%}
 
@@ -42,152 +15,69 @@
   class="image-slider"
   role="region"
   aria-label="Image carousel with {{ slider_blocks_count }} slides"
-  aria-roledescription="carousel"
-  aria-live="polite"
-  aria-describedby="{{ slider_id }}-instructions"
   data-section-type="image-slider"
-  data-autoplay="{{ slider_autoplay }}"
-  data-interval="{{ slider_interval | times: 1000 }}"
+  data-autoplay="{{ section.settings.enable_autoplay | default: false }}"
+  data-interval="{{ section.settings.autoplay_interval | default: 10 | times: 1000 }}"
   style="
-    --slider-transition-duration: {{ slider_transition }}ms;
-    --slider-slide-spacing: {{ slider_gap }}px;
-    --slider-section-padding: {{ slider_padding }}px;
-    --slider-slide-blur: {{ slider_blur }}px;
-    --slider-slide-opacity: {{ slider_side_opacity }};
-    --slider-slide-scale: {{ slider_side_scale }};
-    --slider-will-change: transform;
-    --slider-content-visibility: auto;
+    --slider-transition-duration: {{ section.settings.transition_duration | default: 1000 }}ms;
+    --slider-slide-spacing: {{ section.settings.slide_gap | default: 16 }}px;
+    --slider-section-padding: {{ section.settings.section_padding | default: 32 }}px;
+    --slider-slide-blur: {{ section.settings.blur_amount | default: 4 }}px;
+    --slider-slide-opacity: {{ section.settings.side_opacity | default: 0.6 }};
+    --slider-slide-scale: {{ section.settings.side_scale | default: 0.8 }};
     --slider-slide-count: {{ slider_blocks_count }};
     --slider-current-position: {{ current_slide_index }};
-    {%- if slider_bg_image != blank -%}
-      {%- comment -%} Background pattern optimized for tiling with high resolution {%- endcomment -%}
-      --slider-background-image: url({{ slider_bg_image | image_url: width: 800 }});
-      --slider-background-opacity: {{ slider_bg_opacity }};
-      --slider-background-tile-size: {{ slider_bg_size }}px;
+    {%- if section.settings.background_image != blank -%}
+      --slider-background-image: url({{ section.settings.background_image | image_url: width: 800 }});
+      --slider-background-opacity: {{ section.settings.background_opacity | default: 0.1 }};
+      --slider-background-tile-size: {{ section.settings.background_tile_size | default: 150 }}px;
     {%- endif -%}
   "
 >
-  {%- comment -%} Hidden accessibility instructions {%- endcomment -%}
-  <div id="{{ slider_id }}-instructions" class="visually-hidden">
-    Use left and right arrow keys to navigate between slides. Touch devices can swipe left or right.
-  </div>
-
-
-  {%- comment -%} Wrapper with container query context for viewport-independent positioning {%- endcomment -%}
   <div class="image-slider__wrapper">
-    {%- comment -%} Main slides container with centered slide positioning {%- endcomment -%}
-    {%- liquid
-      comment
-        Centering calculation explained:
-        - Each slide has width: --slider-slide-total-max-width
-        - To center slide N: move container left by (N × slide_width), then adjust for centering
-        - Final formula: -(index × slide_width) + (viewport_center - half_slide_width)
-        - This simplifies to: calc(50vw - var(--slider-slide-total-max-width) * (index + 0.5))
-      endcomment
-    -%}
     <div class="image-slider__container" 
-         style="will-change: transform; transform: translateX(calc(50vw - var(--slider-slide-total-max-width) * ({{ current_slide_index }} + 0.5)))">
+         style="transform: translateX(calc(50vw - var(--slider-slide-total-max-width) * ({{ current_slide_index }} + 0.5)))">
     {%- for block in section.blocks -%}
-      {%- liquid
-        comment
-          Performance optimization: eager load first 3 slides, lazy load the rest
-        endcomment
-        assign is_priority_slide = false
-        if forloop.index <= 3
-          assign is_priority_slide = true
-        endif
-        
-        assign slide_id = slider_id | append: '-slide-' | append: forloop.index
-      -%}
-      
-      {%- comment -%} Individual slide with enhanced accessibility and performance {%- endcomment -%}
       <div 
-        id="{{ slide_id }}"
+        id="{{ slider_id }}-slide-{{ forloop.index }}"
         class="image-slider__slide" 
         {{ block.shopify_attributes }}
         role="group"
-        aria-roledescription="slide"
         {% if forloop.index0 == current_slide_index %}aria-current="true"{% endif %}
-        aria-hidden="{% unless forloop.index0 == current_slide_index %}true{% else %}false{% endunless %}"
-        aria-label="Slide {{ forloop.index }} of {{ forloop.length }}{% if block.settings.title != blank %}: {{ block.settings.title | escape }}{% endif %}"
-        style="{% unless is_priority_slide %}content-visibility: auto;{% endunless %}"
+        aria-label="Slide {{ forloop.index }} of {{ forloop.length }}"
       >
         {%- if block.settings.image != blank -%}
-          {%- comment -%} Progressive image loading with modern formats and optimized performance {%- endcomment -%}
           {%- liquid
-            comment
-              Loading strategy: eager for first slide, lazy for others
-              Fetchpriority: high for first slide, auto for others
-            endcomment
-            assign loading_strategy = 'lazy'
             assign fetch_priority = 'auto'
             if forloop.first
-              assign loading_strategy = 'eager'
               assign fetch_priority = 'high'
-            elsif is_priority_slide
-              assign fetch_priority = 'auto'
-            else
-              assign fetch_priority = 'low'
             endif
-            
-            assign image_alt = block.settings.image.alt | default: block.settings.title | default: 'Slide image' | escape
           -%}
-          <figure class="image-slider__figure">
-            <picture class="image-slider__picture">
-              {%- comment -%} WebP format for modern browsers with mobile-first optimization {%- endcomment -%}
-              <source
-                type="image/webp"
-                srcset="
-                  {{ block.settings.image | image_url: width: 320, format: 'webp' }} 320w,
-                  {{ block.settings.image | image_url: width: 480, format: 'webp' }} 480w,
-                  {{ block.settings.image | image_url: width: 640, format: 'webp' }} 640w,
-                  {{ block.settings.image | image_url: width: 768, format: 'webp' }} 768w,
-                  {{ block.settings.image | image_url: width: 1024, format: 'webp' }} 1024w,
-                  {{ block.settings.image | image_url: width: 1280, format: 'webp' }} 1280w,
-                  {{ block.settings.image | image_url: width: 1536, format: 'webp' }} 1536w,
-                  {{ block.settings.image | image_url: width: 1920, format: 'webp' }} 1920w,
-                  {{ block.settings.image | image_url: width: 2400, format: 'webp' }} 2400w,
-                  {{ block.settings.image | image_url: width: 2900, format: 'webp' }} 2900w"
-                sizes="(max-width: 767px) 100vw, (max-width: 1279px) 90vw, 1450px">
-              {%- comment -%} Fallback image with optimized loading and priority {%- endcomment -%}
-              {{
-                block.settings.image
-                | image_url: width: 2900
-                | image_tag: 
-                  loading: loading_strategy,
-                  fetchpriority: fetch_priority,
-                  widths: '320, 480, 640, 768, 1024, 1280, 1536, 1920, 2400, 2900',
-                  sizes: '(max-width: 767px) 100vw, (max-width: 1279px) 90vw, 1450px',
-                  class: 'image-slider__image',
-                  alt: image_alt
-              }}
-            </picture>
-          </figure>
+          {{
+            block.settings.image
+            | image_url: width: 2900
+            | image_tag: 
+              loading: 'lazy',
+              fetchpriority: fetch_priority,
+              widths: '320, 480, 640, 768, 1024, 1280, 1536, 1920, 2400, 2900',
+              sizes: '(max-width: 767px) 100vw, (max-width: 1279px) 90vw, 1450px',
+              class: 'image-slider__image',
+              alt: block.settings.image.alt | default: 'Slide image'
+          }}
         {%- else -%}
-          {%- comment -%} Fallback placeholder with accessible attributes {%- endcomment -%}
-          <figure class="image-slider__figure image-slider__placeholder">
-            {{ 'image' | placeholder_svg_tag: 'placeholder-svg', alt: 'Placeholder image for slide ' | append: forloop.index }}
-            {%- if block.settings.title != blank -%}
-              <figcaption class="visually-hidden">{{ block.settings.title | escape }}</figcaption>
-            {%- endif -%}
-          </figure>
+          {{ 'image' | placeholder_svg_tag: 'image-slider__image placeholder-svg' }}
         {%- endif -%}
         
-        {%- comment -%} Render slide content using improved snippet {%- endcomment -%}
         {%- render 'snippet-section-image-slider-slide-content-overlay', block: block -%}
       </div>
     {%- endfor -%}
     </div>
-    {%- comment -%} Navigation controls rendered below content with separator {%- endcomment -%}
     {%- render 'snippet-section-image-slider-navigation', 
       slider_id: slider_id, 
-      blocks_count: slider_blocks_count,
-      current_slide_index: current_slide_index
+      blocks_count: slider_blocks_count
     -%}
   </div>
 </section>
-
-{%- comment -%} JavaScript loaded conditionally via theme.liquid {%- endcomment -%}
 
 {% schema %}
 {
