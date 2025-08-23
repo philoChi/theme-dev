@@ -180,7 +180,7 @@ class ImageSliderNavigation {
     this.dots.forEach(dot => {
       dot.addEventListener('click', () => {
         const slideIndex = parseInt(dot.dataset.slideIndex, 10);
-        this.goToSlide(slideIndex + 1); // Convert 0-based to 1-based
+        this.goToSlide(slideIndex); // Convert 0-based to 1-based
       });
     });
     
@@ -309,9 +309,9 @@ class ImageSliderNavigation {
     if (this.dots.length === 0) return;
     
     // Update previous dot (convert 1-based slide to 0-based array index)
-    if (this.dots[previousSlide - 1]) {
-      this.dots[previousSlide - 1].classList.remove('image-slider__dot--active');
-      this.dots[previousSlide - 1].setAttribute('aria-selected', 'false');
+    if (this.dots[previousSlide]) {
+      this.dots[previousSlide].classList.remove('image-slider__dot--active');
+      this.dots[previousSlide].setAttribute('aria-selected', 'false');
     }
     
     // Update current dot (convert 1-based slide to 0-based array index)
