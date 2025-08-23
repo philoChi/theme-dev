@@ -28,9 +28,9 @@
   --slider-transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
   --slider-transform-origin: center center;
 
-
   /* Content Styling */
   --slider-text-color: var(--main-background);
+  --slider-cta-gap: 1rem;
   
   /* Horizontal gaps (shared by content, separator, and navigation) */
   --slider-content-gap-horizontal: 10%;
