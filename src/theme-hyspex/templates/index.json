@@ -62,30 +62,12 @@
             "cta_link_3": "",
             "cta_color_3": "#000000"
           }
-        },
-        "slide_a4MMnQ": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/65c25d4964f40d0f40deaf9b_image11_037205ea-3391-471e-ac16-86ec93bc67db.jpg",
-            "title": "New Slide",
-            "description": "Describe your promotion here",
-            "cta_text_1": "Test",
-            "cta_link_1": "shopify://pages/homepage",
-            "cta_color_1": "#000000",
-            "cta_text_2": "",
-            "cta_link_2": "",
-            "cta_color_2": "#000000",
-            "cta_text_3": "",
-            "cta_link_3": "",
-            "cta_color_3": "#000000"
-          }
         }
       },
       "block_order": [
         "slide_a3EhVj",
         "slide_ejqfXV",
-        "slide_PyDDzP",
-        "slide_a4MMnQ"
+        "slide_PyDDzP"
       ],
       "settings": {
         "enable_autoplay": false,
