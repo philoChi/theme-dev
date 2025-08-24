@@ -17,17 +17,15 @@
         -%}
         
         {%- if blocks_count > 1 -%}
-          <div class="image-slider__dots" role="tablist" aria-label="Slide indicators">
+          <div class="image-slider__dots" aria-label="Slide indicators">
             {%- for i in (1..blocks_count) -%}
-              <button 
+              <span 
                 class="image-slider__dot" 
-                role="tab"
-                aria-label="Go to slide {{ forloop.index }}"
+                aria-label="Slide {{ forloop.index }}"
                 data-slide-index="{{ forloop.index0 }}"
-                type="button"
               >
                 <span class="visually-hidden">Slide {{ forloop.index }}</span>
-              </button>
+              </span>
             {%- endfor -%}
           </div>
         {%- endif -%}

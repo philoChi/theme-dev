@@ -95,7 +95,6 @@ class ImageSlider {
     this.boundGoToPrevious = this.goToPreviousSlide.bind(this);
     this.boundGoToNext = this.goToNextSlide.bind(this);
     this.boundHandleTransitionEnd = this.handleTransitionEnd.bind(this);
-    this.boundDotHandlers = [];
     
     // Arrow button clicks
     if (this.prevButton) {
@@ -106,15 +105,7 @@ class ImageSlider {
       this.nextButton.addEventListener('click', this.boundGoToNext);
     }
     
-    // Dot indicator clicks
-    this.dots.forEach((dot, index) => {
-      const boundHandler = () => {
-        const slideIndex = parseInt(dot.dataset.slideIndex, 10);
-        this.goToSlide(slideIndex);
-      };
-      this.boundDotHandlers[index] = boundHandler;
-      dot.addEventListener('click', boundHandler);
-    });
+    // Note: Dot indicators are now visual-only, no click handlers
     
     // Transition end event for infinite sliding
     this.container.addEventListener('transitionend', this.boundHandleTransitionEnd);
@@ -266,13 +257,7 @@ class ImageSlider {
         this.nextButton.removeEventListener('click', this.boundGoToNext);
       }
       
-      if (this.boundDotHandlers) {
-        this.dots.forEach((dot, index) => {
-          if (this.boundDotHandlers[index]) {
-            dot.removeEventListener('click', this.boundDotHandlers[index]);
-          }
-        });
-      }
+      // Note: No dot handlers to cleanup as they're visual-only
       
       // Remove infinite sliding event listener
       if (this.container && this.boundHandleTransitionEnd) {
