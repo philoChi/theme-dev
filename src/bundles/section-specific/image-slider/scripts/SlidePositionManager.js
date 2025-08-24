@@ -105,18 +105,6 @@ class SlidePositionManager {
     this.updateAdjacentSlidePositions(toIndex);
   }
 
-  /**
-   * Reposition slides for seamless infinite transition (Legacy method)
-   * @deprecated Use prepareInfiniteTransition + completeInfiniteTransition instead
-   * @param {number} fromIndex - Current slide index
-   * @param {number} toIndex - Target slide index
-   * @param {boolean} isForward - Direction of transition
-   */
-  repositionSlidesForInfiniteTransition(fromIndex, toIndex, isForward) {
-    // For backwards compatibility, use the new two-phase approach immediately
-    this.prepareInfiniteTransition(fromIndex, toIndex, isForward);
-    this.completeInfiniteTransition(toIndex);
-  }
 
   /**
    * Normalize slide positions after infinite transition

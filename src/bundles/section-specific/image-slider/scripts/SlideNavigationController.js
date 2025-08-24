@@ -13,7 +13,7 @@ class SlideNavigationController {
     this.positionManager = positionManager;
     this.currentIndex = 0;
     this.isTransitioning = false;
-    this.infiniteMode = true; // Always enable infinite mode
+    this.infiniteMode = true; // Infinite mode enabled for seamless transitions
     this.deferredRepositionTimeout = null; // Track pending deferred repositioning
   }
 
