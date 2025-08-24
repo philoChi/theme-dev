@@ -17,8 +17,6 @@ class ImageSliderConfig {
    */
   readConfiguration() {
     // Read data attributes
-    this.autoplay = this.slider.dataset.autoplay === 'true';
-    this.interval = parseInt(this.slider.dataset.interval || '10000', 10);
     this.sectionType = this.slider.dataset.sectionType || 'image-slider';
     
     // Read CSS variables for transition duration
@@ -27,7 +25,6 @@ class ImageSliderConfig {
     
     // Navigation settings
     this.enableNavigation = true; // Always enable navigation for multiple slides
-    this.enableKeyboardNavigation = true;
     this.enableDotsNavigation = true;
     
     // Accessibility settings
@@ -35,21 +32,6 @@ class ImageSliderConfig {
     this.ariaLive = this.slider.getAttribute('aria-live') || 'polite';
   }
 
-  /**
-   * Get autoplay setting
-   * @returns {boolean} Whether autoplay is enabled
-   */
-  isAutoplayEnabled() {
-    return this.autoplay;
-  }
-
-  /**
-   * Get autoplay interval
-   * @returns {number} Autoplay interval in milliseconds
-   */
-  getAutoplayInterval() {
-    return this.interval;
-  }
 
   /**
    * Get transition duration
@@ -67,13 +49,6 @@ class ImageSliderConfig {
     return this.enableNavigation;
   }
 
-  /**
-   * Check if keyboard navigation is enabled
-   * @returns {boolean} Whether keyboard navigation is enabled
-   */
-  isKeyboardNavigationEnabled() {
-    return this.enableKeyboardNavigation;
-  }
 
   /**
    * Check if dots navigation is enabled

@@ -16,8 +16,6 @@
   role="region"
   aria-label="Image carousel with {{ slider_blocks_count }} slides"
   data-section-type="image-slider"
-  data-autoplay="{{ section.settings.enable_autoplay | default: false }}"
-  data-interval="{{ section.settings.autoplay_interval | default: 10 | times: 1000 }}"
   style="
     --slider-transition-duration: {{ section.settings.transition_duration | default: 1000 }}ms;
     --slider-slide-spacing: {{ section.settings.slide_gap | default: 16 }}px;
@@ -66,21 +64,6 @@
       "content": "Slider Behavior"
     },
     {
-      "type": "checkbox",
-      "id": "enable_autoplay",
-      "label": "Enable autoplay",
-      "default": false
-    },
-    {
-      "type": "range",
-      "id": "autoplay_interval",
-      "label": "Autoplay interval (seconds)",
-      "min": 4,
-      "max": 20,
-      "step": 1,
-      "default": 10
-    },
-    {
       "type": "range",
       "id": "transition_duration",
       "label": "Transition duration (ms)",
@@ -90,7 +73,7 @@
       "default": 1000
     },
 
-    /* --------  New Appearance group  -------- */
+    /* --------  Appearance group  -------- */
     {
       "type": "header",
       "content": "Appearance"
