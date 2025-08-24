@@ -4,7 +4,12 @@
   assign slide_length = slide_length | default: 1
   assign current_slide_index = current_slide_index | default: 1
   assign slide_index_zero = slide_index | minus: 1
+  
+  # Standard positioning for initial load (JavaScript will manage virtual positions)
   assign slide_translateX_by = slide_index_zero | times: 100
+  
+  # For infinite mode (3+ slides), JavaScript will dynamically manage positions
+  # Range will be extended from -100% to 400% for seamless infinite sliding
 -%}
 
 <div 
