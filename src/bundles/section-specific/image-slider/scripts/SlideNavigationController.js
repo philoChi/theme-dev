@@ -60,6 +60,9 @@ class SlideNavigationController {
 
     const previousIndex = this.currentIndex;
     const shouldUseInfinite = this.shouldUseInfiniteTransition(previousIndex, slideIndex);
+    const isForward = shouldUseInfinite ? (previousIndex === this.slideCount - 1 && slideIndex === 0) : null;
+    
+    console.log(`🎯 goToSlide: ${previousIndex} → ${slideIndex}, infinite=${shouldUseInfinite}, forward=${isForward}`);
     
     // Update current index
     this.currentIndex = slideIndex;
@@ -69,7 +72,7 @@ class SlideNavigationController {
       previousIndex,
       currentIndex: slideIndex,
       useInfiniteTransition: shouldUseInfinite,
-      isForward: shouldUseInfinite ? (previousIndex === this.slideCount - 1 && slideIndex === 0) : null
+      isForward
     };
   }
 
