@@ -73,12 +73,13 @@ class SlidePositionManager {
   }
 
   /**
-   * Reposition slides for seamless infinite transition
+   * Prepare infinite transition by positioning only the incoming slide
+   * Phase 1: Position target slide for smooth entry without affecting outgoing slide
    * @param {number} fromIndex - Current slide index
    * @param {number} toIndex - Target slide index
    * @param {boolean} isForward - Direction of transition
    */
-  repositionSlidesForInfiniteTransition(fromIndex, toIndex, isForward) {
+  prepareInfiniteTransition(fromIndex, toIndex, isForward) {
     if (isForward) {
       // Last → First: Position the first slide for seamless forward transition
       const lastSlidePosition = this.slidePositions.get(fromIndex);
@@ -89,9 +90,32 @@ class SlidePositionManager {
       this.slidePositions.set(toIndex, firstSlidePosition - 100);
     }
     
-    // Apply the repositioning and update adjacent slides for the new current slide
+    // Apply positioning of target slide only
     this.updateSlidePositions();
+  }
+
+  /**
+   * Complete infinite transition by repositioning remaining slides
+   * Phase 2: Deferred repositioning when slides are less visible
+   * @param {number} toIndex - Target slide index (now current)
+   */
+  completeInfiniteTransition(toIndex) {
+    // Now update adjacent slide positions for the new current slide
+    // This happens after a delay when slides are mid-transition and less visible
     this.updateAdjacentSlidePositions(toIndex);
+  }
+
+  /**
+   * Reposition slides for seamless infinite transition (Legacy method)
+   * @deprecated Use prepareInfiniteTransition + completeInfiniteTransition instead
+   * @param {number} fromIndex - Current slide index
+   * @param {number} toIndex - Target slide index
+   * @param {boolean} isForward - Direction of transition
+   */
+  repositionSlidesForInfiniteTransition(fromIndex, toIndex, isForward) {
+    // For backwards compatibility, use the new two-phase approach immediately
+    this.prepareInfiniteTransition(fromIndex, toIndex, isForward);
+    this.completeInfiniteTransition(toIndex);
   }
 
   /**

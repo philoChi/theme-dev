@@ -14,6 +14,7 @@ class SlideNavigationController {
     this.currentIndex = 0;
     this.isTransitioning = false;
     this.infiniteMode = true; // Always enable infinite mode
+    this.deferredRepositionTimeout = null; // Track pending deferred repositioning
   }
 
   /**
@@ -105,26 +106,62 @@ class SlideNavigationController {
   /**
    * Execute standard slide transition
    * @param {number} newIndex - New slide index
+   * @param {number} transitionDuration - Transition duration in milliseconds (default: 500)
    */
-  executeStandardTransition(newIndex) {
+  executeStandardTransition(newIndex, transitionDuration = 500) {
+    // Clear any pending deferred repositioning
+    if (this.deferredRepositionTimeout) {
+      clearTimeout(this.deferredRepositionTimeout);
+      this.deferredRepositionTimeout = null;
+    }
+    
+    // Update container position immediately
     this.positionManager.updateContainerPosition(newIndex);
-    this.positionManager.updateAdjacentSlidePositions(newIndex);
+    
+    // For 3-slide configurations, use deferred repositioning to prevent visible slide disappearing
+    if (this.slideCount === 3) {
+      this.isTransitioning = true;
+      
+      // Defer the adjacent slide positioning to when slides are less visible
+      this.deferredRepositionTimeout = setTimeout(() => {
+        this.positionManager.updateAdjacentSlidePositions(newIndex);
+        this.deferredRepositionTimeout = null;
+        this.isTransitioning = false;
+      }, transitionDuration * 0.4);
+    } else {
+      // For 4+ slides, use immediate repositioning (works fine)
+      this.positionManager.updateAdjacentSlidePositions(newIndex);
+    }
   }
 
   /**
-   * Execute infinite transition for seamless boundary crossings
+   * Execute infinite transition for seamless boundary crossings using two-phase approach
    * @param {number} fromIndex - Current slide index
    * @param {number} toIndex - Target slide index
    * @param {boolean} isForward - Direction of transition
+   * @param {number} transitionDuration - Transition duration in milliseconds (default: 500)
    */
-  executeInfiniteTransition(fromIndex, toIndex, isForward) {
+  executeInfiniteTransition(fromIndex, toIndex, isForward, transitionDuration = 500) {
     this.isTransitioning = true;
     
-    // Reposition slides for seamless infinite transition
-    this.positionManager.repositionSlidesForInfiniteTransition(fromIndex, toIndex, isForward);
+    // Clear any pending deferred repositioning
+    if (this.deferredRepositionTimeout) {
+      clearTimeout(this.deferredRepositionTimeout);
+      this.deferredRepositionTimeout = null;
+    }
+    
+    // Phase 1: Prepare infinite transition by positioning only the incoming slide
+    this.positionManager.prepareInfiniteTransition(fromIndex, toIndex, isForward);
     
     // Execute transition with updated positions
     this.positionManager.updateContainerPosition(toIndex);
+    
+    // Phase 2: Deferred repositioning of remaining slides
+    // This happens 40% into the transition when slides are less visible
+    this.deferredRepositionTimeout = setTimeout(() => {
+      this.positionManager.completeInfiniteTransition(toIndex);
+      this.deferredRepositionTimeout = null;
+    }, transitionDuration * 0.4);
   }
 
   /**
@@ -133,6 +170,12 @@ class SlideNavigationController {
    */
   handleTransitionEnd(errorHandler) {
     if (this.isTransitioning) {
+      // Clear any pending deferred repositioning since transition is complete
+      if (this.deferredRepositionTimeout) {
+        clearTimeout(this.deferredRepositionTimeout);
+        this.deferredRepositionTimeout = null;
+      }
+      
       // Normalize slide positions after infinite transition
       this.positionManager.normalizeSlidePositions(this.currentIndex, errorHandler);
       this.isTransitioning = false;

@@ -186,11 +186,14 @@ class ImageSlider {
 
     const { previousIndex, currentIndex, useInfiniteTransition, isForward } = result;
     
+    // Get the configured transition duration for both transition types
+    const transitionDuration = this.config ? this.config.getTransitionDuration() : 500;
+    
     // Execute appropriate transition
     if (useInfiniteTransition) {
-      this.navigationController.executeInfiniteTransition(previousIndex, currentIndex, isForward);
+      this.navigationController.executeInfiniteTransition(previousIndex, currentIndex, isForward, transitionDuration);
     } else {
-      this.navigationController.executeStandardTransition(currentIndex);
+      this.navigationController.executeStandardTransition(currentIndex, transitionDuration);
     }
     
     // Update UI states
@@ -248,6 +251,12 @@ class ImageSlider {
    */
   cleanup() {
     try {
+      // Clean up any pending deferred repositioning timeouts
+      if (this.navigationController && this.navigationController.deferredRepositionTimeout) {
+        clearTimeout(this.navigationController.deferredRepositionTimeout);
+        this.navigationController.deferredRepositionTimeout = null;
+      }
+      
       // Remove event listeners (bound methods are stored during bindEvents)
       if (this.prevButton && this.boundGoToPrevious) {
         this.prevButton.removeEventListener('click', this.boundGoToPrevious);
