@@ -44,8 +44,10 @@
 /********************  Container - Relative Positioning Layout  ********************/
 .image-slider__container {
   position: relative;
-  /* Fixed width based on slide max-width for viewport-independent transforms */
-  width: calc(var(--slider-slide-total-max-width) * var(--slider-slide-count));
+  /* Fixed width based on slide max-width + gaps for viewport-independent transforms */
+  /* Formula: slideWidth * slideCount + slideWidth * gap/100 * (slideCount - 1) */
+  width: calc(var(--slider-slide-total-max-width) * var(--slider-slide-count) + 
+              var(--slider-slide-total-max-width) * var(--slider-slide-spacing) / 100 * (var(--slider-slide-count) - 1));
   /* Height calculated to match exactly one slide's height */
   height: calc(var(--slider-slide-total-max-width) / (var(--slider-slide-aspect-ratio)));
   transition: transform var(--slider-transition-duration, 500ms) var(--slider-transition-timing, ease);

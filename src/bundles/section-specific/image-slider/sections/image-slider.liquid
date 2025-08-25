@@ -2,6 +2,9 @@
   assign slider_id = section.id | default: 'image-slider-default'
   assign slider_blocks_count = section.blocks.size | default: 0
   assign current_slide_index = section.settings.current_slide | default: 1
+  assign slide_gap_percent = section.settings.slide_gap | default: 5
+  assign gap_multiplier = slide_gap_percent | divided_by: 100.0 | plus: 1.0
+  assign current_slide_position = current_slide_index | times: gap_multiplier
   
   assign first_slide = section.blocks.first
   if first_slide and first_slide.settings.image != blank
@@ -18,7 +21,7 @@
   data-section-type="image-slider"
   style="
     --slider-transition-duration: {{ section.settings.transition_duration | default: 1000 }}ms;
-    --slider-slide-spacing: {{ section.settings.slide_gap | default: 16 }}px;
+    --slider-slide-spacing: {{ section.settings.slide_gap | default: 5 }}%;
     --slider-section-padding: {{ section.settings.section_padding | default: 32 }}px;
     --slider-slide-blur: {{ section.settings.blur_amount | default: 4 }}px;
     --slider-slide-opacity: {{ section.settings.side_opacity | default: 0.6 }};
@@ -34,7 +37,7 @@
 >
   <div class="image-slider__wrapper">
     <div class="image-slider__container" 
-         style="transform: translateX(calc(50vw - var(--slider-slide-total-max-width) * ({{ current_slide_index }} + 0.5)))">
+         style="transform: translateX(calc(50vw - var(--slider-slide-total-max-width) * ({{ current_slide_position }} + 0.5)))">
     {%- for block in section.blocks -%}
       {%- render 'snippet-section-image-slider-slide', 
         block: block,
@@ -81,11 +84,11 @@
     {
       "type": "range",
       "id": "slide_gap",
-      "label": "Gap between slides (px)",
+      "label": "Gap between slides (%)",
       "min": 0,
-      "max": 64,
-      "step": 2,
-      "default": 16
+      "max": 50,
+      "step": 1,
+      "default": 5
     },
     {
       "type": "range",

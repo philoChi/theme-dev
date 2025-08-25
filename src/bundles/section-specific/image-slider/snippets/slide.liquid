@@ -6,7 +6,10 @@
   assign slide_index_zero = slide_index | minus: 1
   
   # Standard positioning for initial load (JavaScript will manage virtual positions)
-  assign slide_translateX_by = slide_index_zero | times: 100
+  # Include gap in positioning calculation: position = index * (100% + gap%)
+  assign slide_gap_percent = section.settings.slide_gap | default: 5
+  assign slide_spacing_total = 100 | plus: slide_gap_percent
+  assign slide_translateX_by = slide_index_zero | times: slide_spacing_total
   
   # For infinite mode (3+ slides), JavaScript will dynamically manage positions
   # Range will be extended from -100% to 400% for seamless infinite sliding

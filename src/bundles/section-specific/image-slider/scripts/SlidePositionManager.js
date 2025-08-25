@@ -14,7 +14,29 @@ class SlidePositionManager {
     this.slideCount = slides.length;
     this.slidePositions = new Map();
     
+    // Get gap percentage from CSS variable
+    this.gapPercentage = this.getGapPercentage();
+    
     this.initializeVirtualPositions();
+  }
+
+  /**
+   * Get gap percentage from CSS custom property
+   * @returns {number} Gap percentage as decimal (e.g., 5% returns 5)
+   */
+  getGapPercentage() {
+    const sliderElement = this.container.closest('.image-slider');
+    if (!sliderElement) return 0;
+    
+    const computedStyle = getComputedStyle(sliderElement);
+    const gapValue = computedStyle.getPropertyValue('--slider-slide-spacing').trim();
+    
+    // Parse percentage value (e.g., "5%" -> 5)
+    if (gapValue.endsWith('%')) {
+      return parseFloat(gapValue.replace('%', '')) || 0;
+    }
+    
+    return 0;
   }
 
   /**
@@ -22,9 +44,9 @@ class SlidePositionManager {
    */
   initializeVirtualPositions() {
     // Set up extended virtual positions for infinite mode
-    // Range: -100% to 400% (supports up to 6 slides seamlessly)
+    // Include gap percentage in slide spacing calculations
     this.slides.forEach((slide, index) => {
-      this.slidePositions.set(index, index * 100);
+      this.slidePositions.set(index, index * (100 + this.gapPercentage));
     });
     
     // Apply initial slide positioning
@@ -36,7 +58,7 @@ class SlidePositionManager {
    * @param {number} currentIndex - Current slide index
    */
   updateContainerPosition(currentIndex) {
-    // Use the same formula as Liquid template but based on virtual current position
+    // Calculate virtual position including gaps
     const virtualCurrentPosition = this.slidePositions.get(currentIndex) / 100;
     this.container.style.transform = `translateX(calc(50vw - var(--slider-slide-total-max-width) * (${virtualCurrentPosition} + 0.5)))`;
   }
@@ -59,14 +81,17 @@ class SlidePositionManager {
   updateAdjacentSlidePositions(currentIndex) {
     // Current slide should always be at its designated position
     const currentPosition = this.slidePositions.get(currentIndex);
+    
+    // Calculate slide spacing including gap
+    const slideSpacing = 100 + this.gapPercentage;
 
     // Get adjacent slide indices (with wrapping for infinite behavior)
     const prevIndex = currentIndex === 0 ? this.slideCount - 1 : currentIndex - 1;
     const nextIndex = currentIndex === this.slideCount - 1 ? 0 : currentIndex + 1;
 
     // Position adjacent slides relative to current slide for seamless transitions
-    this.slidePositions.set(prevIndex, currentPosition - 100);
-    this.slidePositions.set(nextIndex, currentPosition + 100);
+    this.slidePositions.set(prevIndex, currentPosition - slideSpacing);
+    this.slidePositions.set(nextIndex, currentPosition + slideSpacing);
 
     // Apply updated positions to ensure adjacent slides are visible
     this.updateSlidePositions();
@@ -80,14 +105,17 @@ class SlidePositionManager {
    * @param {boolean} isForward - Direction of transition
    */
   prepareInfiniteTransition(fromIndex, toIndex, isForward) {
+    // Calculate slide spacing including gap
+    const slideSpacing = 100 + this.gapPercentage;
+    
     if (isForward) {
       // Last → First: Position the first slide for seamless forward transition
       const lastSlidePosition = this.slidePositions.get(fromIndex);
-      this.slidePositions.set(toIndex, lastSlidePosition + 100);
+      this.slidePositions.set(toIndex, lastSlidePosition + slideSpacing);
     } else {
       // First → Last: Position the last slide for seamless backward transition
       const firstSlidePosition = this.slidePositions.get(fromIndex);
-      this.slidePositions.set(toIndex, firstSlidePosition - 100);
+      this.slidePositions.set(toIndex, firstSlidePosition - slideSpacing);
     }
     
     // Apply positioning of target slide only
@@ -130,18 +158,19 @@ class SlidePositionManager {
         } else {
           // Reset non-current slides to their standard positions
           // But ensure no slide overlaps with adjacent positions that will be set later
-          this.slidePositions.set(index, index * 100);
+          this.slidePositions.set(index, index * (100 + this.gapPercentage));
         }
       });
       
       // Prevent position conflicts after updateAdjacentSlidePositions is called
       // When the last slide becomes current, ensure non-adjacent slides don't overlap with adjacent ones
       if (currentIndex === this.slideCount - 1) {
-        // Current slide will be at 0%, adjacent slides at -100% and 100%
+        // Current slide will be at 0%, adjacent slides at negative and positive spacing
         // Move any non-adjacent slides that would conflict with these positions
+        const slideSpacing = 100 + this.gapPercentage;
         const slide1Index = 1;
-        if (this.slidePositions.get(slide1Index) === 100) {
-          this.slidePositions.set(slide1Index, 200); // Avoid overlap with adjacent slide at 100%
+        if (this.slidePositions.get(slide1Index) === slideSpacing) {
+          this.slidePositions.set(slide1Index, slideSpacing * 2); // Avoid overlap with adjacent slide
         }
       }
       
