@@ -73,7 +73,7 @@
         "enable_autoplay": false,
         "autoplay_interval": 10,
         "transition_duration": 500,
-        "slide_gap": 8,
+        "slide_gap": 5,
         "section_padding": 16,
         "blur_amount": 0,
         "side_opacity": 1,
